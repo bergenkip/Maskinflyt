@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6f7f5;
+  --surface: #ffffff;
+  --foreground: #14212b;
+  --muted: #55636e;
+  --border: #dde2df;
+  --accent: #1d5a85;
+  --accent-soft: #e3edf4;
+  --warning: #7a4b00;
+  --warning-soft: #fbf0d9;
+  --danger: #a3261b;
+  --danger-soft: #fbe9e7;
+  --success: #1f6b3a;
+  --success-soft: #e5f3ea;
+  --on-accent: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0e161c;
+    --surface: #152029;
+    --foreground: #e7edf0;
+    --muted: #9eadb7;
+    --border: #253440;
+    --accent: #84b9de;
+    --accent-soft: #1b3445;
+    --warning: #f2c46d;
+    --warning-soft: #3a2c10;
+    --danger: #ff9b8f;
+    --danger-soft: #3b1714;
+    --success: #7fd19b;
+    --success-soft: #12301d;
+    --on-accent: #0e161c;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-on-accent: var(--on-accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --animate-enter: enter 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Buttons and button-like links answer a tap: colours fade and the element
+   presses in slightly. Inline text links are not transformed by the browser. */
+:where(a, button, summary) {
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    color 150ms,
+    box-shadow 150ms,
+    transform 120ms;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, summary):active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(a, button, summary) {
+    transition: none;
+  }
+
+  :where(a, button, summary):active:not(:disabled) {
+    transform: none;
+  }
+}

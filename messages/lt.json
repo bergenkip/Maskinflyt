@@ -1,0 +1,215 @@
+{
+  "Metadata": {
+    "title": "Maskinflyt",
+    "description": "Užsakymai, vairuotojai ir sąskaitos transporto, kranų ir technikos įmonėms."
+  },
+  "LanguageSwitcher": {
+    "label": "Kalba",
+    "submit": "Keisti kalbą"
+  },
+  "Home": {
+    "status": "Kuriama",
+    "title": "Nuo skambučio iki sąskaitos tą pačią dieną",
+    "lead": "Maskinflyt pakeičia telefoną, SMS ir Excel transporto, kranų ir technikos įmonėms: užsakymas, vairuotojas, darbo laikas ir sąskaita vienoje vietoje.",
+    "stepsTitle": "Kaip tai veiks",
+    "steps": {
+      "receive": {
+        "title": "Planavimas",
+        "body": "Įveskite užsakymą ir kalendoriuje priskirkite sunkvežimį ar mašiną bei vairuotoją."
+      },
+      "check": {
+        "title": "Darbas",
+        "body": "Vairuotojas spaudžia „Pakeliui“, „Atvykau“ ir „Baigiau“. Darbo laikas įrašomas pagal šiuos paspaudimus."
+      },
+      "approve": {
+        "title": "Sąskaita",
+        "body": "Sąskaitos juodraštis sudaromas iš patvirtintų valandų. Prieš siunčiant jį patikrina žmogus."
+      }
+    },
+    "notice": "Tai ankstyva versija. Registracija ir prisijungimas veikia; užsakymai, vairuotojo programa ir sąskaitos bus vėlesniuose etapuose."
+  },
+  "Nav": {
+    "home": "Maskinflyt pradžia",
+    "login": "Prisijungti",
+    "signup": "Sukurti paskyrą",
+    "dashboard": "Apžvalga",
+    "team": "Komanda",
+    "settings": "Nustatymai",
+    "signOut": "Atsijungti",
+    "mainMenu": "Pagrindinis meniu",
+    "loading": "Įkeliama …"
+  },
+  "Auth": {
+    "loginTitle": "Prisijunkite prie Maskinflyt",
+    "signupTitle": "Sukurkite paskyrą",
+    "signupLead": "Įmonę sukursite kitame žingsnyje.",
+    "email": "El. paštas",
+    "password": "Slaptažodis",
+    "passwordHint": "Bent 10 simbolių.",
+    "loginSubmit": "Prisijungti",
+    "signupSubmit": "Sukurti paskyrą",
+    "pending": "Palaukite…",
+    "noAccount": "Dar neturite paskyros?",
+    "haveAccount": "Jau turite paskyrą?",
+    "checkEmailTitle": "Patikrinkite el. paštą",
+    "checkEmailBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją šiame įrenginyje, kad užbaigtumėte paskyros kūrimą.",
+    "notConfigured": "Prisijungimas šioje aplinkoje dar neveikia.",
+    "errors": {
+      "emailInvalid": "Įveskite teisingą el. pašto adresą.",
+      "passwordShort": "Slaptažodis turi būti bent 10 simbolių.",
+      "invalidCredentials": "Neteisingas el. paštas arba slaptažodis.",
+      "emailNotConfirmed": "Pirmiausia patvirtinkite el. pašto adresą. Patikrinkite pašto dėžutę.",
+      "userExists": "Paskyra su šiuo el. paštu jau yra. Prisijunkite.",
+      "weakPassword": "Slaptažodis per silpnas. Pasirinkite ilgesnį.",
+      "rateLimited": "Per daug bandymų. Palaukite kelias minutes ir bandykite dar kartą.",
+      "linkInvalid": "Nuoroda neteisinga arba nebegalioja. Prisijunkite arba sukurkite paskyrą iš naujo.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
+      "firstNameRequired": "Įveskite vardą.",
+      "lastNameRequired": "Įveskite pavardę."
+    },
+    "firstName": "Vardas",
+    "lastName": "Pavardė",
+    "checkEmailInviteBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją, kad užbaigtumėte paskyros kūrimą. Kartu prisijungsite prie įmonės."
+  },
+  "Onboarding": {
+    "title": "Sukurkite savo įmonę",
+    "lead": "Tapsite savininku ir vėliau galėsite pakviesti kolegas.",
+    "name": "Įmonės pavadinimas",
+    "country": "Registracijos šalis",
+    "orgNumber": "Organizacijos numeris (neprivaloma)",
+    "orgNumberHint": "9 skaitmenys, pavyzdžiui, 123456785.",
+    "orgNumberHintOther": "Kaip įmonių registre: raidės ir skaitmenys.",
+    "submit": "Sukurti įmonę",
+    "errors": {
+      "nameRequired": "Įveskite įmonės pavadinimą.",
+      "nameTaken": "Įmonė tokiu pavadinimu jau užregistruota. Jei tai jūsų įmonė, paprašykite jos administratoriaus pakvietimo.",
+      "orgNumberInvalid": "Tai nėra teisingas Norvegijos organizacijos numeris. Patikrinkite jį arba palikite lauką tuščią.",
+      "orgNumberFormat": "Naudokite 2–20 raidžių arba skaitmenų arba palikite lauką tuščią.",
+      "orgNumberTaken": "Šis organizacijos numeris jau užregistruotas. Paprašykite savo įmonės administratoriaus pakvietimo.",
+      "alreadyMember": "Jūs jau priklausote įmonei.",
+      "unknown": "Įmonės sukurti nepavyko. Bandykite dar kartą."
+    }
+  },
+  "Dashboard": {
+    "title": "Apžvalga",
+    "role": "Jūsų rolė: {role}",
+    "orgNumber": "Org. nr. {number}",
+    "empty": "Užsakymų planavimas dar neveikia. Jis atsiras vėlesniame etape.",
+    "greeting": "Sveiki, {name}",
+    "numbersTitle": "Pagrindiniai skaičiai",
+    "membersLabel": "Žmonės komandoje",
+    "openInvites": "{count, plural, =0 {Nėra galiojančių kvietimų} one {# galiojantis kvietimas} few {# galiojantys kvietimai} other {# galiojančių kvietimų}}",
+    "ordersLabel": "Užsakymai",
+    "startTitle": "Nuo ko pradėti",
+    "startLead": "Keli žingsniai iki pirmųjų užsakymų.",
+    "stepTeam": "Pakvieskite kolegas",
+    "stepOrders": "Suplanuokite pirmą užsakymą",
+    "stepDone": "Atlikta",
+    "stepTodo": "Reikia atlikti",
+    "stepOptional": "Nebūtina",
+    "stepLater": "Bus vėlesniame etape"
+  },
+  "Roles": {
+    "owner": "Savininkas",
+    "admin": "Administratorius",
+    "operator": "Operatorius",
+    "viewer": "Stebėtojas"
+  },
+  "Settings": {
+    "title": "Nustatymai",
+    "languageTitle": "Kalba",
+    "languageLead": "Išsaugoma jūsų profilyje, todėl galioja visuose įrenginiuose.",
+    "language": "Sąsajos kalba",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota.",
+    "error": "Nepavyko išsaugoti. Bandykite dar kartą.",
+    "nameTitle": "Jūsų vardas",
+    "nameLead": "Rodomas kolegoms komandos sąraše."
+  },
+  "Team": {
+    "title": "Komanda",
+    "lead": "{company} žmonės ir ką jie gali daryti.",
+    "readOnly": "Kviesti žmones ir keisti roles gali tik savininkai ir administratoriai.",
+    "inviteTitle": "Pakvieskite kolegą",
+    "inviteLead": "Pasirinkite rolę ir sukurkite asmeninę nuorodą. Nusiųskite ją vienam kolegai: jis per ją susikurs paskyrą ir prisijungs. Nuoroda veikia vieną kartą ir galioja 7 dienas.",
+    "role": "Rolė",
+    "roleHint": "Administratoriai valdo narius. Operatoriai tvarko užsakymus. Stebėtojai gali tik žiūrėti.",
+    "inviteSubmit": "Sukurti kvietimo nuorodą",
+    "linkLabel": "Asmeninė nuoroda vienam žmogui",
+    "copy": "Kopijuoti nuorodą",
+    "copied": "Nuoroda nukopijuota.",
+    "copyFailed": "Nukopijuoti nepavyko. Pažymėkite nuorodą ir nukopijuokite patys.",
+    "membersTitle": "Nariai",
+    "you": "jūs",
+    "roleFor": "Rolė: {name}",
+    "saveRole": "Išsaugoti rolę",
+    "remove": "Pašalinti",
+    "removeLabel": "Pašalinti narį: {name}",
+    "removeConfirm": "Pašalinti narį {name} iš įmonės?",
+    "invitationsTitle": "Galiojantys kvietimai",
+    "invitationsEmpty": "Galiojančių kvietimų nėra.",
+    "expires": "galioja iki {date}",
+    "revoke": "Atšaukti",
+    "revokeLabel": "Atšaukti kvietimą ({invitation})",
+    "errors": {
+      "roleInvalid": "Pasirinkite rolę.",
+      "notAllowed": "Jūs neturite teisės to daryti.",
+      "lastOwner": "Įmonėje turi likti bent vienas savininkas.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "linkCreated": "Nuoroda sukurta (rolė: {role}). Nukopijuokite ją dabar: saugumo sumetimais ji rodoma tik vieną kartą.",
+    "invitationFor": "Kvietimas, rolė: {role}",
+    "created": "sukurta {date}"
+  },
+  "Join": {
+    "title": "Jus pakvietė į Maskinflyt",
+    "personalLink": "Kvietimams dabar naudojama asmeninė nuoroda. Paprašykite jus pakvietusio žmogaus sukurti jums nuorodą.",
+    "invalidTitle": "Ši kvietimo nuoroda negalioja",
+    "invalidBody": "Ji jau panaudota, nebegalioja arba buvo atšaukta. Paprašykite jus pakvietusio žmogaus naujos nuorodos.",
+    "role": "Rolė: {role}",
+    "validUntil": "Nuoroda galioja iki {date}",
+    "signupLead": "Susikurkite paskyrą ir prisijungsite prie įmonės. Nuoroda skirta tik vienam žmogui.",
+    "alreadyMember": "Jūs jau priklausote įmonei, todėl negalite prisijungti prie kitos.",
+    "toApp": "Eiti į Maskinflyt",
+    "accept": "Prisijungti prie įmonės",
+    "acceptErrors": {
+      "notFound": "Ši kvietimo nuoroda nebegalioja. Paprašykite naujos.",
+      "alreadyMember": "Jūs jau priklausote įmonei.",
+      "unknown": "Prisijungti nepavyko. Bandykite dar kartą."
+    }
+  },
+  "Footer": {
+    "text": "Maskinflyt · Sukurta Norvegijos rangovams"
+  },
+  "Mfa": {
+    "verifyTitle": "Patvirtinkite, kad tai jūs",
+    "verifyLead": "Savininkai ir administratoriai gali kviesti žmones ir keisti roles, todėl po slaptažodžio jie dar patvirtina el. paštu.",
+    "sendLead": "Išsiųsime prisijungimo nuorodą adresu <email></email>.",
+    "send": "Siųsti nuorodą",
+    "sent": "Nuoroda išsiųsta adresu <email></email>.",
+    "step1": "Atidarykite laišką „Your sign-in link“ šiame ar kitame įrenginyje. Jei jo nėra gautuose, patikrinkite šlamšto aplanką.",
+    "step2": "Paspauskite nuorodą ir patvirtinkite prisijungimą. Šis puslapis tada pats atidarys Maskinflyt.",
+    "resend": "Siųsti naują nuorodą",
+    "errors": {
+      "rateLimited": "Išsiųsta per daug laiškų. Palaukite kelias minutes ir bandykite dar kartą.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "waiting": "Laukiama patvirtinimo… Nuoroda veikia vieną kartą ir nebegalioja po valandos."
+  },
+  "Approve": {
+    "title": "Patvirtinkite prisijungimą",
+    "lead": "Kažkas prisijungė prie Maskinflyt su jūsų slaptažodžiu ir laukia patvirtinimo. Tvirtinkite tik jei tai buvote jūs.",
+    "device": "Naršyklė ir įrenginys",
+    "unknownDevice": "Nežinoma naršyklė",
+    "time": "Laikas",
+    "approve": "Taip, tai aš",
+    "decline": "Ne, tai ne aš",
+    "pending": "Palaukite…",
+    "loading": "Tikrinama nuoroda…",
+    "approved": "Prisijungimas patvirtintas. Grįžkite į langą, kuriame jungėtės; jis tęs pats.",
+    "declined": "Prisijungimas nepatvirtintas. Jei tai buvote ne jūs, kažkas žino jūsų slaptažodį: susisiekite su Maskinflyt administratoriumi.",
+    "expired": "Nuoroda nebegalioja. Prisijungimo puslapyje paprašykite naujos.",
+    "invalid": "Nuoroda netinkama arba jau panaudota. Prisijungimo puslapyje paprašykite naujos.",
+    "error": "Kažkas nepavyko. Paprašykite naujos nuorodos ir bandykite dar kartą."
+  }
+}
