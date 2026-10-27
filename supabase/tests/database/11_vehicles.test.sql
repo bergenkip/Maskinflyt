@@ -1,7 +1,7 @@
 -- Vehicles: who may read and change them, and that company A never sees company B's.
 -- All data is synthetic (.test e-mails, made-up plates).
 begin;
-select plan(19);
+select plan(21);
 
 select ok(
   (select relrowsecurity from pg_class where oid = 'public.vehicles'::regclass),
@@ -52,6 +52,17 @@ select throws_ok(
   '23514', null,
   'plates are stored in capitals without spaces'
 );
+select lives_ok(
+  $$ insert into public.vehicles (organization_id, type, type_name, name)
+     values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'other', 'Vilkikas', 'Volvo FH') $$,
+  'an owner can add a vehicle of her own type'
+);
+select throws_ok(
+  $$ insert into public.vehicles (organization_id, type, name)
+     values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'other', 'No type name') $$,
+  '23514', null,
+  'an own type needs its name'
+);
 select throws_ok(
   $$ insert into public.vehicles (organization_id, type, name, hourly_rate)
      values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'tipper', 'Tippbil', -1) $$,
@@ -65,8 +76,8 @@ select throws_ok(
   'an owner cannot add a vehicle to another company'
 );
 select results_eq(
-  $$ select name from public.vehicles $$,
-  $$ values ('Kranbil 1') $$,
+  $$ select name from public.vehicles order by name $$,
+  $$ values ('Kranbil 1'), ('Volvo FH') $$,
   'an owner sees only her own company''s vehicles'
 );
 update public.vehicles set name = 'Hacked' where id = 'b1000000-0000-0000-0000-000000000001';
@@ -109,7 +120,7 @@ select throws_ok(
 -- Dina (dispatcher) reads the list but cannot change it
 select set_config('request.jwt.claim.sub', '33333333-3333-3333-3333-333333333333', true);
 select set_config('request.jwt.claims', '{"sub":"33333333-3333-3333-3333-333333333333","role":"authenticated"}', true);
-select is((select count(*)::int from public.vehicles), 1, 'a dispatcher sees her company''s vehicle');
+select is((select count(*)::int from public.vehicles), 2, 'a dispatcher sees her company''s vehicles');
 select throws_ok(
   $$ insert into public.vehicles (organization_id, type, name)
      values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'tipper', 'Tippbil') $$,

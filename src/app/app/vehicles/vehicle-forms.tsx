@@ -71,6 +71,19 @@ function VehicleFields({
             ))}
           </select>
         </div>
+        {type === "other" && (
+          <Field
+            name="typeName"
+            id="vehicle-type-name"
+            label={t("typeName")}
+            hint={t("typeNameHint")}
+            required
+            maxLength={60}
+            autoComplete="off"
+            defaultValue={values?.typeName}
+            error={error("typeName")}
+          />
+        )}
         <Field
           name="name"
           id="vehicle-name"

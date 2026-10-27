@@ -183,8 +183,11 @@
       "crane_truck_grab": "Kraninis su griebtuvu",
       "tipper": "Savivartis",
       "excavator": "Ekskavatorius",
-      "wheel_loader": "Ratinis krautuvas"
+      "wheel_loader": "Ratinis krautuvas",
+      "other": "Kita (įrašykite savo)"
     },
+    "typeName": "Savas tipas",
+    "typeNameHint": "Pvz., „Vilkikas“ arba „Autokranas“.",
     "name": "Pavadinimas",
     "nameHint": "Kaip ją vadina komanda, pvz., „Kraninis 1“ arba „Raudona Scania“.",
     "regNumber": "Valstybinis numeris (nebūtina)",
@@ -222,7 +225,8 @@
       "rateInvalid": "Įveskite sumą, pvz., 1450 arba 1450,50.",
       "minHoursInvalid": "Įveskite valandas, pvz., 2 arba 1,5 (iki 24).",
       "notAllowed": "Jūs neturite teisės to daryti.",
-      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
+      "typeNameRequired": "Įrašykite tipą (iki 60 simbolių)."
     }
   },
   "Join": {

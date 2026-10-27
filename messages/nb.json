@@ -183,8 +183,11 @@
       "crane_truck_grab": "Kranbil med grabb",
       "tipper": "Tippbil",
       "excavator": "Gravemaskin",
-      "wheel_loader": "Hjullaster"
+      "wheel_loader": "Hjullaster",
+      "other": "Annet (skriv selv)"
     },
+    "typeName": "Egen type",
+    "typeNameHint": "For eksempel «Trekkvogn» eller «Mobilkran».",
     "name": "Navn",
     "nameHint": "Det teamet kaller den, for eksempel «Kranbil 1» eller «Scania rød».",
     "regNumber": "Registreringsnummer (valgfritt)",
@@ -222,7 +225,8 @@
       "rateInvalid": "Skriv et beløp, for eksempel 1450 eller 1450,50.",
       "minHoursInvalid": "Skriv timer, for eksempel 2 eller 1,5 (maks 24).",
       "notAllowed": "Du har ikke tilgang til å gjøre dette.",
-      "unknown": "Noe gikk galt. Prøv igjen."
+      "unknown": "Noe gikk galt. Prøv igjen.",
+      "typeNameRequired": "Skriv typen (maks 60 tegn)."
     }
   },
   "Join": {

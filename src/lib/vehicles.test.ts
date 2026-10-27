@@ -103,6 +103,7 @@ describe("validateVehicle", () => {
   it("returns the database fields", () => {
     expect(validateVehicle(form(valid)).fields).toEqual({
       type: "crane_truck",
+      type_name: null,
       name: "Kranbil 1",
       reg_number: "AB12345",
       crane_tm: 20.5,
@@ -110,6 +111,14 @@ describe("validateVehicle", () => {
       hourly_rate: 145000,
       min_billable_minutes: 120,
     });
+  });
+
+  it("asks for an own type name only with \"other\"", () => {
+    expect(validateVehicle(form({ ...valid, type: "other", typeName: "  Vilkikas " })).fields?.type_name).toBe("Vilkikas");
+    expect(validateVehicle(form({ ...valid, type: "other", typeName: "" })).fieldErrors).toEqual({
+      typeName: "typeNameRequired",
+    });
+    expect(validateVehicle(form({ ...valid, typeName: "Vilkikas" })).fields?.type_name).toBeNull();
   });
 
   it("ignores the crane field for a type without a crane", () => {
@@ -136,6 +145,7 @@ describe("validateVehicle", () => {
 describe("toFormValues", () => {
   const stored = {
     type: "crane_truck" as const,
+    type_name: null,
     name: "Kranbil 1",
     reg_number: "AB12345",
     crane_tm: 20.5,

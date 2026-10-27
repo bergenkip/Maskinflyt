@@ -20,8 +20,12 @@ function newPlates() {
   return `ZZ ${String(Math.floor(Math.random() * 90000) + 10000)}`;
 }
 
-async function addVehicle(page: Page, vehicle: { type: string; name: string; plates?: string; crane?: string; rate?: string }) {
+async function addVehicle(
+  page: Page,
+  vehicle: { type: string; typeName?: string; name: string; plates?: string; crane?: string; rate?: string },
+) {
   await page.locator('select[name="type"]').selectOption(vehicle.type);
+  if (vehicle.typeName !== undefined) await page.locator('input[name="typeName"]').fill(vehicle.typeName);
   await page.locator('input[name="name"]').fill(vehicle.name);
   await page.locator('input[name="regNumber"]').fill(vehicle.plates ?? "");
   if (vehicle.crane) await page.locator('input[name="craneTm"]').fill(vehicle.crane);
@@ -72,8 +76,15 @@ test("owner adds, changes and switches off a machine; a dispatcher only reads; a
   await addVehicle(owner.page, { type: "excavator", name: "Gravemaskin", rate: "" });
   await expect(owner.page.getByText("Gravemaskin was added.")).toBeVisible();
 
+  // A type that is not in the list: "Other", with the company's own name for it.
+  await addVehicle(owner.page, { type: "other", typeName: "", name: "Volvo FH" });
+  await expect(owner.page.getByText("Write the type (at most 60 characters).")).toBeVisible();
+  await addVehicle(owner.page, { type: "other", typeName: "Trekkvogn", name: "Volvo FH" });
+  await expect(owner.page.getByText("Volvo FH was added.")).toBeVisible();
+
   const list = owner.page.getByRole("region", { name: "All machines" });
-  await expect(list.getByText("2 machines")).toBeVisible();
+  await expect(list.getByText("3 machines")).toBeVisible();
+  await expect(list.getByRole("listitem").filter({ hasText: "Volvo FH" }).getByText("Trekkvogn · No plates")).toBeVisible();
   const crane = list.getByRole("listitem").filter({ hasText: "Kranbil 1" });
   await expect(crane.getByText(`Crane truck · ${plates}`)).toBeVisible();
   await expect(crane.getByText("Crane 20.5 tm")).toBeVisible();

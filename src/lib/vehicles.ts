@@ -1,17 +1,21 @@
 // Vehicle form rules, shared by the server actions and their tests. The
 // database checks the same limits again (see the vehicles migration).
 
-export const vehicleTypes = ["crane_truck", "crane_truck_grab", "tipper", "excavator", "wheel_loader"] as const;
+// "other": the company writes its own type name (type_name).
+export const vehicleTypes = ["crane_truck", "crane_truck_grab", "tipper", "excavator", "wheel_loader", "other"] as const;
 export type VehicleType = (typeof vehicleTypes)[number];
 
 export function isVehicleType(value: unknown): value is VehicleType {
   return typeof value === "string" && (vehicleTypes as readonly string[]).includes(value);
 }
 
-// Types that lift with a crane; only these ask for the crane capacity.
+// Types that may lift with a crane; only these ask for the crane capacity.
+// An own type may be anything, so it may have a crane too.
 export function hasCrane(type: VehicleType) {
-  return type === "crane_truck" || type === "crane_truck_grab";
+  return type === "crane_truck" || type === "crane_truck_grab" || type === "other";
 }
+
+export const MAX_TYPE_NAME_LENGTH = 60;
 
 export const MAX_VEHICLE_NAME_LENGTH = 100;
 const MAX_RATE_ORE = 10_000_000; // 100 000 kr per hour
@@ -83,6 +87,7 @@ export function parseHoursToMinutes(input: string) {
 
 export type VehicleFieldError =
   | "typeInvalid"
+  | "typeNameRequired"
   | "nameRequired"
   | "regNumberInvalid"
   | "craneInvalid"
@@ -92,6 +97,7 @@ export type VehicleFieldError =
 
 export type VehicleFormValues = {
   type: string;
+  typeName: string;
   name: string;
   regNumber: string;
   craneTm: string;
@@ -102,6 +108,7 @@ export type VehicleFormValues = {
 
 export type VehicleFields = {
   type: VehicleType;
+  type_name: string | null;
   name: string;
   reg_number: string | null;
   crane_tm: number | null;
@@ -112,7 +119,7 @@ export type VehicleFields = {
 
 // A row as the pages read it.
 export type Vehicle = VehicleFields & { id: string; active: boolean };
-export const vehicleColumns = "id, type, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active";
+export const vehicleColumns = "id, type, type_name, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active";
 
 export function validateVehicle(formData: FormData): {
   values: VehicleFormValues;
@@ -122,6 +129,7 @@ export function validateVehicle(formData: FormData): {
   const text = (key: string) => String(formData.get(key) ?? "").trim();
   const values: VehicleFormValues = {
     type: text("type"),
+    typeName: text("typeName").replace(/\s+/g, " "),
     name: text("name").replace(/\s+/g, " "),
     regNumber: text("regNumber"),
     craneTm: text("craneTm"),
@@ -140,6 +148,11 @@ export function validateVehicle(formData: FormData): {
 
   const fieldErrors: Partial<Record<keyof VehicleFormValues, VehicleFieldError>> = {};
   if (!type) fieldErrors.type = "typeInvalid";
+  // The own type name is asked for (and kept) only with "other".
+  const typeName = type === "other" ? values.typeName : null;
+  if (typeName !== null && (typeName.length === 0 || typeName.length > MAX_TYPE_NAME_LENGTH)) {
+    fieldErrors.typeName = "typeNameRequired";
+  }
   if (values.name.length === 0 || values.name.length > MAX_VEHICLE_NAME_LENGTH) fieldErrors.name = "nameRequired";
   if (regNumber === undefined) fieldErrors.regNumber = "regNumberInvalid";
   if (craneTm === undefined) fieldErrors.craneTm = "craneInvalid";
@@ -163,6 +176,7 @@ export function validateVehicle(formData: FormData): {
     values,
     fields: {
       type,
+      type_name: typeName,
       name: values.name,
       reg_number: regNumber,
       crane_tm: craneTm,
@@ -183,6 +197,7 @@ export function toFormValues(vehicle: VehicleFields, decimalSeparator: "," | "."
   };
   return {
     type: vehicle.type,
+    typeName: vehicle.type_name ?? "",
     name: vehicle.name,
     regNumber: vehicle.reg_number ? formatRegNumber(vehicle.reg_number) : "",
     craneTm: vehicle.crane_tm === null ? "" : decimal(Number(vehicle.crane_tm), 1),

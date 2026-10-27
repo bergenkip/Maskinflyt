@@ -183,8 +183,11 @@
       "crane_truck_grab": "Crane truck with grab",
       "tipper": "Tipper truck",
       "excavator": "Excavator",
-      "wheel_loader": "Wheel loader"
+      "wheel_loader": "Wheel loader",
+      "other": "Other (write your own)"
     },
+    "typeName": "Your type",
+    "typeNameHint": "For example “Semi-trailer truck” or “Mobile crane”.",
     "name": "Name",
     "nameHint": "What the team calls it, for example “Crane truck 1” or “Scania red”.",
     "regNumber": "Registration number (optional)",
@@ -222,7 +225,8 @@
       "rateInvalid": "Enter an amount, for example 1450 or 1450,50.",
       "minHoursInvalid": "Enter hours, for example 2 or 1,5 (at most 24).",
       "notAllowed": "You are not allowed to do this.",
-      "unknown": "Something went wrong. Try again."
+      "unknown": "Something went wrong. Try again.",
+      "typeNameRequired": "Write the type (at most 60 characters)."
     }
   },
   "Join": {

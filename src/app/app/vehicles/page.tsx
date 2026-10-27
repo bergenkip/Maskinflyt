@@ -103,7 +103,8 @@ export default async function VehiclesPage() {
                       </span>
                     </span>
                     <span className="text-sm text-muted">
-                      {t(`types.${vehicle.type}`)} ·{" "}
+                      {/* An own type name is data and is shown exactly as entered. */}
+                      <span className="[overflow-wrap:anywhere]">{vehicle.type_name ?? t(`types.${vehicle.type}`)}</span> ·{" "}
                       <span className="tabular-nums">
                         {vehicle.reg_number ? formatRegNumber(vehicle.reg_number) : t("noRegNumber")}
                       </span>

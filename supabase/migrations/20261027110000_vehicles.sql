@@ -14,13 +14,16 @@ create type public.vehicle_type as enum (
   'crane_truck_grab', -- kranbil med grabb
   'tipper',           -- tippbil
   'excavator',        -- gravemaskin
-  'wheel_loader'      -- hjullaster
+  'wheel_loader',     -- hjullaster
+  'other'             -- anything else; the company names the type itself (type_name)
 );
 
 create table public.vehicles (
   id uuid primary key default gen_random_uuid(),
   organization_id uuid not null references public.organizations (id) on delete cascade,
   type public.vehicle_type not null,
+  -- The company's own type name, only (and always) for type 'other', e.g. "Vilkikas".
+  type_name text check (char_length(btrim(type_name)) between 1 and 60),
   name text not null check (char_length(btrim(name)) between 1 and 100),
   -- Stored without spaces in capitals ("AB12345"), so "ab 12345" is the same vehicle.
   -- Optional: machines that never drive on public roads have no plates.
@@ -34,7 +37,8 @@ create table public.vehicles (
   min_billable_minutes integer not null default 0 check (min_billable_minutes between 0 and 1440),
   active boolean not null default true,
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  check ((type = 'other') = (type_name is not null))
 );
 
 comment on table public.vehicles is 'A truck or machine of an organization. Switched off, never deleted.';
@@ -50,9 +54,9 @@ alter table public.vehicles enable row level security;
 revoke all on public.vehicles from anon, authenticated;
 -- No delete; the organization and timestamps are never changed from the browser.
 grant select on public.vehicles to authenticated;
-grant insert (organization_id, type, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active)
+grant insert (organization_id, type, type_name, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active)
   on public.vehicles to authenticated;
-grant update (type, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active)
+grant update (type, type_name, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active)
   on public.vehicles to authenticated;
 
 create policy "Owners, admins and dispatchers can read vehicles"
