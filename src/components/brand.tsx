@@ -5,7 +5,7 @@ export function Brand({ href, label }: { href: string; label: string }) {
     <Link
       href={href}
       aria-label={label}
-      className="-mx-1 flex min-h-11 items-center gap-2 rounded-lg px-1 text-lg font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      className="-mx-1 flex min-h-11 shrink-0 items-center gap-2 rounded-lg px-1 text-lg font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
       <svg
         aria-hidden="true"

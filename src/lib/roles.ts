@@ -33,7 +33,8 @@ export function needsMfa(role: Role): boolean {
 
 // Mirrors private.second_step_done in the database: the session was created
 // from an e-mailed link or code ("otp" / "magiclink" in the JWT's amr list),
-// or it is at assurance level aal2.
+// including the sign-up confirmation link ("email/signup"), or it is at
+// assurance level aal2.
 export function secondStepDone(claims: unknown): boolean {
   if (!claims || typeof claims !== "object") return false;
   const { aal, amr } = claims as { aal?: unknown; amr?: unknown };
@@ -41,6 +42,6 @@ export function secondStepDone(claims: unknown): boolean {
   if (!Array.isArray(amr)) return false;
   return amr.some((entry) => {
     const method = (entry as { method?: unknown } | null)?.method;
-    return method === "otp" || method === "magiclink";
+    return method === "otp" || method === "magiclink" || method === "email/signup";
   });
 }

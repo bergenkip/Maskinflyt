@@ -34,6 +34,8 @@ describe("secondStepDone", () => {
     expect(secondStepDone({ aal: "aal1", amr: [{ method: "otp", timestamp: 1 }] })).toBe(true);
     expect(secondStepDone({ amr: [{ method: "magiclink", timestamp: 1 }] })).toBe(true);
     expect(secondStepDone({ aal: "aal2", amr: [{ method: "password", timestamp: 1 }] })).toBe(true);
+    // The sign-up confirmation link proves the e-mail address the same way.
+    expect(secondStepDone({ aal: "aal1", amr: [{ method: "email/signup", timestamp: 1 }] })).toBe(true);
   });
 
   it("rejects a password-only session and malformed claims", () => {
