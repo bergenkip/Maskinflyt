@@ -20,7 +20,7 @@ export default function Home() {
 
       {/* The header reaches the screen edges; the content keeps clear of the notch in landscape. */}
       <div className="flex flex-1 flex-col pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-6 sm:py-16">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-10 sm:px-6 sm:pt-6 sm:pb-16">
           <p className="inline-flex items-center gap-2 rounded-full bg-warning-soft px-3 py-1 text-sm font-medium text-warning">
             <svg
               aria-hidden="true"
