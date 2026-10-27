@@ -14,7 +14,8 @@ Pagrindinis matas: laikas nuo darbo pabaigos iki išsiųstos sąskaitos (tikslas
 ## Rolės (iš specifikacijos)
 Tiekėjo savininkas / administratorius, dispečeris, vairuotojas / operatorius; užsakovo administratorius,
 užsakovo darbuotojas; klientas be paskyros. Vienas žmogus gali turėti kelias roles.
-Kol kas kode yra OrderFlow rolės (owner / admin / operator / viewer); jas pritaikysime atskirame etape.
+Kode (1 etapas): `owner` savininkas, `admin` administratorius, `dispatcher` dispečeris, `driver` vairuotojas.
+Užsakovų rolės ir kelios rolės vienam žmogui – vėlesniuose etapuose.
 
 ## P0 funkcijos
 - Įmonė: registracija su org.nr. (+ duomenys iš Brønnøysundregistrene), darbuotojų kvietimai, rolės.

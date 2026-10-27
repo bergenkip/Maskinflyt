@@ -16,7 +16,7 @@ insert into public.organizations (id, name, org_number) values
 insert into public.memberships (organization_id, user_id, role) values
   ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', 'owner'),
   ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '22222222-2222-2222-2222-222222222222', 'owner'),
-  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'viewer');
+  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'driver');
 
 -- Act as Anna (owner of company A)
 set local role authenticated;
@@ -68,26 +68,26 @@ select throws_ok(
   'A: cannot delete company B'
 );
 
--- Act as Viktor (viewer in company A)
+-- Act as Viktor (driver in company A)
 select set_config('request.jwt.claim.sub', '33333333-3333-3333-3333-333333333333', true);
 select set_config('request.jwt.claims', '{"sub":"33333333-3333-3333-3333-333333333333","role":"authenticated"}', true);
 
-update public.organizations set name = 'Viewer edit' where id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+update public.organizations set name = 'Driver edit' where id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
 select results_eq(
   'select name from public.organizations',
   array['Fjord Verktøy Norge AS'],
-  'viewer: sees the organization but cannot rename it'
+  'driver: sees the organization but cannot rename it'
 );
 select is(
   (select role::text from public.memberships where user_id = '33333333-3333-3333-3333-333333333333'),
-  'viewer',
-  'viewer: sees his own role'
+  'driver',
+  'driver: sees his own role'
 );
 select throws_ok(
   $$ update public.memberships set role = 'owner' where user_id = '33333333-3333-3333-3333-333333333333' $$,
   '42501',
   null,
-  'viewer: cannot promote himself to owner'
+  'driver: cannot promote himself to owner'
 );
 
 -- Act as Bjørn (owner of company B)

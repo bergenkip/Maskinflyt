@@ -10,9 +10,9 @@ insert into public.organizations (id, name) values ('aaaaaaaa-aaaa-aaaa-aaaa-aaa
 insert into public.memberships (id, organization_id, user_id, role) values
   ('a0000000-0000-0000-0000-000000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', 'owner'),
   ('a0000000-0000-0000-0000-000000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '22222222-2222-2222-2222-222222222222', 'admin'),
-  ('a0000000-0000-0000-0000-000000000003', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'operator');
+  ('a0000000-0000-0000-0000-000000000003', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'dispatcher');
 insert into public.invitations (organization_id, role, token_hash)
-values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer', repeat('a', 64));
+values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver', repeat('a', 64));
 
 set local role authenticated;
 
@@ -20,12 +20,12 @@ set local role authenticated;
 select set_config('request.jwt.claim.sub', '11111111-1111-1111-1111-111111111111', true);
 select set_config('request.jwt.claims', '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated","aal":"aal1","amr":[{"method":"password","timestamp":1790000000}]}', true);
 select throws_ok(
-  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer') $$,
+  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver') $$,
   '42501', null,
   'an owner without a code cannot invite'
 );
 select throws_ok(
-  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'viewer') $$,
+  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'driver') $$,
   '42501', null,
   'an owner without a code cannot change a role'
 );
@@ -55,19 +55,19 @@ select is(
 -- Claims without any sign-in methods, or with a malformed list, count as no code
 select set_config('request.jwt.claims', '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated"}', true);
 select throws_ok(
-  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer') $$,
+  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver') $$,
   '42501', null,
   'missing sign-in methods are treated as no code'
 );
 select set_config('request.jwt.claims', '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated","amr":"otp"}', true);
 select throws_ok(
-  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer') $$,
+  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver') $$,
   '42501', null,
   'a malformed list of sign-in methods is treated as no code'
 );
 select set_config('request.jwt.claims', '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated","amr":[{"method":"totp"}]}', true);
 select throws_ok(
-  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer') $$,
+  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver') $$,
   '42501', null,
   'an unrelated method name is not accepted'
 );
@@ -76,12 +76,12 @@ select throws_ok(
 select set_config('request.jwt.claim.sub', '22222222-2222-2222-2222-222222222222', true);
 select set_config('request.jwt.claims', '{"sub":"22222222-2222-2222-2222-222222222222","role":"authenticated","aal":"aal1","amr":[{"method":"otp","timestamp":1790000000}]}', true);
 select matches(
-  (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer')),
+  (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver')),
   '^[0-9a-f]{64}$',
   'an admin with a code can invite'
 );
 select lives_ok(
-  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'viewer') $$,
+  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'driver') $$,
   'an admin with a code can change a role'
 );
 select is((select count(*)::int from public.invitations), 2, 'an admin with a code sees the invitations');
@@ -89,7 +89,7 @@ select is((select count(*)::int from public.invitations), 2, 'an admin with a co
 -- A session at assurance level aal2 counts as well
 select set_config('request.jwt.claims', '{"sub":"22222222-2222-2222-2222-222222222222","role":"authenticated","aal":"aal2","amr":[{"method":"password","timestamp":1790000000}]}', true);
 select lives_ok(
-  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'operator') $$,
+  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'dispatcher') $$,
   'an aal2 session counts as the second step'
 );
 
@@ -131,7 +131,7 @@ select lives_ok($$ select public.approve_second_step((select id from req)) $$, '
 select set_config('request.jwt.claims', '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated","session_id":"51000000-0000-0000-0000-000000000001","amr":[{"method":"password","timestamp":1790000000}]}', true);
 select is(public.second_step_passed(), true, 'the approved session has passed the second step');
 select lives_ok(
-  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer') $$,
+  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver') $$,
   'the approved session can invite'
 );
 

@@ -14,7 +14,14 @@ Pašalinta (OrderFlow specifika): prekių katalogas, pirkėjai, pirkėjų kainos
 2. Naujas Vercel projektas, sujungtas su `bergenkip/Maskinflyt`.
 3. Raktai tik į Vercel / GitHub „Secrets“ (tie patys pavadinimai kaip OrderFlow), ne į pokalbį.
 
+## 1 etapas: rolės (2026-10-27)
+Migracija `20261027090000_maskinflyt_roles.sql` pervadina OrderFlow roles:
+`operator` → `dispatcher` (dispečeris), `viewer` → `driver` (vairuotojas). `owner` ir `admin` lieka.
+Esamos narystės ir kvietimai išlieka. Nauja narystė be rolės = `driver` (mažiausia prieiga).
+Teisės kol kas tos pačios: žmones valdo savininkas ir administratorius (su antru žingsniu el. paštu),
+dispečeris ir vairuotojas komandą tik mato. Dispečerio ir vairuotojo skirtumas atsiras su darbais
+(dispečeris planuoja, vairuotojas mato tik savo darbus). Testas: `09_maskinflyt_roles.test.sql`.
+
 ## Kitas etapas (siūlymas)
-1. Rolės pagal specifikaciją: savininkas / administratorius, dispečeris, vairuotojas.
-2. Technikos sąrašas (vehicles).
-3. Užsakymai ir kalendorius.
+1. Technikos sąrašas (vehicles).
+2. Užsakymai ir kalendorius.

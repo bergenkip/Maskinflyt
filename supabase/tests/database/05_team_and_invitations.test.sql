@@ -7,7 +7,7 @@ create temporary table links (name text primary key, token text) on commit drop;
 grant all on links to anon, authenticated;
 
 -- Arrange (as the database owner, bypassing RLS)
--- Anna owns company A, Ola is admin there, Per is operator there.
+-- Anna owns company A, Ola is admin there, Per is dispatcher there.
 -- Bjørn owns company B. Kari and Lise have no company yet.
 insert into auth.users (id, email, email_confirmed_at) values
   ('11111111-1111-1111-1111-111111111111', 'anna@fjordverktoy.test', now()),
@@ -24,7 +24,7 @@ insert into public.organizations (id, name) values
 insert into public.memberships (id, organization_id, user_id, role) values
   ('a0000000-0000-0000-0000-000000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', 'owner'),
   ('a0000000-0000-0000-0000-000000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '22222222-2222-2222-2222-222222222222', 'admin'),
-  ('a0000000-0000-0000-0000-000000000003', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'operator'),
+  ('a0000000-0000-0000-0000-000000000003', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'dispatcher'),
   ('b0000000-0000-0000-0000-000000000001', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '44444444-4444-4444-4444-444444444444', 'owner');
 
 select ok(
@@ -34,13 +34,13 @@ select ok(
 
 set local role authenticated;
 
--- Per (operator) can see the team but not invite
+-- Per (dispatcher) can see the team but not invite
 select set_config('request.jwt.claim.sub', '33333333-3333-3333-3333-333333333333', true);
 select set_config('request.jwt.claims', '{"sub":"33333333-3333-3333-3333-333333333333","role":"authenticated","aal":"aal1","amr":[{"method":"otp","timestamp":1790000000}]}', true);
 select is(
   (select count(*)::int from public.list_members('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa')),
   3,
-  'an operator sees the three members of his company'
+  'a dispatcher sees the three members of his company'
 );
 select is(
   (select email from public.list_members('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa') limit 1),
@@ -48,17 +48,17 @@ select is(
   'the owner is listed first'
 );
 select throws_ok(
-  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer') $$,
+  $$ select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver') $$,
   '42501', null,
-  'an operator cannot invite'
+  'a dispatcher cannot invite'
 );
 select throws_ok(
   $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'admin') $$,
   '42501', null,
-  'an operator cannot change his own role'
+  'a dispatcher cannot change his own role'
 );
 select throws_ok(
-  $$ insert into public.invitations (organization_id, role, token_hash) values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer', repeat('a', 64)) $$,
+  $$ insert into public.invitations (organization_id, role, token_hash) values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver', repeat('a', 64)) $$,
   '42501', null,
   'invitations cannot be written directly from the browser'
 );
@@ -86,8 +86,8 @@ select throws_ok(
 select set_config('request.jwt.claim.sub', '22222222-2222-2222-2222-222222222222', true);
 select set_config('request.jwt.claims', '{"sub":"22222222-2222-2222-2222-222222222222","role":"authenticated","aal":"aal1","amr":[{"method":"otp","timestamp":1790000000}]}', true);
 insert into links values
-  ('kari', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'operator'))),
-  ('cancelled', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer')));
+  ('kari', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'dispatcher'))),
+  ('cancelled', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver')));
 select matches(
   (select token from links where name = 'kari'),
   '^[0-9a-f]{64}$',
@@ -104,7 +104,7 @@ select is(
   'the token itself is not stored, only its hash'
 );
 select is(
-  (select count(*)::int from public.invitations where email is null and role = 'operator'),
+  (select count(*)::int from public.invitations where email is null and role = 'dispatcher'),
   1,
   'an invitation needs no e-mail address'
 );
@@ -114,7 +114,7 @@ select throws_ok(
   'nobody can be invited straight in as owner'
 );
 select lives_ok(
-  $$ select public.revoke_invitation((select id from public.invitations where role = 'viewer')) $$,
+  $$ select public.revoke_invitation((select id from public.invitations where role = 'driver')) $$,
   'an admin can cancel an invitation'
 );
 select throws_ok(
@@ -128,8 +128,8 @@ select throws_ok(
   'an admin cannot make someone owner'
 );
 select lives_ok(
-  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'viewer') $$,
-  'an admin can change an operator to viewer'
+  $$ select public.change_member_role('a0000000-0000-0000-0000-000000000003', 'driver') $$,
+  'an admin can change a dispatcher to driver'
 );
 
 -- Bjørn cannot see company A's invitations
@@ -149,7 +149,7 @@ select set_config('request.jwt.claim.sub', '', true);
 select set_config('request.jwt.claims', '{"role":"anon"}', true);
 select results_eq(
   $$ select organization_name, role::text from public.invitation_preview((select token from links where name = 'kari')) $$,
-  $$ values ('Fjord Verktøy AS'::text, 'operator'::text) $$,
+  $$ values ('Fjord Verktøy AS'::text, 'dispatcher'::text) $$,
   'a valid link shows the company and role before signing up'
 );
 select is(
@@ -190,7 +190,7 @@ select is(
 );
 select is(
   (select role::text from public.memberships where user_id = '55555555-5555-5555-5555-555555555555'),
-  'operator',
+  'dispatcher',
   'Kari got the invited role'
 );
 
@@ -212,7 +212,7 @@ select is(
 reset role;
 insert into links values ('expired', 'e' || repeat('1', 63));
 insert into public.invitations (organization_id, role, token_hash, created_at, expires_at)
-values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer', private.hash_token('e' || repeat('1', 63)), now() - interval '8 days', now() - interval '1 day');
+values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver', private.hash_token('e' || repeat('1', 63)), now() - interval '8 days', now() - interval '1 day');
 set local role authenticated;
 select throws_ok(
   $$ select public.accept_invitation((select token from links where name = 'expired')) $$,

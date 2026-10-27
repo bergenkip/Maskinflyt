@@ -112,8 +112,8 @@
   "Roles": {
     "owner": "Eier",
     "admin": "Administrator",
-    "operator": "Saksbehandler",
-    "viewer": "Leser"
+    "dispatcher": "Disponent",
+    "driver": "Sjåfør"
   },
   "Settings": {
     "title": "Innstillinger",
@@ -133,7 +133,7 @@
     "inviteTitle": "Inviter en kollega",
     "inviteLead": "Velg en rolle og lag en personlig lenke. Send den til én kollega: hen oppretter en konto med den og blir med. Lenken kan brukes én gang og gjelder i 7 dager.",
     "role": "Rolle",
-    "roleHint": "Administratorer styrer medlemmer. Saksbehandlere håndterer oppdrag. Lesere kan bare se.",
+    "roleHint": "Administratorer styrer folk. Disponenter planlegger oppdrag og maskiner. Sjåfører utfører oppdragene.",
     "inviteSubmit": "Lag invitasjonslenke",
     "linkLabel": "Personlig lenke for én person",
     "copy": "Kopier lenke",
