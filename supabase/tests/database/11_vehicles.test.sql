@@ -30,12 +30,14 @@ insert into public.vehicles (id, organization_id, type, name, reg_number, hourly
 
 set local role authenticated;
 
--- Anna (owner, with the e-mailed second step) adds a crane truck
+-- Anna (owner, with the e-mailed second step) adds a crane truck. The browser
+-- cannot choose the id (only the listed columns are granted), so the tests
+-- below find the truck by its plates.
 select set_config('request.jwt.claim.sub', '11111111-1111-1111-1111-111111111111', true);
 select set_config('request.jwt.claims', '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated","aal":"aal1","amr":[{"method":"otp","timestamp":1790000000}]}', true);
 select lives_ok(
-  $$ insert into public.vehicles (id, organization_id, type, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes)
-     values ('a1000000-0000-0000-0000-000000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'crane_truck', 'Kranbil 1', 'AB12345', 20.5, 12000, 145000, 120) $$,
+  $$ insert into public.vehicles (organization_id, type, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes)
+     values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'crane_truck', 'Kranbil 1', 'AB12345', 20.5, 12000, 145000, 120) $$,
   'an owner can add a vehicle'
 );
 select throws_ok(
@@ -77,9 +79,9 @@ select throws_ok(
   '42501', null,
   'an owner without the second step cannot add a vehicle'
 );
-update public.vehicles set name = 'Changed without link' where id = 'a1000000-0000-0000-0000-000000000001';
+update public.vehicles set name = 'Changed without link' where reg_number = 'AB12345';
 select is(
-  (select name from public.vehicles where id = 'a1000000-0000-0000-0000-000000000001'),
+  (select name from public.vehicles where reg_number = 'AB12345'),
   'Kranbil 1',
   'an owner without the second step cannot change a vehicle'
 );
@@ -87,19 +89,19 @@ select is(
 -- Ola (admin, with the second step) switches the truck off
 select set_config('request.jwt.claim.sub', '22222222-2222-2222-2222-222222222222', true);
 select set_config('request.jwt.claims', '{"sub":"22222222-2222-2222-2222-222222222222","role":"authenticated","aal":"aal1","amr":[{"method":"otp","timestamp":1790000000}]}', true);
-update public.vehicles set active = false, hourly_rate = 150000 where id = 'a1000000-0000-0000-0000-000000000001';
+update public.vehicles set active = false, hourly_rate = 150000 where reg_number = 'AB12345';
 select results_eq(
-  $$ select active, hourly_rate from public.vehicles where id = 'a1000000-0000-0000-0000-000000000001' $$,
+  $$ select active, hourly_rate from public.vehicles where reg_number = 'AB12345' $$,
   $$ values (false, 150000) $$,
   'an admin can change and switch off a vehicle'
 );
 select throws_ok(
-  $$ update public.vehicles set organization_id = 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb' where id = 'a1000000-0000-0000-0000-000000000001' $$,
+  $$ update public.vehicles set organization_id = 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb' where reg_number = 'AB12345' $$,
   '42501', null,
   'a vehicle cannot be moved to another company'
 );
 select throws_ok(
-  $$ delete from public.vehicles where id = 'a1000000-0000-0000-0000-000000000001' $$,
+  $$ delete from public.vehicles where reg_number = 'AB12345' $$,
   '42501', null,
   'a vehicle cannot be deleted'
 );
@@ -114,7 +116,7 @@ select throws_ok(
   '42501', null,
   'a dispatcher cannot add a vehicle'
 );
-update public.vehicles set name = 'Dina was here' where id = 'a1000000-0000-0000-0000-000000000001';
+update public.vehicles set name = 'Dina was here' where reg_number = 'AB12345';
 
 -- Sander (driver) sees no vehicles yet
 select set_config('request.jwt.claim.sub', '44444444-4444-4444-4444-444444444444', true);
@@ -132,7 +134,7 @@ select results_eq(
 
 reset role;
 select is(
-  (select name from public.vehicles where id = 'a1000000-0000-0000-0000-000000000001'),
+  (select name from public.vehicles where reg_number = 'AB12345'),
   'Kranbil 1',
   'the dispatcher''s attempted change did not happen'
 );
