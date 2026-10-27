@@ -32,7 +32,7 @@ async function addVehicle(page: Page, vehicle: { type: string; name: string; pla
 // The owner invites a colleague with a role; returns the colleague's page, signed in.
 async function inviteColleague(browser: Browser, baseURL: string, owner: Page, role: string) {
   await owner.goto("/app/team");
-  await owner.locator('select[name="role"]').selectOption(role);
+  await owner.getByLabel("Role", { exact: true }).selectOption(role);
   await owner.locator('main form button[type="submit"]').first().click();
   const link = owner.getByText(/\/join\/[0-9a-f]{64}$/);
   await expect(link).toBeVisible();
