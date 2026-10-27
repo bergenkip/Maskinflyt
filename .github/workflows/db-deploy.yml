@@ -1,0 +1,35 @@
+name: Deploy database migrations
+
+# Applies new files in supabase/migrations to the hosted Supabase project
+# after they are merged to main. Runs only once the project is configured:
+#   repository variable SUPABASE_PROJECT_ID
+#   repository secrets SUPABASE_ACCESS_TOKEN and SUPABASE_DB_PASSWORD
+
+on:
+  push:
+    branches: [main]
+    paths: ["supabase/migrations/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.SUPABASE_PROJECT_ID != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.120.0
+      - run: supabase link --project-ref "${{ vars.SUPABASE_PROJECT_ID }}"
+      - run: supabase db push

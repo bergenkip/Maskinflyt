@@ -1,0 +1,215 @@
+{
+  "Metadata": {
+    "title": "Maskinflyt",
+    "description": "Oppdrag, sjåfører og fakturaer for transport-, kran- og maskinentreprenører."
+  },
+  "LanguageSwitcher": {
+    "label": "Språk",
+    "submit": "Bytt språk"
+  },
+  "Home": {
+    "status": "Under utvikling",
+    "title": "Fra telefon til faktura samme dag",
+    "lead": "Maskinflyt erstatter telefon, SMS og Excel for transport-, kran- og maskinentreprenører: oppdraget, sjåføren, arbeidstiden og fakturaen på ett sted.",
+    "stepsTitle": "Slik skal det fungere",
+    "steps": {
+      "receive": {
+        "title": "Planlegge",
+        "body": "Legg inn oppdraget og sett opp bil eller maskin og sjåfør i kalenderen."
+      },
+      "check": {
+        "title": "Utføre",
+        "body": "Sjåføren trykker På vei, Ankommet og Ferdig. Timene registreres ut fra disse trykkene."
+      },
+      "approve": {
+        "title": "Fakturere",
+        "body": "Et fakturautkast lages fra godkjente timer. En person kontrollerer det før noe sendes."
+      }
+    },
+    "notice": "Dette er en tidlig versjon. Registrering og innlogging fungerer; oppdrag, sjåførappen og fakturaer kommer i senere steg."
+  },
+  "Nav": {
+    "home": "Maskinflyt forside",
+    "login": "Logg inn",
+    "signup": "Opprett konto",
+    "dashboard": "Oversikt",
+    "team": "Team",
+    "settings": "Innstillinger",
+    "signOut": "Logg ut",
+    "mainMenu": "Hovedmeny",
+    "loading": "Laster …"
+  },
+  "Auth": {
+    "loginTitle": "Logg inn i Maskinflyt",
+    "signupTitle": "Opprett konto",
+    "signupLead": "Du oppretter firmaet ditt i neste steg.",
+    "email": "E-post",
+    "password": "Passord",
+    "passwordHint": "Minst 10 tegn.",
+    "loginSubmit": "Logg inn",
+    "signupSubmit": "Opprett konto",
+    "pending": "Vent litt …",
+    "noAccount": "Har du ikke konto?",
+    "haveAccount": "Har du allerede konto?",
+    "checkEmailTitle": "Sjekk e-posten din",
+    "checkEmailBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den på denne enheten for å fullføre kontoen.",
+    "notConfigured": "Innlogging er ikke tilgjengelig i dette miljøet ennå.",
+    "errors": {
+      "emailInvalid": "Skriv inn en gyldig e-postadresse.",
+      "passwordShort": "Passordet må ha minst 10 tegn.",
+      "invalidCredentials": "Feil e-post eller passord.",
+      "emailNotConfirmed": "Bekreft e-postadressen først. Sjekk innboksen din.",
+      "userExists": "Det finnes allerede en konto med denne e-posten. Logg inn i stedet.",
+      "weakPassword": "Passordet er for svakt. Velg et lengre passord.",
+      "rateLimited": "For mange forsøk. Vent noen minutter og prøv igjen.",
+      "linkInvalid": "Lenken er ugyldig eller utløpt. Logg inn eller opprett kontoen på nytt.",
+      "unknown": "Noe gikk galt. Prøv igjen.",
+      "firstNameRequired": "Skriv inn fornavnet ditt.",
+      "lastNameRequired": "Skriv inn etternavnet ditt."
+    },
+    "firstName": "Fornavn",
+    "lastName": "Etternavn",
+    "checkEmailInviteBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den for å fullføre kontoen. Samtidig blir du med i firmaet."
+  },
+  "Onboarding": {
+    "title": "Opprett firmaet ditt",
+    "lead": "Du blir eier og kan invitere kolleger senere.",
+    "name": "Firmanavn",
+    "country": "Registreringsland",
+    "orgNumber": "Organisasjonsnummer (valgfritt)",
+    "orgNumberHint": "9 sifre, for eksempel 123456785.",
+    "orgNumberHintOther": "Som i foretaksregisteret: bokstaver og sifre.",
+    "submit": "Opprett firma",
+    "errors": {
+      "nameRequired": "Skriv inn firmanavnet.",
+      "nameTaken": "Et firma med dette navnet er allerede registrert. Hvis det er ditt firma, be administratoren om å invitere deg.",
+      "orgNumberInvalid": "Dette er ikke et gyldig norsk organisasjonsnummer. Sjekk det, eller la feltet stå tomt.",
+      "orgNumberFormat": "Bruk 2–20 bokstaver eller sifre, eller la feltet stå tomt.",
+      "orgNumberTaken": "Dette organisasjonsnummeret er allerede registrert. Be administratoren i firmaet ditt om å invitere deg.",
+      "alreadyMember": "Du tilhører allerede et firma.",
+      "unknown": "Firmaet kunne ikke opprettes. Prøv igjen."
+    }
+  },
+  "Dashboard": {
+    "title": "Oversikt",
+    "role": "Din rolle: {role}",
+    "orgNumber": "Org.nr. {number}",
+    "empty": "Oppdragsplanlegging er ikke tilgjengelig ennå. Det kommer i et senere steg.",
+    "greeting": "Hei, {name}",
+    "numbersTitle": "Nøkkeltall",
+    "membersLabel": "Personer i teamet",
+    "openInvites": "{count, plural, =0 {Ingen åpne invitasjoner} one {# åpen invitasjon} other {# åpne invitasjoner}}",
+    "ordersLabel": "Oppdrag",
+    "startTitle": "Kom i gang",
+    "startLead": "Noen steg før de første oppdragene.",
+    "stepTeam": "Inviter kolleger",
+    "stepOrders": "Planlegg det første oppdraget",
+    "stepDone": "Ferdig",
+    "stepTodo": "Å gjøre",
+    "stepOptional": "Valgfritt",
+    "stepLater": "Kommer i et senere steg"
+  },
+  "Roles": {
+    "owner": "Eier",
+    "admin": "Administrator",
+    "operator": "Saksbehandler",
+    "viewer": "Leser"
+  },
+  "Settings": {
+    "title": "Innstillinger",
+    "languageTitle": "Språk",
+    "languageLead": "Lagres i profilen din, så det følger deg på alle enheter.",
+    "language": "Språk i grensesnittet",
+    "save": "Lagre",
+    "saved": "Lagret.",
+    "error": "Kunne ikke lagre. Prøv igjen.",
+    "nameTitle": "Navnet ditt",
+    "nameLead": "Vises for kollegene dine i teamlisten."
+  },
+  "Team": {
+    "title": "Team",
+    "lead": "Personer i {company} og hva de har tilgang til.",
+    "readOnly": "Bare eiere og administratorer kan invitere personer og endre roller.",
+    "inviteTitle": "Inviter en kollega",
+    "inviteLead": "Velg en rolle og lag en personlig lenke. Send den til én kollega: hen oppretter en konto med den og blir med. Lenken kan brukes én gang og gjelder i 7 dager.",
+    "role": "Rolle",
+    "roleHint": "Administratorer styrer medlemmer. Saksbehandlere håndterer oppdrag. Lesere kan bare se.",
+    "inviteSubmit": "Lag invitasjonslenke",
+    "linkLabel": "Personlig lenke for én person",
+    "copy": "Kopier lenke",
+    "copied": "Lenken er kopiert.",
+    "copyFailed": "Kunne ikke kopiere. Merk lenken og kopier den selv.",
+    "membersTitle": "Medlemmer",
+    "you": "deg",
+    "roleFor": "Rolle for {name}",
+    "saveRole": "Lagre rolle",
+    "remove": "Fjern",
+    "removeLabel": "Fjern {name}",
+    "removeConfirm": "Fjerne {name} fra firmaet?",
+    "invitationsTitle": "Åpne invitasjoner",
+    "invitationsEmpty": "Ingen åpne invitasjoner.",
+    "expires": "gjelder til {date}",
+    "revoke": "Trekk tilbake",
+    "revokeLabel": "Trekk tilbake invitasjonen ({invitation})",
+    "errors": {
+      "roleInvalid": "Velg en rolle.",
+      "notAllowed": "Du har ikke tilgang til å gjøre dette.",
+      "lastOwner": "Firmaet må ha minst én eier.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    },
+    "linkCreated": "Lenke laget for en ny {role}. Kopier den nå: av sikkerhetshensyn vises den bare én gang.",
+    "invitationFor": "Invitasjon som {role}",
+    "created": "laget {date}"
+  },
+  "Join": {
+    "title": "Du er invitert til Maskinflyt",
+    "personalLink": "Invitasjoner bruker nå en personlig lenke. Be personen som inviterte deg, om å lage en til deg.",
+    "invalidTitle": "Denne invitasjonslenken er ikke gyldig",
+    "invalidBody": "Den er allerede brukt, utløpt eller trukket tilbake. Be personen som inviterte deg, om en ny lenke.",
+    "role": "Rolle: {role}",
+    "validUntil": "Lenken gjelder til {date}",
+    "signupLead": "Opprett kontoen din for å bli med. Lenken gjelder bare for én person.",
+    "alreadyMember": "Du hører allerede til et firma og kan ikke bli med i et annet.",
+    "toApp": "Gå til Maskinflyt",
+    "accept": "Bli med i firmaet",
+    "acceptErrors": {
+      "notFound": "Denne invitasjonslenken er ikke lenger gyldig. Be om en ny.",
+      "alreadyMember": "Du hører allerede til et firma.",
+      "unknown": "Kunne ikke bli med. Prøv igjen."
+    }
+  },
+  "Footer": {
+    "text": "Maskinflyt · Laget for norske entreprenører"
+  },
+  "Mfa": {
+    "verifyTitle": "Bekreft at det er deg",
+    "verifyLead": "Eiere og administratorer kan invitere folk og endre roller, så etter passordet bekrefter de også på e-post.",
+    "sendLead": "Vi sender en innloggingslenke til <email></email>.",
+    "send": "Send lenke",
+    "sent": "Lenken er sendt til <email></email>.",
+    "step1": "Åpne e-posten «Your sign-in link», på denne eller en annen enhet. Sjekk søppelpost hvis den ikke er i innboksen.",
+    "step2": "Trykk på lenken og godkjenn innloggingen. Denne siden åpner da Maskinflyt av seg selv.",
+    "resend": "Send ny lenke",
+    "errors": {
+      "rateLimited": "For mange e-poster er sendt. Vent noen minutter og prøv igjen.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    },
+    "waiting": "Venter på godkjenning … Lenken kan brukes én gang og utløper etter en time."
+  },
+  "Approve": {
+    "title": "Godkjenn innlogging",
+    "lead": "Noen logget inn i Maskinflyt med passordet ditt og venter på godkjenning. Godkjenn bare hvis det var deg.",
+    "device": "Nettleser og enhet",
+    "unknownDevice": "Ukjent nettleser",
+    "time": "Tidspunkt",
+    "approve": "Ja, det var meg",
+    "decline": "Nei, det var ikke meg",
+    "pending": "Vent litt …",
+    "loading": "Sjekker lenken …",
+    "approved": "Innloggingen er godkjent. Gå tilbake til vinduet der du logget inn; det fortsetter av seg selv.",
+    "declined": "Innloggingen er ikke godkjent. Hvis det ikke var deg, kjenner noen passordet ditt: kontakt den som driver Maskinflyt.",
+    "expired": "Lenken er utløpt. Be om en ny lenke på innloggingssiden.",
+    "invalid": "Lenken er ugyldig eller allerede brukt. Be om en ny lenke på innloggingssiden.",
+    "error": "Noe gikk galt. Be om en ny lenke og prøv igjen."
+  }
+}
