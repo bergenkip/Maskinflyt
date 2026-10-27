@@ -3,9 +3,10 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { ArrowRightIcon, CheckCircleIcon, CircleIcon, ClockIcon, InboxIcon, UsersIcon } from "@/components/icons";
+import { ArrowRightIcon, CheckCircleIcon, CircleIcon, ClockIcon, InboxIcon, TruckIcon, UsersIcon } from "@/components/icons";
 import { getCurrentMembership } from "@/lib/membership";
 import { formatOrgNumber } from "@/lib/org-number";
+import { canSeeVehicles } from "@/lib/roles";
 import { createClient, getUserId } from "@/lib/supabase/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,12 +20,13 @@ export default async function DashboardPage() {
 
   const { organization, role } = membership;
   const isAdmin = role === "owner" || role === "admin";
+  const showVehicles = canSeeVehicles(role);
   const supabase = await createClient();
   const userId = await getUserId();
 
   // Counts only (head: true returns no rows). RLS limits every query to this company;
-  // invitations are visible to owners and admins only.
-  const [t, tRoles, format, profile, members, invitations] = await Promise.all([
+  // invitations are visible to owners and admins only, vehicles not to drivers.
+  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles] = await Promise.all([
     getTranslations("Dashboard"),
     getTranslations("Roles"),
     getFormatter(),
@@ -38,6 +40,16 @@ export default async function DashboardPage() {
           .is("accepted_at", null)
           .is("revoked_at", null)
           .gt("expires_at", new Date().toISOString())
+      : null,
+    showVehicles
+      ? supabase.from("vehicles").select("id", { count: "exact", head: true }).eq("organization_id", organization.id)
+      : null,
+    showVehicles
+      ? supabase
+          .from("vehicles")
+          .select("id", { count: "exact", head: true })
+          .eq("organization_id", organization.id)
+          .eq("active", true)
       : null,
   ]);
 
@@ -80,6 +92,23 @@ export default async function DashboardPage() {
               detail={invitations && !invitations.error ? t("openInvites", { count: invitations.count ?? 0 }) : undefined}
             />
           </li>
+          {vehicles && (
+            <li>
+              <StatCard
+                href="/app/vehicles"
+                tone="bg-accent-soft text-accent"
+                icon={<TruckIcon className="size-6" />}
+                value={vehicles.error ? null : (vehicles.count ?? 0)}
+                format={number}
+                label={t("vehiclesLabel")}
+                detail={
+                  activeVehicles && !activeVehicles.error
+                    ? t("vehiclesActive", { count: activeVehicles.count ?? 0 })
+                    : undefined
+                }
+              />
+            </li>
+          )}
           <li>
             {/* Not a link: there is nothing to open yet. */}
             <div className="flex h-full items-start gap-3 rounded-2xl border border-dashed border-border p-4">
@@ -107,6 +136,7 @@ export default async function DashboardPage() {
             <p className="text-muted">{t("startLead")}</p>
           </div>
           <ol className="grid gap-1">
+            <Step done={(vehicles?.count ?? 0) > 0} href="/app/vehicles" label={t("stepVehicles")} status={t} />
             <Step done={memberCount > 1} href="/app/team" label={t("stepTeam")} status={t} />
             <Step later label={t("stepOrders")} status={t} />
           </ol>

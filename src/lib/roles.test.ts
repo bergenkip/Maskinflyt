@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { assignableRoles, canManage, invitableRoles, needsMfa, roles, secondStepDone } from "./roles";
+import {
+  assignableRoles,
+  canEditVehicles,
+  canManage,
+  canSeeVehicles,
+  invitableRoles,
+  needsMfa,
+  roles,
+  secondStepDone,
+} from "./roles";
 
 describe("roles", () => {
   it("owners manage everyone, admins never owners, others nobody", () => {
@@ -26,6 +35,13 @@ describe("roles", () => {
 describe("needsMfa", () => {
   it("asks owners and admins for a code, not dispatchers or drivers", () => {
     expect(roles.filter(needsMfa)).toEqual(["owner", "admin"]);
+  });
+});
+
+describe("vehicles", () => {
+  it("owners and admins change machines, dispatchers only see them, drivers neither", () => {
+    expect(roles.filter(canEditVehicles)).toEqual(["owner", "admin"]);
+    expect(roles.filter(canSeeVehicles)).toEqual(["owner", "admin", "dispatcher"]);
   });
 });
 

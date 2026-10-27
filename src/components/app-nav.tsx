@@ -2,16 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HomeIcon, SettingsIcon, UsersIcon } from "./icons";
+import { HomeIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
 
-type Props = { labels: { dashboard: string; team: string; settings: string; mainMenu: string } };
+type Props = {
+  labels: { dashboard: string; vehicles: string; team: string; settings: string; mainMenu: string };
+  // Drivers do not see the machine list (they will see the machine of their own jobs).
+  showVehicles: boolean;
+};
 
 // Phones: a tab bar fixed to the bottom of the screen, within thumb reach.
 // Tablet and computer: a row in the header.
-export function AppNav({ labels }: Props) {
+export function AppNav({ labels, showVehicles }: Props) {
   const pathname = usePathname();
   const links = [
     { href: "/app", label: labels.dashboard, icon: HomeIcon, active: pathname === "/app" },
+    ...(showVehicles
+      ? [{ href: "/app/vehicles", label: labels.vehicles, icon: TruckIcon, active: pathname.startsWith("/app/vehicles") }]
+      : []),
     { href: "/app/team", label: labels.team, icon: UsersIcon, active: pathname.startsWith("/app/team") },
     { href: "/app/settings", label: labels.settings, icon: SettingsIcon, active: pathname.startsWith("/app/settings") },
   ];

@@ -5,7 +5,7 @@ import { AppNav } from "@/components/app-nav";
 import { SignOutIcon } from "@/components/icons";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
-import { needsMfa } from "@/lib/roles";
+import { canSeeVehicles, needsMfa } from "@/lib/roles";
 import { getUserId } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 
@@ -24,7 +24,16 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
           <Brand href="/app" label={t("dashboard")} />
           {/* Phones: the menu is a tab bar at the bottom of the screen (see AppNav). */}
           <div className="md:order-2 md:ml-auto">
-            <AppNav labels={{ dashboard: t("dashboard"), team: t("team"), settings: t("settings"), mainMenu: t("mainMenu") }} />
+            <AppNav
+              labels={{
+                dashboard: t("dashboard"),
+                vehicles: t("vehicles"),
+                team: t("team"),
+                settings: t("settings"),
+                mainMenu: t("mainMenu"),
+              }}
+              showVehicles={!!membership && canSeeVehicles(membership.role)}
+            />
           </div>
           <div className="md:order-3">
             <form action={signOut}>

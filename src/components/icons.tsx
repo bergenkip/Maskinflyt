@@ -55,6 +55,24 @@ export const UsersIcon = (props: IconProps) => (
   </Icon>
 );
 
+// A truck with a crane arm: the company's machines.
+export const TruckIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M2.5 16.5V8.5h9v8M11.5 11h4.2l3.3 3v2.5h-1.5" />
+    <path d="M7.5 16.5h7M4.5 8.5 9 4l3.5 2.5" />
+    <circle cx="5.5" cy="17" r="1.8" />
+    <circle cx="16.5" cy="17" r="1.8" />
+  </Icon>
+);
+
+// Out of use: two bars, read together with the words next to it.
+export const PauseCircleIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M10 9v6M14 9v6" />
+  </Icon>
+);
+
 export const SettingsIcon = (props: IconProps) => (
   <Icon {...props}>
     <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
