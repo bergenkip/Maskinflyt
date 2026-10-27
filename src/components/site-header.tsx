@@ -10,14 +10,14 @@ export function SiteHeader({ showLogin = true }: { showLogin?: boolean }) {
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-surface pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 sm:px-6">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-x-3 px-4 py-2 sm:gap-x-4 sm:px-6">
         <Brand href="/" label={t("home")} />
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="flex items-center gap-x-2 sm:gap-x-4">
           <LanguageSwitcher />
           {showLogin && (
             <Link
               href="/login"
-              className="flex min-h-11 items-center rounded-lg px-3 font-medium text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="flex min-h-11 items-center rounded-lg px-2 font-medium whitespace-nowrap sm:px-3 text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {t("login")}
             </Link>
