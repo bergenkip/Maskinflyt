@@ -14,23 +14,23 @@ select set_config('request.jwt.claim.sub', '11111111-1111-1111-1111-111111111111
 select set_config('request.jwt.claims', '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated","aal":"aal1","amr":[{"method":"otp","timestamp":1790000000}]}', true);
 reset role;
 insert into links values
-  ('operator', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'operator'))),
-  ('cancelled', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'viewer')));
-update public.invitations set revoked_at = now() where role = 'viewer';
+  ('dispatcher', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'dispatcher'))),
+  ('cancelled', (select public.create_invitation('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'driver')));
+update public.invitations set revoked_at = now() where role = 'driver';
 
 -- Kari signs up from the link, before confirming her e-mail address (as GoTrue does).
 insert into auth.users (id, email, raw_user_meta_data)
 select '22222222-2222-2222-2222-222222222222', 'kari@other-mail.test',
   jsonb_build_object('first_name', 'Kari', 'last_name', 'Kollega', 'invite_token', token)
-from links where name = 'operator';
+from links where name = 'dispatcher';
 
 select is(
   (select role::text from public.memberships where user_id = '22222222-2222-2222-2222-222222222222'),
-  'operator',
+  'dispatcher',
   'signing up with a link joins the company with the invited role'
 );
 select is(
-  (select accepted_by from public.invitations where role = 'operator'),
+  (select accepted_by from public.invitations where role = 'dispatcher'),
   '22222222-2222-2222-2222-222222222222'::uuid,
   'the invitation is marked as used by the new account'
 );
@@ -43,7 +43,7 @@ select is(
 -- Lise got the same link forwarded: her account is created, but without a company.
 insert into auth.users (id, email, raw_user_meta_data)
 select '33333333-3333-3333-3333-333333333333', 'lise@other-mail.test', jsonb_build_object('invite_token', token)
-from links where name = 'operator';
+from links where name = 'dispatcher';
 select is(
   (select count(*)::int from public.memberships where user_id = '33333333-3333-3333-3333-333333333333'),
   0,

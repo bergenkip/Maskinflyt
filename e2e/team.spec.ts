@@ -37,7 +37,7 @@ test("owner creates a personal link; a colleague signs up with it, gets a new ro
   const company = newCompanyName("team");
   const colleague = newEmail("colleague");
 
-  // The owner creates a company and an invitation link for an operator. No e-mail is needed.
+  // The owner creates a company and an invitation link for a dispatcher. No e-mail is needed.
   const owner = await newPage(browser, baseURL!, "en");
   await signUp(owner.page, newEmail("team-owner"), "Ingrid", "Owner");
   await createCompany(owner.page, company);
@@ -45,33 +45,33 @@ test("owner creates a personal link; a colleague signs up with it, gets a new ro
   await expect(owner.page.getByRole("heading", { level: 1 })).toHaveText("Team");
   await expect(owner.page.getByLabel("E-mail")).toHaveCount(0);
 
-  await owner.page.getByLabel("Role", { exact: true }).selectOption("operator");
+  await owner.page.getByLabel("Role", { exact: true }).selectOption("dispatcher");
   await owner.page.getByRole("button", { name: "Create invitation link" }).click();
-  await expect(owner.page.getByText("Link created for a new Operator.")).toBeVisible();
+  await expect(owner.page.getByText("Link created for a new Dispatcher.")).toBeVisible();
   const link = new URL((await owner.page.getByText(linkPattern).textContent())!.trim()).pathname;
   const openInvitations = owner.page.getByRole("region", { name: "Open invitations" });
-  await expect(openInvitations.getByText("Invitation as Operator")).toBeVisible();
+  await expect(openInvitations.getByText("Invitation as Dispatcher")).toBeVisible();
 
   // Every invitation gets its own link, and it can be cancelled.
-  const cancelled = await createLink(owner.page, "viewer");
+  const cancelled = await createLink(owner.page, "driver");
   expect(cancelled).not.toBe(link);
-  await openInvitations.getByRole("button", { name: /^Cancel the invitation \(Viewer/ }).click();
-  await expect(openInvitations.getByText("Invitation as Viewer")).toHaveCount(0);
+  await openInvitations.getByRole("button", { name: /^Cancel the invitation \(Driver/ }).click();
+  await expect(openInvitations.getByText("Invitation as Driver")).toHaveCount(0);
 
   // The colleague opens the link, sees the company, gives a name and joins in one step.
   const invitee = await newPage(browser, baseURL!, "en");
   await invitee.page.goto(link);
   await expect(invitee.page.getByRole("heading", { level: 1 })).toHaveText("You have been invited to Maskinflyt");
   await expect(invitee.page.getByText(company)).toBeVisible();
-  await expect(invitee.page.getByText("Role: Operator")).toBeVisible();
+  await expect(invitee.page.getByText("Role: Dispatcher")).toBeVisible();
   await invitee.page.getByRole("button", { name: "Create account" }).click();
   await expect(invitee.page.getByText("Enter your first name.")).toBeVisible();
   await fillSignUp(invitee.page, colleague, "Kari", "Kollega");
   await invitee.page.waitForURL((url) => url.pathname === "/app");
   await expect(invitee.page.getByRole("heading", { level: 1 })).toHaveText(company);
-  await expect(invitee.page.getByText("Your role: Operator")).toBeVisible();
+  await expect(invitee.page.getByText("Your role: Dispatcher")).toBeVisible();
 
-  // An operator sees the team but cannot invite or change anyone.
+  // A dispatcher sees the team but cannot invite or change anyone.
   await invitee.page.goto("/app/team");
   await expect(invitee.page.getByText("Only owners and administrators can invite people and change roles.")).toBeVisible();
   await expect(invitee.page.getByRole("button", { name: /Remove/ })).toHaveCount(0);
@@ -88,13 +88,13 @@ test("owner creates a personal link; a colleague signs up with it, gets a new ro
 
   // The owner sees the new member by name, changes the role and finally removes them.
   await owner.page.reload();
-  await expect(openInvitations.getByText("Invitation as Operator")).toHaveCount(0);
+  await expect(openInvitations.getByText("Invitation as Dispatcher")).toHaveCount(0);
   const colleagueRow = owner.page.getByRole("listitem").filter({ hasText: colleague });
   await expect(colleagueRow.getByText("Kari Kollega", { exact: true })).toBeVisible();
-  await owner.page.getByLabel("Role for Kari Kollega").selectOption("viewer");
+  await owner.page.getByLabel("Role for Kari Kollega").selectOption("driver");
   await owner.page.getByRole("button", { name: "Save role" }).click();
-  // The role shown as text next to the name (the select also contains "Viewer" as an option).
-  await expect(colleagueRow.getByRole("paragraph").filter({ hasText: /^Viewer$/ })).toBeVisible();
+  // The role shown as text next to the name (the select also contains "Driver" as an option).
+  await expect(colleagueRow.getByRole("paragraph").filter({ hasText: /^Driver$/ })).toBeVisible();
 
   owner.page.once("dialog", (dialog) => dialog.accept());
   await owner.page.getByRole("button", { name: "Remove Kari Kollega" }).click();

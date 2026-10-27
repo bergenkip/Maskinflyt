@@ -112,8 +112,8 @@
   "Roles": {
     "owner": "Savininkas",
     "admin": "Administratorius",
-    "operator": "Operatorius",
-    "viewer": "Stebėtojas"
+    "dispatcher": "Dispečeris",
+    "driver": "Vairuotojas"
   },
   "Settings": {
     "title": "Nustatymai",
@@ -133,7 +133,7 @@
     "inviteTitle": "Pakvieskite kolegą",
     "inviteLead": "Pasirinkite rolę ir sukurkite asmeninę nuorodą. Nusiųskite ją vienam kolegai: jis per ją susikurs paskyrą ir prisijungs. Nuoroda veikia vieną kartą ir galioja 7 dienas.",
     "role": "Rolė",
-    "roleHint": "Administratoriai valdo narius. Operatoriai tvarko užsakymus. Stebėtojai gali tik žiūrėti.",
+    "roleHint": "Administratoriai valdo žmones. Dispečeriai planuoja darbus ir techniką. Vairuotojai atlieka darbus.",
     "inviteSubmit": "Sukurti kvietimo nuorodą",
     "linkLabel": "Asmeninė nuoroda vienam žmogui",
     "copy": "Kopijuoti nuorodą",

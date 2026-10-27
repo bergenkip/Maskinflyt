@@ -112,8 +112,8 @@
   "Roles": {
     "owner": "Owner",
     "admin": "Administrator",
-    "operator": "Operator",
-    "viewer": "Viewer"
+    "dispatcher": "Dispatcher",
+    "driver": "Driver"
   },
   "Settings": {
     "title": "Settings",
@@ -133,7 +133,7 @@
     "inviteTitle": "Invite a colleague",
     "inviteLead": "Choose a role and create a personal link. Send it to one colleague: they create an account with it and join. The link works once and is valid for 7 days.",
     "role": "Role",
-    "roleHint": "Administrators manage members. Operators handle jobs. Viewers can only look.",
+    "roleHint": "Administrators manage people. Dispatchers plan jobs and machines. Drivers do the jobs.",
     "inviteSubmit": "Create invitation link",
     "linkLabel": "Personal link for one person",
     "copy": "Copy link",

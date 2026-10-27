@@ -1,4 +1,4 @@
-export const roles = ["owner", "admin", "operator", "viewer"] as const;
+export const roles = ["owner", "admin", "dispatcher", "driver"] as const;
 export type Role = (typeof roles)[number];
 
 export function isRole(value: unknown): value is Role {
@@ -16,7 +16,7 @@ export function canManage(actor: Role, target: Role): boolean {
 // Roles the actor may give to a member (owner only by an owner).
 export function assignableRoles(actor: Role): Role[] {
   if (actor === "owner") return [...roles];
-  if (actor === "admin") return ["admin", "operator", "viewer"];
+  if (actor === "admin") return ["admin", "dispatcher", "driver"];
   return [];
 }
 

@@ -5,26 +5,26 @@ describe("roles", () => {
   it("owners manage everyone, admins never owners, others nobody", () => {
     expect(canManage("owner", "owner")).toBe(true);
     expect(canManage("admin", "owner")).toBe(false);
-    expect(canManage("admin", "operator")).toBe(true);
-    expect(canManage("operator", "viewer")).toBe(false);
-    expect(canManage("viewer", "viewer")).toBe(false);
+    expect(canManage("admin", "dispatcher")).toBe(true);
+    expect(canManage("dispatcher", "driver")).toBe(false);
+    expect(canManage("driver", "driver")).toBe(false);
   });
 
   it("only owners can give the owner role", () => {
     expect(assignableRoles("owner")).toContain("owner");
     expect(assignableRoles("admin")).not.toContain("owner");
-    expect(assignableRoles("operator")).toEqual([]);
+    expect(assignableRoles("dispatcher")).toEqual([]);
   });
 
   it("nobody is invited as owner", () => {
-    expect(invitableRoles("owner")).toEqual(["admin", "operator", "viewer"]);
-    expect(invitableRoles("admin")).toEqual(["admin", "operator", "viewer"]);
-    expect(invitableRoles("viewer")).toEqual([]);
+    expect(invitableRoles("owner")).toEqual(["admin", "dispatcher", "driver"]);
+    expect(invitableRoles("admin")).toEqual(["admin", "dispatcher", "driver"]);
+    expect(invitableRoles("driver")).toEqual([]);
   });
 });
 
 describe("needsMfa", () => {
-  it("asks owners and admins for a code, not operators or viewers", () => {
+  it("asks owners and admins for a code, not dispatchers or drivers", () => {
     expect(roles.filter(needsMfa)).toEqual(["owner", "admin"]);
   });
 });
