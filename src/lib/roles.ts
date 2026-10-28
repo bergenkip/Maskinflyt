@@ -25,6 +25,16 @@ export function invitableRoles(actor: Role): Role[] {
   return assignableRoles(actor).filter((role) => role !== "owner");
 }
 
+// Mirror the RLS policies on vehicles: owners and admins add and change
+// machines, dispatchers read the list to plan jobs, drivers do not see it.
+export function canSeeVehicles(role: Role): boolean {
+  return role !== "driver";
+}
+
+export function canEditVehicles(role: Role): boolean {
+  return role === "owner" || role === "admin";
+}
+
 // Owners and admins manage people and the company, so after the password
 // they also confirm with a link e-mailed to them (the database checks this too).
 export function needsMfa(role: Role): boolean {
