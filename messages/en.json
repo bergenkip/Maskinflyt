@@ -244,7 +244,8 @@
       "notFound": "This invitation link is no longer valid. Ask for a new one.",
       "alreadyMember": "You already belong to a company.",
       "unknown": "Could not join. Try again."
-    }
+    },
+    "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it in this browser to finish. You are already a member of the company. If the link opens in another app, sign in here with your e-mail and password."
   },
   "Footer": {
     "text": "Maskinflyt · Built for Norwegian contractors"
