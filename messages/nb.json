@@ -488,6 +488,37 @@
     "vehicleSuggestedMain": "Hovedmaskinen til {name} ble fylt inn. Du kan velge en annen.",
     "vehicleSuggestedUsual": "Maskinen {name} kjører oftest ble fylt inn. Du kan velge en annen.",
     "aboutTime": "~{time}",
-    "untilAbout": "til ca. {time}"
+    "untilAbout": "til ca. {time}",
+    "viewLabel": "Vis oppdrag som",
+    "viewList": "Liste",
+    "viewCalendar": "Kalender",
+    "timeSpan": "{start}–~{end}"
+  },
+  "Calendar": {
+    "title": "Kalender",
+    "lead": "Hvem og hva er opptatt når. Trykk på en ledig plass for å legge inn et oppdrag der.",
+    "previousWeek": "Forrige uke",
+    "previousDay": "Forrige dag",
+    "nextWeek": "Neste uke",
+    "nextDay": "Neste dag",
+    "today": "I dag",
+    "viewLabel": "Vis",
+    "day": "Dag",
+    "week": "Uke",
+    "groupLabel": "Rader",
+    "byVehicle": "Maskiner",
+    "byDriver": "Førere",
+    "withoutVehicle": "{count, plural, one {# oppdrag uten maskin} other {# oppdrag uten maskin}}",
+    "withoutDriver": "{count, plural, one {# oppdrag uten fører} other {# oppdrag uten fører}}",
+    "noVehicles": "Ingen maskiner ennå. Legg dem inn under Maskiner.",
+    "noPeople": "Ingen personer i teamet ennå.",
+    "newJobFor": "Nytt oppdrag for {name}",
+    "free": "Ledig",
+    "newJobAt": "Nytt oppdrag for {name} kl. {time}",
+    "openDay": "Åpne {day}",
+    "noJobsDay": "Ingen oppdrag",
+    "newJobOn": "Nytt oppdrag for {name} {day}",
+    "weekHeading": "Uke {week} · {range}",
+    "jobLabel": "Oppdrag {number}, {customer}, {time}, {status}"
   }
 }
