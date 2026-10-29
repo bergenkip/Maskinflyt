@@ -89,6 +89,15 @@ Migracija `20261029150000_job_estimate_and_main_machine`, pgTAP `15_job_estimate
 - **Pagrindinė technika**: `memberships.main_vehicle_id`, keičiama tik per `set_main_machine` (owner/admin su antru žingsniu, dispatcher). Komandos puslapyje kiekvienam žmogui. Formoje pasirinkus vairuotoją įrašoma jo pagrindinė technika, o jei jos nėra, dažniausiai vairuota (iš paskutinių 500 darbų). Galima pakeisti.
 - Išskleidžiamiems sąrašams `key={defaultValue}`, nes React po veiksmo atstato formą (taip pat Komandos rolės sąraše).
 
+## 4 etapas: užsakymai, 2 dalis – kalendorius (2026-10-29)
+
+`/app/jobs/calendar`, perjungiama iš Užsakymų („Sąrašas | Kalendorius“), nes apatinėje juostoje vietos 6-am punktui nėra.
+- Adreso parametrai: `date` (YYYY-MM-DD), `view` (`day`|`week`), `by` (`vehicle`|`driver`). Atšaukti užsakymai kalendoriuje nerodomi.
+- **Diena**: kompiuteryje ir planšetėje laiko juosta 06–20 (išplečiama, jei darbų anksčiau ar vėliau), eilutė kiekvienai technikai ar žmogui, persidengę darbai – atskirose eilutėse. Telefone kortelė kiekvienai technikai su tos dienos darbais.
+- **Savaitė** (pirmadienis–sekmadienis, ISO savaitės numeris): kompiuteryje lentelė (slenka tik viduje), telefone kortelė kiekvienai dienai.
+- **Nepaskirti** (be technikos arba be vairuotojo, pagal pasirinktą grupavimą) rodomi viršuje.
+- **Laisva vieta / „+“** atidaro `/app/jobs/new?date=&start=&vehicle=|driver=`. Parametrai tikrinami pagal sąrašus; pagal vairuotoją dar įrašoma jo pagrindinė arba dažniausia technika.
+- Datų skaičiavimai `src/lib/calendar.ts` (Vitest). E2E `e2e/calendar.spec.ts`, nuotraukos `calendar-day`, `calendar-week` faile `jobs.spec.ts`.
+
 ## Kitas etapas (siūlymas)
-1. Užsakymai, 2 dalis: dienos ir savaitės kalendorius pagal techniką ir vairuotoją.
-2. Vairuotojo telefono vaizdas: mano šiandienos darbai, būsenos, darbo laikas.
+1. Vairuotojo telefono vaizdas: mano šiandienos darbai, būsenos, darbo laikas.

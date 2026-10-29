@@ -488,6 +488,37 @@
     "vehicleSuggestedMain": "{name}'s main machine was filled in. You can choose another.",
     "vehicleSuggestedUsual": "The machine {name} drives most often was filled in. You can choose another.",
     "aboutTime": "~{time}",
-    "untilAbout": "until about {time}"
+    "untilAbout": "until about {time}",
+    "viewLabel": "Show jobs as",
+    "viewList": "List",
+    "viewCalendar": "Calendar",
+    "timeSpan": "{start}–~{end}"
+  },
+  "Calendar": {
+    "title": "Calendar",
+    "lead": "Who and what is busy when. Tap a free slot to add a job there.",
+    "previousWeek": "Previous week",
+    "previousDay": "Previous day",
+    "nextWeek": "Next week",
+    "nextDay": "Next day",
+    "today": "Today",
+    "viewLabel": "Show",
+    "day": "Day",
+    "week": "Week",
+    "groupLabel": "Rows",
+    "byVehicle": "Machines",
+    "byDriver": "Drivers",
+    "withoutVehicle": "{count, plural, one {# job without a machine} other {# jobs without a machine}}",
+    "withoutDriver": "{count, plural, one {# job without a driver} other {# jobs without a driver}}",
+    "noVehicles": "No machines yet. Add them under Machines.",
+    "noPeople": "No people in the team yet.",
+    "newJobFor": "New job for {name}",
+    "free": "Free",
+    "newJobAt": "New job for {name} at {time}",
+    "openDay": "Open {day}",
+    "noJobsDay": "No jobs",
+    "newJobOn": "New job for {name} on {day}",
+    "weekHeading": "Week {week} · {range}",
+    "jobLabel": "Job {number}, {customer}, {time}, {status}"
   }
 }

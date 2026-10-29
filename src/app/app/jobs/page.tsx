@@ -8,6 +8,7 @@ import { getCurrentMembership } from "@/lib/membership";
 import { canSeeJobs } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 import { StatusBadge } from "./status-badge";
+import { JobsViewNav } from "./view-nav";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Jobs");
@@ -74,7 +75,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
   const time = (iso: string) => format.dateTime(new Date(iso), { hour: "2-digit", minute: "2-digit", timeZone });
 
   return (
-    <div className="grid max-w-3xl gap-8">
+    <div className="grid max-w-3xl gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="grid min-w-0 gap-2">
           <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
@@ -89,6 +90,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
           {t("addTitle")}
         </Link>
       </div>
+      <JobsViewNav current="list" />
 
       <section aria-labelledby="list-title" className="grid gap-4">
         <h2 id="list-title" className="sr-only">

@@ -488,6 +488,37 @@
     "vehicleSuggestedMain": "Įrašyta pagrindinė {name} technika. Galite pasirinkti kitą.",
     "vehicleSuggestedUsual": "Įrašyta technika, kurią {name} vairuoja dažniausiai. Galite pasirinkti kitą.",
     "aboutTime": "~{time}",
-    "untilAbout": "iki maždaug {time}"
+    "untilAbout": "iki maždaug {time}",
+    "viewLabel": "Rodyti užsakymus kaip",
+    "viewList": "Sąrašas",
+    "viewCalendar": "Kalendorius",
+    "timeSpan": "{start}–~{end}"
+  },
+  "Calendar": {
+    "title": "Kalendorius",
+    "lead": "Kas ir kada užimta. Paspauskite laisvą vietą, kad ten pridėtumėte užsakymą.",
+    "previousWeek": "Ankstesnė savaitė",
+    "previousDay": "Ankstesnė diena",
+    "nextWeek": "Kita savaitė",
+    "nextDay": "Kita diena",
+    "today": "Šiandien",
+    "viewLabel": "Rodyti",
+    "day": "Diena",
+    "week": "Savaitė",
+    "groupLabel": "Eilutės",
+    "byVehicle": "Technika",
+    "byDriver": "Vairuotojai",
+    "withoutVehicle": "{count, plural, one {# užsakymas be technikos} few {# užsakymai be technikos} other {# užsakymų be technikos}}",
+    "withoutDriver": "{count, plural, one {# užsakymas be vairuotojo} few {# užsakymai be vairuotojo} other {# užsakymų be vairuotojo}}",
+    "noVehicles": "Technikos dar nėra. Pridėkite ją skiltyje Technika.",
+    "noPeople": "Komandoje dar nėra žmonių.",
+    "newJobFor": "Naujas užsakymas: {name}",
+    "free": "Laisva",
+    "newJobAt": "Naujas užsakymas: {name}, {time}",
+    "openDay": "Atidaryti {day}",
+    "noJobsDay": "Užsakymų nėra",
+    "newJobOn": "Naujas užsakymas: {name}, {day}",
+    "weekHeading": "{week} savaitė · {range}",
+    "jobLabel": "Užsakymas {number}, {customer}, {time}, {status}"
   }
 }
