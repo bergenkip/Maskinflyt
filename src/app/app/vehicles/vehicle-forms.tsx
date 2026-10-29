@@ -37,7 +37,7 @@ function VehicleFields({
   const tAuth = useTranslations("Auth");
   const values = state.values ?? vehicle?.values;
   const initialType = values && isVehicleType(values.type) ? values.type : "crane_truck";
-  // Controlled, so the crane field appears and disappears with the type.
+  // Tracked, so the crane field appears and disappears with the type.
   const [type, setType] = useState<VehicleType>(initialType);
   const error = (key: keyof VehicleFormValues) => {
     const code = state.fieldErrors?.[key];
@@ -57,10 +57,14 @@ function VehicleFields({
           <label htmlFor="vehicle-type" className="font-medium">
             {t("type")}
           </label>
+          {/* Not controlled: React resets the form after each action, which puts a
+              select back to its default choice, so the choice sent back becomes
+              that default (a new key renders the select afresh with it). */}
           <select
+            key={values?.type ?? "new"}
             id="vehicle-type"
             name="type"
-            value={type}
+            defaultValue={initialType}
             onChange={(event) => isVehicleType(event.target.value) && setType(event.target.value)}
             className={selectClass}
           >

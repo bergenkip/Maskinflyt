@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormatter, useTranslations } from "next-intl";
-import { useActionState, useState, type ReactNode } from "react";
+import { useActionState, type ReactNode } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
 import { AlertIcon } from "@/components/icons";
 import { MAX_DESCRIPTION_LENGTH, type JobFormValues, type JobStatus } from "@/lib/jobs";
@@ -35,11 +35,6 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
     const code = state.fieldErrors?.[key];
     return code && t(`errors.${code}`);
   };
-  // Controlled: React resets a form after each action, and an uncontrolled
-  // select would fall back to the choice it was first rendered with.
-  const [customerId, setCustomerId] = useState(values.customerId ?? "");
-  const [vehicleId, setVehicleId] = useState(values.vehicleId ?? "");
-  const [driverId, setDriverId] = useState(values.driverId ?? "");
   const optionLabel = (option: Option) => (option.active === false ? t("inactiveOption", { name: option.name }) : option.name);
 
   return (
@@ -54,8 +49,7 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
             name="customerId"
             id="job-customer"
             label={t("customer")}
-            value={customerId}
-            onChange={setCustomerId}
+            defaultValue={values.customerId ?? ""}
             error={error("customerId")}
           >
             <option value="" disabled>
@@ -114,7 +108,7 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
           />
           <p className="col-span-2 -mt-3 text-sm text-muted sm:col-span-3">{t("timeHint")}</p>
         </div>
-        <Select name="vehicleId" id="job-vehicle" label={t("vehicle")} value={vehicleId} onChange={setVehicleId} error={error("vehicleId")}>
+        <Select name="vehicleId" id="job-vehicle" label={t("vehicle")} defaultValue={values.vehicleId ?? ""} error={error("vehicleId")}>
           <option value="">{t("notChosen")}</option>
           {vehicles.map((option) => (
             <option key={option.id} value={option.id}>
@@ -122,7 +116,7 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
             </option>
           ))}
         </Select>
-        <Select name="driverId" id="job-driver" label={t("driver")} value={driverId} onChange={setDriverId} error={error("driverId")}>
+        <Select name="driverId" id="job-driver" label={t("driver")} defaultValue={values.driverId ?? ""} error={error("driverId")}>
           <option value="">{t("notChosen")}</option>
           {drivers.map((option) => (
             <option key={option.id} value={option.id}>
@@ -200,16 +194,14 @@ function Select({
   name,
   id,
   label,
-  value,
-  onChange,
+  defaultValue,
   error,
   children,
 }: {
   name: string;
   id: string;
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  defaultValue: string;
   error?: string;
   children: ReactNode;
 }) {
@@ -219,11 +211,14 @@ function Select({
       <label htmlFor={id} className="font-medium">
         {label}
       </label>
+      {/* React resets the form after each action, and a select returns to the
+          choice it was first rendered with, not a later defaultValue. A new key
+          renders it afresh with the values the action sent back. */}
       <select
+        key={defaultValue}
         id={id}
         name={name}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
+        defaultValue={defaultValue}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
         className={selectClass}

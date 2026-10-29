@@ -10,7 +10,7 @@ export function OnboardingForm({ countries }: { countries: { code: OrgCountry; n
   const t = useTranslations("Onboarding");
   const tAuth = useTranslations("Auth");
   const [state, action] = useActionState<OnboardingState, FormData>(createOrganization, {});
-  // Controlled, so the choice survives the form reset after a failed submit.
+  // Tracked, so the org number hint follows the country.
   const [country, setCountry] = useState<OrgCountry>("NO");
 
   return (
@@ -34,10 +34,14 @@ export function OnboardingForm({ countries }: { countries: { code: OrgCountry; n
           <label htmlFor="country" className="font-medium">
             {t("country")}
           </label>
+          {/* React resets the form after a failed submit, which puts a select back
+              to its default choice, so the choice sent back becomes that default
+              (a new key renders the select afresh with it). */}
           <select
+            key={state.values?.country ?? "NO"}
             id="country"
             name="country"
-            value={country}
+            defaultValue={state.values?.country ?? "NO"}
             onChange={(event) => isOrgCountry(event.target.value) && setCountry(event.target.value)}
             className="min-h-11 w-full rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent"
           >
