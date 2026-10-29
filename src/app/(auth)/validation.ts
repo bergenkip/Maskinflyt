@@ -9,6 +9,7 @@ export type AuthErrorKey =
   | "weakPassword"
   | "rateLimited"
   | "linkInvalid"
+  | "samePassword"
   | "unknown";
 
 export type AuthFormValues = { email: string; firstName?: string; lastName?: string };
@@ -23,7 +24,7 @@ export type AuthFormState = {
 export const MIN_PASSWORD_LENGTH = 10;
 export const MAX_NAME_LENGTH = 100;
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Trims and joins inner whitespace, so "  Ola   Nordmann " is stored as "Ola Nordmann".
 export function cleanName(value: FormDataEntryValue | null) {

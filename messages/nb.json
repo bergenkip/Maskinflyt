@@ -67,11 +67,24 @@
       "linkInvalid": "Lenken er ugyldig eller utløpt. Logg inn eller opprett kontoen på nytt.",
       "unknown": "Noe gikk galt. Prøv igjen.",
       "firstNameRequired": "Skriv inn fornavnet ditt.",
-      "lastNameRequired": "Skriv inn etternavnet ditt."
+      "lastNameRequired": "Skriv inn etternavnet ditt.",
+      "samePassword": "Det nye passordet må være annerledes enn det gamle."
     },
     "firstName": "Fornavn",
     "lastName": "Etternavn",
-    "checkEmailInviteBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den for å fullføre kontoen. Samtidig blir du med i firmaet."
+    "checkEmailInviteBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den for å fullføre kontoen. Samtidig blir du med i firmaet.",
+    "forgotLink": "Glemt passordet?",
+    "forgotTitle": "Glemt passordet?",
+    "forgotLead": "Skriv e-postadressen du logger inn med. Vi sender deg en lenke for å velge nytt passord.",
+    "forgotSubmit": "Send lenke",
+    "resetSent": "Hvis {email} har en konto, er en lenke på vei. Åpne den i denne nettleseren innen en time. Finner du den ikke? Sjekk søppelpost.",
+    "backToLogin": "Tilbake til innlogging",
+    "resetTitle": "Velg nytt passord",
+    "resetLead": "For kontoen <strong>{email}</strong>.",
+    "newPassword": "Nytt passord",
+    "resetSubmit": "Lagre nytt passord",
+    "resetChecking": "Sjekker lenken …",
+    "resetNoSession": "Lenken er ugyldig eller utløpt (hver lenke virker én gang). Be om en ny lenke."
   },
   "Onboarding": {
     "title": "Opprett firmaet ditt",

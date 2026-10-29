@@ -67,11 +67,24 @@
       "linkInvalid": "Nuoroda neteisinga arba nebegalioja. Prisijunkite arba sukurkite paskyrą iš naujo.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
       "firstNameRequired": "Įveskite vardą.",
-      "lastNameRequired": "Įveskite pavardę."
+      "lastNameRequired": "Įveskite pavardę.",
+      "samePassword": "Naujas slaptažodis turi skirtis nuo senojo."
     },
     "firstName": "Vardas",
     "lastName": "Pavardė",
-    "checkEmailInviteBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją, kad užbaigtumėte paskyros kūrimą. Kartu prisijungsite prie įmonės."
+    "checkEmailInviteBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją, kad užbaigtumėte paskyros kūrimą. Kartu prisijungsite prie įmonės.",
+    "forgotLink": "Pamiršote slaptažodį?",
+    "forgotTitle": "Pamiršote slaptažodį?",
+    "forgotLead": "Įrašykite el. pašto adresą, kuriuo jungiatės. Atsiųsime nuorodą naujam slaptažodžiui pasirinkti.",
+    "forgotSubmit": "Siųsti nuorodą",
+    "resetSent": "Jei {email} turi paskyrą, nuoroda jau siunčiama. Atidarykite ją šioje naršyklėje per valandą. Nerandate? Patikrinkite šlamšto aplanką.",
+    "backToLogin": "Grįžti į prisijungimą",
+    "resetTitle": "Pasirinkite naują slaptažodį",
+    "resetLead": "Paskyrai <strong>{email}</strong>.",
+    "newPassword": "Naujas slaptažodis",
+    "resetSubmit": "Išsaugoti naują slaptažodį",
+    "resetChecking": "Tikrinama nuoroda …",
+    "resetNoSession": "Nuoroda neteisinga arba nebegalioja (kiekviena nuoroda veikia vieną kartą). Paprašykite naujos nuorodos."
   },
   "Onboarding": {
     "title": "Sukurkite savo įmonę",

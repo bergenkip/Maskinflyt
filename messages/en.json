@@ -67,11 +67,24 @@
       "linkInvalid": "The link is invalid or has expired. Sign in or create the account again.",
       "unknown": "Something went wrong. Try again.",
       "firstNameRequired": "Enter your first name.",
-      "lastNameRequired": "Enter your last name."
+      "lastNameRequired": "Enter your last name.",
+      "samePassword": "The new password must be different from the old one."
     },
     "firstName": "First name",
     "lastName": "Last name",
-    "checkEmailInviteBody": "We sent a confirmation link to {email}. Open it to finish creating your account. You join the company at the same time."
+    "checkEmailInviteBody": "We sent a confirmation link to {email}. Open it to finish creating your account. You join the company at the same time.",
+    "forgotLink": "Forgot your password?",
+    "forgotTitle": "Forgot your password?",
+    "forgotLead": "Write the e-mail address you sign in with. We send you a link for choosing a new password.",
+    "forgotSubmit": "Send link",
+    "resetSent": "If {email} has an account, a link is on its way. Open it in this browser within an hour. Not there? Check the spam folder.",
+    "backToLogin": "Back to sign in",
+    "resetTitle": "Choose a new password",
+    "resetLead": "For the account <strong>{email}</strong>.",
+    "newPassword": "New password",
+    "resetSubmit": "Save new password",
+    "resetChecking": "Checking the link …",
+    "resetNoSession": "The link is invalid or has expired (each link works once). Ask for a new link."
   },
   "Onboarding": {
     "title": "Create your company",
