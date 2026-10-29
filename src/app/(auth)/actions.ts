@@ -71,7 +71,12 @@ export async function signUp(_prev: AuthFormState, formData: FormData): Promise<
   if (error) return { values: shown, error: mapAuthError(error.code) };
 
   // With e-mail confirmation on, there is no session until the link is opened.
-  if (!data.session) return { values: shown, checkEmail: true };
+  // The invitation was used up when the account was created, so its page would
+  // now say the link is not valid: show the "check your e-mail" page instead.
+  if (!data.session) {
+    if (invite) redirect("/join/sent");
+    return { values: shown, checkEmail: true };
+  }
 
   // A new company's default language may apply.
   if (invite) revalidatePath("/", "layout");

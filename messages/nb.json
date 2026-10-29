@@ -244,7 +244,8 @@
       "notFound": "Denne invitasjonslenken er ikke lenger gyldig. Be om en ny.",
       "alreadyMember": "Du hører allerede til et firma.",
       "unknown": "Kunne ikke bli med. Prøv igjen."
-    }
+    },
+    "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den i denne nettleseren for å fullføre. Du er allerede medlem av firmaet. Hvis lenken åpnes i en annen app, logg inn her med e-post og passord."
   },
   "Footer": {
     "text": "Maskinflyt · Laget for norske entreprenører"

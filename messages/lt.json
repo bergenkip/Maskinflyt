@@ -244,7 +244,8 @@
       "notFound": "Ši kvietimo nuoroda nebegalioja. Paprašykite naujos.",
       "alreadyMember": "Jūs jau priklausote įmonei.",
       "unknown": "Prisijungti nepavyko. Bandykite dar kartą."
-    }
+    },
+    "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją šioje naršyklėje, kad baigtumėte. Jūs jau esate įmonės narys. Jei nuoroda atsidaro kitoje programėlėje, prisijunkite čia su el. paštu ir slaptažodžiu."
   },
   "Footer": {
     "text": "Maskinflyt · Sukurta Norvegijos rangovams"
