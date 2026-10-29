@@ -132,7 +132,7 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
     format.dateTime(new Date(`${day}T12:00:00Z`), {
       weekday: style,
       day: "numeric",
-      month: style === "long" ? "long" : "short",
+      month: "long",
       timeZone: "UTC",
     });
   const step = view === "week" ? 7 : 1;
@@ -142,7 +142,7 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
           week: weekNumber(date),
           range: format.dateTimeRange(new Date(`${range.days[0]}T12:00:00Z`), new Date(`${range.days[6]}T12:00:00Z`), {
             day: "numeric",
-            month: "short",
+            month: "long",
             timeZone: "UTC",
           }),
         })
@@ -152,14 +152,14 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
     t("jobLabel", { number: job.number, customer: job.customers?.name ?? "", time: span(job), status: status(job) });
 
   // The day timeline (tablets and computers).
-  const spans = jobs.map((job) => minutesOnDay(job, date, timeZone));
+  const spans = jobsOn(jobs, date).map((job) => minutesOnDay(job, date, timeZone));
   const hours = visibleHours(view === "day" ? spans : []);
   const hourList = Array.from({ length: hours.to - hours.from }, (_, i) => hours.from + i);
   const percent = (minutes: number) => ((minutes - hours.from * 60) / ((hours.to - hours.from) * 60)) * 100;
 
   return (
     <div className="grid gap-6">
-      <div className="flex max-w-3xl flex-wrap items-end justify-between gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="grid min-w-0 gap-2">
           <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="text-muted">{t("lead")}</p>
