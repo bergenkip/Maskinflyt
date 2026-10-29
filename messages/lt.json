@@ -55,7 +55,7 @@
     "noAccount": "Dar neturite paskyros?",
     "haveAccount": "Jau turite paskyrą?",
     "checkEmailTitle": "Patikrinkite el. paštą",
-    "checkEmailBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją šiame įrenginyje, kad užbaigtumėte paskyros kūrimą.",
+    "checkEmailBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją, kad užbaigtumėte paskyros kūrimą. Ji veikia bet kuriame įrenginyje.",
     "notConfigured": "Prisijungimas šioje aplinkoje dar neveikia.",
     "errors": {
       "emailInvalid": "Įveskite teisingą el. pašto adresą.",
@@ -65,7 +65,7 @@
       "userExists": "Paskyra su šiuo el. paštu jau yra. Prisijunkite.",
       "weakPassword": "Slaptažodis per silpnas. Pasirinkite ilgesnį.",
       "rateLimited": "Per daug bandymų. Palaukite kelias minutes ir bandykite dar kartą.",
-      "linkInvalid": "Nuoroda neteisinga arba nebegalioja. Prisijunkite arba sukurkite paskyrą iš naujo.",
+      "linkInvalid": "Nuoroda neteisinga arba nebegalioja. Jei el. paštą jau patvirtinote, prisijunkite su slaptažodžiu.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
       "firstNameRequired": "Įveskite vardą.",
       "lastNameRequired": "Įveskite pavardę.",
@@ -85,7 +85,10 @@
     "newPassword": "Naujas slaptažodis",
     "resetSubmit": "Išsaugoti naują slaptažodį",
     "resetChecking": "Tikrinama nuoroda …",
-    "resetNoSession": "Nuoroda neteisinga arba nebegalioja (kiekviena nuoroda veikia vieną kartą). Paprašykite naujos nuorodos."
+    "resetNoSession": "Nuoroda neteisinga arba nebegalioja (kiekviena nuoroda veikia vieną kartą). Paprašykite naujos nuorodos.",
+    "confirmTitle": "El. pašto patvirtinimas",
+    "confirmChecking": "Tvirtinamas jūsų el. paštas …",
+    "confirmFailed": "Nuoroda neteisinga arba jau panaudota. Jei el. paštą jau patvirtinote anksčiau, tiesiog prisijunkite su el. paštu ir slaptažodžiu."
   },
   "Onboarding": {
     "title": "Sukurkite savo įmonę",
@@ -343,7 +346,7 @@
       "alreadyMember": "Jūs jau priklausote įmonei.",
       "unknown": "Prisijungti nepavyko. Bandykite dar kartą."
     },
-    "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją šioje naršyklėje, kad baigtumėte. Jūs jau esate įmonės narys. Jei nuoroda atsidaro kitoje programėlėje, prisijunkite čia su el. paštu ir slaptažodžiu."
+    "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją bet kuriame įrenginyje, kad baigtumėte. Jūs jau esate įmonės narys."
   },
   "Footer": {
     "text": "Maskinflyt · Sukurta Norvegijos rangovams"

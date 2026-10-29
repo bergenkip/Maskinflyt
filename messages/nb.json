@@ -55,7 +55,7 @@
     "noAccount": "Har du ikke konto?",
     "haveAccount": "Har du allerede konto?",
     "checkEmailTitle": "Sjekk e-posten din",
-    "checkEmailBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den på denne enheten for å fullføre kontoen.",
+    "checkEmailBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den for å fullføre kontoen. Den virker på alle enheter.",
     "notConfigured": "Innlogging er ikke tilgjengelig i dette miljøet ennå.",
     "errors": {
       "emailInvalid": "Skriv inn en gyldig e-postadresse.",
@@ -65,7 +65,7 @@
       "userExists": "Det finnes allerede en konto med denne e-posten. Logg inn i stedet.",
       "weakPassword": "Passordet er for svakt. Velg et lengre passord.",
       "rateLimited": "For mange forsøk. Vent noen minutter og prøv igjen.",
-      "linkInvalid": "Lenken er ugyldig eller utløpt. Logg inn eller opprett kontoen på nytt.",
+      "linkInvalid": "Lenken er ugyldig eller utløpt. Hvis du allerede har bekreftet e-posten, logg inn med passordet ditt.",
       "unknown": "Noe gikk galt. Prøv igjen.",
       "firstNameRequired": "Skriv inn fornavnet ditt.",
       "lastNameRequired": "Skriv inn etternavnet ditt.",
@@ -85,7 +85,10 @@
     "newPassword": "Nytt passord",
     "resetSubmit": "Lagre nytt passord",
     "resetChecking": "Sjekker lenken …",
-    "resetNoSession": "Lenken er ugyldig eller utløpt (hver lenke virker én gang). Be om en ny lenke."
+    "resetNoSession": "Lenken er ugyldig eller utløpt (hver lenke virker én gang). Be om en ny lenke.",
+    "confirmTitle": "Bekreft e-post",
+    "confirmChecking": "Bekrefter e-posten din …",
+    "confirmFailed": "Lenken er ugyldig eller allerede brukt. Hvis du har bekreftet e-posten tidligere, logg inn med e-post og passord."
   },
   "Onboarding": {
     "title": "Opprett firmaet ditt",
@@ -343,7 +346,7 @@
       "alreadyMember": "Du hører allerede til et firma.",
       "unknown": "Kunne ikke bli med. Prøv igjen."
     },
-    "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den i denne nettleseren for å fullføre. Du er allerede medlem av firmaet. Hvis lenken åpnes i en annen app, logg inn her med e-post og passord."
+    "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den for å fullføre, på hvilken som helst enhet. Du er allerede medlem av firmaet."
   },
   "Footer": {
     "text": "Maskinflyt · Laget for norske entreprenører"

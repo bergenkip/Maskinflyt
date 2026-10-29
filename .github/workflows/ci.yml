@@ -86,7 +86,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/jobs.spec.ts
+      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts
         env:
           CI: true
       - name: Upload screenshots

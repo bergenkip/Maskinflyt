@@ -55,7 +55,7 @@
     "noAccount": "No account yet?",
     "haveAccount": "Already have an account?",
     "checkEmailTitle": "Check your e-mail",
-    "checkEmailBody": "We sent a confirmation link to {email}. Open it on this device to finish creating your account.",
+    "checkEmailBody": "We sent a confirmation link to {email}. Open it to finish creating your account. It works on any device.",
     "notConfigured": "Sign-in is not available yet in this environment.",
     "errors": {
       "emailInvalid": "Enter a valid e-mail address.",
@@ -65,7 +65,7 @@
       "userExists": "An account with this e-mail already exists. Sign in instead.",
       "weakPassword": "This password is too weak. Choose a longer one.",
       "rateLimited": "Too many attempts. Wait a few minutes and try again.",
-      "linkInvalid": "The link is invalid or has expired. Sign in or create the account again.",
+      "linkInvalid": "The link is invalid or has expired. If you already confirmed your e-mail, sign in with your password.",
       "unknown": "Something went wrong. Try again.",
       "firstNameRequired": "Enter your first name.",
       "lastNameRequired": "Enter your last name.",
@@ -85,7 +85,10 @@
     "newPassword": "New password",
     "resetSubmit": "Save new password",
     "resetChecking": "Checking the link …",
-    "resetNoSession": "The link is invalid or has expired (each link works once). Ask for a new link."
+    "resetNoSession": "The link is invalid or has expired (each link works once). Ask for a new link.",
+    "confirmTitle": "Confirm e-mail",
+    "confirmChecking": "Confirming your e-mail …",
+    "confirmFailed": "The link is invalid or was already used. If you confirmed your e-mail earlier, just sign in with your e-mail and password."
   },
   "Onboarding": {
     "title": "Create your company",
@@ -343,7 +346,7 @@
       "alreadyMember": "You already belong to a company.",
       "unknown": "Could not join. Try again."
     },
-    "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it in this browser to finish. You are already a member of the company. If the link opens in another app, sign in here with your e-mail and password."
+    "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it to finish, on any device. You are already a member of the company."
   },
   "Footer": {
     "text": "Maskinflyt · Built for Norwegian contractors"

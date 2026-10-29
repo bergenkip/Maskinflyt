@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getSupabaseEnv } from "@/lib/supabase/env";
+import { setLinkSession } from "@/lib/supabase/link-session";
 import { createClient } from "@/lib/supabase/server";
 import { createLinkSender } from "@/lib/supabase/standalone";
 import { EMAIL_PATTERN, MIN_PASSWORD_LENGTH, type AuthErrorKey } from "./validation";
@@ -36,16 +37,10 @@ export async function requestPasswordReset(_prev: ForgotPasswordState, formData:
   return { email, sent: true };
 }
 
-const jwt = /^[\w-]+\.[\w-]+\.[\w-]+$/;
-
 // The e-mailed link's tokens, taken from the URL fragment, become this
-// browser's session; the answer is the account's address, or null when the
-// link is not (or no longer) valid.
+// browser's session; the answer is the account's address, or null.
 export async function startPasswordReset(accessToken: string, refreshToken: string): Promise<string | null> {
-  if (!jwt.test(accessToken) || !refreshToken || refreshToken.length > 200) return null;
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
-  return error ? null : (data.user?.email ?? null);
+  return setLinkSession(accessToken, refreshToken);
 }
 
 export type ResetPasswordState = { fieldError?: AuthErrorKey; error?: AuthErrorKey };

@@ -4,8 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-// The confirmation e-mail links land here with a one-time code. An invitation
-// used at sign-up was already accepted when the account was created.
+// Older confirmation e-mail links land here with a one-time code (new ones go
+// to /confirm). An invitation used at sign-up was already accepted when the
+// account was created.
 // The second-step link lands here with ?approve=<request>, and the password-reset
 // link with ?next=/reset-password; their tokens are in the URL fragment, which
 // the browser keeps across these redirects.
