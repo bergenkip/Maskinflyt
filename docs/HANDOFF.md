@@ -81,6 +81,14 @@ rodomas kaip „buvęs narys“. Anksčiau pridėti įrašai neturi autoriaus ir
   Kompiuteryje visas meniu viršuje, „Atsijungti“ – tik ikona.
 - Testai: `14_jobs` (31 pgTAP), `src/lib/jobs.test.ts`, `e2e/jobs.spec.ts` (+ nuotraukos).
 
+## Užsakymo forma: naujas klientas, trukmė, pagrindinė technika (2026-10-29)
+
+Migracija `20261029150000_job_estimate_and_main_machine`, pgTAP `15_job_estimate_and_main_machine` (12 testų).
+- **Naujas klientas** pasirenkamas sąraše („+ Naujas klientas“) ir išsaugomas kartu su užsakymu (tipas, pavadinimas, telefonas, el. paštas). Klientas įrašomas tik kai užsakymas teisingas ir be persidengimo įspėjimo; jei užsakymas vis tiek nepavyksta, forma lieka su jau sukurtu klientu (be dublikatų).
+- **Laikas**: pradžia + apytikslė trukmė (valandos ir 0/15/30/45 min., nuo 15 min. iki 24 val.). `ends_at` = pradžia + trukmė (tikrom valandom, ir laikrodžio keitimo naktį). Prierašas „tai tik įvertis“ ir `jobs.time_note` (iki 200 simbolių). Sąraše pabaiga rodoma „~11:30“.
+- **Pagrindinė technika**: `memberships.main_vehicle_id`, keičiama tik per `set_main_machine` (owner/admin su antru žingsniu, dispatcher). Komandos puslapyje kiekvienam žmogui. Formoje pasirinkus vairuotoją įrašoma jo pagrindinė technika, o jei jos nėra, dažniausiai vairuota (iš paskutinių 500 darbų). Galima pakeisti.
+- Išskleidžiamiems sąrašams `key={defaultValue}`, nes React po veiksmo atstato formą (taip pat Komandos rolės sąraše).
+
 ## Kitas etapas (siūlymas)
 1. Užsakymai, 2 dalis: dienos ir savaitės kalendorius pagal techniką ir vairuotoją.
 2. Vairuotojo telefono vaizdas: mano šiandienos darbai, būsenos, darbo laikas.

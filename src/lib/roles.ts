@@ -72,3 +72,8 @@ export function canEditCustomerRates(role: Role): boolean {
 export function canSeeJobs(role: Role): boolean {
   return role !== "driver";
 }
+
+// Mirrors public.set_main_machine: those who plan jobs choose each person's main machine.
+export function canChooseMainMachines(role: Role): boolean {
+  return role !== "driver";
+}

@@ -128,7 +128,11 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
                       >
                         <span className="grid w-14 shrink-0 gap-0.5 pt-0.5 text-sm font-semibold tabular-nums sm:w-16 sm:text-base">
                           <span>{time(job.starts_at)}</span>
-                          <span className="font-normal text-muted">{time(job.ends_at)}</span>
+                          {/* The end is expected, not promised. */}
+                          <span className="font-normal text-muted" aria-hidden="true">
+                            {t("aboutTime", { time: time(job.ends_at) })}
+                          </span>
+                          <span className="sr-only">{t("untilAbout", { time: time(job.ends_at) })}</span>
                         </span>
                         <span className="grid min-w-0 flex-1 gap-1">
                           <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">

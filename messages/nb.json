@@ -187,7 +187,11 @@
     },
     "linkCreated": "Lenke laget for en ny {role}. Kopier den nå: av sikkerhetshensyn vises den bare én gang.",
     "invitationFor": "Invitasjon som {role}",
-    "created": "laget {date}"
+    "created": "laget {date}",
+    "mainMachineFor": "Hovedmaskin for {name}",
+    "mainMachineNone": "Ingen hovedmaskin",
+    "saveMainMachine": "Lagre maskin",
+    "mainMachineSaved": "Hovedmaskinen er lagret. Den foreslås når personen får et oppdrag."
   },
   "Customers": {
     "title": "Kunder",
@@ -403,8 +407,6 @@
     "back": "Alle oppdrag",
     "customer": "Kunde",
     "chooseCustomer": "Velg kunde",
-    "noCustomers": "Det finnes ingen kunder ennå. Legg til den første, og kom tilbake.",
-    "newCustomer": "Ny kunde",
     "vehicle": "Maskin",
     "driver": "Sjåfør",
     "notChosen": "Ikke valgt ennå",
@@ -414,9 +416,8 @@
     "siteContact": "Kontakt på stedet",
     "siteContactHint": "Valgfritt, for eksempel Per, 912 34 567.",
     "date": "Dato",
-    "startTime": "Fra",
-    "endTime": "Til",
-    "timeHint": "Lokal tid. Et oppdrag varer høyst én dag.",
+    "startTime": "Start",
+    "timeHint": "Lokal tid.",
     "description": "Hva skal gjøres",
     "descriptionHint": "Valgfritt: last, vekt, adkomst, hva som må med.",
     "priceTitle": "Pris",
@@ -465,12 +466,28 @@
       "siteContactInvalid": "Bruk maks 100 tegn.",
       "dateInvalid": "Velg en dato.",
       "timeInvalid": "Skriv et klokkeslett, for eksempel 07:30.",
-      "endBeforeStart": "Slutten må være etter starten, samme dag.",
       "descriptionTooLong": "Bruk maks 2000 tegn.",
       "notAllowed": "Du har ikke tilgang til å gjøre dette.",
       "notAvailable": "Kunden, maskinen eller sjåføren er ikke lenger tilgjengelig. Velg på nytt.",
       "needsVehicleAndDriver": "Velg maskin og sjåfør først.",
-      "unknown": "Noe gikk galt. Prøv igjen."
-    }
+      "unknown": "Noe gikk galt. Prøv igjen.",
+      "durationInvalid": "Skriv hvor lenge oppdraget forventes å ta: fra 15 minutter til 24 timer, for eksempel 4 timer 30 min.",
+      "timeNoteTooLong": "Maks 200 tegn."
+    },
+    "newCustomerOption": "+ Ny kunde",
+    "newCustomerTitle": "Ny kunde",
+    "newCustomerLead": "Lagres sammen med oppdraget. Adresse, organisasjonsnummer og priser kan legges til på kundesiden senere.",
+    "newCustomerName": "Navn",
+    "duration": "Forventet varighet",
+    "durationHours": "Timer",
+    "durationMinutes": "Minutter",
+    "minutesOption": "{minutes} min",
+    "durationHint": "Bare et anslag: oppdraget kan ta lengre eller kortere tid. Maskin og sjåfør er booket for denne tiden.",
+    "timeNote": "Merknad om tiden",
+    "timeNoteHint": "Valgfritt, for eksempel: kan vare til ettermiddagen hvis grunnen er hard.",
+    "vehicleSuggestedMain": "Hovedmaskinen til {name} ble fylt inn. Du kan velge en annen.",
+    "vehicleSuggestedUsual": "Maskinen {name} kjører oftest ble fylt inn. Du kan velge en annen.",
+    "aboutTime": "~{time}",
+    "untilAbout": "til ca. {time}"
   }
 }

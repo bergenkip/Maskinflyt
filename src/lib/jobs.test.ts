@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fromLocalParts, overlaps, toJobFormValues, toLocalParts, validateJob, type Job } from "./jobs";
+import { durationToMinutes, fromLocalParts, NEW_CUSTOMER, overlaps, toJobFormValues, toLocalParts, validateJob, type Job } from "./jobs";
 
 const oslo = "Europe/Oslo";
 const customer = "a2000000-0000-4000-8000-000000000001";
@@ -19,7 +19,9 @@ const valid = {
   siteContact: "",
   date: "2026-11-02",
   startTime: "07:00",
-  endTime: "11:30",
+  durationHours: "4",
+  durationMinutes: "30",
+  timeNote: "  Kan  ta lengre tid ",
   description: "Løfte takstoler\nInngang fra baksiden",
 };
 
@@ -64,13 +66,14 @@ describe("validateJob", () => {
       site_contact: null,
       starts_at: "2026-11-02T06:00:00.000Z",
       ends_at: "2026-11-02T10:30:00.000Z",
+      time_note: "Kan ta lengre tid",
       description: "Løfte takstoler\nInngang fra baksiden",
     });
   });
 
   it("explains every wrong field and keeps what was typed", () => {
     const { values, fieldErrors, fields } = validateJob(
-      form({ customerId: "", vehicleId: "x", driverId: "y", address: " ", siteContact: "a".repeat(101), date: "2026-11-02", startTime: "11:00", endTime: "10:00", description: "b".repeat(2001) }),
+      form({ customerId: "", vehicleId: "x", driverId: "y", address: " ", siteContact: "a".repeat(101), date: "2026-11-02", startTime: "11:00", durationHours: "0", durationMinutes: "0", timeNote: "c".repeat(201), description: "b".repeat(2001) }),
       oslo,
     );
     expect(fields).toBeUndefined();
@@ -80,19 +83,57 @@ describe("validateJob", () => {
       driverId: "choiceInvalid",
       address: "addressRequired",
       siteContact: "siteContactInvalid",
-      endTime: "endBeforeStart",
+      durationHours: "durationInvalid",
+      timeNote: "timeNoteTooLong",
       description: "descriptionTooLong",
     });
     expect(values.startTime).toBe("11:00");
   });
 
-  it("asks for a date and times that exist", () => {
+  it("asks for a date, a start time and a duration that exist", () => {
     expect(validateJob(form({ ...valid, date: "" }), oslo).fieldErrors).toEqual({ date: "dateInvalid" });
-    expect(validateJob(form({ ...valid, startTime: "", endTime: "25:00" }), oslo).fieldErrors).toEqual({
+    expect(validateJob(form({ ...valid, startTime: "", durationHours: "25" }), oslo).fieldErrors).toEqual({
       startTime: "timeInvalid",
-      endTime: "timeInvalid",
+      durationHours: "durationInvalid",
     });
-    expect(validateJob(form({ ...valid, endTime: "07:00" }), oslo).fieldErrors).toEqual({ endTime: "endBeforeStart" });
+  });
+
+  it("runs past midnight and counts real hours over a clock change", () => {
+    const late = validateJob(form({ ...valid, startTime: "22:00", durationHours: "6", durationMinutes: "0" }), oslo).fields;
+    expect([late?.starts_at, late?.ends_at]).toEqual(["2026-11-02T21:00:00.000Z", "2026-11-03T03:00:00.000Z"]);
+    // The night the clocks go back: 01:00 + 3 hours is 03:00 by the clock, 3 real hours later.
+    const night = validateJob(form({ ...valid, date: "2026-10-25", startTime: "01:00", durationHours: "3", durationMinutes: "0" }), oslo).fields;
+    expect(Date.parse(night!.ends_at) - Date.parse(night!.starts_at)).toBe(3 * 3_600_000);
+  });
+
+  it("lets a new customer be added with the job", () => {
+    const { fieldErrors, fields } = validateJob(form({ ...valid, customerId: NEW_CUSTOMER }), oslo);
+    expect(fieldErrors).toBeUndefined();
+    expect(fields?.customer_id).toBe(NEW_CUSTOMER);
+  });
+});
+
+describe("durationToMinutes", () => {
+  it.each([
+    ["4", "30", 270],
+    ["0", "15", 15],
+    ["", "45", 45],
+    ["24", "0", 1440],
+    ["1", "", 60],
+  ])("%s h %s min → %s", (hours, minutes, expected) => {
+    expect(durationToMinutes(hours, minutes)).toBe(expected);
+  });
+
+  it.each([
+    ["0", "0"],
+    ["0", "10"],
+    ["24", "15"],
+    ["4,5", "0"],
+    ["-1", "0"],
+    ["2", "60"],
+    ["x", "0"],
+  ])("%s h %s min is refused", (hours, minutes) => {
+    expect(durationToMinutes(hours, minutes)).toBeUndefined();
   });
 });
 
@@ -107,6 +148,7 @@ describe("toJobFormValues", () => {
     site_contact: null,
     starts_at: "2026-11-02T06:00:00.000Z",
     ends_at: "2026-11-02T10:30:00.000Z",
+    time_note: null,
     description: null,
     status: "new",
     hourly_rate: null,
@@ -115,12 +157,19 @@ describe("toJobFormValues", () => {
     created_at: "2026-10-29T10:00:00.000Z",
   };
 
-  it("shows the job in local time", () => {
-    expect(toJobFormValues(job, oslo)).toMatchObject({ date: "2026-11-02", startTime: "07:00", endTime: "11:30", vehicleId: "" });
+  it("shows the job in local time, with its expected duration", () => {
+    expect(toJobFormValues(job, oslo)).toMatchObject({
+      date: "2026-11-02",
+      startTime: "07:00",
+      durationHours: "4",
+      durationMinutes: "30",
+      timeNote: "",
+      vehicleId: "",
+    });
   });
 
-  it("leaves the end empty for a job past midnight", () => {
-    expect(toJobFormValues({ ...job, ends_at: "2026-11-02T23:30:00.000Z" }, oslo).endTime).toBe("");
+  it("keeps a job past midnight as a duration", () => {
+    expect(toJobFormValues({ ...job, ends_at: "2026-11-02T23:30:00.000Z" }, oslo)).toMatchObject({ durationHours: "17", durationMinutes: "30" });
   });
 });
 

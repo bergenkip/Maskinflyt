@@ -8,6 +8,7 @@ import {
   inviteMember,
   removeMember,
   revokeInvitation,
+  setMainMachine,
   type InviteState,
   type TeamActionState,
 } from "./actions";
@@ -121,7 +122,7 @@ export function RoleForm({
         <label htmlFor={selectId} className="text-sm font-medium">
           {t("roleFor", { name })}
         </label>
-        <select id={selectId} name="role" defaultValue={current} className={selectClass}>
+        <select key={current} id={selectId} name="role" defaultValue={current} className={selectClass}>
           {roles.map((role) => (
             <option key={role.value} value={role.value}>
               {role.label}
@@ -189,6 +190,57 @@ export function RevokeInvitationForm({ invitationId, label }: { invitationId: st
       </button>
       {state.error && (
         <p role="alert" className="text-sm font-medium text-danger">
+          {t(`errors.${state.error}`)}
+        </p>
+      )}
+    </form>
+  );
+}
+
+export function MainMachineForm({
+  membershipId,
+  name,
+  current,
+  vehicles,
+}: {
+  membershipId: string;
+  name: string;
+  current: string;
+  vehicles: { id: string; name: string }[];
+}) {
+  const t = useTranslations("Team");
+  const tAuth = useTranslations("Auth");
+  const [state, action, pending] = useActionState<TeamActionState, FormData>(setMainMachine, {});
+  const selectId = `machine-${membershipId}`;
+
+  return (
+    <form action={action} className="flex flex-1 flex-wrap items-end gap-3">
+      <input type="hidden" name="membershipId" value={membershipId} />
+      <div className="grid min-w-44 flex-1 gap-1.5 sm:flex-none">
+        <label htmlFor={selectId} className="text-sm font-medium">
+          {t("mainMachineFor", { name })}
+        </label>
+        {/* Machine names are data and are shown exactly as entered. The key renders
+            the select afresh with the saved machine (React resets forms after an action). */}
+        <select key={current} id={selectId} name="vehicleId" defaultValue={current} className={`${selectClass} sm:max-w-80`}>
+          <option value="">{t("mainMachineNone")}</option>
+          {vehicles.map((vehicle) => (
+            <option key={vehicle.id} value={vehicle.id}>
+              {vehicle.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button type="submit" disabled={pending} className={secondaryButtonClass}>
+        {pending ? tAuth("pending") : t("saveMainMachine")}
+      </button>
+      {state.done && !pending && (
+        <p role="status" className="basis-full text-sm font-medium text-success">
+          {t("mainMachineSaved")}
+        </p>
+      )}
+      {state.error && (
+        <p role="alert" className="basis-full text-sm font-medium text-danger">
           {t(`errors.${state.error}`)}
         </p>
       )}
