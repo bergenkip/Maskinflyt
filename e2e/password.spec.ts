@@ -63,7 +63,7 @@ test("a forgotten password is replaced through an e-mailed link", async ({ brows
   await later.context.clearCookies();
   await later.page.goto(link);
   await later.page.waitForURL((url) => url.pathname === "/reset-password");
-  await expect(later.page.getByRole("alert")).toContainText("Ask for a new link");
+  await expect(later.page.getByRole("alert").filter({ hasText: "Ask for a new link" })).toBeVisible();
   await later.context.close();
 });
 
