@@ -40,7 +40,8 @@
     "loading": "Laster …",
     "vehicles": "Maskiner",
     "customers": "Kunder",
-    "jobs": "Oppdrag"
+    "jobs": "Oppdrag",
+    "myJobs": "Mine oppdrag"
   },
   "Auth": {
     "loginTitle": "Logg inn i Maskinflyt",
@@ -114,12 +115,10 @@
     "title": "Oversikt",
     "role": "Din rolle: {role}",
     "orgNumber": "Org.nr. {number}",
-    "empty": "Dine egne oppdrag vises her i et senere steg.",
     "greeting": "Hei, {name}",
     "numbersTitle": "Nøkkeltall",
     "membersLabel": "Personer i teamet",
     "openInvites": "{count, plural, =0 {Ingen åpne invitasjoner} one {# åpen invitasjon} other {# åpne invitasjoner}}",
-    "ordersLabel": "Oppdrag",
     "startTitle": "Kom i gang",
     "startLead": "Noen steg før de første oppdragene.",
     "stepTeam": "Inviter kolleger",
@@ -135,7 +134,9 @@
     "customersDetail": "Aktive",
     "stepCustomers": "Legg til kundene dine",
     "jobsLabel": "Kommende oppdrag",
-    "jobsDetail": "{count, plural, =0 {Alle er planlagt} one {# ikke planlagt ennå} other {# ikke planlagt ennå}}"
+    "jobsDetail": "{count, plural, =0 {Alle er planlagt} one {# ikke planlagt ennå} other {# ikke planlagt ennå}}",
+    "myJobsLabel": "Mine oppdrag i dag",
+    "myJobsDetail": "{count, plural, =0 {alt er gjort} one {# gjenstår} other {# gjenstår}}"
   },
   "Roles": {
     "owner": "Eier",
@@ -530,5 +531,59 @@
     "moved": "Oppdrag {number} er flyttet til {time}.",
     "undo": "Angre",
     "dragHint": "Tips: dra et oppdrag for å flytte det, dra høyre kant for å endre varigheten, eller trykk på blyanten for å redigere."
+  },
+  "MyJobs": {
+    "title": "Mine oppdrag",
+    "lead": "Oppdragene dine i dag og i morgen. Trykk på en knapp ved hvert steg, så vet kontoret hvordan det går.",
+    "today": "I dag",
+    "tomorrow": "I morgen",
+    "noJobs": "Ingen oppdrag til deg denne dagen.",
+    "openMap": "Åpne i kart",
+    "call": "Ring",
+    "progress": {
+      "none": "Ikke akseptert ennå",
+      "accepted": "Akseptert",
+      "on_the_way": "På vei",
+      "arrived": "Ankommet",
+      "on_break": "På pause",
+      "finished": "Ferdig"
+    },
+    "progressAt": "{step} {time}",
+    "steps": {
+      "accepted": "Aksepter oppdraget",
+      "on_the_way": "Jeg er på vei",
+      "arrived": "Jeg er fremme",
+      "break_started": "Start pause",
+      "break_ended": "Avslutt pause",
+      "finished": "Jeg er ferdig"
+    },
+    "finishQuestion": "Ferdig med dette oppdraget? Kontoret ser det da som utført.",
+    "confirmFinish": "Ja, ferdig",
+    "notYet": "Ikke ennå",
+    "finishedNote": "Du er ferdig med dette oppdraget. Takk!",
+    "closedNote": "Kontoret har avsluttet dette oppdraget.",
+    "events": {
+      "accepted": "Akseptert",
+      "on_the_way": "På vei",
+      "arrived": "Ankommet",
+      "break_started": "Pause startet",
+      "break_ended": "Pause avsluttet",
+      "finished": "Ferdig",
+      "note": "Notat"
+    },
+    "history": "{count, plural, one {# registrering} other {# registreringer}} så langt",
+    "addNote": "Legg til notat",
+    "noteLabel": "Notat til kontoret",
+    "noteHint": "For eksempel: kunden var ikke der, ventet 30 min. Maks 500 tegn.",
+    "saveNote": "Lagre notat",
+    "noteSaved": "Notatet er lagret. Kontoret kan se det.",
+    "officeTitle": "Fra føreren",
+    "officeEmpty": "Føreren har ikke rapportert noe ennå.",
+    "errors": {
+      "notAllowed": "Dette er ikke ditt oppdrag, eller du er ikke lenger på det.",
+      "notNow": "Dette steget passer ikke nå. Siden viser oppdraget slik det er.",
+      "noteInvalid": "Skriv et notat på maks 500 tegn.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    }
   }
 }

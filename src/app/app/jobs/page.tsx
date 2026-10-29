@@ -4,9 +4,11 @@ import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { ArrowRightIcon, MapPinIcon, PlusIcon, TruckIcon, UserIcon } from "@/components/icons";
 import { toLocalParts, type JobStatus } from "@/lib/jobs";
+import type { JobProgress } from "@/lib/progress";
 import { getCurrentMembership } from "@/lib/membership";
 import { canSeeJobs } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
+import { ProgressBadge } from "./progress-badge";
 import { StatusBadge } from "./status-badge";
 import { JobsViewNav } from "./view-nav";
 
@@ -22,6 +24,8 @@ type Row = {
   starts_at: string;
   ends_at: string;
   status: JobStatus;
+  progress: JobProgress | null;
+  progress_at: string | null;
   driver_id: string | null;
   customers: { name: string } | null;
   vehicles: { name: string } | null;
@@ -44,10 +48,11 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
   // Upcoming: from the earliest still running, in time order. Earlier: newest first.
   const request = supabase
     .from("jobs")
-    .select("id, number, address, starts_at, ends_at, status, driver_id, customers(name), vehicles(name)")
+    .select("id, number, address, starts_at, ends_at, status, progress, progress_at, driver_id, customers(name), vehicles(name)")
     .eq("organization_id", organization.id);
-  const [t, format, result, members] = await Promise.all([
+  const [t, tMy, format, result, members] = await Promise.all([
     getTranslations("Jobs"),
+    getTranslations("MyJobs"),
     getFormatter(),
     past
       ? request.lt("ends_at", now.toISOString()).order("starts_at", { ascending: false }).limit(100)
@@ -161,6 +166,16 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
                             </span>
                             <span className="tabular-nums">{t("numberShort", { number: job.number })}</span>
                           </span>
+                          {/* What the driver last reported from the phone. */}
+                          {job.progress && job.status !== "cancelled" && (
+                            <ProgressBadge
+                              progress={job.progress}
+                              label={tMy("progressAt", {
+                                step: tMy(`progress.${job.progress}`),
+                                time: time(job.progress_at ?? job.starts_at),
+                              })}
+                            />
+                          )}
                         </span>
                         <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
                       </Link>
