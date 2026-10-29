@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   assignableRoles,
+  canEditCustomerRates,
   canEditVehicles,
   canManage,
+  canSeeCustomers,
   canSeeVehicles,
   invitableRoles,
   needsMfa,
@@ -42,6 +44,13 @@ describe("vehicles", () => {
   it("owners and admins change machines, dispatchers only see them, drivers neither", () => {
     expect(roles.filter(canEditVehicles)).toEqual(["owner", "admin"]);
     expect(roles.filter(canSeeVehicles)).toEqual(["owner", "admin", "dispatcher"]);
+  });
+});
+
+describe("customers", () => {
+  it("everyone but drivers keeps customers, only owners and admins set their prices", () => {
+    expect(roles.filter(canSeeCustomers)).toEqual(["owner", "admin", "dispatcher"]);
+    expect(roles.filter(canEditCustomerRates)).toEqual(["owner", "admin"]);
   });
 });
 

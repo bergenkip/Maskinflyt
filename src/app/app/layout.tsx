@@ -5,7 +5,7 @@ import { AppNav } from "@/components/app-nav";
 import { SignOutIcon } from "@/components/icons";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
-import { canSeeVehicles, needsMfa } from "@/lib/roles";
+import { canSeeCustomers, canSeeVehicles, needsMfa } from "@/lib/roles";
 import { getUserId } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 
@@ -27,11 +27,13 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
             <AppNav
               labels={{
                 dashboard: t("dashboard"),
+                customers: t("customers"),
                 vehicles: t("vehicles"),
                 team: t("team"),
                 settings: t("settings"),
                 mainMenu: t("mainMenu"),
               }}
+              showCustomers={!!membership && canSeeCustomers(membership.role)}
               showVehicles={!!membership && canSeeVehicles(membership.role)}
             />
           </div>

@@ -1,4 +1,4 @@
-import { expect, type Page } from "@playwright/test";
+import { type Browser, expect, type Page } from "@playwright/test";
 import { isValidOrgNumber } from "../src/lib/org-number";
 
 // Shared by the specs that need a running Supabase (the e2e-auth CI job).
@@ -131,4 +131,47 @@ export async function shootAllWidths(page: Page, name: string, locale: string) {
       fullPage: true,
     });
   }
+}
+
+// A browser with the interface language fixed by cookie (it wins over the company default).
+export async function newPage(browser: Browser, baseURL: string, locale: string) {
+  const context = await browser.newContext();
+  await context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL }]);
+  return { context, page: await context.newPage() };
+}
+
+export function newCompanyName(tag: string) {
+  return `E2E ${tag} ${Date.now()} ${Math.random().toString(36).slice(2, 6)} AS`;
+}
+
+// Made-up plates, different in every run so parallel tests never collide.
+export function newPlates() {
+  return `ZZ ${String(Math.floor(Math.random() * 90000) + 10000)}`;
+}
+
+export async function addVehicle(
+  page: Page,
+  vehicle: { type: string; typeName?: string; name: string; plates?: string; crane?: string; rate?: string },
+) {
+  await page.locator('select[name="type"]').selectOption(vehicle.type);
+  if (vehicle.typeName !== undefined) await page.locator('input[name="typeName"]').fill(vehicle.typeName);
+  await page.locator('input[name="name"]').fill(vehicle.name);
+  await page.locator('input[name="regNumber"]').fill(vehicle.plates ?? "");
+  if (vehicle.crane) await page.locator('input[name="craneTm"]').fill(vehicle.crane);
+  await page.locator('input[name="hourlyRate"]').fill(vehicle.rate ?? "");
+  await page.locator('main form button[type="submit"]').first().click();
+}
+
+// The owner invites a colleague with a role; returns the colleague's page, signed in.
+export async function inviteColleague(browser: Browser, baseURL: string, owner: Page, role: string) {
+  await owner.goto("/app/team");
+  await owner.getByLabel("Role", { exact: true }).selectOption(role);
+  await owner.locator('main form button[type="submit"]').first().click();
+  const link = owner.getByText(/\/join\/[0-9a-f]{64}$/);
+  await expect(link).toBeVisible();
+  const colleague = await newPage(browser, baseURL, "en");
+  await colleague.page.goto(new URL((await link.textContent())!.trim()).pathname);
+  await fillSignUp(colleague.page, newEmail(role));
+  await colleague.page.waitForURL((url) => url.pathname === "/app");
+  return colleague;
 }
