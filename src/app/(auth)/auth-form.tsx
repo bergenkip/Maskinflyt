@@ -98,6 +98,14 @@ export function AuthForm({ mode, action, initialError, invite, next, intro, swit
           hint={isSignUp ? t("passwordHint") : undefined}
           error={state.fieldErrors?.password && t(`errors.${state.fieldErrors.password}`)}
         />
+        {!isSignUp && (
+          <Link
+            href="/forgot-password"
+            className="-my-2 inline-flex min-h-11 w-fit items-center text-sm font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            {t("forgotLink")}
+          </Link>
+        )}
         <SubmitButton pendingLabel={t("pending")}>{isSignUp ? t("signupSubmit") : t("loginSubmit")}</SubmitButton>
       </form>
 

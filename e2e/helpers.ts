@@ -47,7 +47,7 @@ export async function createCompany(page: Page, name: string, orgNumber = newOrg
 // Local Supabase delivers e-mail to Mailpit instead of sending it.
 const mailpit = process.env.MAILPIT_URL ?? "http://127.0.0.1:54324";
 
-async function messagesTo(email: string): Promise<{ ID: string }[]> {
+export async function messagesTo(email: string): Promise<{ ID: string }[]> {
   const response = await fetch(`${mailpit}/api/v1/search?query=${encodeURIComponent(`to:"${email}"`)}`);
   return ((await response.json()) as { messages: { ID: string }[] }).messages; // newest first
 }
@@ -75,6 +75,20 @@ export async function requestLink(page: Page) {
   const { HTML } = (await response.json()) as { HTML: string };
   const link = HTML.match(/href="([^"]*\/auth\/v1\/verify[^"]*)"/)?.[1];
   expect(link, "the e-mail has a sign-in link").toBeTruthy();
+  return link!.replace(/&amp;/g, "&");
+}
+
+// Waits for a new e-mail to the address (more than `before` in the inbox) and
+// returns the Supabase link in it.
+export async function newMailLink(email: string, before: number) {
+  let messages: { ID: string }[] = [];
+  await expect
+    .poll(async () => (messages = await messagesTo(email)).length, { timeout: 10_000 })
+    .toBeGreaterThan(before);
+  const response = await fetch(`${mailpit}/api/v1/message/${messages[0].ID}`);
+  const { HTML } = (await response.json()) as { HTML: string };
+  const link = HTML.match(/href="([^"]*\/auth\/v1\/verify[^"]*)"/)?.[1];
+  expect(link, "the e-mail has a link").toBeTruthy();
   return link!.replace(/&amp;/g, "&");
 }
 
