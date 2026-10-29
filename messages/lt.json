@@ -39,7 +39,8 @@
     "mainMenu": "Pagrindinis meniu",
     "loading": "Įkeliama …",
     "vehicles": "Technika",
-    "customers": "Klientai"
+    "customers": "Klientai",
+    "jobs": "Užsakymai"
   },
   "Auth": {
     "loginTitle": "Prisijunkite prie Maskinflyt",
@@ -54,7 +55,7 @@
     "noAccount": "Dar neturite paskyros?",
     "haveAccount": "Jau turite paskyrą?",
     "checkEmailTitle": "Patikrinkite el. paštą",
-    "checkEmailBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją šiame įrenginyje, kad užbaigtumėte paskyros kūrimą.",
+    "checkEmailBody": "Išsiuntėme patvirtinimo nuorodą adresu {email}. Atidarykite ją, kad užbaigtumėte paskyros kūrimą. Ji veikia bet kuriame įrenginyje.",
     "notConfigured": "Prisijungimas šioje aplinkoje dar neveikia.",
     "errors": {
       "emailInvalid": "Įveskite teisingą el. pašto adresą.",
@@ -64,7 +65,7 @@
       "userExists": "Paskyra su šiuo el. paštu jau yra. Prisijunkite.",
       "weakPassword": "Slaptažodis per silpnas. Pasirinkite ilgesnį.",
       "rateLimited": "Per daug bandymų. Palaukite kelias minutes ir bandykite dar kartą.",
-      "linkInvalid": "Nuoroda neteisinga arba nebegalioja. Prisijunkite arba sukurkite paskyrą iš naujo.",
+      "linkInvalid": "Nuoroda neteisinga arba nebegalioja. Jei el. paštą jau patvirtinote, prisijunkite su slaptažodžiu.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
       "firstNameRequired": "Įveskite vardą.",
       "lastNameRequired": "Įveskite pavardę.",
@@ -84,7 +85,11 @@
     "newPassword": "Naujas slaptažodis",
     "resetSubmit": "Išsaugoti naują slaptažodį",
     "resetChecking": "Tikrinama nuoroda …",
-    "resetNoSession": "Nuoroda neteisinga arba nebegalioja (kiekviena nuoroda veikia vieną kartą). Paprašykite naujos nuorodos."
+    "resetNoSession": "Nuoroda neteisinga arba nebegalioja (kiekviena nuoroda veikia vieną kartą). Paprašykite naujos nuorodos.",
+    "confirmTitle": "El. pašto patvirtinimas",
+    "confirmChecking": "Tvirtinamas jūsų el. paštas …",
+    "confirmFailed": "Nuoroda neteisinga arba jau panaudota. Jei el. paštą jau patvirtinote anksčiau, tiesiog prisijunkite su el. paštu ir slaptažodžiu.",
+    "emailConfirmed": "El. paštas patvirtintas. Dabar galite prisijungti."
   },
   "Onboarding": {
     "title": "Sukurkite savo įmonę",
@@ -109,7 +114,7 @@
     "title": "Apžvalga",
     "role": "Jūsų rolė: {role}",
     "orgNumber": "Org. nr. {number}",
-    "empty": "Užsakymų planavimas dar neveikia. Jis atsiras vėlesniame etape.",
+    "empty": "Jūsų užsakymai čia atsiras vėlesniame etape.",
     "greeting": "Sveiki, {name}",
     "numbersTitle": "Pagrindiniai skaičiai",
     "membersLabel": "Žmonės komandoje",
@@ -128,7 +133,9 @@
     "stepVehicles": "Pridėkite savo techniką",
     "customersLabel": "Klientai",
     "customersDetail": "Aktyvūs",
-    "stepCustomers": "Pridėkite savo klientus"
+    "stepCustomers": "Pridėkite savo klientus",
+    "jobsLabel": "Būsimi užsakymai",
+    "jobsDetail": "{count, plural, =0 {Visi suplanuoti} one {# dar nesuplanuotas} few {# dar nesuplanuoti} other {# dar nesuplanuotų}}"
   },
   "Roles": {
     "owner": "Savininkas",
@@ -340,7 +347,7 @@
       "alreadyMember": "Jūs jau priklausote įmonei.",
       "unknown": "Prisijungti nepavyko. Bandykite dar kartą."
     },
-    "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją šioje naršyklėje, kad baigtumėte. Jūs jau esate įmonės narys. Jei nuoroda atsidaro kitoje programėlėje, prisijunkite čia su el. paštu ir slaptažodžiu."
+    "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją bet kuriame įrenginyje, kad baigtumėte. Jūs jau esate įmonės narys."
   },
   "Footer": {
     "text": "Maskinflyt · Sukurta Norvegijos rangovams"
@@ -380,5 +387,90 @@
     "by": "Pridėjo {name} · {date}",
     "on": "Pridėta {date}",
     "formerMember": "buvęs narys"
+  },
+  "Jobs": {
+    "title": "Užsakymai",
+    "lead": "{company} užsakymai: kam, kur, kada ir kokia technika.",
+    "addTitle": "Naujas užsakymas",
+    "addLead": "Įrašykite, ko prašė klientas. Techniką ir vairuotoją galima pasirinkti dabar arba vėliau.",
+    "addSubmit": "Pridėti užsakymą",
+    "added": "Užsakymas {number} pridėtas.",
+    "jobTitle": "Užsakymas {number}",
+    "numberShort": "Nr. {number}",
+    "detailsTitle": "Duomenys",
+    "save": "Išsaugoti pakeitimus",
+    "saved": "Pakeitimai išsaugoti.",
+    "back": "Visi užsakymai",
+    "customer": "Klientas",
+    "chooseCustomer": "Pasirinkite klientą",
+    "noCustomers": "Klientų dar nėra. Pridėkite pirmą ir grįžkite.",
+    "newCustomer": "Naujas klientas",
+    "vehicle": "Technika",
+    "driver": "Vairuotojas",
+    "notChosen": "Dar nepasirinkta",
+    "inactiveOption": "{name} (neaktyvus)",
+    "address": "Adresas",
+    "addressHint": "Kur dirbama, pvz., Storgata 1, 0155 Oslo.",
+    "siteContact": "Kontaktas vietoje",
+    "siteContactHint": "Neprivaloma, pvz., Per, 912 34 567.",
+    "date": "Data",
+    "startTime": "Nuo",
+    "endTime": "Iki",
+    "timeHint": "Vietos laikas. Užsakymas trunka ne ilgiau kaip vieną dieną.",
+    "description": "Ką reikia padaryti",
+    "descriptionHint": "Neprivaloma: kroviniai, svoriai, privažiavimas, ką atsivežti.",
+    "priceTitle": "Kaina",
+    "priceCustomer": "{amount} per valandą (kliento kaina)",
+    "priceUsual": "{amount} per valandą (įprastas technikos įkainis)",
+    "priceNone": "Kainos nėra: technika neturi valandinio įkainio.",
+    "priceNoMachine": "Kaina nustatoma pasirinkus techniką.",
+    "priceLead": "Imama kliento kaina šiai technikai, o jei jos nėra, įprastas technikos įkainis, kai išsaugoma technika ar klientas.",
+    "statuses": {
+      "new": "Nesuplanuotas",
+      "planned": "Suplanuotas",
+      "done": "Atliktas",
+      "cancelled": "Atšauktas"
+    },
+    "statusTitle": "Būsena",
+    "statusLead": {
+      "new": "Pasirinkite techniką ir vairuotoją, ir užsakymas bus suplanuotas.",
+      "planned": "Kai darbas atliktas, pažymėkite užsakymą kaip atliktą.",
+      "done": "Užsakymas atliktas.",
+      "cancelled": "Užsakymas atšauktas. Jis išsaugomas ir gali būti atkurtas."
+    },
+    "markDone": "Pažymėti kaip atliktą",
+    "cancel": "Atšaukti užsakymą",
+    "restore": "Atkurti užsakymą",
+    "reopen": "Vis dėlto neatliktas",
+    "listTitle": "Visi užsakymai",
+    "show": "Rodyti",
+    "upcoming": "Būsimi",
+    "past": "Ankstesni",
+    "count": "{count, plural, =0 {Užsakymų nėra} one {# užsakymas} few {# užsakymai} other {# užsakymų}}",
+    "emptyUpcoming": "Būsimų užsakymų nėra. Pridėkite, kai paskambins klientas.",
+    "emptyPast": "Ankstesnių užsakymų nėra.",
+    "today": "Šiandien",
+    "tomorrow": "Rytoj",
+    "noVehicle": "Be technikos",
+    "noDriver": "Be vairuotojo",
+    "overlapTitle": "Šiuo metu jau užimta",
+    "overlapLead": "Pakeiskite laiką, techniką ar vairuotoją arba vis tiek išsaugokite.",
+    "overlapVehicle": "{name} jau dirba užsakyme {number} klientui {customer}, {time}.",
+    "overlapDriver": "{name} jau dirba užsakyme {number} klientui {customer}, {time}.",
+    "saveAnyway": "Vis tiek išsaugoti",
+    "errors": {
+      "customerRequired": "Pasirinkite klientą.",
+      "choiceInvalid": "Pasirinkite iš sąrašo.",
+      "addressRequired": "Įveskite adresą (ne daugiau kaip 200 simbolių).",
+      "siteContactInvalid": "Ne daugiau kaip 100 simbolių.",
+      "dateInvalid": "Pasirinkite datą.",
+      "timeInvalid": "Įveskite laiką, pvz., 07:30.",
+      "endBeforeStart": "Pabaiga turi būti po pradžios, tą pačią dieną.",
+      "descriptionTooLong": "Ne daugiau kaip 2000 simbolių.",
+      "notAllowed": "Jūs neturite teisės to daryti.",
+      "notAvailable": "Klientas, technika ar vairuotojas nebepasiekiami. Pasirinkite iš naujo.",
+      "needsVehicleAndDriver": "Pirmiausia pasirinkite techniką ir vairuotoją.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
   }
 }

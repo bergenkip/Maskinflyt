@@ -39,7 +39,8 @@
     "mainMenu": "Hovedmeny",
     "loading": "Laster …",
     "vehicles": "Maskiner",
-    "customers": "Kunder"
+    "customers": "Kunder",
+    "jobs": "Oppdrag"
   },
   "Auth": {
     "loginTitle": "Logg inn i Maskinflyt",
@@ -54,7 +55,7 @@
     "noAccount": "Har du ikke konto?",
     "haveAccount": "Har du allerede konto?",
     "checkEmailTitle": "Sjekk e-posten din",
-    "checkEmailBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den på denne enheten for å fullføre kontoen.",
+    "checkEmailBody": "Vi har sendt en bekreftelseslenke til {email}. Åpne den for å fullføre kontoen. Den virker på alle enheter.",
     "notConfigured": "Innlogging er ikke tilgjengelig i dette miljøet ennå.",
     "errors": {
       "emailInvalid": "Skriv inn en gyldig e-postadresse.",
@@ -64,7 +65,7 @@
       "userExists": "Det finnes allerede en konto med denne e-posten. Logg inn i stedet.",
       "weakPassword": "Passordet er for svakt. Velg et lengre passord.",
       "rateLimited": "For mange forsøk. Vent noen minutter og prøv igjen.",
-      "linkInvalid": "Lenken er ugyldig eller utløpt. Logg inn eller opprett kontoen på nytt.",
+      "linkInvalid": "Lenken er ugyldig eller utløpt. Hvis du allerede har bekreftet e-posten, logg inn med passordet ditt.",
       "unknown": "Noe gikk galt. Prøv igjen.",
       "firstNameRequired": "Skriv inn fornavnet ditt.",
       "lastNameRequired": "Skriv inn etternavnet ditt.",
@@ -84,7 +85,11 @@
     "newPassword": "Nytt passord",
     "resetSubmit": "Lagre nytt passord",
     "resetChecking": "Sjekker lenken …",
-    "resetNoSession": "Lenken er ugyldig eller utløpt (hver lenke virker én gang). Be om en ny lenke."
+    "resetNoSession": "Lenken er ugyldig eller utløpt (hver lenke virker én gang). Be om en ny lenke.",
+    "confirmTitle": "Bekreft e-post",
+    "confirmChecking": "Bekrefter e-posten din …",
+    "confirmFailed": "Lenken er ugyldig eller allerede brukt. Hvis du har bekreftet e-posten tidligere, logg inn med e-post og passord.",
+    "emailConfirmed": "E-posten din er bekreftet. Du kan logge inn nå."
   },
   "Onboarding": {
     "title": "Opprett firmaet ditt",
@@ -109,7 +114,7 @@
     "title": "Oversikt",
     "role": "Din rolle: {role}",
     "orgNumber": "Org.nr. {number}",
-    "empty": "Oppdragsplanlegging er ikke tilgjengelig ennå. Det kommer i et senere steg.",
+    "empty": "Dine egne oppdrag vises her i et senere steg.",
     "greeting": "Hei, {name}",
     "numbersTitle": "Nøkkeltall",
     "membersLabel": "Personer i teamet",
@@ -128,7 +133,9 @@
     "stepVehicles": "Legg til maskinene dine",
     "customersLabel": "Kunder",
     "customersDetail": "Aktive",
-    "stepCustomers": "Legg til kundene dine"
+    "stepCustomers": "Legg til kundene dine",
+    "jobsLabel": "Kommende oppdrag",
+    "jobsDetail": "{count, plural, =0 {Alle er planlagt} one {# ikke planlagt ennå} other {# ikke planlagt ennå}}"
   },
   "Roles": {
     "owner": "Eier",
@@ -340,7 +347,7 @@
       "alreadyMember": "Du hører allerede til et firma.",
       "unknown": "Kunne ikke bli med. Prøv igjen."
     },
-    "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den i denne nettleseren for å fullføre. Du er allerede medlem av firmaet. Hvis lenken åpnes i en annen app, logg inn her med e-post og passord."
+    "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den for å fullføre, på hvilken som helst enhet. Du er allerede medlem av firmaet."
   },
   "Footer": {
     "text": "Maskinflyt · Laget for norske entreprenører"
@@ -380,5 +387,90 @@
     "by": "Lagt til av {name} · {date}",
     "on": "Lagt til {date}",
     "formerMember": "et tidligere medlem"
+  },
+  "Jobs": {
+    "title": "Oppdrag",
+    "lead": "Oppdrag for {company}: for hvem, hvor, når og med hvilken maskin.",
+    "addTitle": "Nytt oppdrag",
+    "addLead": "Fyll inn det kunden ba om. Maskin og sjåfør kan velges nå eller senere.",
+    "addSubmit": "Legg til oppdrag",
+    "added": "Oppdrag {number} er lagt til.",
+    "jobTitle": "Oppdrag {number}",
+    "numberShort": "Nr. {number}",
+    "detailsTitle": "Detaljer",
+    "save": "Lagre endringer",
+    "saved": "Endringene er lagret.",
+    "back": "Alle oppdrag",
+    "customer": "Kunde",
+    "chooseCustomer": "Velg kunde",
+    "noCustomers": "Det finnes ingen kunder ennå. Legg til den første, og kom tilbake.",
+    "newCustomer": "Ny kunde",
+    "vehicle": "Maskin",
+    "driver": "Sjåfør",
+    "notChosen": "Ikke valgt ennå",
+    "inactiveOption": "{name} (inaktiv)",
+    "address": "Adresse",
+    "addressHint": "Hvor jobben er, for eksempel Storgata 1, 0155 Oslo.",
+    "siteContact": "Kontakt på stedet",
+    "siteContactHint": "Valgfritt, for eksempel Per, 912 34 567.",
+    "date": "Dato",
+    "startTime": "Fra",
+    "endTime": "Til",
+    "timeHint": "Lokal tid. Et oppdrag varer høyst én dag.",
+    "description": "Hva skal gjøres",
+    "descriptionHint": "Valgfritt: last, vekt, adkomst, hva som må med.",
+    "priceTitle": "Pris",
+    "priceCustomer": "{amount} per time (kundens egen pris)",
+    "priceUsual": "{amount} per time (maskinens vanlige pris)",
+    "priceNone": "Ingen pris: maskinen har ingen timepris.",
+    "priceNoMachine": "Prisen settes når en maskin er valgt.",
+    "priceLead": "Hentes fra kundens egen pris for maskinen, ellers maskinens vanlige pris, når maskin eller kunde lagres.",
+    "statuses": {
+      "new": "Ikke planlagt",
+      "planned": "Planlagt",
+      "done": "Utført",
+      "cancelled": "Avlyst"
+    },
+    "statusTitle": "Status",
+    "statusLead": {
+      "new": "Velg maskin og sjåfør, så er oppdraget planlagt.",
+      "planned": "Når jobben er gjort, merk oppdraget som utført.",
+      "done": "Oppdraget er utført.",
+      "cancelled": "Oppdraget er avlyst. Det beholdes og kan gjenopprettes."
+    },
+    "markDone": "Merk som utført",
+    "cancel": "Avlys oppdraget",
+    "restore": "Gjenopprett oppdraget",
+    "reopen": "Likevel ikke utført",
+    "listTitle": "Alle oppdrag",
+    "show": "Vis",
+    "upcoming": "Kommende",
+    "past": "Tidligere",
+    "count": "{count, plural, =0 {Ingen oppdrag} one {# oppdrag} other {# oppdrag}}",
+    "emptyUpcoming": "Ingen kommende oppdrag. Legg til et når en kunde ringer.",
+    "emptyPast": "Ingen tidligere oppdrag.",
+    "today": "I dag",
+    "tomorrow": "I morgen",
+    "noVehicle": "Ingen maskin",
+    "noDriver": "Ingen sjåfør",
+    "overlapTitle": "Allerede opptatt på dette tidspunktet",
+    "overlapLead": "Endre tid, maskin eller sjåfør, eller lagre likevel.",
+    "overlapVehicle": "{name} er på oppdrag {number} for {customer}, {time}.",
+    "overlapDriver": "{name} er på oppdrag {number} for {customer}, {time}.",
+    "saveAnyway": "Lagre likevel",
+    "errors": {
+      "customerRequired": "Velg en kunde.",
+      "choiceInvalid": "Velg fra listen.",
+      "addressRequired": "Skriv adressen (maks 200 tegn).",
+      "siteContactInvalid": "Bruk maks 100 tegn.",
+      "dateInvalid": "Velg en dato.",
+      "timeInvalid": "Skriv et klokkeslett, for eksempel 07:30.",
+      "endBeforeStart": "Slutten må være etter starten, samme dag.",
+      "descriptionTooLong": "Bruk maks 2000 tegn.",
+      "notAllowed": "Du har ikke tilgang til å gjøre dette.",
+      "notAvailable": "Kunden, maskinen eller sjåføren er ikke lenger tilgjengelig. Velg på nytt.",
+      "needsVehicleAndDriver": "Velg maskin og sjåfør først.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    }
   }
 }

@@ -66,3 +66,9 @@ export function canSeeCustomers(role: Role): boolean {
 export function canEditCustomerRates(role: Role): boolean {
   return role === "owner" || role === "admin";
 }
+
+// Mirror the RLS policies on jobs: owners, admins and dispatchers add, plan and
+// change jobs; drivers will see their own jobs in a later stage.
+export function canSeeJobs(role: Role): boolean {
+  return role !== "driver";
+}

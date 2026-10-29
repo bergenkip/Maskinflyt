@@ -168,3 +168,30 @@ export const ContactsIcon = (props: IconProps) => (
     <path d="M8.5 16.5c.6-1.8 1.9-2.8 3.5-2.8s2.9 1 3.5 2.8M2.5 8h2M2.5 12h2M2.5 16h2" />
   </Icon>
 );
+
+export const CalendarIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+    <path d="M3.5 10h17M8 3v4M16 3v4" />
+  </Icon>
+);
+
+export const XCircleIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="m9 9 6 6M15 9l-6 6" />
+  </Icon>
+);
+
+export const MapPinIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
+    <circle cx="12" cy="10" r="2.3" />
+  </Icon>
+);
+
+export const AlertIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M12 8v5M12 16h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+  </Icon>
+);

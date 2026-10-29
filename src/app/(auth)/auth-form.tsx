@@ -10,6 +10,8 @@ type Props = {
   mode: "signIn" | "signUp";
   action: (state: AuthFormState, formData: FormData) => Promise<AuthFormState>;
   initialError?: AuthFormState["error"];
+  // Good news to show above the form, for example after the e-mail was confirmed.
+  notice?: string;
   // Signing up from a personal invitation link: the account joins that company.
   invite?: string;
   // Where to go after signing in (a path on this site).
@@ -20,7 +22,7 @@ type Props = {
   switchHref?: string;
 };
 
-export function AuthForm({ mode, action, initialError, invite, next, intro, switchHref }: Props) {
+export function AuthForm({ mode, action, initialError, notice, invite, next, intro, switchHref }: Props) {
   const t = useTranslations("Auth");
   const tNav = useTranslations("Nav");
   const [state, formAction] = useActionState(action, { error: initialError });
@@ -50,6 +52,7 @@ export function AuthForm({ mode, action, initialError, invite, next, intro, swit
 
       <form action={formAction} noValidate className="grid gap-5 rounded-xl border border-border bg-surface p-5 sm:p-6">
         {state.error && <FormAlert kind="error">{t(`errors.${state.error}`)}</FormAlert>}
+        {notice && !state.error && <FormAlert kind="success">{notice}</FormAlert>}
         {invite && <input type="hidden" name="invite" value={invite} />}
         {next && <input type="hidden" name="next" value={next} />}
         {isSignUp && (

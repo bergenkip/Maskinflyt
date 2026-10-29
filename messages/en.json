@@ -39,7 +39,8 @@
     "mainMenu": "Main menu",
     "loading": "Loading …",
     "vehicles": "Machines",
-    "customers": "Customers"
+    "customers": "Customers",
+    "jobs": "Jobs"
   },
   "Auth": {
     "loginTitle": "Sign in to Maskinflyt",
@@ -54,7 +55,7 @@
     "noAccount": "No account yet?",
     "haveAccount": "Already have an account?",
     "checkEmailTitle": "Check your e-mail",
-    "checkEmailBody": "We sent a confirmation link to {email}. Open it on this device to finish creating your account.",
+    "checkEmailBody": "We sent a confirmation link to {email}. Open it to finish creating your account. It works on any device.",
     "notConfigured": "Sign-in is not available yet in this environment.",
     "errors": {
       "emailInvalid": "Enter a valid e-mail address.",
@@ -64,7 +65,7 @@
       "userExists": "An account with this e-mail already exists. Sign in instead.",
       "weakPassword": "This password is too weak. Choose a longer one.",
       "rateLimited": "Too many attempts. Wait a few minutes and try again.",
-      "linkInvalid": "The link is invalid or has expired. Sign in or create the account again.",
+      "linkInvalid": "The link is invalid or has expired. If you already confirmed your e-mail, sign in with your password.",
       "unknown": "Something went wrong. Try again.",
       "firstNameRequired": "Enter your first name.",
       "lastNameRequired": "Enter your last name.",
@@ -84,7 +85,11 @@
     "newPassword": "New password",
     "resetSubmit": "Save new password",
     "resetChecking": "Checking the link …",
-    "resetNoSession": "The link is invalid or has expired (each link works once). Ask for a new link."
+    "resetNoSession": "The link is invalid or has expired (each link works once). Ask for a new link.",
+    "confirmTitle": "Confirm e-mail",
+    "confirmChecking": "Confirming your e-mail …",
+    "confirmFailed": "The link is invalid or was already used. If you confirmed your e-mail earlier, just sign in with your e-mail and password.",
+    "emailConfirmed": "Your e-mail is confirmed. You can sign in now."
   },
   "Onboarding": {
     "title": "Create your company",
@@ -109,7 +114,7 @@
     "title": "Overview",
     "role": "Your role: {role}",
     "orgNumber": "Org. no. {number}",
-    "empty": "Job planning is not available yet. It comes in a later stage.",
+    "empty": "Your own jobs will show here in a later stage.",
     "greeting": "Hi, {name}",
     "numbersTitle": "Key figures",
     "membersLabel": "People in the team",
@@ -128,7 +133,9 @@
     "stepVehicles": "Add your machines",
     "customersLabel": "Customers",
     "customersDetail": "Active",
-    "stepCustomers": "Add your customers"
+    "stepCustomers": "Add your customers",
+    "jobsLabel": "Upcoming jobs",
+    "jobsDetail": "{count, plural, =0 {All are planned} one {# not planned yet} other {# not planned yet}}"
   },
   "Roles": {
     "owner": "Owner",
@@ -340,7 +347,7 @@
       "alreadyMember": "You already belong to a company.",
       "unknown": "Could not join. Try again."
     },
-    "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it in this browser to finish. You are already a member of the company. If the link opens in another app, sign in here with your e-mail and password."
+    "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it to finish, on any device. You are already a member of the company."
   },
   "Footer": {
     "text": "Maskinflyt · Built for Norwegian contractors"
@@ -380,5 +387,90 @@
     "by": "Added by {name} · {date}",
     "on": "Added {date}",
     "formerMember": "a former member"
+  },
+  "Jobs": {
+    "title": "Jobs",
+    "lead": "Jobs for {company}: for whom, where, when and with which machine.",
+    "addTitle": "New job",
+    "addLead": "Fill in what the customer asked for. The machine and the driver can be chosen now or later.",
+    "addSubmit": "Add job",
+    "added": "Job {number} was added.",
+    "jobTitle": "Job {number}",
+    "numberShort": "No. {number}",
+    "detailsTitle": "Details",
+    "save": "Save changes",
+    "saved": "Changes saved.",
+    "back": "All jobs",
+    "customer": "Customer",
+    "chooseCustomer": "Choose a customer",
+    "noCustomers": "There are no customers yet. Add the first one, then come back.",
+    "newCustomer": "New customer",
+    "vehicle": "Machine",
+    "driver": "Driver",
+    "notChosen": "Not chosen yet",
+    "inactiveOption": "{name} (inactive)",
+    "address": "Address",
+    "addressHint": "Where the work is, for example Storgata 1, 0155 Oslo.",
+    "siteContact": "Contact at the site",
+    "siteContactHint": "Optional, for example Per, 912 34 567.",
+    "date": "Date",
+    "startTime": "From",
+    "endTime": "To",
+    "timeHint": "Local time. A job lasts at most one day.",
+    "description": "What is to be done",
+    "descriptionHint": "Optional: loads, weights, access, what to bring.",
+    "priceTitle": "Price",
+    "priceCustomer": "{amount} per hour (the customer's own price)",
+    "priceUsual": "{amount} per hour (the machine's usual rate)",
+    "priceNone": "No price: the machine has no hourly rate.",
+    "priceNoMachine": "The price is set when a machine is chosen.",
+    "priceLead": "Taken from the customer's own price for the machine, or else the machine's usual rate, when the machine or customer is saved.",
+    "statuses": {
+      "new": "Not planned",
+      "planned": "Planned",
+      "done": "Done",
+      "cancelled": "Cancelled"
+    },
+    "statusTitle": "Status",
+    "statusLead": {
+      "new": "Choose a machine and a driver, and the job is planned.",
+      "planned": "When the work is done, mark the job as done.",
+      "done": "The job is done.",
+      "cancelled": "The job is cancelled. It is kept and can be restored."
+    },
+    "markDone": "Mark as done",
+    "cancel": "Cancel job",
+    "restore": "Restore job",
+    "reopen": "Not done after all",
+    "listTitle": "All jobs",
+    "show": "Show",
+    "upcoming": "Upcoming",
+    "past": "Earlier",
+    "count": "{count, plural, =0 {No jobs} one {# job} other {# jobs}}",
+    "emptyUpcoming": "No upcoming jobs. Add one when a customer calls.",
+    "emptyPast": "No earlier jobs.",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "noVehicle": "No machine",
+    "noDriver": "No driver",
+    "overlapTitle": "Already busy at this time",
+    "overlapLead": "Change the time, the machine or the driver, or save anyway.",
+    "overlapVehicle": "{name} is on job {number} for {customer}, {time}.",
+    "overlapDriver": "{name} is on job {number} for {customer}, {time}.",
+    "saveAnyway": "Save anyway",
+    "errors": {
+      "customerRequired": "Choose a customer.",
+      "choiceInvalid": "Choose from the list.",
+      "addressRequired": "Enter the address (at most 200 characters).",
+      "siteContactInvalid": "At most 100 characters.",
+      "dateInvalid": "Choose a date.",
+      "timeInvalid": "Enter a time, for example 07:30.",
+      "endBeforeStart": "The end must be after the start on the same day.",
+      "descriptionTooLong": "At most 2000 characters.",
+      "notAllowed": "You do not have permission to do this.",
+      "notAvailable": "The customer, machine or driver is no longer available. Choose again.",
+      "needsVehicleAndDriver": "Choose a machine and a driver first.",
+      "unknown": "Something went wrong. Try again."
+    }
   }
 }

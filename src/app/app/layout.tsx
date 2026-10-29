@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Brand } from "@/components/brand";
-import { AppNav } from "@/components/app-nav";
+import { AppNav, SettingsLink } from "@/components/app-nav";
 import { SignOutIcon } from "@/components/icons";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
-import { canSeeCustomers, canSeeVehicles, needsMfa } from "@/lib/roles";
+import { canSeeCustomers, canSeeJobs, canSeeVehicles, needsMfa } from "@/lib/roles";
 import { getUserId } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 
@@ -20,32 +20,36 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <header className="sticky top-0 z-20 border-b border-border bg-surface pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-x-4 px-4 py-2 sm:px-6 md:gap-x-1">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-x-4 px-4 py-2 sm:px-6 lg:gap-x-1">
           <Brand href="/app" label={t("dashboard")} />
-          {/* Phones: the menu is a tab bar at the bottom of the screen (see AppNav). */}
-          <div className="md:order-2 md:ml-auto">
+          {/* Phones and tablets: the menu is a tab bar at the bottom of the screen (see AppNav). */}
+          <div className="lg:order-2 lg:ml-auto">
             <AppNav
               labels={{
                 dashboard: t("dashboard"),
+                jobs: t("jobs"),
                 customers: t("customers"),
                 vehicles: t("vehicles"),
                 team: t("team"),
                 settings: t("settings"),
                 mainMenu: t("mainMenu"),
               }}
+              showJobs={!!membership && canSeeJobs(membership.role)}
               showCustomers={!!membership && canSeeCustomers(membership.role)}
               showVehicles={!!membership && canSeeVehicles(membership.role)}
             />
           </div>
-          <div className="md:order-3">
+          <div className="flex items-center gap-1 lg:order-3">
+            <SettingsLink label={t("settings")} />
             <form action={signOut}>
               <button
                 type="submit"
+                title={t("signOut")}
                 className="flex min-h-11 items-center gap-2 rounded-lg px-3 font-medium text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 <SignOutIcon />
-                {/* Tablets and phones in landscape: icon only, so the header fits one row. */}
-                <span className="md:max-lg:sr-only">{t("signOut")}</span>
+                {/* Computers: icon only, so the header with the whole menu fits one row. */}
+                <span className="lg:sr-only">{t("signOut")}</span>
               </button>
             </form>
           </div>
@@ -53,7 +57,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
       </header>
       {/* The header reaches the screen edges; the content keeps clear of the notch in landscape. */}
       <div className="flex flex-1 flex-col pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-6 md:pb-10">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-6 lg:pb-10">
           {children}
         </main>
       </div>

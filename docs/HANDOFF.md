@@ -52,6 +52,7 @@ Vėliau: importas iš Excel / Fiken / Tripletex, duomenys iš Brønnøysund paga
 `/forgot-password` siunčia nuorodą (`resetPasswordForEmail`; atsakymas vienodas, ar paskyra yra, ar ne).
 Nuoroda per `/auth/callback?next=/reset-password` prijungia ir atidaro `/reset-password` (naujas slaptažodis, min. 10 simbolių).
 Nuoroda veikia bet kurioje naršyklėje ar įrenginyje (implicit flow: žetonai URL fragmente, kaip antrojo žingsnio nuorodoje). Kiekviena nuoroda veikia vieną kartą. Prisijungimo formoje yra nuoroda „Pamiršote slaptažodį?“.
+Registracijos patvirtinimo nuoroda taip pat veikia bet kurioje naršyklėje: `signUp` siunčiamas implicit flow, nuoroda veda į `/confirm`, kuris paima žetonus iš fragmento ir atidaro `/app`. Senos nuorodos (`/auth/callback?next=/app`) vis dar priimamos.
 Testai: `e2e/password.spec.ts`.
 
 ## Kas pridėjo (2026-10-29)
@@ -61,5 +62,25 @@ Technika ir klientai turi `created_by` (migracija `20261029120000_added_by`). J�
 rodoma „Pridėjo Vardas Pavardė · data“. Vardai imami iš komandos sąrašo (`list_members`), todėl išėjęs žmogus
 rodomas kaip „buvęs narys“. Anksčiau pridėti įrašai neturi autoriaus ir rodo tik datą.
 
+## 4 etapas: užsakymai, 1 dalis (2026-10-29)
+
+- Migracija `20261029130000_jobs`: lentelė `jobs` (klientas, adresas, kontaktas vietoje, pradžia ir pabaiga,
+  technika, vairuotojas, aprašymas, būsena, kaina øre). Užsakymai neištrinami, tik atšaukiami.
+- Duomenų bazė pati nustato: numerį įmonėje (1, 2, 3 …), valandinę kainą (kliento kaina šiai technikai, kitaip
+  technikos įkainis; imama, kai išsaugoma technika ar klientas) ir būseną „new“ / „planned“ (suplanuotas, kai yra
+  ir technika, ir vairuotojas). „done“ reikalauja technikos ir vairuotojo. Naršyklė negali nustatyti kainos ar numerio.
+- RLS kaip klientams: owner, admin, dispatcher; owner ir admin su antruoju žingsniu. Vairuotojai užsakymų dar nemato.
+- Vairuotojas turi būti įmonės narys (FK į `memberships`); išėjusio nario užsakymai lieka be vairuotojo.
+- Laikas: įmonės laiko zona (`organizations.timezone`, Europe/Oslo), `src/lib/jobs.ts` (`fromLocalParts`,
+  `toLocalParts`, testai su laiko keitimu). Užsakymas trunka ne ilgiau kaip vieną dieną.
+- Persidengimas: jei ta pati technika ar vairuotojas tuo metu jau turi atvirą užsakymą, forma įspėja ir leidžia
+  „Vis tiek išsaugoti“.
+- Ekranai: `/app/jobs` (būsimi / ankstesni, sugrupuoti pagal dieną), `/app/jobs/new` (galima `?customer=`),
+  `/app/jobs/[id]` (duomenys, kaina, būsena). Apžvalgoje kortelė „Būsimi užsakymai“.
+- Meniu: telefone ir planšetėje (iki 1024 px) apatinė juosta su 5 punktais, nustatymai – krumpliaračio ikona viršuje.
+  Kompiuteryje visas meniu viršuje, „Atsijungti“ – tik ikona.
+- Testai: `14_jobs` (31 pgTAP), `src/lib/jobs.test.ts`, `e2e/jobs.spec.ts` (+ nuotraukos).
+
 ## Kitas etapas (siūlymas)
-1. Užsakymai ir kalendorius (klientas, adresas, laikas, mašina; kainai naudojamas kliento įkainis, jei jis yra).
+1. Užsakymai, 2 dalis: dienos ir savaitės kalendorius pagal techniką ir vairuotoją.
+2. Vairuotojo telefono vaizdas: mano šiandienos darbai, būsenos, darbo laikas.

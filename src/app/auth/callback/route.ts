@@ -4,8 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-// The confirmation e-mail links land here with a one-time code. An invitation
-// used at sign-up was already accepted when the account was created.
+// Older confirmation e-mail links land here with a one-time code (new ones go
+// to /confirm). An invitation used at sign-up was already accepted when the
+// account was created.
 // The second-step link lands here with ?approve=<request>, and the password-reset
 // link with ?next=/reset-password; their tokens are in the URL fragment, which
 // the browser keeps across these redirects.
@@ -21,6 +22,10 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) return NextResponse.redirect(`${origin}${next}`);
+    // Supabase issues the code only after confirming the e-mail, so a code that
+    // cannot be used here (another browser than the one that signed up) still
+    // means the address is confirmed: the person signs in with the password.
+    if (next === "/app") return NextResponse.redirect(`${origin}/login?confirmed=1`);
   }
 
   // The password-reset link (tokens in the fragment), or an older one that failed: that page sorts it out.
