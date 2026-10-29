@@ -53,7 +53,12 @@ type OverlapRow = {
 };
 
 // Open jobs of the same machine or driver that share any time with this one.
-async function findOverlaps(supabase: Supabase, organizationId: string, fields: JobFields, exceptId?: string) {
+async function findOverlaps(
+  supabase: Supabase,
+  organizationId: string,
+  fields: Pick<JobFields, "vehicle_id" | "driver_id" | "starts_at" | "ends_at">,
+  exceptId?: string,
+) {
   const who = [
     fields.vehicle_id && `vehicle_id.eq.${fields.vehicle_id}`,
     fields.driver_id && `driver_id.eq.${fields.driver_id}`,
@@ -190,4 +195,43 @@ export async function setJobStatus(_prev: JobStatusState, formData: FormData): P
 
   revalidatePath("/app", "layout");
   return {};
+}
+
+export type MoveJobResult = { ok?: true; overlaps?: Overlap[]; error?: "notAllowed" | "notMovable" | "unknown" };
+
+// From the calendar: a job dragged to another time or made longer or shorter.
+// The same double-booking warning as the form, unless the person saves anyway.
+export async function moveJob(id: string, startsAt: string, endsAt: string, saveAnyway = false): Promise<MoveJobResult> {
+  const start = Date.parse(startsAt);
+  const end = Date.parse(endsAt);
+  if (!uuid.test(id) || Number.isNaN(start) || Number.isNaN(end) || end <= start || end - start > 24 * 3_600_000) {
+    return { error: "unknown" };
+  }
+  const membership = await getCurrentMembership();
+  if (!membership) return { error: "notAllowed" };
+
+  const supabase = await createClient();
+  const { data: job } = await supabase
+    .from("jobs")
+    .select("status, vehicle_id, driver_id")
+    .eq("id", id)
+    .eq("organization_id", membership.organization.id)
+    .maybeSingle();
+  if (!job) return { error: "notAllowed" };
+  // Done and cancelled jobs keep their times.
+  if (job.status !== "new" && job.status !== "planned") return { error: "notMovable" };
+
+  const span = { starts_at: new Date(start).toISOString(), ends_at: new Date(end).toISOString() };
+  if (!saveAnyway) {
+    const fields = { ...span, vehicle_id: job.vehicle_id, driver_id: job.driver_id };
+    const overlaps = await findOverlaps(supabase, membership.organization.id, fields, id);
+    if (overlaps.length > 0) return { overlaps };
+  }
+
+  const { data, error } = await supabase.from("jobs").update(span).eq("id", id).select("id");
+  if (error) return { error: error.code === "42501" ? "notAllowed" : "unknown" };
+  if (!data || data.length === 0) return { error: "notAllowed" };
+
+  revalidatePath("/app", "layout");
+  return { ok: true };
 }
