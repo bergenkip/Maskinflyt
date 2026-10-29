@@ -163,7 +163,7 @@ for (const locale of locales) {
     test.setTimeout(150_000);
     const owner = await newPage(browser, baseURL!, locale);
     await signUp(owner.page, newEmail(`shots-customers-${locale}`), "Ingrid", "Ødegård-Kristiansen");
-    await createCompany(owner.page, `Sørlandets Kran- og Maskinentreprenør ${locale.toUpperCase()} AS`);
+    await createCompany(owner.page, `Vestlandets Kran- og Maskinentreprenør Kunder ${locale.toUpperCase()} AS`);
     await owner.page.goto("/app/vehicles");
     await addVehicle(owner.page, { type: "crane_truck_grab", name: "Scania R650 med Hiab X-HiPro 1058 og grabb", rate: "2 150" });
     await expect(owner.page.locator('[role="status"]')).toBeVisible();

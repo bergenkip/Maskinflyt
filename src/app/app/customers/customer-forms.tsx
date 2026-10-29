@@ -47,14 +47,14 @@ export function CustomerForm({ customer }: Props) {
               key={value}
               className="relative flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-border bg-surface px-3 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-1 has-[:focus-visible]:outline-accent"
             >
-              {/* The real radio covers the whole option, so all of it is the tap target. */}
+              {/* The real radio covers the whole option (border included), so all of it is the 44px tap target. */}
               <input
                 type="radio"
                 name="kind"
                 value={value}
                 checked={kind === value}
                 onChange={() => setKind(value)}
-                className="peer absolute inset-0 m-0 size-full cursor-pointer appearance-none rounded-lg opacity-0"
+                className="peer absolute -inset-px m-0 cursor-pointer appearance-none rounded-lg opacity-0"
               />
               {/* The chosen option shows a filled dot as well as the colour. */}
               <span
