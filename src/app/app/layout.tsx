@@ -28,6 +28,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
               labels={{
                 dashboard: t("dashboard"),
                 jobs: t("jobs"),
+                myJobs: t("myJobs"),
                 customers: t("customers"),
                 vehicles: t("vehicles"),
                 team: t("team"),
@@ -35,6 +36,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
                 mainMenu: t("mainMenu"),
               }}
               showJobs={!!membership && canSeeJobs(membership.role)}
+              showMyJobs={membership?.role === "driver"}
               showCustomers={!!membership && canSeeCustomers(membership.role)}
               showVehicles={!!membership && canSeeVehicles(membership.role)}
             />
