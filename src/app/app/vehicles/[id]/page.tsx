@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowRightIcon, CheckCircleIcon, PauseCircleIcon } from "@/components/icons";
+import { getAddedBy } from "@/lib/added-by";
 import { getCurrentMembership } from "@/lib/membership";
 import { canEditVehicles } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
@@ -25,9 +26,10 @@ export default async function VehiclePage({ params }: PageProps<"/app/vehicles/[
   if (!uuid.test(id)) notFound();
 
   const supabase = await createClient();
-  const [t, locale, { data }] = await Promise.all([
+  const [t, locale, addedBy, { data }] = await Promise.all([
     getTranslations("Vehicles"),
     getLocale(),
+    getAddedBy(membership.organization.id),
     // RLS returns nothing for another company's vehicle: it is "not found" here too.
     supabase.from("vehicles").select(vehicleColumns).eq("id", id).maybeSingle(),
   ]);
@@ -47,6 +49,8 @@ export default async function VehiclePage({ params }: PageProps<"/app/vehicles/[
         <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t("editTitle")}</p>
         {/* Vehicle names are data and are shown exactly as entered. */}
         <h1 className="text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">{vehicle.name}</h1>
+        {/* Person names are data and are shown exactly as entered. */}
+        <p className="text-sm text-muted [overflow-wrap:anywhere]">{addedBy(vehicle)}</p>
       </div>
 
       <section aria-label={t("editTitle")} className={sectionClass}>

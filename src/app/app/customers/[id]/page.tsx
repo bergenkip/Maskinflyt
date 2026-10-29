@@ -4,6 +4,7 @@ import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { FormAlert } from "@/components/form";
 import { CheckCircleIcon, PauseCircleIcon } from "@/components/icons";
 import { customerColumns, toCustomerFormValues, type Customer } from "@/lib/customers";
+import { getAddedBy } from "@/lib/added-by";
 import { getCurrentMembership } from "@/lib/membership";
 import { canEditCustomerRates, canSeeCustomers } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
@@ -31,10 +32,11 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
 
   const { organization, role } = membership;
   const supabase = await createClient();
-  const [t, format, locale, { data }, vehicles, rates] = await Promise.all([
+  const [t, format, locale, addedBy, { data }, vehicles, rates] = await Promise.all([
     getTranslations("Customers"),
     getFormatter(),
     getLocale(),
+    getAddedBy(organization.id),
     // RLS returns nothing for another company's customer: it is "not found" here too.
     supabase.from("customers").select(customerColumns).eq("id", id).maybeSingle(),
     supabase
@@ -67,6 +69,8 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
         <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t(`kinds.${customer.kind}`)}</p>
         {/* Customer names are data and are shown exactly as entered. */}
         <h1 className="text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">{customer.name}</h1>
+        {/* Person names are data and are shown exactly as entered. */}
+        <p className="text-sm text-muted [overflow-wrap:anywhere]">{addedBy(customer)}</p>
       </div>
 
       {added === "1" && <FormAlert kind="success">{t("added", { name: customer.name })}</FormAlert>}

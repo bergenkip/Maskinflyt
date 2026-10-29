@@ -93,9 +93,9 @@ export type CustomerFields = {
 };
 
 // A row as the pages read it.
-export type Customer = CustomerFields & { id: string; active: boolean };
+export type Customer = CustomerFields & { id: string; active: boolean; created_by: string | null; created_at: string };
 export const customerColumns =
-  "id, kind, name, org_number, contact_name, phone, email, invoice_email, street, postal_code, city, note, active";
+  "id, kind, name, org_number, contact_name, phone, email, invoice_email, street, postal_code, city, note, active, created_by, created_at";
 
 export function validateCustomer(formData: FormData): {
   values: CustomerFormValues;

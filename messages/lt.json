@@ -375,5 +375,10 @@
     "expired": "Nuoroda nebegalioja. Prisijungimo puslapyje paprašykite naujos.",
     "invalid": "Nuoroda netinkama arba jau panaudota. Prisijungimo puslapyje paprašykite naujos.",
     "error": "Kažkas nepavyko. Paprašykite naujos nuorodos ir bandykite dar kartą."
+  },
+  "AddedBy": {
+    "by": "Pridėjo {name} · {date}",
+    "on": "Pridėta {date}",
+    "formerMember": "buvęs narys"
   }
 }

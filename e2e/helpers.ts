@@ -177,7 +177,14 @@ export async function addVehicle(
 }
 
 // The owner invites a colleague with a role; returns the colleague's page, signed in.
-export async function inviteColleague(browser: Browser, baseURL: string, owner: Page, role: string) {
+export async function inviteColleague(
+  browser: Browser,
+  baseURL: string,
+  owner: Page,
+  role: string,
+  firstName?: string,
+  lastName?: string,
+) {
   await owner.goto("/app/team");
   await owner.getByLabel("Role", { exact: true }).selectOption(role);
   await owner.locator('main form button[type="submit"]').first().click();
@@ -185,7 +192,7 @@ export async function inviteColleague(browser: Browser, baseURL: string, owner: 
   await expect(link).toBeVisible();
   const colleague = await newPage(browser, baseURL, "en");
   await colleague.page.goto(new URL((await link.textContent())!.trim()).pathname);
-  await fillSignUp(colleague.page, newEmail(role));
+  await fillSignUp(colleague.page, newEmail(role), firstName, lastName);
   await colleague.page.waitForURL((url) => url.pathname === "/app");
   return colleague;
 }

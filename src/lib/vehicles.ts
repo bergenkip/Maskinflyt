@@ -118,8 +118,9 @@ export type VehicleFields = {
 };
 
 // A row as the pages read it.
-export type Vehicle = VehicleFields & { id: string; active: boolean };
-export const vehicleColumns = "id, type, type_name, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active";
+export type Vehicle = VehicleFields & { id: string; active: boolean; created_by: string | null; created_at: string };
+export const vehicleColumns =
+  "id, type, type_name, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active, created_by, created_at";
 
 export function validateVehicle(formData: FormData): {
   values: VehicleFormValues;
