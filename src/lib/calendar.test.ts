@@ -1,5 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { addDays, calendarRange, minutesOnDay, parseDate, visibleHours, weekNumber, weekStart } from "./calendar";
+import {
+  addDays,
+  addMonths,
+  calendarRange,
+  draggedSpan,
+  minutesOnDay,
+  parseDate,
+  snapMinutes,
+  visibleHours,
+  weekNumber,
+  weekStart,
+} from "./calendar";
 
 const oslo = "Europe/Oslo";
 
@@ -27,6 +38,13 @@ describe("dates", () => {
     expect(weekNumber(date)).toBe(week);
   });
 
+  it("adds months, keeping the day where it exists", () => {
+    expect(addMonths("2026-10-29", 1)).toBe("2026-11-29");
+    expect(addMonths("2026-01-31", 1)).toBe("2026-02-28");
+    expect(addMonths("2026-12-15", 1)).toBe("2027-01-15");
+    expect(addMonths("2026-01-15", -1)).toBe("2025-12-15");
+  });
+
   it("takes only real dates from the address", () => {
     expect(parseDate("2026-11-02", "x")).toBe("2026-11-02");
     expect(parseDate("2026-02-30", "x")).toBe("x");
@@ -48,6 +66,45 @@ describe("calendarRange", () => {
     expect(week.days).toEqual(["2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30", "2026-10-31", "2026-11-01"]);
     expect(week.from.toISOString()).toBe("2026-10-25T23:00:00.000Z");
     expect(week.to.toISOString()).toBe("2026-11-01T23:00:00.000Z");
+  });
+});
+
+describe("the month", () => {
+  it("shows whole weeks around the month", () => {
+    const october = calendarRange("2026-10-29", "month", oslo);
+    expect(october.days[0]).toBe("2026-09-28"); // the Monday before 1 October (a Thursday)
+    expect(october.days.at(-1)).toBe("2026-11-01"); // the Sunday after 31 October
+    expect(october.days).toHaveLength(35);
+    expect(october.from.toISOString()).toBe("2026-09-27T22:00:00.000Z");
+  });
+
+  it("has six weeks when the month needs them", () => {
+    const march = calendarRange("2027-03-10", "month", oslo); // 1 March 2027 is a Monday, 31 days
+    expect(march.days[0]).toBe("2027-03-01");
+    expect(march.days).toHaveLength(35);
+    const august = calendarRange("2026-08-01", "month", oslo); // starts on a Saturday
+    expect(august.days[0]).toBe("2026-07-27");
+    expect(august.days).toHaveLength(42);
+  });
+});
+
+describe("dragging on the day timeline", () => {
+  const job = { starts_at: "2026-11-02T06:00:00.000Z", ends_at: "2026-11-02T10:30:00.000Z" };
+
+  it("snaps to 15 minutes", () => {
+    expect(snapMinutes(7)).toBe(0);
+    expect(snapMinutes(8)).toBe(15);
+    expect(snapMinutes(-52)).toBe(-45);
+  });
+
+  it("moves the whole job, keeping its length", () => {
+    expect(draggedSpan(job, "move", 61)).toEqual({ starts_at: "2026-11-02T07:00:00.000Z", ends_at: "2026-11-02T11:30:00.000Z" });
+  });
+
+  it("changes only the end when resized, between 15 minutes and 24 hours", () => {
+    expect(draggedSpan(job, "resize", 30)).toEqual({ starts_at: job.starts_at, ends_at: "2026-11-02T11:00:00.000Z" });
+    expect(draggedSpan(job, "resize", -600).ends_at).toBe("2026-11-02T06:15:00.000Z");
+    expect(draggedSpan(job, "resize", 3000).ends_at).toBe("2026-11-03T06:00:00.000Z");
   });
 });
 

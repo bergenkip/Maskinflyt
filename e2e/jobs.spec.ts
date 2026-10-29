@@ -235,9 +235,11 @@ for (const locale of locales) {
     await expect(owner.page.getByRole("listitem").filter({ hasText: "Kokstad" })).toHaveCount(2);
     await shootAllWidths(owner.page, "jobs", locale);
     await owner.page.goto(`/app/jobs/calendar?date=${day}`);
-    await shootAllWidths(owner.page, "calendar-day", locale);
-    await owner.page.goto(`/app/jobs/calendar?date=${day}&view=week&by=driver`);
+    await shootAllWidths(owner.page, "calendar-month", locale);
+    await owner.page.goto(`/app/jobs/calendar?date=${day}&view=week`);
     await shootAllWidths(owner.page, "calendar-week", locale);
+    await owner.page.goto(`/app/jobs/calendar?date=${day}&view=day`);
+    await shootAllWidths(owner.page, "calendar-day", locale);
     await owner.page.goto("/app");
     await shootAllWidths(owner.page, "dashboard-jobs", locale);
 

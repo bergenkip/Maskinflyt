@@ -4,10 +4,8 @@
 
 import { fromLocalParts, toLocalParts } from "./jobs";
 
-export const calendarViews = ["day", "week"] as const;
+export const calendarViews = ["month", "week", "day"] as const;
 export type CalendarView = (typeof calendarViews)[number];
-export const calendarGroups = ["vehicle", "driver"] as const;
-export type CalendarGroup = (typeof calendarGroups)[number];
 
 const isoDate = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -22,6 +20,13 @@ export function weekStart(date: string): string {
   const [y, m, d] = date.split("-").map(Number);
   const weekday = (new Date(Date.UTC(y, m - 1, d)).getUTCDay() + 6) % 7; // Monday 0 … Sunday 6
   return addDays(date, -weekday);
+}
+
+// The same day n months later (or earlier), or the month's last day when it is shorter.
+export function addMonths(date: string, months: number): string {
+  const [y, m, d] = date.split("-").map(Number);
+  const last = new Date(Date.UTC(y, m - 1 + months + 1, 0)).getUTCDate();
+  return new Date(Date.UTC(y, m - 1 + months, Math.min(d, last))).toISOString().slice(0, 10);
 }
 
 // The ISO week number (Norwegians say "uke 44").
@@ -39,9 +44,20 @@ export function parseDate(value: unknown, fallback: string): string {
 }
 
 // The days a view shows, and the instants from the first midnight to the one after the last day.
+// A month shows whole weeks, Monday to Sunday, so it starts and ends with days of its neighbours.
 export function calendarRange(date: string, view: CalendarView, timeZone: string) {
-  const first = view === "week" ? weekStart(date) : date;
-  const days = Array.from({ length: view === "week" ? 7 : 1 }, (_, i) => addDays(first, i));
+  let first = date;
+  let count = 1;
+  if (view === "week") {
+    first = weekStart(date);
+    count = 7;
+  } else if (view === "month") {
+    const firstOfMonth = `${date.slice(0, 7)}-01`;
+    first = weekStart(firstOfMonth);
+    const lastOfMonth = addDays(addMonths(firstOfMonth, 1), -1);
+    count = Math.round((Date.parse(addDays(weekStart(lastOfMonth), 7)) - Date.parse(first)) / 86_400_000);
+  }
+  const days = Array.from({ length: count }, (_, i) => addDays(first, i));
   const after = addDays(days[days.length - 1], 1);
   return {
     days,
@@ -73,4 +89,34 @@ export function visibleHours(spans: { start: number; end: number }[]): { from: n
     to = Math.max(to, Math.ceil(span.end / 60));
   }
   return { from, to: Math.min(to, 24) };
+}
+
+// Dragging a job on the day timeline: moved whole ("move") or by its end ("resize"),
+// in steps of 15 minutes. A resized job stays between 15 minutes and 24 hours.
+export const DRAG_STEP_MINUTES = 15;
+
+export function snapMinutes(minutes: number): number {
+  return Math.round(minutes / DRAG_STEP_MINUTES) * DRAG_STEP_MINUTES || 0;
+}
+
+export function draggedSpan(job: { starts_at: string; ends_at: string }, mode: "move" | "resize", minutes: number) {
+  const start = Date.parse(job.starts_at);
+  const end = Date.parse(job.ends_at);
+  const shift = snapMinutes(minutes) * 60_000;
+  if (mode === "move") return { starts_at: new Date(start + shift).toISOString(), ends_at: new Date(end + shift).toISOString() };
+  const length = Math.min(Math.max(end + shift - start, DRAG_STEP_MINUTES * 60_000), 24 * 3_600_000);
+  return { starts_at: job.starts_at, ends_at: new Date(start + length).toISOString() };
+}
+
+// Puts overlapping jobs of one row on separate lanes, so a double booking shows as two bars.
+export function lanes<T extends { start: number; end: number }>(items: T[]): (T & { lane: number })[] {
+  const ends: number[] = [];
+  return [...items]
+    .sort((a, b) => a.start - b.start)
+    .map((item) => {
+      let lane = ends.findIndex((end) => end <= item.start);
+      if (lane === -1) lane = ends.length;
+      ends[lane] = item.end;
+      return { ...item, lane };
+    });
 }
