@@ -88,7 +88,8 @@
     "resetNoSession": "The link is invalid or has expired (each link works once). Ask for a new link.",
     "confirmTitle": "Confirm e-mail",
     "confirmChecking": "Confirming your e-mail …",
-    "confirmFailed": "The link is invalid or was already used. If you confirmed your e-mail earlier, just sign in with your e-mail and password."
+    "confirmFailed": "The link is invalid or was already used. If you confirmed your e-mail earlier, just sign in with your e-mail and password.",
+    "emailConfirmed": "Your e-mail is confirmed. You can sign in now."
   },
   "Onboarding": {
     "title": "Create your company",

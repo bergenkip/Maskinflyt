@@ -28,7 +28,13 @@ export function ConfirmPanel({ signedIn }: { signedIn: boolean }) {
     const result =
       accessToken && refreshToken ? confirmSignUp(accessToken, refreshToken) : Promise.resolve(signedIn && !linkFailed);
     result.then(
-      (ok) => (ok ? window.location.replace("/app") : setFailed(true)),
+      (ok) => {
+        if (ok) window.location.replace("/app");
+        // Supabase sends tokens only after confirming the e-mail, so the address
+        // is confirmed even when they no longer sign in: the password does.
+        else if (accessToken && refreshToken) window.location.replace("/login?confirmed=1");
+        else setFailed(true);
+      },
       () => setFailed(true),
     );
   }, [signedIn]);

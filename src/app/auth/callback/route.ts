@@ -22,6 +22,10 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) return NextResponse.redirect(`${origin}${next}`);
+    // Supabase issues the code only after confirming the e-mail, so a code that
+    // cannot be used here (another browser than the one that signed up) still
+    // means the address is confirmed: the person signs in with the password.
+    if (next === "/app") return NextResponse.redirect(`${origin}/login?confirmed=1`);
   }
 
   // The password-reset link (tokens in the fragment), or an older one that failed: that page sorts it out.

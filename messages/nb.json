@@ -88,7 +88,8 @@
     "resetNoSession": "Lenken er ugyldig eller utløpt (hver lenke virker én gang). Be om en ny lenke.",
     "confirmTitle": "Bekreft e-post",
     "confirmChecking": "Bekrefter e-posten din …",
-    "confirmFailed": "Lenken er ugyldig eller allerede brukt. Hvis du har bekreftet e-posten tidligere, logg inn med e-post og passord."
+    "confirmFailed": "Lenken er ugyldig eller allerede brukt. Hvis du har bekreftet e-posten tidligere, logg inn med e-post og passord.",
+    "emailConfirmed": "E-posten din er bekreftet. Du kan logge inn nå."
   },
   "Onboarding": {
     "title": "Opprett firmaet ditt",

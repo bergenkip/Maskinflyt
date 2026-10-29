@@ -12,17 +12,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
-  const { error, next } = await searchParams;
-  if (!getSupabaseEnv()) {
-    const t = await getTranslations("Auth");
-    return <FormAlert kind="error">{t("notConfigured")}</FormAlert>;
-  }
+  const { error, next, confirmed } = await searchParams;
+  const t = await getTranslations("Auth");
+  if (!getSupabaseEnv()) return <FormAlert kind="error">{t("notConfigured")}</FormAlert>;
   const nextPath = typeof next === "string" ? safeNextPath(next, "") : "";
   return (
     <AuthForm
       mode="signIn"
       action={signIn}
       initialError={error === "link" ? "linkInvalid" : undefined}
+      notice={confirmed === "1" ? t("emailConfirmed") : undefined}
       next={nextPath || undefined}
       // Coming from an invitation link: signing up goes back to that link.
       switchHref={nextPath.startsWith("/join/") ? nextPath : undefined}

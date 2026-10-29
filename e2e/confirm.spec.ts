@@ -58,3 +58,15 @@ for (const locale of locales) {
     await context.close();
   });
 }
+
+for (const locale of locales) {
+  test(`sign-in after a confirmed e-mail in ${locale} at every width`, async ({ browser, baseURL }) => {
+    const { context, page } = await newPage(browser, baseURL!, locale);
+    // Where an older confirmation link, opened in another browser, ends up.
+    await page.goto("/login?confirmed=1");
+    await expect(page.locator('main [role="status"]')).toBeVisible();
+    if (locale === "en") await expect(page.locator("main")).toContainText("Your e-mail is confirmed. You can sign in now.");
+    await shootAllWidths(page, "login-confirmed", locale);
+    await context.close();
+  });
+}
