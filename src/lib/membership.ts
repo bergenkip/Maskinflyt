@@ -7,7 +7,7 @@ export type { Role } from "./roles";
 
 export type CurrentMembership = {
   role: Role;
-  organization: { id: string; name: string; orgNumber: string | null; currency: string };
+  organization: { id: string; name: string; orgNumber: string | null; currency: string; timeZone: string };
 };
 
 // RLS lets a member read every membership of their company (for the team list),
@@ -20,7 +20,7 @@ export const getCurrentMembership = cache(async (): Promise<CurrentMembership | 
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("memberships")
-    .select("role, organizations(id, name, org_number, currency)")
+    .select("role, organizations(id, name, org_number, currency, timezone)")
     .eq("user_id", userId)
     .order("created_at")
     .limit(1)
@@ -32,10 +32,11 @@ export const getCurrentMembership = cache(async (): Promise<CurrentMembership | 
     name: string;
     org_number: string | null;
     currency: string;
+    timezone: string;
   } | null;
   if (!org) return null;
   return {
     role: data.role as Role,
-    organization: { id: org.id, name: org.name, orgNumber: org.org_number, currency: org.currency },
+    organization: { id: org.id, name: org.name, orgNumber: org.org_number, currency: org.currency, timeZone: org.timezone },
   };
 });

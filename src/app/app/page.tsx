@@ -3,10 +3,20 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { ArrowRightIcon, CheckCircleIcon, CircleIcon, ClockIcon, ContactsIcon, InboxIcon, TruckIcon, UsersIcon } from "@/components/icons";
+import {
+  ArrowRightIcon,
+  CalendarIcon,
+  CheckCircleIcon,
+  CircleIcon,
+  ClockIcon,
+  ContactsIcon,
+  InboxIcon,
+  TruckIcon,
+  UsersIcon,
+} from "@/components/icons";
 import { getCurrentMembership } from "@/lib/membership";
 import { formatOrgNumber } from "@/lib/org-number";
-import { canSeeCustomers, canSeeVehicles } from "@/lib/roles";
+import { canSeeCustomers, canSeeJobs, canSeeVehicles } from "@/lib/roles";
 import { createClient, getUserId } from "@/lib/supabase/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,44 +32,65 @@ export default async function DashboardPage() {
   const isAdmin = role === "owner" || role === "admin";
   const showVehicles = canSeeVehicles(role);
   const showCustomers = canSeeCustomers(role);
+  const showJobs = canSeeJobs(role);
   const supabase = await createClient();
   const userId = await getUserId();
 
   // Counts only (head: true returns no rows). RLS limits every query to this company;
-  // invitations are visible to owners and admins only, vehicles and customers not to drivers.
-  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers] = await Promise.all([
-    getTranslations("Dashboard"),
-    getTranslations("Roles"),
-    getFormatter(),
-    supabase.from("profiles").select("first_name").eq("id", userId ?? "").maybeSingle(),
-    supabase.from("memberships").select("user_id", { count: "exact", head: true }).eq("organization_id", organization.id),
-    isAdmin
-      ? supabase
-          .from("invitations")
-          .select("id", { count: "exact", head: true })
-          .eq("organization_id", organization.id)
-          .is("accepted_at", null)
-          .is("revoked_at", null)
-          .gt("expires_at", new Date().toISOString())
-      : null,
-    showVehicles
-      ? supabase.from("vehicles").select("id", { count: "exact", head: true }).eq("organization_id", organization.id)
-      : null,
-    showVehicles
-      ? supabase
-          .from("vehicles")
-          .select("id", { count: "exact", head: true })
-          .eq("organization_id", organization.id)
-          .eq("active", true)
-      : null,
-    showCustomers
-      ? supabase
-          .from("customers")
-          .select("id", { count: "exact", head: true })
-          .eq("organization_id", organization.id)
-          .eq("active", true)
-      : null,
-  ]);
+  // invitations are visible to owners and admins only; vehicles, customers and jobs not to drivers.
+  const now = new Date().toISOString();
+  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers, upcomingJobs, unplannedJobs, anyJob] =
+    await Promise.all([
+      getTranslations("Dashboard"),
+      getTranslations("Roles"),
+      getFormatter(),
+      supabase.from("profiles").select("first_name").eq("id", userId ?? "").maybeSingle(),
+      supabase.from("memberships").select("user_id", { count: "exact", head: true }).eq("organization_id", organization.id),
+      isAdmin
+        ? supabase
+            .from("invitations")
+            .select("id", { count: "exact", head: true })
+            .eq("organization_id", organization.id)
+            .is("accepted_at", null)
+            .is("revoked_at", null)
+            .gt("expires_at", new Date().toISOString())
+        : null,
+      showVehicles
+        ? supabase.from("vehicles").select("id", { count: "exact", head: true }).eq("organization_id", organization.id)
+        : null,
+      showVehicles
+        ? supabase
+            .from("vehicles")
+            .select("id", { count: "exact", head: true })
+            .eq("organization_id", organization.id)
+            .eq("active", true)
+        : null,
+      showCustomers
+        ? supabase
+            .from("customers")
+            .select("id", { count: "exact", head: true })
+            .eq("organization_id", organization.id)
+            .eq("active", true)
+        : null,
+      // Upcoming open jobs, and how many of them still lack a machine or a driver.
+      showJobs
+        ? supabase
+            .from("jobs")
+            .select("id", { count: "exact", head: true })
+            .eq("organization_id", organization.id)
+            .in("status", ["new", "planned"])
+            .gte("ends_at", now)
+        : null,
+      showJobs
+        ? supabase
+            .from("jobs")
+            .select("id", { count: "exact", head: true })
+            .eq("organization_id", organization.id)
+            .eq("status", "new")
+            .gte("ends_at", now)
+        : null,
+      showJobs ? supabase.from("jobs").select("id", { count: "exact", head: true }).eq("organization_id", organization.id) : null,
+    ]);
 
   // Names are data and are shown exactly as entered.
   const firstName = profile.data?.first_name?.trim();
@@ -130,21 +161,35 @@ export default async function DashboardPage() {
               />
             </li>
           )}
-          <li>
-            {/* Not a link: there is nothing to open yet. */}
-            <div className="flex h-full items-start gap-3 rounded-2xl border border-dashed border-border p-4">
-              <span className="flex size-11 items-center justify-center rounded-xl border border-border bg-surface text-muted">
-                <InboxIcon className="size-6" />
-              </span>
-              <div className="grid gap-1">
-                <p className="font-semibold">{t("ordersLabel")}</p>
-                <p className="flex items-center gap-1.5 text-sm text-muted">
-                  <ClockIcon className="size-4" />
-                  {t("empty")}
-                </p>
+          {upcomingJobs ? (
+            <li>
+              <StatCard
+                href="/app/jobs"
+                tone="bg-warning-soft text-warning"
+                icon={<CalendarIcon className="size-6" />}
+                value={upcomingJobs.error ? null : (upcomingJobs.count ?? 0)}
+                format={number}
+                label={t("jobsLabel")}
+                detail={unplannedJobs && !unplannedJobs.error ? t("jobsDetail", { count: unplannedJobs.count ?? 0 }) : undefined}
+              />
+            </li>
+          ) : (
+            <li>
+              {/* Not a link: drivers' own jobs come in a later stage. */}
+              <div className="flex h-full items-start gap-3 rounded-2xl border border-dashed border-border p-4">
+                <span className="flex size-11 items-center justify-center rounded-xl border border-border bg-surface text-muted">
+                  <InboxIcon className="size-6" />
+                </span>
+                <div className="grid gap-1">
+                  <p className="font-semibold">{t("ordersLabel")}</p>
+                  <p className="flex items-center gap-1.5 text-sm text-muted">
+                    <ClockIcon className="size-4" />
+                    {t("empty")}
+                  </p>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          )}
         </ul>
       </section>
 
@@ -160,7 +205,7 @@ export default async function DashboardPage() {
             <Step done={(vehicles?.count ?? 0) > 0} href="/app/vehicles" label={t("stepVehicles")} status={t} />
             <Step done={(customers?.count ?? 0) > 0} href="/app/customers" label={t("stepCustomers")} status={t} />
             <Step done={memberCount > 1} href="/app/team" label={t("stepTeam")} status={t} />
-            <Step later label={t("stepOrders")} status={t} />
+            <Step done={(anyJob?.count ?? 0) > 0} href="/app/jobs/new" label={t("stepOrders")} status={t} />
           </ol>
         </section>
       )}

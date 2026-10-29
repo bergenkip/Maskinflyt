@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { FormAlert } from "@/components/form";
-import { CheckCircleIcon, PauseCircleIcon } from "@/components/icons";
+import { CheckCircleIcon, PauseCircleIcon, PlusIcon } from "@/components/icons";
 import { customerColumns, toCustomerFormValues, type Customer } from "@/lib/customers";
 import { getAddedBy } from "@/lib/added-by";
 import { getCurrentMembership } from "@/lib/membership";
@@ -32,8 +33,9 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
 
   const { organization, role } = membership;
   const supabase = await createClient();
-  const [t, format, locale, addedBy, { data }, vehicles, rates] = await Promise.all([
+  const [t, tJobs, format, locale, addedBy, { data }, vehicles, rates] = await Promise.all([
     getTranslations("Customers"),
+    getTranslations("Jobs"),
     getFormatter(),
     getLocale(),
     getAddedBy(organization.id),
@@ -71,6 +73,15 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
         <h1 className="text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">{customer.name}</h1>
         {/* Person names are data and are shown exactly as entered. */}
         <p className="text-sm text-muted [overflow-wrap:anywhere]">{addedBy(customer)}</p>
+        {customer.active && (
+          <Link
+            href={`/app/jobs/new?customer=${customer.id}`}
+            className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border px-4 font-medium hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+          >
+            <PlusIcon className="size-5" />
+            {tJobs("addTitle")}
+          </Link>
+        )}
       </div>
 
       {added === "1" && <FormAlert kind="success">{t("added", { name: customer.name })}</FormAlert>}
