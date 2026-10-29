@@ -83,7 +83,8 @@
     "resetLead": "Paskyrai <strong>{email}</strong>.",
     "newPassword": "Naujas slaptažodis",
     "resetSubmit": "Išsaugoti naują slaptažodį",
-    "resetNoSession": "Nuoroda neteisinga, nebegalioja arba atidaryta kitoje naršyklėje. Paprašykite naujos nuorodos ir atidarykite ją šioje naršyklėje."
+    "resetChecking": "Tikrinama nuoroda …",
+    "resetNoSession": "Nuoroda neteisinga arba nebegalioja (kiekviena nuoroda veikia vieną kartą). Paprašykite naujos nuorodos."
   },
   "Onboarding": {
     "title": "Sukurkite savo įmonę",

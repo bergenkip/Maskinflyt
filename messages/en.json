@@ -83,7 +83,8 @@
     "resetLead": "For the account <strong>{email}</strong>.",
     "newPassword": "New password",
     "resetSubmit": "Save new password",
-    "resetNoSession": "The link is invalid, has expired or was opened in another browser. Ask for a new link and open it in this browser."
+    "resetChecking": "Checking the link …",
+    "resetNoSession": "The link is invalid or has expired (each link works once). Ask for a new link."
   },
   "Onboarding": {
     "title": "Create your company",

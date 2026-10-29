@@ -34,19 +34,24 @@ test("a forgotten password is replaced through an e-mailed link", async ({ brows
   await page.getByRole("button", { name: "Send link" }).click();
   await expect(page.getByRole("status")).toContainText(email);
   const link = await newMailLink(email, before);
-
-  // The link opens the new-password form for this account.
-  await page.goto(link);
-  await page.waitForURL((url) => url.pathname === "/reset-password");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Choose a new password");
-  await expect(page.getByText(email)).toBeVisible();
-  await page.getByLabel("New password").fill("short");
-  await page.getByRole("button", { name: "Save new password" }).click();
-  await expect(page.getByText("The password must be at least 10 characters.")).toBeVisible();
-  await page.getByLabel("New password").fill(newPassword);
-  await page.getByRole("button", { name: "Save new password" }).click();
-  await page.waitForURL((url) => url.pathname.startsWith("/app"));
   await context.close();
+
+  // The link works in another browser too (say, the phone's mail app), and
+  // opens the new-password form for this account.
+  const other = await newPage(browser, baseURL!, "en");
+  await other.page.goto(link);
+  await other.page.waitForURL((url) => url.pathname === "/reset-password");
+  await expect(other.page.getByRole("heading", { level: 1 })).toHaveText("Choose a new password");
+  await expect(other.page.getByText(email)).toBeVisible();
+  // The link's tokens do not stay in the address bar.
+  expect(new URL(other.page.url()).hash).toBe("");
+  await other.page.getByLabel("New password").fill("short");
+  await other.page.getByRole("button", { name: "Save new password" }).click();
+  await expect(other.page.getByText("The password must be at least 10 characters.")).toBeVisible();
+  await other.page.getByLabel("New password").fill(newPassword);
+  await other.page.getByRole("button", { name: "Save new password" }).click();
+  await other.page.waitForURL((url) => url.pathname.startsWith("/app"));
+  await other.context.close();
 
   // The old password no longer works; the new one does.
   const later = await newPage(browser, baseURL!, "en");

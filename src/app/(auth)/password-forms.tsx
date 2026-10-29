@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
 import {
   requestPasswordReset,
+  startPasswordReset,
   updatePassword,
   type ForgotPasswordState,
   type ResetPasswordState,
@@ -64,7 +65,45 @@ export function ForgotPasswordForm() {
   );
 }
 
-export function ResetPasswordForm({ email }: { email: string }) {
+// Where the e-mailed link lands, in whatever browser or device opened it.
+// `email` is the account already signed in here (say, after a reload), if any.
+export function ResetPasswordPanel({ email }: { email: string | null }) {
+  const t = useTranslations("Auth");
+  const started = useRef(false);
+  // undefined: still checking the link; null: no valid link or session.
+  const [account, setAccount] = useState<string | null | undefined>(undefined);
+
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
+    // The link's tokens arrive in the URL fragment. Take them and remove them
+    // from the address bar and history right away.
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const accessToken = fragment.get("access_token");
+    const refreshToken = fragment.get("refresh_token");
+    const failed = fragment.has("error");
+    if (window.location.hash) window.history.replaceState(null, "", window.location.pathname);
+    // Without tokens: a used or expired link says so in the fragment; otherwise a session from earlier may do.
+    const result = accessToken && refreshToken ? startPasswordReset(accessToken, refreshToken) : Promise.resolve(failed ? null : email);
+    result.then(setAccount, () => setAccount(null));
+  }, [email]);
+
+  if (account === undefined) return <p role="status" className="text-muted">{t("resetChecking")}</p>;
+  if (account) return <ResetPasswordForm email={account} />;
+  return (
+    <div className="grid gap-3">
+      <h1 className="text-2xl font-semibold tracking-tight text-balance">{t("resetTitle")}</h1>
+      <FormAlert kind="error">{t("resetNoSession")}</FormAlert>
+      <p>
+        <Link href="/forgot-password" className={linkClass}>
+          {t("forgotSubmit")}
+        </Link>
+      </p>
+    </div>
+  );
+}
+
+function ResetPasswordForm({ email }: { email: string }) {
   const t = useTranslations("Auth");
   const [state, action] = useActionState<ResetPasswordState, FormData>(updatePassword, {});
 

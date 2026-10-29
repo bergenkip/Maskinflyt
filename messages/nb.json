@@ -83,7 +83,8 @@
     "resetLead": "For kontoen <strong>{email}</strong>.",
     "newPassword": "Nytt passord",
     "resetSubmit": "Lagre nytt passord",
-    "resetNoSession": "Lenken er ugyldig, utløpt eller åpnet i en annen nettleser. Be om en ny lenke og åpne den i denne nettleseren."
+    "resetChecking": "Sjekker lenken …",
+    "resetNoSession": "Lenken er ugyldig eller utløpt (hver lenke virker én gang). Be om en ny lenke."
   },
   "Onboarding": {
     "title": "Opprett firmaet ditt",

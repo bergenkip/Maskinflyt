@@ -4,10 +4,11 @@ import { createClient } from "@/lib/supabase/server";
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-// The confirmation and password-reset e-mail links land here with a one-time code. An invitation
+// The confirmation e-mail links land here with a one-time code. An invitation
 // used at sign-up was already accepted when the account was created.
-// The second-step link lands here with ?approve=<request>; its tokens are in
-// the URL fragment, which the browser keeps across this redirect.
+// The second-step link lands here with ?approve=<request>, and the password-reset
+// link with ?next=/reset-password; their tokens are in the URL fragment, which
+// the browser keeps across these redirects.
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl;
   const approve = searchParams.get("approve");
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
     if (!error) return NextResponse.redirect(`${origin}${next}`);
   }
 
-  // A failed password-reset link: that page explains it and offers a new link.
+  // The password-reset link (tokens in the fragment), or an older one that failed: that page sorts it out.
   if (next === "/reset-password") return NextResponse.redirect(`${origin}/reset-password`);
   return NextResponse.redirect(`${origin}/login?error=link`);
 }

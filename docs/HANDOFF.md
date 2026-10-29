@@ -51,7 +51,7 @@ Vėliau: importas iš Excel / Fiken / Tripletex, duomenys iš Brønnøysund paga
 ## Slaptažodžio atkūrimas (2026-10-29)
 `/forgot-password` siunčia nuorodą (`resetPasswordForEmail`; atsakymas vienodas, ar paskyra yra, ar ne).
 Nuoroda per `/auth/callback?next=/reset-password` prijungia ir atidaro `/reset-password` (naujas slaptažodis, min. 10 simbolių).
-Nuoroda veikia toje pačioje naršyklėje, kurioje jos paprašyta (PKCE). Prisijungimo formoje yra nuoroda „Pamiršote slaptažodį?“.
+Nuoroda veikia bet kurioje naršyklėje ar įrenginyje (implicit flow: žetonai URL fragmente, kaip antrojo žingsnio nuorodoje). Kiekviena nuoroda veikia vieną kartą. Prisijungimo formoje yra nuoroda „Pamiršote slaptažodį?“.
 Testai: `e2e/password.spec.ts`.
 
 ## Kitas etapas (siūlymas)
