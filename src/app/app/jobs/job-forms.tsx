@@ -1,11 +1,19 @@
 "use client";
 
 import { useFormatter, useTranslations } from "next-intl";
-import { useActionState, type ReactNode } from "react";
+import { useActionState, useRef, useState, type ReactNode, type Ref } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
-import { AlertIcon } from "@/components/icons";
-import { MAX_DESCRIPTION_LENGTH, type JobFormValues, type JobStatus } from "@/lib/jobs";
-import { addJob, setJobStatus, updateJob, type JobFormState, type JobStatusState } from "./actions";
+import { AlertIcon, ClockIcon } from "@/components/icons";
+import { durationMinuteSteps, MAX_DESCRIPTION_LENGTH, NEW_CUSTOMER, type JobFormValues, type JobStatus } from "@/lib/jobs";
+import {
+  addJob,
+  setJobStatus,
+  updateJob,
+  type JobFormState,
+  type JobStatusState,
+  type NewCustomerValues,
+} from "./actions";
+import type { Suggestion } from "./options";
 
 const selectClass =
   "min-h-11 w-full min-w-0 rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent aria-invalid:border-danger";
@@ -18,6 +26,8 @@ type Props = {
   customers: Option[];
   vehicles: Option[];
   drivers: Option[];
+  // The machine to suggest when someone is chosen as driver, by user id.
+  suggestions: Record<string, Suggestion>;
   timeZone: string;
   // A new job: the values to start from (today's date, a chosen customer).
   initial?: Partial<JobFormValues>;
@@ -25,9 +35,10 @@ type Props = {
   job?: { id: string; values: JobFormValues };
 };
 
-export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }: Props) {
+export function JobForm({ customers, vehicles, drivers, suggestions, timeZone, initial, job }: Props) {
   const t = useTranslations("Jobs");
   const tAuth = useTranslations("Auth");
+  const tCustomers = useTranslations("Customers");
   const format = useFormatter();
   const [state, action] = useActionState<JobFormState, FormData>(job ? updateJob : addJob, {});
   const values: Partial<JobFormValues> = state.values ?? job?.values ?? initial ?? {};
@@ -35,7 +46,36 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
     const code = state.fieldErrors?.[key];
     return code && t(`errors.${code}`);
   };
+  const customerError = (key: keyof NewCustomerValues) => {
+    const code = state.customerFieldErrors?.[key];
+    return code && tCustomers(`errors.${code}`);
+  };
+
+  // What was chosen since the form was last sent; each answer from the server
+  // starts again from the values it sent back.
+  const [customerChoice, setCustomerChoice] = useState({ state, value: values.customerId ?? "" });
+  const customerId = customerChoice.state === state ? customerChoice.value : (values.customerId ?? "");
+  const [suggested, setSuggested] = useState<{ state: JobFormState; driver: string; suggestion: Suggestion } | null>(null);
+  const suggestion = suggested?.state === state ? suggested : null;
+  const vehicleRef = useRef<HTMLSelectElement>(null);
+
+  // A driver's main (or usual) machine is filled in when no machine is chosen
+  // yet, or the one there was filled in the same way; it can still be changed.
+  const chooseDriver = (driverId: string) => {
+    const next = suggestions[driverId];
+    const select = vehicleRef.current;
+    if (!next || !select || (select.value !== "" && select.value !== suggestion?.suggestion.vehicleId)) {
+      setSuggested(null);
+      return;
+    }
+    select.value = next.vehicleId;
+    setSuggested({ state, driver: drivers.find((d) => d.id === driverId)?.name ?? "", suggestion: next });
+  };
+
   const optionLabel = (option: Option) => (option.active === false ? t("inactiveOption", { name: option.name }) : option.name);
+  const minuteSteps: string[] = [...durationMinuteSteps];
+  if (values.durationMinutes && !minuteSteps.includes(values.durationMinutes)) minuteSteps.push(values.durationMinutes);
+  const newCustomer = state.newCustomer;
 
   return (
     <form action={action} noValidate className="grid gap-6">
@@ -50,11 +90,13 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
             id="job-customer"
             label={t("customer")}
             defaultValue={values.customerId ?? ""}
+            onChange={(value) => setCustomerChoice({ state, value })}
             error={error("customerId")}
           >
             <option value="" disabled>
               {t("chooseCustomer")}
             </option>
+            <option value={NEW_CUSTOMER}>{t("newCustomerOption")}</option>
             {customers.map((option) => (
               <option key={option.id} value={option.id}>
                 {optionLabel(option)}
@@ -62,6 +104,56 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
             ))}
           </Select>
         </div>
+
+        {customerId === NEW_CUSTOMER && (
+          <fieldset className="grid gap-4 rounded-lg border border-border p-4 sm:col-span-2 sm:grid-cols-2">
+            <legend className="px-1 font-semibold">{t("newCustomerTitle")}</legend>
+            <p className="-mt-1 text-sm text-muted sm:col-span-2">{t("newCustomerLead")}</p>
+            <Select
+              name="newCustomerKind"
+              id="job-new-customer-kind"
+              label={tCustomers("kind")}
+              defaultValue={newCustomer?.kind || "company"}
+              error={customerError("kind")}
+            >
+              <option value="company">{tCustomers("kinds.company")}</option>
+              <option value="private">{tCustomers("kinds.private")}</option>
+            </Select>
+            <Field
+              name="newCustomerName"
+              id="job-new-customer-name"
+              label={t("newCustomerName")}
+              required
+              maxLength={120}
+              autoComplete="off"
+              defaultValue={newCustomer?.name}
+              error={customerError("name")}
+            />
+            <Field
+              name="newCustomerPhone"
+              id="job-new-customer-phone"
+              type="tel"
+              inputMode="tel"
+              label={tCustomers("phone")}
+              autoComplete="off"
+              defaultValue={newCustomer?.phone}
+              error={customerError("phone")}
+            />
+            <Field
+              name="newCustomerEmail"
+              id="job-new-customer-email"
+              type="email"
+              inputMode="email"
+              autoCapitalize="none"
+              spellCheck={false}
+              label={tCustomers("email")}
+              autoComplete="off"
+              defaultValue={newCustomer?.email}
+              error={customerError("email")}
+            />
+          </fieldset>
+        )}
+
         <div className="sm:col-span-2">
           <Field
             name="address"
@@ -75,48 +167,85 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
             error={error("address")}
           />
         </div>
-        {/* Phones: the date on its own row, the two times side by side under it. */}
-        <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:col-span-2 sm:grid-cols-3 sm:gap-x-5">
-          <div className="col-span-2 sm:col-span-1">
+        <Field
+          name="date"
+          id="job-date"
+          type="date"
+          label={t("date")}
+          required
+          defaultValue={values.date}
+          error={error("date")}
+        />
+        <Field
+          name="startTime"
+          id="job-start"
+          type="time"
+          label={t("startTime")}
+          hint={t("timeHint")}
+          required
+          defaultValue={values.startTime}
+          error={error("startTime")}
+        />
+
+        <fieldset className="grid gap-1.5 sm:col-span-2" aria-describedby="job-duration-hint">
+          <legend className="mb-1.5 font-medium">{t("duration")}</legend>
+          <div className="grid grid-cols-2 gap-3 sm:max-w-sm">
             <Field
-              name="date"
-              id="job-date"
-              type="date"
-              label={t("date")}
-              required
-              defaultValue={values.date}
-              error={error("date")}
+              name="durationHours"
+              id="job-duration-hours"
+              label={t("durationHours")}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={2}
+              autoComplete="off"
+              defaultValue={values.durationHours}
+              aria-invalid={error("durationHours") ? true : undefined}
+              aria-describedby={error("durationHours") ? "job-duration-error" : undefined}
             />
+            <Select
+              name="durationMinutes"
+              id="job-duration-minutes"
+              label={t("durationMinutes")}
+              defaultValue={values.durationMinutes || "0"}
+            >
+              {minuteSteps.map((minutes) => (
+                <option key={minutes} value={minutes}>
+                  {t("minutesOption", { minutes })}
+                </option>
+              ))}
+            </Select>
           </div>
+          <p id="job-duration-hint" className="flex items-start gap-1.5 text-sm text-muted">
+            <ClockIcon className="mt-0.5 size-4 shrink-0" />
+            {t("durationHint")}
+          </p>
+          {error("durationHours") && (
+            <p id="job-duration-error" className="text-sm font-medium text-danger">
+              {error("durationHours")}
+            </p>
+          )}
+        </fieldset>
+        <div className="sm:col-span-2">
           <Field
-            name="startTime"
-            id="job-start"
-            type="time"
-            label={t("startTime")}
-            required
-            defaultValue={values.startTime}
-            error={error("startTime")}
+            name="timeNote"
+            id="job-time-note"
+            label={t("timeNote")}
+            hint={t("timeNoteHint")}
+            maxLength={200}
+            autoComplete="off"
+            defaultValue={values.timeNote}
+            error={error("timeNote")}
           />
-          <Field
-            name="endTime"
-            id="job-end"
-            type="time"
-            label={t("endTime")}
-            required
-            defaultValue={values.endTime}
-            error={error("endTime")}
-          />
-          <p className="col-span-2 -mt-3 text-sm text-muted sm:col-span-3">{t("timeHint")}</p>
         </div>
-        <Select name="vehicleId" id="job-vehicle" label={t("vehicle")} defaultValue={values.vehicleId ?? ""} error={error("vehicleId")}>
-          <option value="">{t("notChosen")}</option>
-          {vehicles.map((option) => (
-            <option key={option.id} value={option.id}>
-              {optionLabel(option)}
-            </option>
-          ))}
-        </Select>
-        <Select name="driverId" id="job-driver" label={t("driver")} defaultValue={values.driverId ?? ""} error={error("driverId")}>
+
+        <Select
+          name="driverId"
+          id="job-driver"
+          label={t("driver")}
+          defaultValue={values.driverId ?? ""}
+          onChange={chooseDriver}
+          error={error("driverId")}
+        >
           <option value="">{t("notChosen")}</option>
           {drivers.map((option) => (
             <option key={option.id} value={option.id}>
@@ -124,6 +253,32 @@ export function JobForm({ customers, vehicles, drivers, timeZone, initial, job }
             </option>
           ))}
         </Select>
+        <div className="grid content-start gap-1.5">
+          <Select
+            name="vehicleId"
+            id="job-vehicle"
+            label={t("vehicle")}
+            defaultValue={values.vehicleId ?? ""}
+            selectRef={vehicleRef}
+            onChange={() => setSuggested(null)}
+            error={error("vehicleId")}
+          >
+            <option value="">{t("notChosen")}</option>
+            {vehicles.map((option) => (
+              <option key={option.id} value={option.id}>
+                {optionLabel(option)}
+              </option>
+            ))}
+          </Select>
+          {suggestion && (
+            // Person names are data and are shown exactly as entered.
+            <p role="status" className="text-sm text-muted [overflow-wrap:anywhere]">
+              {t(suggestion.suggestion.reason === "main" ? "vehicleSuggestedMain" : "vehicleSuggestedUsual", {
+                name: suggestion.driver,
+              })}
+            </p>
+          )}
+        </div>
         <div className="sm:col-span-2">
           <Field
             name="siteContact"
@@ -195,6 +350,8 @@ function Select({
   id,
   label,
   defaultValue,
+  onChange,
+  selectRef,
   error,
   children,
 }: {
@@ -202,6 +359,8 @@ function Select({
   id: string;
   label: string;
   defaultValue: string;
+  onChange?: (value: string) => void;
+  selectRef?: Ref<HTMLSelectElement>;
   error?: string;
   children: ReactNode;
 }) {
@@ -216,9 +375,11 @@ function Select({
           renders it afresh with the values the action sent back. */}
       <select
         key={defaultValue}
+        ref={selectRef}
         id={id}
         name={name}
         defaultValue={defaultValue}
+        onChange={onChange && ((event) => onChange(event.target.value))}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
         className={selectClass}

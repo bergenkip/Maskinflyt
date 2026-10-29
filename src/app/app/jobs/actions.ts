@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { validateJob, type JobFieldError, type JobFields, type JobFormValues } from "@/lib/jobs";
+import { validateCustomer, type CustomerFieldError, type CustomerFormValues } from "@/lib/customers";
+import { NEW_CUSTOMER, validateJob, type JobFieldError, type JobFields, type JobFormValues } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import { createClient } from "@/lib/supabase/server";
 
@@ -26,6 +27,9 @@ export type JobFormState = {
   // The machine or driver is already on another job at that time.
   overlaps?: Overlap[];
   savedAt?: number;
+  // The customer being added with the job, and what is wrong with it.
+  newCustomer?: NewCustomerValues;
+  customerFieldErrors?: Partial<Record<keyof CustomerFormValues, CustomerFieldError>>;
 };
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -91,45 +95,63 @@ async function findOverlaps(supabase: Supabase, organizationId: string, fields: 
   });
 }
 
-export async function addJob(_prev: JobFormState, formData: FormData): Promise<JobFormState> {
-  const membership = await getCurrentMembership();
-  if (!membership) redirect("/app/onboarding");
-  const { organization } = membership;
+// The customer added together with a job (customer "new"): only what is
+// needed on the phone; the rest can be filled in on the customer's page.
+export type NewCustomerValues = { kind: string; name: string; phone: string; email: string };
+const newCustomerFields = { kind: "newCustomerKind", name: "newCustomerName", phone: "newCustomerPhone", email: "newCustomerEmail" } as const;
 
-  const { values, fieldErrors, fields } = validateJob(formData, organization.timeZone);
-  if (!fields) return { values, fieldErrors };
-
-  const supabase = await createClient();
-  if (formData.get("confirmOverlap") !== "1") {
-    const overlaps = await findOverlaps(supabase, organization.id, fields);
-    if (overlaps.length > 0) return { values, overlaps };
-  }
-
-  const { data, error } = await supabase
-    .from("jobs")
-    .insert({ ...fields, organization_id: organization.id })
-    .select("id")
-    .single();
-  if (error) return mapError(values, error);
-
-  revalidatePath("/app", "layout");
-  redirect(`/app/jobs/${data.id}?added=1`);
+function readNewCustomer(formData: FormData) {
+  const data = new FormData();
+  for (const [key, field] of Object.entries(newCustomerFields)) data.set(key, String(formData.get(field) ?? ""));
+  const { values, fieldErrors, fields } = validateCustomer(data);
+  const shown: NewCustomerValues = { kind: values.kind, name: values.name, phone: values.phone, email: values.email };
+  return { values: shown, fieldErrors, fields };
 }
 
-export async function updateJob(_prev: JobFormState, formData: FormData): Promise<JobFormState> {
+// Adds (no id) or changes a job. A new customer is added first, once the job
+// itself is known to be valid and free of clashes, so a refused job leaves no
+// customer behind; if the job still fails after that, the form keeps the new
+// customer chosen and nothing is added twice.
+async function saveJob(formData: FormData, id?: string): Promise<JobFormState> {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
   const { organization } = membership;
 
-  const id = String(formData.get("id") ?? "");
   const { values, fieldErrors, fields } = validateJob(formData, organization.timeZone);
-  if (!fields) return { values, fieldErrors };
-  if (!uuid.test(id)) return { values, error: "unknown" };
+  const isNew = values.customerId === NEW_CUSTOMER;
+  const customer = isNew ? readNewCustomer(formData) : undefined;
+  if (!fields || customer?.fieldErrors) {
+    return { values, fieldErrors, newCustomer: customer?.values, customerFieldErrors: customer?.fieldErrors };
+  }
+  if (id !== undefined && !uuid.test(id)) return { values, error: "unknown" };
 
   const supabase = await createClient();
   if (formData.get("confirmOverlap") !== "1") {
     const overlaps = await findOverlaps(supabase, organization.id, fields, id);
-    if (overlaps.length > 0) return { values, overlaps };
+    if (overlaps.length > 0) return { values, overlaps, newCustomer: customer?.values };
+  }
+
+  if (customer?.fields) {
+    const { data, error } = await supabase
+      .from("customers")
+      .insert({ ...customer.fields, organization_id: organization.id })
+      .select("id")
+      .single();
+    if (error) return { ...mapError(values, error), newCustomer: customer.values };
+    fields.customer_id = data.id;
+    values.customerId = data.id;
+    revalidatePath("/app/customers", "layout");
+  }
+
+  if (id === undefined) {
+    const { data, error } = await supabase
+      .from("jobs")
+      .insert({ ...fields, organization_id: organization.id })
+      .select("id")
+      .single();
+    if (error) return mapError(values, error);
+    revalidatePath("/app", "layout");
+    redirect(`/app/jobs/${data.id}?added=1`);
   }
 
   // RLS hides rows the person may not change, so no row back means not allowed.
@@ -139,6 +161,14 @@ export async function updateJob(_prev: JobFormState, formData: FormData): Promis
 
   revalidatePath("/app", "layout");
   return { values, savedAt: Date.now() };
+}
+
+export async function addJob(_prev: JobFormState, formData: FormData): Promise<JobFormState> {
+  return saveJob(formData);
+}
+
+export async function updateJob(_prev: JobFormState, formData: FormData): Promise<JobFormState> {
+  return saveJob(formData, String(formData.get("id") ?? ""));
 }
 
 export type JobStatusState = { error?: "notAllowed" | "needsVehicleAndDriver" | "unknown" };

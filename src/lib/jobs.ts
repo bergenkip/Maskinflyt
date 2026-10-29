@@ -11,7 +11,14 @@ export function isJobStatus(value: unknown): value is JobStatus {
 
 const MAX_ADDRESS_LENGTH = 200;
 const MAX_SITE_CONTACT_LENGTH = 100;
+const MAX_TIME_NOTE_LENGTH = 200;
 export const MAX_DESCRIPTION_LENGTH = 2000;
+// The longest expected duration, as the database allows (24 hours).
+export const MAX_DURATION_HOURS = 24;
+// The quarter hours offered for the expected duration.
+export const durationMinuteSteps = ["0", "15", "30", "45"] as const;
+// Chosen in the customer list when the customer is new and added with the job.
+export const NEW_CUSTOMER = "new";
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // Local time ---------------------------------------------------------------
@@ -68,7 +75,9 @@ export type JobFormValues = {
   siteContact: string;
   date: string;
   startTime: string;
-  endTime: string;
+  durationHours: string;
+  durationMinutes: string;
+  timeNote: string;
   description: string;
 };
 
@@ -79,7 +88,8 @@ export type JobFieldError =
   | "siteContactInvalid"
   | "dateInvalid"
   | "timeInvalid"
-  | "endBeforeStart"
+  | "durationInvalid"
+  | "timeNoteTooLong"
   | "descriptionTooLong";
 
 export type JobFields = {
@@ -90,9 +100,12 @@ export type JobFields = {
   site_contact: string | null;
   starts_at: string;
   ends_at: string;
+  time_note: string | null;
   description: string | null;
 };
 
+// The customer may be NEW_CUSTOMER; the action then adds the customer first
+// and puts its id in customer_id.
 export function validateJob(
   formData: FormData,
   timeZone: string,
@@ -106,26 +119,30 @@ export function validateJob(
     siteContact: text("siteContact").replace(/\s+/g, " "),
     date: text("date"),
     startTime: text("startTime"),
-    endTime: text("endTime"),
+    durationHours: text("durationHours"),
+    durationMinutes: text("durationMinutes"),
+    timeNote: text("timeNote").replace(/\s+/g, " "),
     // Line breaks in the description are kept; only the ends are trimmed.
     description: String(formData.get("description") ?? "").trim(),
   };
   const fieldErrors: Partial<Record<keyof JobFormValues, JobFieldError>> = {};
 
-  if (!uuid.test(values.customerId)) fieldErrors.customerId = "customerRequired";
+  if (!uuid.test(values.customerId) && values.customerId !== NEW_CUSTOMER) fieldErrors.customerId = "customerRequired";
   if (values.vehicleId && !uuid.test(values.vehicleId)) fieldErrors.vehicleId = "choiceInvalid";
   if (values.driverId && !uuid.test(values.driverId)) fieldErrors.driverId = "choiceInvalid";
   if (values.address.length < 1 || values.address.length > MAX_ADDRESS_LENGTH) fieldErrors.address = "addressRequired";
   if (values.siteContact.length > MAX_SITE_CONTACT_LENGTH) fieldErrors.siteContact = "siteContactInvalid";
+  if (values.timeNote.length > MAX_TIME_NOTE_LENGTH) fieldErrors.timeNote = "timeNoteTooLong";
   if (values.description.length > MAX_DESCRIPTION_LENGTH) fieldErrors.description = "descriptionTooLong";
 
   const validDate = fromLocalParts(values.date, "12:00", timeZone) !== undefined;
   if (!validDate) fieldErrors.date = "dateInvalid";
   const startsAt = validDate ? fromLocalParts(values.date, values.startTime, timeZone) : undefined;
-  const endsAt = validDate ? fromLocalParts(values.date, values.endTime, timeZone) : undefined;
   if (validDate && !startsAt) fieldErrors.startTime = "timeInvalid";
-  if (validDate && !endsAt) fieldErrors.endTime = "timeInvalid";
-  if (startsAt && endsAt && endsAt <= startsAt) fieldErrors.endTime = "endBeforeStart";
+  const minutes = durationToMinutes(values.durationHours, values.durationMinutes);
+  if (minutes === undefined) fieldErrors.durationHours = "durationInvalid";
+  // Counted in real time, so a job over the night the clocks change lasts as long as it says.
+  const endsAt = startsAt && minutes !== undefined ? new Date(startsAt.getTime() + minutes * 60_000) : undefined;
 
   if (Object.keys(fieldErrors).length > 0 || !startsAt || !endsAt) return { values, fieldErrors };
   return {
@@ -138,9 +155,20 @@ export function validateJob(
       site_contact: values.siteContact || null,
       starts_at: startsAt.toISOString(),
       ends_at: endsAt.toISOString(),
+      time_note: values.timeNote || null,
       description: values.description || null,
     },
   };
+}
+
+// The expected duration in minutes from the form's whole hours and minutes, or
+// undefined when it is not between a quarter hour and 24 hours.
+export function durationToMinutes(hours: string, minutes: string): number | undefined {
+  const h = hours === "" ? "0" : hours;
+  const m = minutes === "" ? "0" : minutes;
+  if (!/^\d{1,2}$/.test(h) || !/^\d{1,2}$/.test(m) || Number(m) > 59) return undefined;
+  const total = Number(h) * 60 + Number(m);
+  return total >= 15 && total <= MAX_DURATION_HOURS * 60 ? total : undefined;
 }
 
 // A row as the pages read it.
@@ -154,12 +182,12 @@ export type Job = JobFields & {
   created_at: string;
 };
 export const jobColumns =
-  "id, number, customer_id, vehicle_id, driver_id, address, site_contact, starts_at, ends_at, description, status, hourly_rate, customer_rate, created_by, created_at";
+  "id, number, customer_id, vehicle_id, driver_id, address, site_contact, starts_at, ends_at, time_note, description, status, hourly_rate, customer_rate, created_by, created_at";
 
 // A stored job as form text, in the company's local time.
 export function toJobFormValues(job: Job, timeZone: string): JobFormValues {
   const start = toLocalParts(new Date(job.starts_at), timeZone);
-  const end = toLocalParts(new Date(job.ends_at), timeZone);
+  const minutes = Math.round((Date.parse(job.ends_at) - Date.parse(job.starts_at)) / 60_000);
   return {
     customerId: job.customer_id,
     vehicleId: job.vehicle_id ?? "",
@@ -168,8 +196,9 @@ export function toJobFormValues(job: Job, timeZone: string): JobFormValues {
     siteContact: job.site_contact ?? "",
     date: start.date,
     startTime: start.time,
-    // A job that ends after midnight cannot be shown as one day; the form asks again.
-    endTime: end.date === start.date ? end.time : "",
+    durationHours: String(Math.floor(minutes / 60)),
+    durationMinutes: String(minutes % 60),
+    timeNote: job.time_note ?? "",
     description: job.description ?? "",
   };
 }

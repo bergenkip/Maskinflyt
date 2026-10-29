@@ -187,7 +187,11 @@
     },
     "linkCreated": "Nuoroda sukurta (rolė: {role}). Nukopijuokite ją dabar: saugumo sumetimais ji rodoma tik vieną kartą.",
     "invitationFor": "Kvietimas, rolė: {role}",
-    "created": "sukurta {date}"
+    "created": "sukurta {date}",
+    "mainMachineFor": "Pagrindinė {name} technika",
+    "mainMachineNone": "Nėra pagrindinės technikos",
+    "saveMainMachine": "Išsaugoti techniką",
+    "mainMachineSaved": "Pagrindinė technika išsaugota. Ji bus siūloma, kai šiam žmogui skirsite darbą."
   },
   "Customers": {
     "title": "Klientai",
@@ -403,8 +407,6 @@
     "back": "Visi užsakymai",
     "customer": "Klientas",
     "chooseCustomer": "Pasirinkite klientą",
-    "noCustomers": "Klientų dar nėra. Pridėkite pirmą ir grįžkite.",
-    "newCustomer": "Naujas klientas",
     "vehicle": "Technika",
     "driver": "Vairuotojas",
     "notChosen": "Dar nepasirinkta",
@@ -414,9 +416,8 @@
     "siteContact": "Kontaktas vietoje",
     "siteContactHint": "Neprivaloma, pvz., Per, 912 34 567.",
     "date": "Data",
-    "startTime": "Nuo",
-    "endTime": "Iki",
-    "timeHint": "Vietos laikas. Užsakymas trunka ne ilgiau kaip vieną dieną.",
+    "startTime": "Pradžia",
+    "timeHint": "Vietos laikas.",
     "description": "Ką reikia padaryti",
     "descriptionHint": "Neprivaloma: kroviniai, svoriai, privažiavimas, ką atsivežti.",
     "priceTitle": "Kaina",
@@ -465,12 +466,28 @@
       "siteContactInvalid": "Ne daugiau kaip 100 simbolių.",
       "dateInvalid": "Pasirinkite datą.",
       "timeInvalid": "Įveskite laiką, pvz., 07:30.",
-      "endBeforeStart": "Pabaiga turi būti po pradžios, tą pačią dieną.",
       "descriptionTooLong": "Ne daugiau kaip 2000 simbolių.",
       "notAllowed": "Jūs neturite teisės to daryti.",
       "notAvailable": "Klientas, technika ar vairuotojas nebepasiekiami. Pasirinkite iš naujo.",
       "needsVehicleAndDriver": "Pirmiausia pasirinkite techniką ir vairuotoją.",
-      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
-    }
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
+      "durationInvalid": "Įrašykite, kiek apytiksliai truks darbas: nuo 15 minučių iki 24 valandų, pvz. 4 val. 30 min.",
+      "timeNoteTooLong": "Ne daugiau kaip 200 simbolių."
+    },
+    "newCustomerOption": "+ Naujas klientas",
+    "newCustomerTitle": "Naujas klientas",
+    "newCustomerLead": "Išsaugomas kartu su užsakymu. Adresą, įmonės kodą ir kainas galėsite pridėti vėliau kliento puslapyje.",
+    "newCustomerName": "Pavadinimas arba vardas",
+    "duration": "Apytikslė trukmė",
+    "durationHours": "Valandos",
+    "durationMinutes": "Minutės",
+    "minutesOption": "{minutes} min.",
+    "durationHint": "Tai tik įvertis: darbas gali užtrukti ilgiau arba trumpiau. Technika ir vairuotojas užimami šiam laikui.",
+    "timeNote": "Pastaba apie laiką",
+    "timeNoteHint": "Nebūtina, pvz.: gali užtrukti iki vakaro, jei gruntas kietas.",
+    "vehicleSuggestedMain": "Įrašyta pagrindinė {name} technika. Galite pasirinkti kitą.",
+    "vehicleSuggestedUsual": "Įrašyta technika, kurią {name} vairuoja dažniausiai. Galite pasirinkti kitą.",
+    "aboutTime": "~{time}",
+    "untilAbout": "iki maždaug {time}"
   }
 }

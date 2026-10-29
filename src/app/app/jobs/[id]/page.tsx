@@ -89,6 +89,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
             customers={options.customers}
             vehicles={options.vehicles}
             drivers={options.drivers}
+            suggestions={options.suggestions}
             timeZone={organization.timeZone}
             job={{ id: job.id, values: toJobFormValues(job, organization.timeZone) }}
           />

@@ -187,7 +187,11 @@
     },
     "linkCreated": "Link created for a new {role}. Copy it now: for security it is shown only once.",
     "invitationFor": "Invitation as {role}",
-    "created": "created {date}"
+    "created": "created {date}",
+    "mainMachineFor": "Main machine for {name}",
+    "mainMachineNone": "No main machine",
+    "saveMainMachine": "Save machine",
+    "mainMachineSaved": "Main machine saved. It is suggested when this person gets a job."
   },
   "Customers": {
     "title": "Customers",
@@ -403,8 +407,6 @@
     "back": "All jobs",
     "customer": "Customer",
     "chooseCustomer": "Choose a customer",
-    "noCustomers": "There are no customers yet. Add the first one, then come back.",
-    "newCustomer": "New customer",
     "vehicle": "Machine",
     "driver": "Driver",
     "notChosen": "Not chosen yet",
@@ -414,9 +416,8 @@
     "siteContact": "Contact at the site",
     "siteContactHint": "Optional, for example Per, 912 34 567.",
     "date": "Date",
-    "startTime": "From",
-    "endTime": "To",
-    "timeHint": "Local time. A job lasts at most one day.",
+    "startTime": "Start",
+    "timeHint": "Local time.",
     "description": "What is to be done",
     "descriptionHint": "Optional: loads, weights, access, what to bring.",
     "priceTitle": "Price",
@@ -465,12 +466,28 @@
       "siteContactInvalid": "At most 100 characters.",
       "dateInvalid": "Choose a date.",
       "timeInvalid": "Enter a time, for example 07:30.",
-      "endBeforeStart": "The end must be after the start on the same day.",
       "descriptionTooLong": "At most 2000 characters.",
       "notAllowed": "You do not have permission to do this.",
       "notAvailable": "The customer, machine or driver is no longer available. Choose again.",
       "needsVehicleAndDriver": "Choose a machine and a driver first.",
-      "unknown": "Something went wrong. Try again."
-    }
+      "unknown": "Something went wrong. Try again.",
+      "durationInvalid": "Enter how long the job is expected to take: from 15 minutes to 24 hours, for example 4 hours 30 min.",
+      "timeNoteTooLong": "At most 200 characters."
+    },
+    "newCustomerOption": "+ New customer",
+    "newCustomerTitle": "New customer",
+    "newCustomerLead": "Saved together with the job. Address, organisation number and prices can be added on the customer's page later.",
+    "newCustomerName": "Name",
+    "duration": "Expected duration",
+    "durationHours": "Hours",
+    "durationMinutes": "Minutes",
+    "minutesOption": "{minutes} min",
+    "durationHint": "An estimate only: the job may take longer or shorter. The machine and driver are booked for this time.",
+    "timeNote": "Note on the time",
+    "timeNoteHint": "Optional, for example: may run until the afternoon if the ground is hard.",
+    "vehicleSuggestedMain": "{name}'s main machine was filled in. You can choose another.",
+    "vehicleSuggestedUsual": "The machine {name} drives most often was filled in. You can choose another.",
+    "aboutTime": "~{time}",
+    "untilAbout": "until about {time}"
   }
 }

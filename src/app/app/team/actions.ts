@@ -93,3 +93,19 @@ export async function revokeInvitation(_prev: TeamActionState, formData: FormDat
   revalidatePath("/app/team");
   return { done: true };
 }
+
+const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// The machine suggested when this person is chosen as a job's driver ("" for none).
+export async function setMainMachine(_prev: TeamActionState, formData: FormData): Promise<TeamActionState> {
+  const membershipId = String(formData.get("membershipId") ?? "");
+  const vehicleId = String(formData.get("vehicleId") ?? "");
+  if (!uuid.test(membershipId) || (vehicleId !== "" && !uuid.test(vehicleId))) return { error: "unknown" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_main_machine", { membership_id: membershipId, vehicle_id: vehicleId || null });
+  if (error) return mapTeamError(error);
+
+  revalidatePath("/app/team");
+  return { done: true };
+}

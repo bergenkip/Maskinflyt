@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { getCurrentMembership } from "@/lib/membership";
-import { assignableRoles, canManage, invitableRoles, isRole, type Role } from "@/lib/roles";
+import { assignableRoles, canChooseMainMachines, canManage, invitableRoles, isRole, type Role } from "@/lib/roles";
 import { createClient, getUserId } from "@/lib/supabase/server";
-import { InviteForm, RemoveMemberForm, RevokeInvitationForm, RoleForm } from "./team-forms";
+import { InviteForm, MainMachineForm, RemoveMemberForm, RevokeInvitationForm, RoleForm } from "./team-forms";
 
 type Member = { membership_id: string; user_id: string; email: string; full_name: string | null; role: Role };
 type Invitation = { id: string; role: string; created_at: string; expires_at: string };
+type MainMachine = { id: string; main_vehicle_id: string | null };
+type Vehicle = { id: string; name: string; active: boolean };
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Team");
@@ -25,8 +27,9 @@ export default async function TeamPage() {
   const supabase = await createClient();
   const userId = await getUserId();
   const mayInvite = invitableRoles(myRole).length > 0;
+  const mayChooseMachines = canChooseMainMachines(myRole);
 
-  const [members, invitations] = await Promise.all([
+  const [members, invitations, machines, vehicles] = await Promise.all([
     supabase.rpc("list_members", { org: organization.id }),
     mayInvite
       ? supabase
@@ -38,7 +41,18 @@ export default async function TeamPage() {
           .gt("expires_at", new Date().toISOString())
           .order("created_at", { ascending: false })
       : Promise.resolve({ data: [] as Invitation[] }),
+    // Each person's main machine, suggested when they get a job.
+    mayChooseMachines
+      ? supabase.from("memberships").select("id, main_vehicle_id").eq("organization_id", organization.id)
+      : Promise.resolve({ data: [] as MainMachine[] }),
+    mayChooseMachines
+      ? supabase.from("vehicles").select("id, name, active").eq("organization_id", organization.id).order("name")
+      : Promise.resolve({ data: [] as Vehicle[] }),
   ]);
+  const mainMachine = new Map(((machines.data ?? []) as MainMachine[]).map((row) => [row.id, row.main_vehicle_id ?? ""]));
+  const vehicleRows = (vehicles.data ?? []) as Vehicle[];
+  // Active machines, and the one someone already has even if it was switched off.
+  const machineOptions = (current: string) => vehicleRows.filter((vehicle) => vehicle.active || vehicle.id === current);
 
   const roleOptions = (list: string[]) => list.filter(isRole).map((value) => ({ value, label: tRoles(value) }));
 
@@ -101,6 +115,14 @@ export default async function TeamPage() {
                       />
                       <RemoveMemberForm membershipId={member.membership_id} name={name} />
                     </div>
+                  )}
+                  {mayChooseMachines && vehicleRows.length > 0 && (
+                    <MainMachineForm
+                      membershipId={member.membership_id}
+                      name={name}
+                      current={mainMachine.get(member.membership_id) ?? ""}
+                      vehicles={machineOptions(mainMachine.get(member.membership_id) ?? "")}
+                    />
                   )}
                 </li>
               );
