@@ -53,7 +53,7 @@ test("owner keeps customers and their own prices; a dispatcher adds customers bu
 }) => {
   test.setTimeout(180_000);
   const owner = await newPage(browser, baseURL!, "en");
-  await signUp(owner.page, newEmail("customers-owner"));
+  await signUp(owner.page, newEmail("customers-owner"), "Anna", "Berg");
   await createCompany(owner.page, newCompanyName("customers"));
   await owner.page.goto("/app/vehicles");
   await addVehicle(owner.page, { type: "crane_truck", name: "Kranbil 1", crane: "20", rate: "1450" });
@@ -88,6 +88,7 @@ test("owner keeps customers and their own prices; a dispatcher adds customers bu
   await owner.page.waitForURL(/\/app\/customers\/[0-9a-f-]{36}\?added=1$/);
   await expect(owner.page.getByRole("heading", { level: 1 })).toHaveText("Nordbygg AS");
   await expect(owner.page.getByText("Nordbygg AS was added. You can set the customer's own prices below.")).toBeVisible();
+  await expect(owner.page.getByText(/^Added by Anna Berg · /)).toBeVisible();
   await expect(owner.page.locator('input[name="phone"]')).toHaveValue("912 34 567");
   await expect(owner.page.locator('input[name="email"]')).toHaveValue("post@nordbygg.test");
 
@@ -135,12 +136,17 @@ test("owner keeps customers and their own prices; a dispatcher adds customers bu
   await expect(list.getByText("2 customers")).toBeVisible();
 
   // A dispatcher adds a customer taken by phone and reads the prices, but cannot change them.
-  const dispatcher = await inviteColleague(browser, baseURL!, owner.page, "dispatcher");
+  const dispatcher = await inviteColleague(browser, baseURL!, owner.page, "dispatcher", "Dina", "Dahl");
   await dispatcher.page.getByRole("link", { name: "Customers", exact: true }).click();
   await dispatcher.page.getByRole("link", { name: "Add a customer" }).click();
   await fillCustomer(dispatcher.page, { name: "Telefonkunde AS", phone: "22 33 44 55" });
   await expect(dispatcher.page.getByRole("heading", { level: 1 })).toHaveText("Telefonkunde AS");
+  await expect(dispatcher.page.getByText(/^Added by Dina Dahl · /)).toBeVisible();
   await dispatcher.page.getByRole("link", { name: "All customers" }).click();
+  // Who added each customer shows in the list too.
+  const listed = dispatcher.page.getByRole("listitem");
+  await expect(listed.filter({ hasText: "Telefonkunde AS" }).getByText(/^Added by Dina Dahl · /)).toBeVisible();
+  await expect(listed.filter({ hasText: "Nordbygg AS" }).getByText(/^Added by Anna Berg · /)).toBeVisible();
   await dispatcher.page.getByRole("link", { name: /Nordbygg AS/ }).click();
   const readOnlyPrices = dispatcher.page.getByRole("region", { name: "The customer's own prices" });
   await expect(readOnlyPrices.getByText("Only owners and administrators can change prices.")).toBeVisible();

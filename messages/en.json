@@ -375,5 +375,10 @@
     "expired": "This link has expired. Ask for a new link on the sign-in page.",
     "invalid": "This link is invalid or was already used. Ask for a new link on the sign-in page.",
     "error": "Something went wrong. Ask for a new link and try again."
+  },
+  "AddedBy": {
+    "by": "Added by {name} · {date}",
+    "on": "Added {date}",
+    "formerMember": "a former member"
   }
 }

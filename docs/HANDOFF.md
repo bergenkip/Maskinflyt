@@ -54,5 +54,12 @@ Nuoroda per `/auth/callback?next=/reset-password` prijungia ir atidaro `/reset-p
 Nuoroda veikia bet kurioje naršyklėje ar įrenginyje (implicit flow: žetonai URL fragmente, kaip antrojo žingsnio nuorodoje). Kiekviena nuoroda veikia vieną kartą. Prisijungimo formoje yra nuoroda „Pamiršote slaptažodį?“.
 Testai: `e2e/password.spec.ts`.
 
+## Kas pridėjo (2026-10-29)
+
+Technika ir klientai turi `created_by` (migracija `20261029120000_added_by`). Jį užpildo pati duomenų bazė
+(`default auth.uid()`), naršyklė jo negali nei nurodyti, nei pakeisti (testas `13_added_by`). Sąraše ir kortelėje
+rodoma „Pridėjo Vardas Pavardė · data“. Vardai imami iš komandos sąrašo (`list_members`), todėl išėjęs žmogus
+rodomas kaip „buvęs narys“. Anksčiau pridėti įrašai neturi autoriaus ir rodo tik datą.
+
 ## Kitas etapas (siūlymas)
 1. Užsakymai ir kalendorius (klientas, adresas, laikas, mašina; kainai naudojamas kliento įkainis, jei jis yra).

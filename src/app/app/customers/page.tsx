@@ -11,6 +11,7 @@ import {
   UserIcon,
 } from "@/components/icons";
 import { customerColumns, formatPhone, searchPattern, type Customer } from "@/lib/customers";
+import { getAddedBy } from "@/lib/added-by";
 import { getCurrentMembership } from "@/lib/membership";
 import { formatOrgNumber } from "@/lib/org-number";
 import { canSeeCustomers } from "@/lib/roles";
@@ -40,7 +41,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/app/cu
     .order("active", { ascending: false })
     .order("name");
   if (pattern) request = request.ilike("search", pattern);
-  const [t, result] = await Promise.all([getTranslations("Customers"), request]);
+  const [t, addedBy, result] = await Promise.all([getTranslations("Customers"), getAddedBy(organization.id), request]);
   const customers = (result.data ?? []) as Customer[];
 
   return (
@@ -155,6 +156,8 @@ export default async function CustomersPage({ searchParams }: PageProps<"/app/cu
                       {customer.contact_name && (
                         <span className="text-sm [overflow-wrap:anywhere]">{customer.contact_name}</span>
                       )}
+                      {/* Person names are data and are shown exactly as entered. */}
+                      <span className="text-sm text-muted [overflow-wrap:anywhere]">{addedBy(customer)}</span>
                     </span>
                     <ArrowRightIcon className="mt-3 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
                   </Link>

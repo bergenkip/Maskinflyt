@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { ArrowRightIcon, CheckCircleIcon, PauseCircleIcon, TruckIcon } from "@/components/icons";
+import { getAddedBy } from "@/lib/added-by";
 import { getCurrentMembership } from "@/lib/membership";
 import { canEditVehicles, canSeeVehicles } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
@@ -22,9 +23,10 @@ export default async function VehiclesPage() {
   const { organization, role } = membership;
   const mayEdit = canEditVehicles(role);
   const supabase = await createClient();
-  const [t, format, result] = await Promise.all([
+  const [t, format, addedBy, result] = await Promise.all([
     getTranslations("Vehicles"),
     getFormatter(),
+    getAddedBy(organization.id),
     // In use first, then by name.
     supabase
       .from("vehicles")
@@ -114,6 +116,8 @@ export default async function VehiclesPage() {
                         <span key={String(detail)}>{detail}</span>
                       ))}
                     </span>
+                    {/* Person names are data and are shown exactly as entered. */}
+                    <span className="text-sm text-muted [overflow-wrap:anywhere]">{addedBy(vehicle)}</span>
                   </span>
                 </>
               );

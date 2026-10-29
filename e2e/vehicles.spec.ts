@@ -41,6 +41,9 @@ test("owner adds, changes and switches off a machine; a dispatcher only reads; a
   await addVehicle(owner.page, { type: "crane_truck", name: "Kranbil 1", plates: plates.toLowerCase(), crane: "20,5", rate: "1 450,50" });
   await expect(owner.page.getByText("Kranbil 1 was added.")).toBeVisible();
   await expect(owner.page.locator('input[name="name"]')).toHaveValue("");
+  // Everyone sees who added a machine.
+  const kranbil = owner.page.getByRole("listitem").filter({ hasText: "Kranbil 1" });
+  await expect(kranbil.getByText(/^Added by Kari Nordmann · /)).toBeVisible();
   await addVehicle(owner.page, { type: "excavator", name: "Gravemaskin", rate: "" });
   await expect(owner.page.getByText("Gravemaskin was added.")).toBeVisible();
 

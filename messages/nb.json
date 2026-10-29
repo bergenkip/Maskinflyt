@@ -375,5 +375,10 @@
     "expired": "Lenken er utløpt. Be om en ny lenke på innloggingssiden.",
     "invalid": "Lenken er ugyldig eller allerede brukt. Be om en ny lenke på innloggingssiden.",
     "error": "Noe gikk galt. Be om en ny lenke og prøv igjen."
+  },
+  "AddedBy": {
+    "by": "Lagt til av {name} · {date}",
+    "on": "Lagt til {date}",
+    "formerMember": "et tidligere medlem"
   }
 }
