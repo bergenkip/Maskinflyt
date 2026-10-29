@@ -2,20 +2,24 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HomeIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
+import { ContactsIcon, HomeIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
 
 type Props = {
-  labels: { dashboard: string; vehicles: string; team: string; settings: string; mainMenu: string };
-  // Drivers do not see the machine list (they will see the machine of their own jobs).
+  labels: { dashboard: string; customers: string; vehicles: string; team: string; settings: string; mainMenu: string };
+  // Drivers see neither the customer nor the machine list (they will see those of their own jobs).
+  showCustomers: boolean;
   showVehicles: boolean;
 };
 
 // Phones: a tab bar fixed to the bottom of the screen, within thumb reach.
 // Tablet and computer: a row in the header.
-export function AppNav({ labels, showVehicles }: Props) {
+export function AppNav({ labels, showCustomers, showVehicles }: Props) {
   const pathname = usePathname();
   const links = [
     { href: "/app", label: labels.dashboard, icon: HomeIcon, active: pathname === "/app" },
+    ...(showCustomers
+      ? [{ href: "/app/customers", label: labels.customers, icon: ContactsIcon, active: pathname.startsWith("/app/customers") }]
+      : []),
     ...(showVehicles
       ? [{ href: "/app/vehicles", label: labels.vehicles, icon: TruckIcon, active: pathname.startsWith("/app/vehicles") }]
       : []),

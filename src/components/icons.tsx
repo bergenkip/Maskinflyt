@@ -153,3 +153,18 @@ export const ChevronDownIcon = (props: IconProps) => (
     <path d="M7 10l5 5 5-5" />
   </Icon>
 );
+
+export const UserIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <circle cx="12" cy="8" r="3.5" />
+    <path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5" />
+  </Icon>
+);
+
+export const ContactsIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <rect x="4.5" y="3.5" width="15" height="17" rx="2" />
+    <circle cx="12" cy="10" r="2.5" />
+    <path d="M8.5 16.5c.6-1.8 1.9-2.8 3.5-2.8s2.9 1 3.5 2.8M2.5 8h2M2.5 12h2M2.5 16h2" />
+  </Icon>
+);

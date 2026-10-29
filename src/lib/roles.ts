@@ -55,3 +55,14 @@ export function secondStepDone(claims: unknown): boolean {
     return method === "otp" || method === "magiclink" || method === "email/signup";
   });
 }
+
+// Mirror the RLS policies on customers: owners, admins and dispatchers add and
+// change customers (orders come in by phone); drivers do not see the list.
+export function canSeeCustomers(role: Role): boolean {
+  return role !== "driver";
+}
+
+// A customer's own prices are set by owners and admins; dispatchers read them.
+export function canEditCustomerRates(role: Role): boolean {
+  return role === "owner" || role === "admin";
+}
