@@ -122,7 +122,7 @@ test("a job is added, planned with a machine and a driver, warned about double b
   await expect(owner.page.getByRole("region", { name: "Status" }).getByText("The job is done.")).toBeVisible();
 
   // The overview counts the open upcoming jobs.
-  await owner.page.getByRole("link", { name: "Overview", exact: true }).click();
+  await owner.page.getByRole("navigation", { name: "Main menu" }).getByRole("link", { name: "Overview" }).click();
   await expect(owner.page.getByRole("link", { name: /Upcoming jobs/ })).toContainText("1 not planned yet");
 
   // A dispatcher plans jobs too; a driver has no menu entry, and the address leads back to the overview.
