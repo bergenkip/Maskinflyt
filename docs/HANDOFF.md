@@ -141,3 +141,9 @@ Migracija `20261103110000_job_files`, pgTAP `18_job_files` (23 testai).
      vairuotojas. Variantai: prisegti prie darbo ataskaitos ar sąskaitos juodraščio, arba saugi nuoroda klientui
      tik į jo darbą (atšaukiama, su galiojimo laiku). Prieš darant: nuspręsti su Li, kokį būdą renkamės,
      ir patikrinti GDPR (nuotraukose gali būti žmonių ar automobilių numerių).
+   - **Atlikto darbo taisymas prieš sąskaitą ir ginčas po jos** (Li prašymas 2026-11-03).
+     Baigtą darbą biuras gali papildyti (papildomos eilutės, medžiagos, laikas) iki sąskaitos juodraščio.
+     Klientas gali užginčyti išsiųstą sąskaitą, o biuras pataiso ir parengia naują. Norvegijoje išsiųstos
+     sąskaitos keisti negalima: daroma **kreditnota** (atšaukia seną) ir nauja sąskaita, abi su istorija
+     (bokføringsloven; patikrinti su buhalteriu). MVP etape sąskaitos **nesiunčiamos** (CLAUDE.md), todėl
+     pirmiausia: papildymas ir sąskaitos juodraštis; ginčas, kreditnota ir siuntimas (EHF) vėliau.
