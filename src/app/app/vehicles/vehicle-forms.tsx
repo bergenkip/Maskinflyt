@@ -3,7 +3,15 @@
 import { useTranslations } from "next-intl";
 import { useActionState, useState } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
-import { hasCrane, isVehicleType, vehicleTypes, type VehicleFormValues, type VehicleType } from "@/lib/vehicles";
+import {
+  eveningKinds,
+  hasCrane,
+  isVehicleType,
+  vehicleTypes,
+  type EveningKind,
+  type VehicleFormValues,
+  type VehicleType,
+} from "@/lib/vehicles";
 import {
   addVehicle,
   setVehicleActive,
@@ -39,6 +47,9 @@ function VehicleFields({
   const initialType = values && isVehicleType(values.type) ? values.type : "crane_truck";
   // Tracked, so the crane field appears and disappears with the type.
   const [type, setType] = useState<VehicleType>(initialType);
+  const initialEveningKind: EveningKind = values?.eveningKind === "rate" ? "rate" : "percent";
+  // Tracked, so the amount field says whether it wants percent or a price.
+  const [eveningKind, setEveningKind] = useState<EveningKind>(initialEveningKind);
   const error = (key: keyof VehicleFormValues) => {
     const code = state.fieldErrors?.[key];
     return code && t(`errors.${code}`);
@@ -156,6 +167,52 @@ function VehicleFields({
           error={error("minHours")}
         />
       </div>
+
+      {/* A higher rate from a time of day, e.g. +50 % after 15:00. */}
+      <fieldset className="grid gap-4 rounded-lg border border-border p-4">
+        <legend className="px-1 font-medium">{t("eveningTitle")}</legend>
+        <p className="-mt-2 text-sm text-muted">{t("eveningLead")}</p>
+        <div className="grid gap-5 sm:grid-cols-3">
+          <Field
+            name="eveningFrom"
+            id="vehicle-evening-from"
+            type="time"
+            label={t("eveningFrom")}
+            defaultValue={values?.eveningFrom}
+            error={error("eveningFrom")}
+          />
+          <div className="grid content-start gap-1.5">
+            <label htmlFor="vehicle-evening-kind" className="font-medium">
+              {t("eveningKind")}
+            </label>
+            {/* Not controlled, for the same reason as the type above. */}
+            <select
+              key={values?.eveningKind ?? "new"}
+              id="vehicle-evening-kind"
+              name="eveningKind"
+              defaultValue={initialEveningKind}
+              onChange={(event) => setEveningKind(event.target.value === "rate" ? "rate" : "percent")}
+              className={selectClass}
+            >
+              {eveningKinds.map((value) => (
+                <option key={value} value={value}>
+                  {t(`eveningKinds.${value}`)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Field
+            name="eveningValue"
+            id="vehicle-evening-value"
+            label={eveningKind === "rate" ? t("eveningRate", { currency }) : t("eveningPercent")}
+            inputMode={eveningKind === "rate" ? "decimal" : "numeric"}
+            autoComplete="off"
+            maxLength={12}
+            defaultValue={values?.eveningValue}
+            error={error("eveningValue") || error("eveningKind")}
+          />
+        </div>
+      </fieldset>
 
       <div>
         <SubmitButton pendingLabel={tAuth("pending")}>{vehicle ? t("save") : t("addSubmit")}</SubmitButton>

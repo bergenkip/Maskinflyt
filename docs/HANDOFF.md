@@ -114,5 +114,15 @@ Migracija `20261029180000_driver_job_progress`, pgTAP `16_driver_job_progress` (
 ## GPS sekimas (tyrimas 2026-10-29, ne teisinė išvada)
 Norvegijoje sutikimas darbo santykiuose paprastai nėra tinkamas pagrindas; pagrindas – teisėtas interesas (parko valdymas), Arbeidsmiljøloven 9 sk. (dalykinė priežastis, proporcingumas, aptarimas su darbuotojais prieš įvedant), tikslo ribojimas. Mūsų planas: įmonė įjungia pati, tik tarp „Pakeliui“ ir „Baigiau“, ženklas „Vieta perduodama“, ištrinama po 30 d., mato tik dispečeris, DPA su klientu. Prieš paleidimą – teisininko patikra.
 
+## 5 etapas: darbo laikas ir patvirtinimas, 2 dalis (2026-11-03)
+
+Migracija `20261103090000_job_time`, pgTAP `17_job_time` (27 testai).
+- Technikai: minimalus apmokestinamas laikas (buvo) ir **didesnis tarifas nuo valandos** (Li prašymas): `evening_from` + `evening_percent` (priedas %) arba `evening_rate` (kitas valandinis tarifas, øre). Taikomas nuo to laiko darbo pradžios dieną iki darbo pabaigos, ir po vidurnakčio.
+- Darbo laikas iš paspaudimų (`private.driver_time`): nuo „Važiuoju“ (be jo – „Atvykau“) iki „Baigiau“, sveikomis minutėmis, atėmus pertraukas.
+- Kaina skaičiuojama tik DB (`private.price_job_time`): pertraukos atimamos iš įprasto tarifo laiko pirmiausia; iki minimalaus laiko pridėtas laikas – įprastu tarifu; tarifai įrašomi patvirtinimo metu.
+- `job_times`: kiekvienas patvirtinimas – nauja eilutė (istorija), naujausia galioja. Skaito tik biuras (vairuotojas kainų nemato). `job_time_draft` – juodraštis iš paspaudimų; `approve_job_time` – tik biuras (savininkai/administratoriai su antru žingsniu), tik atliktam užsakymui; priežastis privaloma, jei laikas skiriasi nuo paspaudimų arba jau buvo patvirtintas.
+- Užsakymo puslapyje skiltis „Darbo laikas“ (patvirtinti, pataisyti, ankstesnės versijos); sąraše „Laikas laukia patvirtinimo“ / „Laikas patvirtintas“. Tik peržiūrai, jokių sąskaitų.
+- E2E `e2e/job-time.spec.ts`, nuotraukos `job-time`, `vehicles-evening`.
+
 ## Kitas etapas (siūlymas)
-1. Vairuotojo vaizdas, 2 dalis: darbo laikas iš žingsnių, dispečerio patvirtinimas, minimalus apmokestinamas laikas, nuotraukos, kliento parašas.
+1. Vairuotojo vaizdas, 3 dalis: nuotraukos iš objekto ir kliento parašas (privatus Storage bucket).

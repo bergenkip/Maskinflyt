@@ -84,6 +84,16 @@ export default async function VehiclesPage() {
                     })
                   : t("noRate"),
                 vehicle.min_billable_minutes > 0 && t("minimum", { hours: vehicle.min_billable_minutes / 60 }),
+                vehicle.evening_from &&
+                  t("evening", {
+                    time: vehicle.evening_from.slice(0, 5),
+                    rate:
+                      vehicle.evening_rate !== null
+                        ? t("perHour", {
+                            amount: format.number(vehicle.evening_rate / 100, { style: "currency", currency: organization.currency }),
+                          })
+                        : `+${vehicle.evening_percent} %`,
+                  }),
               ].filter(Boolean);
               // Vehicle names are data and are shown exactly as entered.
               const body = (

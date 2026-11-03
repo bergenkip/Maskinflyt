@@ -12,6 +12,7 @@ import { createClient } from "@/lib/supabase/server";
 import { BackLink } from "../back-link";
 import { JobForm, JobStatusForm } from "../job-forms";
 import { getJobOptions } from "../options";
+import { JobTimeSection } from "./job-time-section";
 import { ProgressBadge, progressIcon } from "../progress-badge";
 import { StatusBadge } from "../status-badge";
 
@@ -55,7 +56,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
   ]);
   const events = (eventsResult.data ?? []) as EventRow[];
   const when = (iso: string) =>
-    format.dateTime(new Date(iso), { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: organization.timeZone });
+    format.dateTime(new Date(iso), { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: organization.timeZone });
   const money = (ore: number) => format.number(ore / 100, { style: "currency", currency: organization.currency });
   const price =
     job.vehicle_id === null
@@ -151,6 +152,8 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
           </ol>
         )}
       </section>
+
+      <JobTimeSection job={job} organization={organization} />
 
       <section aria-labelledby="status-title" className={sectionClass}>
         <div className="grid gap-1">

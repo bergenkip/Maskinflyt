@@ -333,8 +333,22 @@
       "minHoursInvalid": "Įveskite valandas, pvz., 2 arba 1,5 (iki 24).",
       "notAllowed": "Jūs neturite teisės to daryti.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
-      "typeNameRequired": "Įrašykite tipą (iki 60 simbolių)."
-    }
+      "typeNameRequired": "Įrašykite tipą (iki 60 simbolių).",
+      "eveningFromInvalid": "Įveskite laiką, pvz., 15:00.",
+      "eveningKindRequired": "Pasirinkite priedą arba kitą valandinį tarifą.",
+      "eveningPercentInvalid": "Įveskite sveiką procentą nuo 1 iki 500, pvz., 50."
+    },
+    "eveningTitle": "Didesnis tarifas vėliau dieną (nebūtina)",
+    "eveningLead": "Pvz., +50 % po 15:00. Taikomas nuo to laiko iki darbo pabaigos, taip pat po vidurnakčio.",
+    "eveningFrom": "Nuo",
+    "eveningKind": "Kaip",
+    "eveningKinds": {
+      "percent": "Priedas procentais",
+      "rate": "Kitas valandinis tarifas"
+    },
+    "eveningPercent": "Priedas, %",
+    "eveningRate": "Didesnis valandinis tarifas, {currency}",
+    "evening": "Nuo {time}: {rate}"
   },
   "Join": {
     "title": "Jus pakvietė į Maskinflyt",
@@ -585,5 +599,59 @@
       "noteInvalid": "Parašykite pastabą iki 500 simbolių.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
     }
+  },
+  "JobTime": {
+    "title": "Darbo laikas",
+    "lead": "Suskaičiuota iš vairuotojo paspaudimų, su mašinos minimaliu laiku ir didesniu tarifu. Be PVM. Tik peržiūrai: niekas neišrašoma.",
+    "waiting": "Laukia patvirtinimo: suskaičiuota iš vairuotojo paspaudimų",
+    "noPresses": "Iš vairuotojo paspaudimų darbo laiko dar nėra. Įveskite laiką, kad jį patvirtintumėte.",
+    "notDone": "Laikas suskaičiuojamas, kai darbas baigtas.",
+    "approvedBy": "Patvirtino {name} · {when}",
+    "correctedBy": "Pataisė {name} · {when}",
+    "formerMember": "buvęs narys",
+    "reasonShown": "Priežastis: {reason}",
+    "time": "Laikas",
+    "span": "{day}, {start}–{end}",
+    "breaks": "Pertraukos",
+    "noBreaks": "Nėra",
+    "worked": "Dirbta",
+    "evening": "Iš jų didesniu tarifu",
+    "billed": "Apmokestinama",
+    "billedMinimum": "{time} (mašinos minimalus laikas)",
+    "rate": "Valandinis tarifas",
+    "eveningRate": "Didesnis tarifas",
+    "perHour": "{amount} per valandą",
+    "amount": "Suma be PVM",
+    "noPrice": "Kainos nėra: darbas neturi valandinio tarifo",
+    "hours": "{hours} val.",
+    "minutes": "{minutes} min.",
+    "hoursMinutes": "{hours} val. {minutes} min.",
+    "approve": "Patvirtinti laiką",
+    "approveEntered": "Patvirtinti šį laiką",
+    "correct": "Pataisyti laiką",
+    "saveCorrection": "Išsaugoti pataisytą laiką",
+    "history": "{count, plural, one {Ankstesnė versija} few {Ankstesnės versijos} other {Ankstesnių versijų}} ({count})",
+    "date": "Data",
+    "start": "Pradžia",
+    "end": "Pabaiga",
+    "endHint": "Anksčiau nei pradžia reiškia kitą rytą.",
+    "breaksMinutes": "Pertraukos, minutės",
+    "reason": "Priežastis",
+    "reasonHint": "Reikia, kai laikas skiriasi nuo vairuotojo paspaudimų arba jau buvo patvirtintas. Išsaugoma kartu su laiku.",
+    "errors": {
+      "dateInvalid": "Pasirinkite datą.",
+      "startInvalid": "Įveskite pradžios laiką, pvz., 07:00.",
+      "endInvalid": "Įveskite pabaigos laiką, pvz., 16:00.",
+      "tooLong": "Daugiausia 24 valandos.",
+      "breaksInvalid": "Įveskite pertraukas minutėmis, trumpesnes už darbo laiką.",
+      "reasonTooLong": "Daugiausia 500 simbolių.",
+      "reasonRequired": "Parašykite, kodėl laikas taisomas.",
+      "notAllowed": "Darbo laiką tvirtina tik biuras. Savininkai ir administratoriai pirmiausia patvirtina prisijungimą.",
+      "notDone": "Galima patvirtinti tik baigto darbo laiką.",
+      "changed": "Laikas tuo metu pasikeitė. Perkraukite puslapį.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "listApproved": "Laikas patvirtintas",
+    "listWaiting": "Laikas laukia patvirtinimo"
   }
 }
