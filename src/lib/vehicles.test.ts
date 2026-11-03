@@ -110,6 +110,39 @@ describe("validateVehicle", () => {
       payload_kg: 12000,
       hourly_rate: 145000,
       min_billable_minutes: 120,
+      evening_from: null,
+      evening_percent: null,
+      evening_rate: null,
+    });
+  });
+
+  it("reads a higher rate from a time of day, as a surcharge or another price", () => {
+    const evening = (values: Record<string, string>) => validateVehicle(form({ ...valid, ...values }));
+    expect(evening({ eveningFrom: "15:00", eveningKind: "percent", eveningValue: "50 %" }).fields).toMatchObject({
+      evening_from: "15:00",
+      evening_percent: 50,
+      evening_rate: null,
+    });
+    expect(evening({ eveningFrom: "15:00", eveningKind: "rate", eveningValue: "2 175,50" }).fields).toMatchObject({
+      evening_percent: null,
+      evening_rate: 217550,
+    });
+    // Without a time, whatever else is left in the form means no higher rate.
+    expect(evening({ eveningFrom: "", eveningKind: "rate", eveningValue: "x" }).fields?.evening_rate).toBeNull();
+    expect(evening({ eveningFrom: "25:00", eveningKind: "percent", eveningValue: "50" }).fieldErrors).toEqual({
+      eveningFrom: "eveningFromInvalid",
+    });
+    expect(evening({ eveningFrom: "15:00", eveningKind: "percent", eveningValue: "0" }).fieldErrors).toEqual({
+      eveningValue: "eveningPercentInvalid",
+    });
+    expect(evening({ eveningFrom: "15:00", eveningKind: "percent", eveningValue: "501" }).fieldErrors).toEqual({
+      eveningValue: "eveningPercentInvalid",
+    });
+    expect(evening({ eveningFrom: "15:00", eveningKind: "rate", eveningValue: "" }).fieldErrors).toEqual({
+      eveningValue: "rateInvalid",
+    });
+    expect(evening({ eveningFrom: "15:00", eveningKind: "", eveningValue: "50" }).fieldErrors).toEqual({
+      eveningKind: "eveningKindRequired",
     });
   });
 
@@ -152,6 +185,9 @@ describe("toFormValues", () => {
     payload_kg: 12000,
     hourly_rate: 145050,
     min_billable_minutes: 90,
+    evening_from: null,
+    evening_percent: null,
+    evening_rate: null,
   };
 
   it("uses the language's decimal separator and reads back to the same fields", () => {
@@ -162,5 +198,13 @@ describe("toFormValues", () => {
       hourlyRate: "1450",
       minHours: "2",
     });
+  });
+
+  it("reads back a higher rate from the database's time", () => {
+    const percent = { ...stored, evening_from: "15:00:00", evening_percent: 50 };
+    expect(toFormValues(percent, ",")).toMatchObject({ eveningFrom: "15:00", eveningKind: "percent", eveningValue: "50" });
+    expect(validateVehicle(form(toFormValues(percent, ","))).fields).toEqual({ ...percent, evening_from: "15:00" });
+    const rate = { ...stored, evening_from: "16:30:00", evening_rate: 217550 };
+    expect(toFormValues(rate, ",")).toMatchObject({ eveningKind: "rate", eveningValue: "2175,50" });
   });
 });

@@ -1,5 +1,7 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import {
+  addCustomer,
+  addTodaysJob,
   addVehicle,
   createCompany,
   inviteColleague,
@@ -13,33 +15,6 @@ import {
 
 // These tests need a running Supabase (local `supabase start` in CI).
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
-
-// Today in the company's time zone (new companies are in Norway).
-const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Oslo" }).format(new Date());
-
-async function addCustomer(page: Page, name: string) {
-  await page.goto("/app/customers/new");
-  await page.locator('input[name="name"]').fill(name);
-  await page.locator('main form button[type="submit"]').first().click();
-  await page.waitForURL(/\/app\/customers\/[0-9a-f-]{36}\?added=1$/);
-}
-
-// Today's job for a driver, chosen by visible names; returns the job's address.
-async function addTodaysJob(page: Page, job: { customer: string; vehicle: string; driver: string; address: string; contact: string }) {
-  await page.goto("/app/jobs/new");
-  await page.locator('select[name="customerId"]').selectOption({ label: job.customer });
-  await page.locator('input[name="address"]').fill(job.address);
-  await page.locator('input[name="siteContact"]').fill(job.contact);
-  await page.locator('input[name="date"]').fill(today);
-  await page.locator('input[name="startTime"]').fill("07:00");
-  await page.locator('input[name="durationHours"]').fill("4");
-  await page.locator('select[name="driverId"]').selectOption({ label: job.driver });
-  await page.locator('select[name="vehicleId"]').selectOption({ label: job.vehicle });
-  await page.locator('textarea[name="description"]').fill("Løfte 6 takstoler opp på taket. Kran med jib.");
-  await page.locator("main form").first().locator('button[type="submit"]').last().click();
-  await page.waitForURL(/\/app\/jobs\/[0-9a-f-]{36}\?added=1$/);
-  return page.url().replace(/\?added=1$/, "");
-}
 
 test("a driver sees today's job on the phone, reports each step and a note, and the office sees them", async ({
   browser,

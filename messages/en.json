@@ -333,8 +333,22 @@
       "minHoursInvalid": "Enter hours, for example 2 or 1,5 (at most 24).",
       "notAllowed": "You are not allowed to do this.",
       "unknown": "Something went wrong. Try again.",
-      "typeNameRequired": "Write the type (at most 60 characters)."
-    }
+      "typeNameRequired": "Write the type (at most 60 characters).",
+      "eveningFromInvalid": "Enter a time, for example 15:00.",
+      "eveningKindRequired": "Choose a surcharge or another hourly rate.",
+      "eveningPercentInvalid": "Enter a whole percent from 1 to 500, for example 50."
+    },
+    "eveningTitle": "Higher rate later in the day (optional)",
+    "eveningLead": "For example +50 % after 15:00. It applies from that time until the work ends, also past midnight.",
+    "eveningFrom": "From",
+    "eveningKind": "How",
+    "eveningKinds": {
+      "percent": "Surcharge in percent",
+      "rate": "Another hourly rate"
+    },
+    "eveningPercent": "Surcharge, %",
+    "eveningRate": "Higher hourly rate, {currency}",
+    "evening": "From {time}: {rate}"
   },
   "Join": {
     "title": "You have been invited to Maskinflyt",
@@ -585,5 +599,59 @@
       "noteInvalid": "Write a note of at most 500 characters.",
       "unknown": "Something went wrong. Try again."
     }
+  },
+  "JobTime": {
+    "title": "Working time",
+    "lead": "Counted from the driver's presses, with the machine's minimum and higher rate. Excluding VAT. Only to look at: nothing is invoiced.",
+    "waiting": "Waiting for approval: counted from the driver's presses",
+    "noPresses": "No working time from the driver's presses yet. Enter the time to approve it.",
+    "notDone": "The time is counted when the job is finished.",
+    "approvedBy": "Approved by {name} · {when}",
+    "correctedBy": "Corrected by {name} · {when}",
+    "formerMember": "a former member",
+    "reasonShown": "Reason: {reason}",
+    "time": "Time",
+    "span": "{day}, {start}–{end}",
+    "breaks": "Breaks",
+    "noBreaks": "None",
+    "worked": "Worked",
+    "evening": "Of this at the higher rate",
+    "billed": "Billed",
+    "billedMinimum": "{time} (the machine's minimum)",
+    "rate": "Hourly rate",
+    "eveningRate": "Higher rate",
+    "perHour": "{amount} per hour",
+    "amount": "Amount excl. VAT",
+    "noPrice": "No price: the job has no hourly rate",
+    "hours": "{hours} h",
+    "minutes": "{minutes} min",
+    "hoursMinutes": "{hours} h {minutes} min",
+    "approve": "Approve time",
+    "approveEntered": "Approve this time",
+    "correct": "Correct the time",
+    "saveCorrection": "Save corrected time",
+    "history": "Earlier {count, plural, one {version} other {versions}} ({count})",
+    "date": "Date",
+    "start": "Start",
+    "end": "End",
+    "endHint": "Earlier than the start means the next morning.",
+    "breaksMinutes": "Breaks, minutes",
+    "reason": "Reason",
+    "reasonHint": "Needed when the time differs from the driver's presses or was approved before. Kept with the time.",
+    "errors": {
+      "dateInvalid": "Choose a date.",
+      "startInvalid": "Enter a start time, for example 07:00.",
+      "endInvalid": "Enter an end time, for example 16:00.",
+      "tooLong": "At most 24 hours.",
+      "breaksInvalid": "Enter the breaks in minutes, shorter than the working time.",
+      "reasonTooLong": "At most 500 characters.",
+      "reasonRequired": "Write why the time is corrected.",
+      "notAllowed": "Only the office approves working time. Owners and administrators confirm their sign-in first.",
+      "notDone": "Only a finished job's time can be approved.",
+      "changed": "The time changed meanwhile. Reload the page.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "listApproved": "Time approved",
+    "listWaiting": "Time to approve"
   }
 }

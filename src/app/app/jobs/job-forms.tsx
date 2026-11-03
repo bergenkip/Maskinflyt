@@ -320,7 +320,7 @@ export function JobForm({ customers, vehicles, drivers, suggestions, timeZone, i
                   customer: overlap.customer,
                   time: format.dateTimeRange(new Date(overlap.startsAt), new Date(overlap.endsAt), {
                     day: "numeric",
-                    month: "short",
+                    month: "long",
                     hour: "2-digit",
                     minute: "2-digit",
                     timeZone,

@@ -93,7 +93,10 @@ export type VehicleFieldError =
   | "craneInvalid"
   | "payloadInvalid"
   | "rateInvalid"
-  | "minHoursInvalid";
+  | "minHoursInvalid"
+  | "eveningFromInvalid"
+  | "eveningKindRequired"
+  | "eveningPercentInvalid";
 
 export type VehicleFormValues = {
   type: string;
@@ -104,6 +107,9 @@ export type VehicleFormValues = {
   payloadKg: string;
   hourlyRate: string;
   minHours: string;
+  eveningFrom: string;
+  eveningKind: string;
+  eveningValue: string;
 };
 
 export type VehicleFields = {
@@ -115,12 +121,15 @@ export type VehicleFields = {
   payload_kg: number | null;
   hourly_rate: number | null;
   min_billable_minutes: number;
+  evening_from: string | null;
+  evening_percent: number | null;
+  evening_rate: number | null;
 };
 
 // A row as the pages read it.
 export type Vehicle = VehicleFields & { id: string; active: boolean; created_by: string | null; created_at: string };
 export const vehicleColumns =
-  "id, type, type_name, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, active, created_by, created_at";
+  "id, type, type_name, name, reg_number, crane_tm, payload_kg, hourly_rate, min_billable_minutes, evening_from, evening_percent, evening_rate, active, created_by, created_at";
 
 export function validateVehicle(formData: FormData): {
   values: VehicleFormValues;
@@ -137,6 +146,9 @@ export function validateVehicle(formData: FormData): {
     payloadKg: text("payloadKg"),
     hourlyRate: text("hourlyRate"),
     minHours: text("minHours"),
+    eveningFrom: text("eveningFrom"),
+    eveningKind: text("eveningKind"),
+    eveningValue: text("eveningValue"),
   };
 
   const type = isVehicleType(values.type) ? values.type : undefined;
@@ -146,6 +158,7 @@ export function validateVehicle(formData: FormData): {
   const payloadKg = parsePayloadKg(values.payloadKg);
   const hourlyRate = parseMoneyToOre(values.hourlyRate);
   const minMinutes = parseHoursToMinutes(values.minHours);
+  const evening = parseEvening(values);
 
   const fieldErrors: Partial<Record<keyof VehicleFormValues, VehicleFieldError>> = {};
   if (!type) fieldErrors.type = "typeInvalid";
@@ -160,6 +173,7 @@ export function validateVehicle(formData: FormData): {
   if (payloadKg === undefined) fieldErrors.payloadKg = "payloadInvalid";
   if (hourlyRate === undefined) fieldErrors.hourlyRate = "rateInvalid";
   if (minMinutes === undefined) fieldErrors.minHours = "minHoursInvalid";
+  if ("error" in evening) fieldErrors[evening.error[0]] = evening.error[1];
 
   if (
     !type ||
@@ -168,7 +182,8 @@ export function validateVehicle(formData: FormData): {
     craneTm === undefined ||
     payloadKg === undefined ||
     hourlyRate === undefined ||
-    minMinutes === undefined
+    minMinutes === undefined ||
+    "error" in evening
   ) {
     return { values, fieldErrors };
   }
@@ -184,8 +199,36 @@ export function validateVehicle(formData: FormData): {
       payload_kg: payloadKg,
       hourly_rate: hourlyRate,
       min_billable_minutes: minMinutes,
+      ...evening.fields,
     },
   };
+}
+
+// A higher rate from a time of day: either a surcharge in percent of the
+// job's price, or another hourly price. Without a time there is none.
+export const eveningKinds = ["percent", "rate"] as const;
+export type EveningKind = (typeof eveningKinds)[number];
+const MAX_EVENING_PERCENT = 500;
+
+type EveningResult =
+  | { fields: Pick<VehicleFields, "evening_from" | "evening_percent" | "evening_rate"> }
+  | { error: [keyof VehicleFormValues, VehicleFieldError] };
+
+function parseEvening(values: VehicleFormValues): EveningResult {
+  const none = { fields: { evening_from: null, evening_percent: null, evening_rate: null } };
+  if (values.eveningFrom === "") return none;
+  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(values.eveningFrom)) return { error: ["eveningFrom", "eveningFromInvalid"] };
+  if (values.eveningKind === "percent") {
+    const percent = parseFixed(values.eveningValue.replace(/%$/, ""), 0);
+    if (!percent || percent > MAX_EVENING_PERCENT) return { error: ["eveningValue", "eveningPercentInvalid"] };
+    return { fields: { evening_from: values.eveningFrom, evening_percent: percent, evening_rate: null } };
+  }
+  if (values.eveningKind === "rate") {
+    const rate = parseMoneyToOre(values.eveningValue);
+    if (rate === null || rate === undefined) return { error: ["eveningValue", "rateInvalid"] };
+    return { fields: { evening_from: values.eveningFrom, evening_percent: null, evening_rate: rate } };
+  }
+  return { error: ["eveningKind", "eveningKindRequired"] };
 }
 
 // A stored vehicle as editable text for the form ("1450,50" with a comma in
@@ -205,5 +248,14 @@ export function toFormValues(vehicle: VehicleFields, decimalSeparator: "," | "."
     payloadKg: vehicle.payload_kg === null ? "" : String(vehicle.payload_kg),
     hourlyRate: vehicle.hourly_rate === null ? "" : decimal(vehicle.hourly_rate / 100, 2),
     minHours: vehicle.min_billable_minutes === 0 ? "" : decimal(vehicle.min_billable_minutes / 60, 2),
+    // The database gives "15:00:00".
+    eveningFrom: vehicle.evening_from ? vehicle.evening_from.slice(0, 5) : "",
+    eveningKind: vehicle.evening_rate !== null ? "rate" : "percent",
+    eveningValue:
+      vehicle.evening_percent !== null
+        ? String(vehicle.evening_percent)
+        : vehicle.evening_rate !== null
+          ? decimal(vehicle.evening_rate / 100, 2)
+          : "",
   };
 }

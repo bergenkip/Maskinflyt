@@ -333,8 +333,22 @@
       "minHoursInvalid": "Skriv timer, for eksempel 2 eller 1,5 (maks 24).",
       "notAllowed": "Du har ikke tilgang til å gjøre dette.",
       "unknown": "Noe gikk galt. Prøv igjen.",
-      "typeNameRequired": "Skriv typen (maks 60 tegn)."
-    }
+      "typeNameRequired": "Skriv typen (maks 60 tegn).",
+      "eveningFromInvalid": "Skriv et klokkeslett, for eksempel 15:00.",
+      "eveningKindRequired": "Velg tillegg eller en annen timepris.",
+      "eveningPercentInvalid": "Skriv hele prosent fra 1 til 500, for eksempel 50."
+    },
+    "eveningTitle": "Høyere pris senere på dagen (valgfritt)",
+    "eveningLead": "For eksempel +50 % etter kl. 15:00. Gjelder fra det klokkeslettet til arbeidet er ferdig, også over midnatt.",
+    "eveningFrom": "Fra kl.",
+    "eveningKind": "Hvordan",
+    "eveningKinds": {
+      "percent": "Tillegg i prosent",
+      "rate": "En annen timepris"
+    },
+    "eveningPercent": "Tillegg, %",
+    "eveningRate": "Høyere timepris, {currency}",
+    "evening": "Fra {time}: {rate}"
   },
   "Join": {
     "title": "Du er invitert til Maskinflyt",
@@ -585,5 +599,59 @@
       "noteInvalid": "Skriv et notat på maks 500 tegn.",
       "unknown": "Noe gikk galt. Prøv igjen."
     }
+  },
+  "JobTime": {
+    "title": "Arbeidstid",
+    "lead": "Regnet ut fra sjåførens trykk, med maskinens minstetid og høyere pris. Eks. mva. Bare til visning: ingenting faktureres.",
+    "waiting": "Venter på godkjenning: regnet ut fra sjåførens trykk",
+    "noPresses": "Ingen arbeidstid fra sjåførens trykk ennå. Skriv inn tiden for å godkjenne den.",
+    "notDone": "Tiden regnes ut når oppdraget er ferdig.",
+    "approvedBy": "Godkjent av {name} · {when}",
+    "correctedBy": "Rettet av {name} · {when}",
+    "formerMember": "et tidligere medlem",
+    "reasonShown": "Begrunnelse: {reason}",
+    "time": "Tid",
+    "span": "{day}, {start}–{end}",
+    "breaks": "Pauser",
+    "noBreaks": "Ingen",
+    "worked": "Arbeidet",
+    "evening": "Av dette med høyere pris",
+    "billed": "Fakturerbart",
+    "billedMinimum": "{time} (maskinens minstetid)",
+    "rate": "Timepris",
+    "eveningRate": "Høyere pris",
+    "perHour": "{amount} per time",
+    "amount": "Beløp eks. mva.",
+    "noPrice": "Ingen pris: oppdraget har ingen timepris",
+    "hours": "{hours} t",
+    "minutes": "{minutes} min",
+    "hoursMinutes": "{hours} t {minutes} min",
+    "approve": "Godkjenn tiden",
+    "approveEntered": "Godkjenn denne tiden",
+    "correct": "Rett tiden",
+    "saveCorrection": "Lagre rettet tid",
+    "history": "{count, plural, one {Tidligere versjon} other {Tidligere versjoner}} ({count})",
+    "date": "Dato",
+    "start": "Start",
+    "end": "Slutt",
+    "endHint": "Tidligere enn start betyr neste morgen.",
+    "breaksMinutes": "Pauser, minutter",
+    "reason": "Begrunnelse",
+    "reasonHint": "Trengs når tiden avviker fra sjåførens trykk eller er godkjent før. Lagres med tiden.",
+    "errors": {
+      "dateInvalid": "Velg en dato.",
+      "startInvalid": "Skriv et starttidspunkt, for eksempel 07:00.",
+      "endInvalid": "Skriv et sluttidspunkt, for eksempel 16:00.",
+      "tooLong": "Maks 24 timer.",
+      "breaksInvalid": "Skriv pausene i minutter, kortere enn arbeidstiden.",
+      "reasonTooLong": "Maks 500 tegn.",
+      "reasonRequired": "Skriv hvorfor tiden rettes.",
+      "notAllowed": "Bare kontoret godkjenner arbeidstid. Eiere og administratorer bekrefter innloggingen først.",
+      "notDone": "Bare tiden for et ferdig oppdrag kan godkjennes.",
+      "changed": "Tiden er endret i mellomtiden. Last inn siden på nytt.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    },
+    "listApproved": "Tid godkjent",
+    "listWaiting": "Tid til godkjenning"
   }
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { ArrowRightIcon, MapPinIcon, PlusIcon, TruckIcon, UserIcon } from "@/components/icons";
+import { ArrowRightIcon, CheckCircleIcon, ClockIcon, MapPinIcon, PlusIcon, TruckIcon, UserIcon } from "@/components/icons";
 import { toLocalParts, type JobStatus } from "@/lib/jobs";
 import type { JobProgress } from "@/lib/progress";
 import { getCurrentMembership } from "@/lib/membership";
@@ -29,6 +29,8 @@ type Row = {
   driver_id: string | null;
   customers: { name: string } | null;
   vehicles: { name: string } | null;
+  // Approvals of the working time; empty while none.
+  job_times: { id: string }[];
 };
 type MemberRow = { user_id: string; email: string; full_name: string | null };
 
@@ -48,11 +50,12 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
   // Upcoming: from the earliest still running, in time order. Earlier: newest first.
   const request = supabase
     .from("jobs")
-    .select("id, number, address, starts_at, ends_at, status, progress, progress_at, driver_id, customers(name), vehicles(name)")
+    .select("id, number, address, starts_at, ends_at, status, progress, progress_at, driver_id, customers(name), vehicles(name), job_times(id)")
     .eq("organization_id", organization.id);
-  const [t, tMy, format, result, members] = await Promise.all([
+  const [t, tMy, tTime, format, result, members] = await Promise.all([
     getTranslations("Jobs"),
     getTranslations("MyJobs"),
+    getTranslations("JobTime"),
     getFormatter(),
     past
       ? request.lt("ends_at", now.toISOString()).order("starts_at", { ascending: false }).limit(100)
@@ -176,6 +179,19 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
                               })}
                             />
                           )}
+                          {/* A finished job's working time waits for the office's approval. */}
+                          {job.status === "done" &&
+                            (job.job_times.length > 0 ? (
+                              <span className="flex items-center gap-1.5 text-sm font-medium text-success">
+                                <CheckCircleIcon className="size-4" />
+                                {tTime("listApproved")}
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1.5 text-sm font-medium text-warning">
+                                <ClockIcon className="size-4" />
+                                {tTime("listWaiting")}
+                              </span>
+                            ))}
                         </span>
                         <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
                       </Link>
