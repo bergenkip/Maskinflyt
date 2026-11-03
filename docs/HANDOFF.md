@@ -136,3 +136,8 @@ Migracija `20261103110000_job_files`, pgTAP `18_job_files` (23 testai).
 
 ## Kitas etapas (siūlymas)
 1. Pasirinkti kartu su Li: sąskaitų juodraščiai (be siuntimo) arba GPS (po teisininko patikros).
+2. Li norai, laukiantys savo eilės:
+   - **Nuotraukos ir parašas klientui** (Li prašymas 2026-11-03). Dabar juos mato tik biuras ir to darbo
+     vairuotojas. Variantai: prisegti prie darbo ataskaitos ar sąskaitos juodraščio, arba saugi nuoroda klientui
+     tik į jo darbą (atšaukiama, su galiojimo laiku). Prieš darant: nuspręsti su Li, kokį būdą renkamės,
+     ir patikrinti GDPR (nuotraukose gali būti žmonių ar automobilių numerių).
