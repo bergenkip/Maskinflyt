@@ -23,7 +23,10 @@ async function photoOf(page: Page) {
 
 // A signature drawn with the pointer, as a finger would.
 async function sign(card: Locator, page: Page, name: string) {
-  await card.getByText(/^(Customer signature \(optional\)|Kundens signatur \(valgfritt\)|Kliento parašas \(nebūtinas\))$/).click();
+  // Open the section unless it is open already (a second click would close it).
+  if (!(await card.locator("details").filter({ has: page.locator("canvas") }).evaluate((d: HTMLDetailsElement) => d.open))) {
+    await card.getByText(/^(Customer signature \(optional\)|Kundens signatur \(valgfritt\)|Kliento parašas \(nebūtinas\))$/).click();
+  }
   const pad = card.locator("canvas");
   const box = (await pad.boundingBox())!;
   await page.mouse.move(box.x + 20, box.y + box.height * 0.7);
