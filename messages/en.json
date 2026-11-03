@@ -653,5 +653,31 @@
     },
     "listApproved": "Time approved",
     "listWaiting": "Time to approve"
+  },
+  "JobFiles": {
+    "title": "Photos and signature",
+    "photos": "Photos",
+    "noFiles": "No photos or signature yet.",
+    "addPhoto": "Take a photo",
+    "sending": "Sending…",
+    "sign": "Customer signature",
+    "signHint": "The customer signs here with a finger.",
+    "signerName": "Customer's name",
+    "saveSignature": "Save signature",
+    "clear": "Clear",
+    "photoAlt": "Photo {number}, {time}",
+    "unavailable": "Cannot be shown now",
+    "signatureAlt": "Signature of {name}",
+    "signedBy": "Signed by {name} · {time}",
+    "errors": {
+      "unreadable": "This photo could not be read. Try another one.",
+      "notAllowed": "You cannot add files to this job.",
+      "tooBig": "The file is too large (at most 2 MB).",
+      "wrongType": "Only photos (JPEG) and signatures can be saved.",
+      "signerRequired": "Write the customer's name.",
+      "tooMany": "At most 30 photos per job.",
+      "alreadySigned": "The customer has already signed this job.",
+      "unknown": "Something went wrong. Try again."
+    }
   }
 }

@@ -21,6 +21,11 @@ admin_url="${ADMIN_DATABASE_URL:-${DATABASE_URL/:\/\/postgres:/:\/\/supabase_adm
 psql "$admin_url" -v ON_ERROR_STOP=1 -q -X \
   -c "alter table auth.users add column if not exists email_confirmed_at timestamptz;"
 
+# Storage tables come from the Storage service, which this image does not run.
+if [ "$(psql_run -tA -c "select to_regclass('storage.objects') is null")" = "t" ]; then
+  psql "$admin_url" -v ON_ERROR_STOP=1 -q -X -f supabase/tests/storage-stub.sql
+fi
+
 for file in supabase/migrations/*.sql; do
   echo "migrate: $file"
   psql_run -f "$file"

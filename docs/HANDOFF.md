@@ -124,5 +124,15 @@ Migracija `20261103090000_job_time`, pgTAP `17_job_time` (27 testai).
 - Užsakymo puslapyje skiltis „Darbo laikas“ (patvirtinti, pataisyti, ankstesnės versijos); sąraše „Laikas laukia patvirtinimo“ / „Laikas patvirtintas“. Tik peržiūrai, jokių sąskaitų.
 - E2E `e2e/job-time.spec.ts`, nuotraukos `job-time`, `vehicles-evening`.
 
+## 5 etapas: nuotraukos ir kliento parašas, 3 dalis (2026-11-03)
+
+Migracija `20261103110000_job_files`, pgTAP `18_job_files` (23 testai).
+- Privatus Storage bucket `job-files` (JPEG/PNG, iki 2 MB): kelias `<organization_id>/<job_id>/<uuid>.jpg|png`. Storage politikos: įkelti ir matyti gali užsakymo vairuotojas ir biuras (`private.job_of_path`, `may_see_job_files`, `may_add_job_files`); atšauktam užsakymui – ne. Neįtrauktą į sąrašą failą įkėlėjas gali ištrinti (nepavykusio įrašymo atvejis).
+- `job_files` sąrašas (nuotrauka arba parašas su kliento vardu, vienas parašas užsakymui, iki 30 nuotraukų); rašoma tik per `add_job_file`.
+- Telefone nuotrauka sumažinama iki 1600 px JPEG prieš siunčiant; serveris tikrina failo baitus (JPEG/PNG), ne pavadinimą. Parašas pirštu ant drobės (canvas) + kliento vardas.
+- Rodoma per 1 val. galiojančias pasirašytas nuorodas (`createSignedUrls`); viešos nuorodos neveikia (E2E tikrina).
+- CI: `e2e-auth` dabar paleidžia ir Storage (`storage-api`); `database` darbui `scripts/db-test.sh` sukuria Storage lentelių kopiją (`supabase/tests/storage-stub.sql`), nes tuščias Postgres jų neturi.
+- E2E `e2e/job-files.spec.ts`, nuotraukos `my-jobs-sign`, `my-jobs-files`, `job-files`.
+
 ## Kitas etapas (siūlymas)
-1. Vairuotojo vaizdas, 3 dalis: nuotraukos iš objekto ir kliento parašas (privatus Storage bucket).
+1. Pasirinkti kartu su Li: sąskaitų juodraščiai (be siuntimo) arba GPS (po teisininko patikros).

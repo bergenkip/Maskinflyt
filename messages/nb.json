@@ -653,5 +653,31 @@
     },
     "listApproved": "Tid godkjent",
     "listWaiting": "Tid til godkjenning"
+  },
+  "JobFiles": {
+    "title": "Bilder og signatur",
+    "photos": "Bilder",
+    "noFiles": "Ingen bilder eller signatur ennå.",
+    "addPhoto": "Ta et bilde",
+    "sending": "Sender …",
+    "sign": "Kundens signatur",
+    "signHint": "Kunden signerer her med fingeren.",
+    "signerName": "Kundens navn",
+    "saveSignature": "Lagre signatur",
+    "clear": "Tøm",
+    "photoAlt": "Bilde {number}, {time}",
+    "unavailable": "Kan ikke vises nå",
+    "signatureAlt": "Signaturen til {name}",
+    "signedBy": "Signert av {name} · {time}",
+    "errors": {
+      "unreadable": "Bildet kunne ikke leses. Prøv et annet.",
+      "notAllowed": "Du kan ikke legge til filer på dette oppdraget.",
+      "tooBig": "Filen er for stor (maks 2 MB).",
+      "wrongType": "Bare bilder (JPEG) og signaturer kan lagres.",
+      "signerRequired": "Skriv kundens navn.",
+      "tooMany": "Maks 30 bilder per oppdrag.",
+      "alreadySigned": "Kunden har allerede signert dette oppdraget.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    }
   }
 }

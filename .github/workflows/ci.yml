@@ -75,8 +75,8 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: 2.120.0
-      - name: Start Supabase (database, auth, API and the Mailpit inbox for e-mailed codes)
-        run: supabase start -x realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta
+      - name: Start Supabase (database, auth, API, storage and the Mailpit inbox for e-mailed codes)
+        run: supabase start -x realtime,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta
       - name: Point the app at local Supabase
         # Local development keys, not secrets; they only work against this throwaway instance.
         run: |
@@ -86,7 +86,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts e2e/calendar.spec.ts e2e/driver.spec.ts e2e/job-time.spec.ts
+      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts e2e/calendar.spec.ts e2e/driver.spec.ts e2e/job-time.spec.ts e2e/job-files.spec.ts
         env:
           CI: true
       - name: Upload screenshots

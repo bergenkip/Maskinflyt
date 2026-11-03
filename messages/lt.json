@@ -653,5 +653,31 @@
     },
     "listApproved": "Laikas patvirtintas",
     "listWaiting": "Laikas laukia patvirtinimo"
+  },
+  "JobFiles": {
+    "title": "Nuotraukos ir parašas",
+    "photos": "Nuotraukos",
+    "noFiles": "Nuotraukų ir parašo dar nėra.",
+    "addPhoto": "Fotografuoti",
+    "sending": "Siunčiama…",
+    "sign": "Kliento parašas",
+    "signHint": "Klientas pasirašo čia pirštu.",
+    "signerName": "Kliento vardas",
+    "saveSignature": "Išsaugoti parašą",
+    "clear": "Išvalyti",
+    "photoAlt": "Nuotrauka {number}, {time}",
+    "unavailable": "Dabar negalima parodyti",
+    "signatureAlt": "{name} parašas",
+    "signedBy": "Pasirašė {name} · {time}",
+    "errors": {
+      "unreadable": "Nepavyko perskaityti nuotraukos. Bandykite kitą.",
+      "notAllowed": "Negalite pridėti failų prie šio darbo.",
+      "tooBig": "Failas per didelis (daugiausia 2 MB).",
+      "wrongType": "Galima išsaugoti tik nuotraukas (JPEG) ir parašus.",
+      "signerRequired": "Įrašykite kliento vardą.",
+      "tooMany": "Daugiausia 30 nuotraukų vienam darbui.",
+      "alreadySigned": "Klientas jau pasirašė šį darbą.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
   }
 }

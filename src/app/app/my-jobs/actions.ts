@@ -1,6 +1,19 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import {
+  contentTypeFor,
+  extensionFor,
+  isJobFileKind,
+  JOB_FILES_BUCKET,
+  jobFilePath,
+  MAX_FILE_BYTES,
+  normalizeSigner,
+  sniffImage,
+} from "@/lib/job-files";
+import { getCurrentMembership } from "@/lib/membership";
 import { isJobStep, MAX_NOTE_LENGTH } from "@/lib/progress";
 import { createClient } from "@/lib/supabase/server";
 
@@ -42,6 +55,48 @@ export async function addNote(_prev: NoteState, formData: FormData): Promise<Not
   if (error) {
     const code = mapError(error.code);
     return { error: code === "notNow" ? "notAllowed" : code, note };
+  }
+  revalidatePath("/app", "layout");
+  return { savedAt: Date.now() };
+}
+
+export type FileState = {
+  error?: "notAllowed" | "tooBig" | "wrongType" | "signerRequired" | "tooMany" | "alreadySigned" | "unknown";
+  savedAt?: number;
+};
+
+// A photo or the customer's signature: checked here by its bytes, stored in
+// the private bucket (Storage policies check the job's folder), then listed
+// with the job (add_job_file checks again and keeps one signature per job).
+export async function addJobFile(_prev: FileState, formData: FormData): Promise<FileState> {
+  const membership = await getCurrentMembership();
+  if (!membership) redirect("/app/onboarding");
+
+  const job = String(formData.get("job") ?? "");
+  const kind = formData.get("kind");
+  const file = formData.get("file");
+  if (!uuid.test(job) || !isJobFileKind(kind) || !(file instanceof File)) return { error: "unknown" };
+  if (file.size === 0 || file.size > MAX_FILE_BYTES) return { error: "tooBig" };
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const extension = sniffImage(bytes);
+  if (extension !== extensionFor[kind]) return { error: "wrongType" };
+  const signer = kind === "signature" ? normalizeSigner(String(formData.get("signedBy") ?? "")) : null;
+  if (signer === undefined) return { error: "signerRequired" };
+
+  const supabase = await createClient();
+  const path = jobFilePath(membership.organization.id, job, randomUUID(), extension);
+  const bucket = supabase.storage.from(JOB_FILES_BUCKET);
+  const upload = await bucket.upload(path, bytes, { contentType: contentTypeFor[extension], upsert: false });
+  if (upload.error) return { error: /row-level security|unauthorized|403/i.test(upload.error.message) ? "notAllowed" : "unknown" };
+
+  const { error } = await supabase.rpc("add_job_file", { job, kind, path, signed_by: signer });
+  if (error) {
+    // Not listed, so not kept: the uploader may remove it.
+    await bucket.remove([path]);
+    if (error.code === "23505") return { error: "alreadySigned" };
+    if (error.code === "54000") return { error: "tooMany" };
+    if (error.code === "42501") return { error: "notAllowed" };
+    return { error: "unknown" };
   }
   revalidatePath("/app", "layout");
   return { savedAt: Date.now() };
