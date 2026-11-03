@@ -12,7 +12,7 @@ import { VehicleForm, VehicleStatusForm } from "../vehicle-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Vehicles");
-  return { title: `${t("editTitle")} · Maskinflyt` };
+  return { title: `${t("editTitle")} · MaskinGo` };
 }
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;

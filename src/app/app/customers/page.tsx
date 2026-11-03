@@ -19,7 +19,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Customers");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 export default async function CustomersPage({ searchParams }: PageProps<"/app/customers">) {

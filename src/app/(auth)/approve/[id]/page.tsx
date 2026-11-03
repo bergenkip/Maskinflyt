@@ -4,7 +4,7 @@ import { ApprovePanel } from "./approve-panel";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Approve");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 // Where the second-step e-mail link lands, in whatever browser opened it.

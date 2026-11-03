@@ -6,7 +6,7 @@ import { ForgotPasswordForm } from "../password-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Auth");
-  return { title: `${t("forgotTitle")} · Maskinflyt` };
+  return { title: `${t("forgotTitle")} · MaskinGo` };
 }
 
 export default async function ForgotPasswordPage() {

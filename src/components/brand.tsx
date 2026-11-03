@@ -1,25 +1,31 @@
+import Image from "next/image";
 import Link from "next/link";
 
+// The MaskinGo logo: dark blue letters on light screens, white letters when the
+// phone is in dark mode (dark blue would not be readable there).
 export function Brand({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
       aria-label={label}
-      className="-mx-1 flex min-h-11 shrink-0 items-center gap-2 rounded-lg px-1 text-lg font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      className="-mx-1 flex min-h-11 shrink-0 items-center rounded-lg px-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        className="size-7 text-accent"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M4 7h11l-3-3M20 17H9l3 3" />
-      </svg>
-      Maskinflyt
+      <Image
+        src="/brand/maskingo-logo.png"
+        alt=""
+        width={494}
+        height={160}
+        priority
+        className="h-9 w-auto sm:h-11 dark:hidden"
+      />
+      <Image
+        src="/brand/maskingo-logo-on-dark.png"
+        alt=""
+        width={492}
+        height={160}
+        priority
+        className="hidden h-9 w-auto sm:h-11 dark:block"
+      />
     </Link>
   );
 }

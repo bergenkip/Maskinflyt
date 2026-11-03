@@ -24,7 +24,7 @@ import { DayTimeline, type TimelineJob, type TimelineRow } from "./day-timeline"
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Calendar");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 type Row = {

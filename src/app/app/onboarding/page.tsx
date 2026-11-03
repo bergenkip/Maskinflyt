@@ -7,7 +7,7 @@ import { OnboardingForm } from "./onboarding-form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Onboarding");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 export default async function OnboardingPage() {

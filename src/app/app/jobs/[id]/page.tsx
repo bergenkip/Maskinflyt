@@ -34,7 +34,7 @@ async function getJob(id: string) {
 
 export async function generateMetadata({ params }: PageProps<"/app/jobs/[id]">): Promise<Metadata> {
   const [t, job] = await Promise.all([getTranslations("Jobs"), getJob((await params).id)]);
-  return { title: `${job ? t("jobTitle", { number: job.number }) : t("title")} · Maskinflyt` };
+  return { title: `${job ? t("jobTitle", { number: job.number }) : t("title")} · MaskinGo` };
 }
 
 export default async function JobPage({ params, searchParams }: PageProps<"/app/jobs/[id]">) {

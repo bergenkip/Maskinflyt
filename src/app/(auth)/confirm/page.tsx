@@ -7,7 +7,7 @@ import { ConfirmPanel } from "./confirm-panel";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Auth");
-  return { title: `${t("confirmTitle")} · Maskinflyt` };
+  return { title: `${t("confirmTitle")} · MaskinGo` };
 }
 
 // The sign-up confirmation link lands here with the link's tokens in the URL

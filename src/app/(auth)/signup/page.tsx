@@ -7,7 +7,7 @@ import { AuthForm } from "../auth-form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Nav");
-  return { title: `${t("signup")} · Maskinflyt` };
+  return { title: `${t("signup")} · MaskinGo` };
 }
 
 export default async function SignupPage() {

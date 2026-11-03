@@ -14,7 +14,7 @@ import { CustomerForm, CustomerRateForm, CustomerStatusForm } from "../customer-
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Customers");
-  return { title: `${t("editTitle")} · Maskinflyt` };
+  return { title: `${t("editTitle")} · MaskinGo` };
 }
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;

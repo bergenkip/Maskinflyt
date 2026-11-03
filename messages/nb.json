@@ -1,6 +1,6 @@
 {
   "Metadata": {
-    "title": "Maskinflyt",
+    "title": "MaskinGo",
     "description": "Oppdrag, sjåfører og fakturaer for transport-, kran- og maskinentreprenører."
   },
   "LanguageSwitcher": {
@@ -10,7 +10,7 @@
   "Home": {
     "status": "Under utvikling",
     "title": "Fra telefon til faktura samme dag",
-    "lead": "Maskinflyt erstatter telefon, SMS og Excel for transport-, kran- og maskinentreprenører: oppdraget, sjåføren, arbeidstiden og fakturaen på ett sted.",
+    "lead": "MaskinGo erstatter telefon, SMS og Excel for transport-, kran- og maskinentreprenører: oppdraget, sjåføren, arbeidstiden og fakturaen på ett sted.",
     "stepsTitle": "Slik skal det fungere",
     "steps": {
       "receive": {
@@ -29,7 +29,7 @@
     "notice": "Dette er en tidlig versjon. Registrering og innlogging fungerer; oppdrag, sjåførappen og fakturaer kommer i senere steg."
   },
   "Nav": {
-    "home": "Maskinflyt forside",
+    "home": "MaskinGo forside",
     "login": "Logg inn",
     "signup": "Opprett konto",
     "dashboard": "Oversikt",
@@ -44,7 +44,7 @@
     "myJobs": "Mine oppdrag"
   },
   "Auth": {
-    "loginTitle": "Logg inn i Maskinflyt",
+    "loginTitle": "Logg inn i MaskinGo",
     "signupTitle": "Opprett konto",
     "signupLead": "Du oppretter firmaet ditt i neste steg.",
     "email": "E-post",
@@ -351,7 +351,7 @@
     "evening": "Fra {time}: {rate}"
   },
   "Join": {
-    "title": "Du er invitert til Maskinflyt",
+    "title": "Du er invitert til MaskinGo",
     "personalLink": "Invitasjoner bruker nå en personlig lenke. Be personen som inviterte deg, om å lage en til deg.",
     "invalidTitle": "Denne invitasjonslenken er ikke gyldig",
     "invalidBody": "Den er allerede brukt, utløpt eller trukket tilbake. Be personen som inviterte deg, om en ny lenke.",
@@ -359,7 +359,7 @@
     "validUntil": "Lenken gjelder til {date}",
     "signupLead": "Opprett kontoen din for å bli med. Lenken gjelder bare for én person.",
     "alreadyMember": "Du hører allerede til et firma og kan ikke bli med i et annet.",
-    "toApp": "Gå til Maskinflyt",
+    "toApp": "Gå til MaskinGo",
     "accept": "Bli med i firmaet",
     "acceptErrors": {
       "notFound": "Denne invitasjonslenken er ikke lenger gyldig. Be om en ny.",
@@ -369,7 +369,7 @@
     "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den for å fullføre, på hvilken som helst enhet. Du er allerede medlem av firmaet."
   },
   "Footer": {
-    "text": "Maskinflyt · Laget for norske entreprenører"
+    "text": "MaskinGo · Laget for norske entreprenører"
   },
   "Mfa": {
     "verifyTitle": "Bekreft at det er deg",
@@ -378,7 +378,7 @@
     "send": "Send lenke",
     "sent": "Lenken er sendt til <email></email>.",
     "step1": "Åpne e-posten «Your sign-in link», på denne eller en annen enhet. Sjekk søppelpost hvis den ikke er i innboksen.",
-    "step2": "Trykk på lenken og godkjenn innloggingen. Denne siden åpner da Maskinflyt av seg selv.",
+    "step2": "Trykk på lenken og godkjenn innloggingen. Denne siden åpner da MaskinGo av seg selv.",
     "resend": "Send ny lenke",
     "errors": {
       "rateLimited": "For mange e-poster er sendt. Vent noen minutter og prøv igjen.",
@@ -388,7 +388,7 @@
   },
   "Approve": {
     "title": "Godkjenn innlogging",
-    "lead": "Noen logget inn i Maskinflyt med passordet ditt og venter på godkjenning. Godkjenn bare hvis det var deg.",
+    "lead": "Noen logget inn i MaskinGo med passordet ditt og venter på godkjenning. Godkjenn bare hvis det var deg.",
     "device": "Nettleser og enhet",
     "unknownDevice": "Ukjent nettleser",
     "time": "Tidspunkt",
@@ -397,7 +397,7 @@
     "pending": "Vent litt …",
     "loading": "Sjekker lenken …",
     "approved": "Innloggingen er godkjent. Gå tilbake til vinduet der du logget inn; det fortsetter av seg selv.",
-    "declined": "Innloggingen er ikke godkjent. Hvis det ikke var deg, kjenner noen passordet ditt: kontakt den som driver Maskinflyt.",
+    "declined": "Innloggingen er ikke godkjent. Hvis det ikke var deg, kjenner noen passordet ditt: kontakt den som driver MaskinGo.",
     "expired": "Lenken er utløpt. Be om en ny lenke på innloggingssiden.",
     "invalid": "Lenken er ugyldig eller allerede brukt. Be om en ny lenke på innloggingssiden.",
     "error": "Noe gikk galt. Be om en ny lenke og prøv igjen."

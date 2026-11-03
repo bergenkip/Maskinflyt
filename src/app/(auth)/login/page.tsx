@@ -8,7 +8,7 @@ import { safeNextPath } from "../validation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Nav");
-  return { title: `${t("login")} · Maskinflyt` };
+  return { title: `${t("login")} · MaskinGo` };
 }
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {

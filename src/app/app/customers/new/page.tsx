@@ -8,7 +8,7 @@ import { CustomerForm } from "../customer-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Customers");
-  return { title: `${t("addTitle")} · Maskinflyt` };
+  return { title: `${t("addTitle")} · MaskinGo` };
 }
 
 export default async function NewCustomerPage() {

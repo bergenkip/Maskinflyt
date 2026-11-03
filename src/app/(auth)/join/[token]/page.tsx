@@ -13,7 +13,7 @@ import { AcceptForm } from "./accept-form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Join");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 type Preview = { organization_name: string; role: string; expires_at: string };

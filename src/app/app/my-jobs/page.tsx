@@ -15,7 +15,7 @@ import { NoteForm, StepButtons } from "./job-steps";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("MyJobs");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 type MyJob = {

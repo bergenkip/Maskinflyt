@@ -6,7 +6,7 @@ import { NameForm } from "./name-form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Settings");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 const sectionClass = "grid gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6";

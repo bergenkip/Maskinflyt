@@ -13,7 +13,7 @@ type Vehicle = { id: string; name: string; active: boolean };
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Team");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 export default async function TeamPage() {

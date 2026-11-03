@@ -10,7 +10,7 @@ import { MfaEmailLink } from "./mfa-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Mfa");
-  return { title: `${t("verifyTitle")} · Maskinflyt` };
+  return { title: `${t("verifyTitle")} · MaskinGo` };
 }
 
 // Second step of signing in for owners and admins: a sign-in link e-mailed to them.
