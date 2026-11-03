@@ -101,5 +101,18 @@ Migracija `20261029150000_job_estimate_and_main_machine`, pgTAP `15_job_estimate
 - Laisva vieta / „+“ atidaro `/app/jobs/new?date=&start=&vehicle=`. Parametrai tikrinami pagal sąrašus.
 - Datų skaičiavimai `src/lib/calendar.ts` (Vitest). E2E `e2e/calendar.spec.ts` (tempimas pele), nuotraukos `calendar-month`, `calendar-week`, `calendar-day` faile `jobs.spec.ts`.
 
+## 5 etapas: vairuotojo telefono vaizdas, 1 dalis (2026-10-29)
+
+Migracija `20261029180000_driver_job_progress`, pgTAP `16_driver_job_progress` (25 testai).
+- `/app/my-jobs` („Mano darbai“, meniu punktas vairuotojams; kiti mato kortelę Apžvalgoje, jei turi darbų šiandien): šiandienos ir rytojaus darbai bei pradėti ir nebaigti. Adresas su „Atidaryti žemėlapyje“ (Google Maps), „Skambinti“ (tel: iš kontakto vietoje), technika, aprašymas.
+- Žingsniai dideliais mygtukais: Priimti → Važiuoju → Atvykau → (pertrauka) → Baigiau (klausia dar kartą). `record_job_step` (security definer): tik užsakymo vairuotojas, tik atviras užsakymas, tik iš eilės. „Baigiau“ pažymi užsakymą atliktu, jei yra technika.
+- Kiekvienas paspaudimas ir pastaba įrašomi į `job_events` (niekada nekeičiami) – iš jų 2 dalyje bus skaičiuojamas darbo laikas. `jobs.progress`, `progress_at` – paskutinis žingsnis biurui.
+- Vairuotojas `jobs` lentelės neskaito (joje kainos): jo darbai ateina per `my_jobs` be kainų. `job_events` skaito biuras ir užsakymo vairuotojas (`private.drives_job`).
+- Biuras mato eigą užsakymų sąraše ir užsakymo puslapyje („Iš vairuotojo“).
+- E2E `e2e/driver.spec.ts`, nuotraukos `my-jobs`, `my-jobs-arrived`.
+
+## GPS sekimas (tyrimas 2026-10-29, ne teisinė išvada)
+Norvegijoje sutikimas darbo santykiuose paprastai nėra tinkamas pagrindas; pagrindas – teisėtas interesas (parko valdymas), Arbeidsmiljøloven 9 sk. (dalykinė priežastis, proporcingumas, aptarimas su darbuotojais prieš įvedant), tikslo ribojimas. Mūsų planas: įmonė įjungia pati, tik tarp „Pakeliui“ ir „Baigiau“, ženklas „Vieta perduodama“, ištrinama po 30 d., mato tik dispečeris, DPA su klientu. Prieš paleidimą – teisininko patikra.
+
 ## Kitas etapas (siūlymas)
-1. Vairuotojo telefono vaizdas: mano šiandienos darbai, būsenos, darbo laikas.
+1. Vairuotojo vaizdas, 2 dalis: darbo laikas iš žingsnių, dispečerio patvirtinimas, minimalus apmokestinamas laikas, nuotraukos, kliento parašas.

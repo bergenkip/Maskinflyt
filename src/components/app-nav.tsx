@@ -5,9 +5,19 @@ import { usePathname } from "next/navigation";
 import { CalendarIcon, ContactsIcon, HomeIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
 
 type Props = {
-  labels: { dashboard: string; jobs: string; customers: string; vehicles: string; team: string; settings: string; mainMenu: string };
-  // Drivers see neither jobs, customers nor machines yet (they will see their own jobs).
+  labels: {
+    dashboard: string;
+    jobs: string;
+    myJobs: string;
+    customers: string;
+    vehicles: string;
+    team: string;
+    settings: string;
+    mainMenu: string;
+  };
+  // Drivers see their own jobs instead of the office's jobs, customers and machines.
   showJobs: boolean;
+  showMyJobs: boolean;
   showCustomers: boolean;
   showVehicles: boolean;
 };
@@ -15,10 +25,13 @@ type Props = {
 // Phones and tablets: a tab bar fixed to the bottom of the screen, within thumb
 // reach; settings sit in the header there (SettingsLink), so five tabs fit.
 // Computers: a row in the header.
-export function AppNav({ labels, showJobs, showCustomers, showVehicles }: Props) {
+export function AppNav({ labels, showJobs, showMyJobs, showCustomers, showVehicles }: Props) {
   const pathname = usePathname();
   const links = [
     { href: "/app", label: labels.dashboard, icon: HomeIcon, active: pathname === "/app" },
+    ...(showMyJobs
+      ? [{ href: "/app/my-jobs", label: labels.myJobs, icon: CalendarIcon, active: pathname.startsWith("/app/my-jobs") }]
+      : []),
     ...(showJobs ? [{ href: "/app/jobs", label: labels.jobs, icon: CalendarIcon, active: pathname.startsWith("/app/jobs") }] : []),
     ...(showCustomers
       ? [{ href: "/app/customers", label: labels.customers, icon: ContactsIcon, active: pathname.startsWith("/app/customers") }]

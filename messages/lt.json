@@ -40,7 +40,8 @@
     "loading": "Įkeliama …",
     "vehicles": "Technika",
     "customers": "Klientai",
-    "jobs": "Užsakymai"
+    "jobs": "Užsakymai",
+    "myJobs": "Mano darbai"
   },
   "Auth": {
     "loginTitle": "Prisijunkite prie Maskinflyt",
@@ -114,12 +115,10 @@
     "title": "Apžvalga",
     "role": "Jūsų rolė: {role}",
     "orgNumber": "Org. nr. {number}",
-    "empty": "Jūsų užsakymai čia atsiras vėlesniame etape.",
     "greeting": "Sveiki, {name}",
     "numbersTitle": "Pagrindiniai skaičiai",
     "membersLabel": "Žmonės komandoje",
     "openInvites": "{count, plural, =0 {Nėra galiojančių kvietimų} one {# galiojantis kvietimas} few {# galiojantys kvietimai} other {# galiojančių kvietimų}}",
-    "ordersLabel": "Užsakymai",
     "startTitle": "Nuo ko pradėti",
     "startLead": "Keli žingsniai iki pirmųjų užsakymų.",
     "stepTeam": "Pakvieskite kolegas",
@@ -135,7 +134,9 @@
     "customersDetail": "Aktyvūs",
     "stepCustomers": "Pridėkite savo klientus",
     "jobsLabel": "Būsimi užsakymai",
-    "jobsDetail": "{count, plural, =0 {Visi suplanuoti} one {# dar nesuplanuotas} few {# dar nesuplanuoti} other {# dar nesuplanuotų}}"
+    "jobsDetail": "{count, plural, =0 {Visi suplanuoti} one {# dar nesuplanuotas} few {# dar nesuplanuoti} other {# dar nesuplanuotų}}",
+    "myJobsLabel": "Mano darbai šiandien",
+    "myJobsDetail": "{count, plural, =0 {viskas atlikta} one {liko #} few {liko #} other {liko #}}"
   },
   "Roles": {
     "owner": "Savininkas",
@@ -530,5 +531,59 @@
     "moved": "Užsakymas {number} perkeltas į {time}.",
     "undo": "Atšaukti",
     "dragHint": "Patarimas: užsakymą tempkite, kad perkeltumėte, dešinį kraštą – kad pakeistumėte trukmę, arba spauskite pieštuką, kad redaguotumėte."
+  },
+  "MyJobs": {
+    "title": "Mano darbai",
+    "lead": "Jūsų šiandienos ir rytojaus užsakymai. Paspauskite mygtuką kiekviename žingsnyje, kad biuras žinotų, kaip sekasi.",
+    "today": "Šiandien",
+    "tomorrow": "Rytoj",
+    "noJobs": "Šią dieną jums užsakymų nėra.",
+    "openMap": "Atidaryti žemėlapyje",
+    "call": "Skambinti",
+    "progress": {
+      "none": "Dar nepriimtas",
+      "accepted": "Priimtas",
+      "on_the_way": "Pakeliui",
+      "arrived": "Atvyko",
+      "on_break": "Pertrauka",
+      "finished": "Baigta"
+    },
+    "progressAt": "{step} {time}",
+    "steps": {
+      "accepted": "Priimti užsakymą",
+      "on_the_way": "Važiuoju",
+      "arrived": "Atvykau",
+      "break_started": "Pradėti pertrauką",
+      "break_ended": "Baigti pertrauką",
+      "finished": "Baigiau"
+    },
+    "finishQuestion": "Baigėte šį užsakymą? Biuras jį matys kaip atliktą.",
+    "confirmFinish": "Taip, baigiau",
+    "notYet": "Dar ne",
+    "finishedNote": "Šį užsakymą baigėte. Ačiū!",
+    "closedNote": "Biuras šį užsakymą uždarė.",
+    "events": {
+      "accepted": "Priimta",
+      "on_the_way": "Pakeliui",
+      "arrived": "Atvyko",
+      "break_started": "Pertrauka pradėta",
+      "break_ended": "Pertrauka baigta",
+      "finished": "Baigta",
+      "note": "Pastaba"
+    },
+    "history": "{count, plural, one {# įrašas} few {# įrašai} other {# įrašų}} iki šiol",
+    "addNote": "Pridėti pastabą",
+    "noteLabel": "Pastaba biurui",
+    "noteHint": "Pavyzdžiui: kliento nebuvo, laukiau 30 min. Iki 500 simbolių.",
+    "saveNote": "Išsaugoti pastabą",
+    "noteSaved": "Pastaba išsaugota. Biuras ją mato.",
+    "officeTitle": "Iš vairuotojo",
+    "officeEmpty": "Vairuotojas dar nieko nepranešė.",
+    "errors": {
+      "notAllowed": "Tai ne jūsų užsakymas arba jūs jam nebepriskirtas.",
+      "notNow": "Šis žingsnis dabar netinka. Puslapis rodo užsakymą tokį, koks jis yra.",
+      "noteInvalid": "Parašykite pastabą iki 500 simbolių.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
   }
 }

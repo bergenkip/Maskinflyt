@@ -40,7 +40,8 @@
     "loading": "Loading …",
     "vehicles": "Machines",
     "customers": "Customers",
-    "jobs": "Jobs"
+    "jobs": "Jobs",
+    "myJobs": "My jobs"
   },
   "Auth": {
     "loginTitle": "Sign in to Maskinflyt",
@@ -114,12 +115,10 @@
     "title": "Overview",
     "role": "Your role: {role}",
     "orgNumber": "Org. no. {number}",
-    "empty": "Your own jobs will show here in a later stage.",
     "greeting": "Hi, {name}",
     "numbersTitle": "Key figures",
     "membersLabel": "People in the team",
     "openInvites": "{count, plural, =0 {No open invitations} one {# open invitation} other {# open invitations}}",
-    "ordersLabel": "Jobs",
     "startTitle": "Get started",
     "startLead": "A few steps before the first jobs.",
     "stepTeam": "Invite colleagues",
@@ -135,7 +134,9 @@
     "customersDetail": "Active",
     "stepCustomers": "Add your customers",
     "jobsLabel": "Upcoming jobs",
-    "jobsDetail": "{count, plural, =0 {All are planned} one {# not planned yet} other {# not planned yet}}"
+    "jobsDetail": "{count, plural, =0 {All are planned} one {# not planned yet} other {# not planned yet}}",
+    "myJobsLabel": "My jobs today",
+    "myJobsDetail": "{count, plural, =0 {all done} one {# still to do} other {# still to do}}"
   },
   "Roles": {
     "owner": "Owner",
@@ -530,5 +531,59 @@
     "moved": "Job {number} moved to {time}.",
     "undo": "Undo",
     "dragHint": "Tip: drag a job to move it, drag its right edge to change how long it takes, or tap the pencil to edit it."
+  },
+  "MyJobs": {
+    "title": "My jobs",
+    "lead": "Your jobs today and tomorrow. Press a button at each step, so the office knows how it goes.",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "noJobs": "No jobs for you this day.",
+    "openMap": "Open in map",
+    "call": "Call",
+    "progress": {
+      "none": "Not accepted yet",
+      "accepted": "Accepted",
+      "on_the_way": "On the way",
+      "arrived": "Arrived",
+      "on_break": "On a break",
+      "finished": "Finished"
+    },
+    "progressAt": "{step} {time}",
+    "steps": {
+      "accepted": "Accept job",
+      "on_the_way": "I'm on my way",
+      "arrived": "I've arrived",
+      "break_started": "Start break",
+      "break_ended": "End break",
+      "finished": "I'm finished"
+    },
+    "finishQuestion": "Finished with this job? The office then sees it as done.",
+    "confirmFinish": "Yes, finished",
+    "notYet": "Not yet",
+    "finishedNote": "You have finished this job. Thank you!",
+    "closedNote": "The office has closed this job.",
+    "events": {
+      "accepted": "Accepted",
+      "on_the_way": "On the way",
+      "arrived": "Arrived",
+      "break_started": "Break started",
+      "break_ended": "Break ended",
+      "finished": "Finished",
+      "note": "Note"
+    },
+    "history": "{count, plural, one {# entry} other {# entries}} so far",
+    "addNote": "Add a note",
+    "noteLabel": "Note for the office",
+    "noteHint": "For example: the customer was not there, waited 30 min. At most 500 characters.",
+    "saveNote": "Save note",
+    "noteSaved": "Note saved. The office can see it.",
+    "officeTitle": "From the driver",
+    "officeEmpty": "The driver has not reported anything yet.",
+    "errors": {
+      "notAllowed": "This is not your job, or you are no longer on it.",
+      "notNow": "This step does not fit now. The page shows the job as it is.",
+      "noteInvalid": "Write a note of at most 500 characters.",
+      "unknown": "Something went wrong. Try again."
+    }
   }
 }

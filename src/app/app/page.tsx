@@ -10,10 +10,11 @@ import {
   CircleIcon,
   ClockIcon,
   ContactsIcon,
-  InboxIcon,
   TruckIcon,
   UsersIcon,
 } from "@/components/icons";
+import { addDays } from "@/lib/calendar";
+import { fromLocalParts, toLocalParts } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import { formatOrgNumber } from "@/lib/org-number";
 import { canSeeCustomers, canSeeJobs, canSeeVehicles } from "@/lib/roles";
@@ -39,7 +40,11 @@ export default async function DashboardPage() {
   // Counts only (head: true returns no rows). RLS limits every query to this company;
   // invitations are visible to owners and admins only; vehicles, customers and jobs not to drivers.
   const now = new Date().toISOString();
-  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers, upcomingJobs, unplannedJobs, anyJob] =
+  // The person's own jobs today (anyone can be given a job, also an owner who drives).
+  const today = toLocalParts(new Date(), organization.timeZone).date;
+  const midnight = (day: string) =>
+    fromLocalParts(day, "00:00", organization.timeZone) ?? fromLocalParts(day, "01:00", organization.timeZone)!;
+  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers, upcomingJobs, unplannedJobs, anyJob, myJobs] =
     await Promise.all([
       getTranslations("Dashboard"),
       getTranslations("Roles"),
@@ -90,7 +95,14 @@ export default async function DashboardPage() {
             .gte("ends_at", now)
         : null,
       showJobs ? supabase.from("jobs").select("id", { count: "exact", head: true }).eq("organization_id", organization.id) : null,
+      supabase.rpc("my_jobs", {
+        org: organization.id,
+        from_at: midnight(today).toISOString(),
+        to_at: midnight(addDays(today, 1)).toISOString(),
+      }),
     ]);
+  const myJobsToday = myJobs.error ? null : ((myJobs.data ?? []) as { status: string }[]).length;
+  const myJobsOpen = ((myJobs.data ?? []) as { status: string }[]).filter((job) => job.status !== "done").length;
 
   // Names are data and are shown exactly as entered.
   const firstName = profile.data?.first_name?.trim();
@@ -173,21 +185,18 @@ export default async function DashboardPage() {
                 detail={unplannedJobs && !unplannedJobs.error ? t("jobsDetail", { count: unplannedJobs.count ?? 0 }) : undefined}
               />
             </li>
-          ) : (
+          ) : null}
+          {(!showJobs || (myJobsToday ?? 0) > 0) && (
             <li>
-              {/* Not a link: drivers' own jobs come in a later stage. */}
-              <div className="flex h-full items-start gap-3 rounded-2xl border border-dashed border-border p-4">
-                <span className="flex size-11 items-center justify-center rounded-xl border border-border bg-surface text-muted">
-                  <InboxIcon className="size-6" />
-                </span>
-                <div className="grid gap-1">
-                  <p className="font-semibold">{t("ordersLabel")}</p>
-                  <p className="flex items-center gap-1.5 text-sm text-muted">
-                    <ClockIcon className="size-4" />
-                    {t("empty")}
-                  </p>
-                </div>
-              </div>
+              <StatCard
+                href="/app/my-jobs"
+                tone="bg-warning-soft text-warning"
+                icon={<CalendarIcon className="size-6" />}
+                value={myJobsToday}
+                format={number}
+                label={t("myJobsLabel")}
+                detail={t("myJobsDetail", { count: myJobsOpen })}
+              />
             </li>
           )}
         </ul>
