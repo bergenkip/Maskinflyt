@@ -28,8 +28,9 @@ async function sign(card: Locator, page: Page, name: string) {
     await card.getByText(/^(Customer signature \(optional\)|Kundens signatur \(valgfritt\)|Kliento parašas \(nebūtinas\))$/).click();
   }
   const pad = card.locator("canvas");
-  // The mouse only draws inside the window: bring the pad into view first.
-  await pad.scrollIntoViewIfNeeded();
+  // The mouse only draws on what it touches: put the pad in the middle of the
+  // window, clear of the sticky header and the phone's bottom bar.
+  await pad.evaluate((el) => el.scrollIntoView({ block: "center" }));
   const box = (await pad.boundingBox())!;
   await page.mouse.move(box.x + 20, box.y + box.height * 0.7);
   await page.mouse.down();
