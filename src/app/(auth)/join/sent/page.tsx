@@ -5,7 +5,7 @@ import { FormAlert } from "@/components/form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Auth");
-  return { title: `${t("checkEmailTitle")} · Maskinflyt` };
+  return { title: `${t("checkEmailTitle")} · MaskinGo` };
 }
 
 // After signing up from an invitation while e-mail confirmation is on. The

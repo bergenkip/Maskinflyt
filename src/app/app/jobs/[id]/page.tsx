@@ -8,8 +8,10 @@ import { jobColumns, toJobFormValues, type Job } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import type { JobEventKind, JobProgress } from "@/lib/progress";
 import { canSeeJobs } from "@/lib/roles";
+import { getJobFiles } from "@/lib/job-files-server";
 import { createClient } from "@/lib/supabase/server";
 import { BackLink } from "../back-link";
+import { JobFilesView } from "../job-files-view";
 import { JobForm, JobStatusForm } from "../job-forms";
 import { getJobOptions } from "../options";
 import { JobTimeSection } from "./job-time-section";
@@ -32,7 +34,7 @@ async function getJob(id: string) {
 
 export async function generateMetadata({ params }: PageProps<"/app/jobs/[id]">): Promise<Metadata> {
   const [t, job] = await Promise.all([getTranslations("Jobs"), getJob((await params).id)]);
-  return { title: `${job ? t("jobTitle", { number: job.number }) : t("title")} · Maskinflyt` };
+  return { title: `${job ? t("jobTitle", { number: job.number }) : t("title")} · MaskinGo` };
 }
 
 export default async function JobPage({ params, searchParams }: PageProps<"/app/jobs/[id]">) {
@@ -46,13 +48,15 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
   const job = await getJob(id);
   if (!job) notFound();
   const supabase = await createClient();
-  const [t, tMy, format, addedBy, options, eventsResult] = await Promise.all([
+  const [t, tMy, tFiles, format, addedBy, options, eventsResult, files] = await Promise.all([
     getTranslations("Jobs"),
     getTranslations("MyJobs"),
+    getTranslations("JobFiles"),
     getFormatter(),
     getAddedBy(organization.id),
     getJobOptions(organization.id, { customerId: job.customer_id, vehicleId: job.vehicle_id }),
     supabase.from("job_events").select("kind, note, created_at").eq("job_id", job.id).order("created_at"),
+    getJobFiles([job.id]),
   ]);
   const events = (eventsResult.data ?? []) as EventRow[];
   const when = (iso: string) =>
@@ -150,6 +154,17 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
               );
             })}
           </ol>
+        )}
+      </section>
+
+      <section aria-labelledby="files-title" className={sectionClass}>
+        <h2 id="files-title" className="text-lg font-semibold">
+          {tFiles("title")}
+        </h2>
+        {files.length === 0 ? (
+          <p className="text-muted">{tFiles("noFiles")}</p>
+        ) : (
+          <JobFilesView files={files} timeZone={organization.timeZone} />
         )}
       </section>
 

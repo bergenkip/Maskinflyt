@@ -1,6 +1,6 @@
 {
   "Metadata": {
-    "title": "Maskinflyt",
+    "title": "MaskinGo",
     "description": "Jobs, drivers and invoices for truck, crane and machine contractors."
   },
   "LanguageSwitcher": {
@@ -10,7 +10,7 @@
   "Home": {
     "status": "In development",
     "title": "From phone call to invoice the same day",
-    "lead": "Maskinflyt replaces phone, text messages and Excel for truck, crane and machine contractors: the job, the driver, the hours worked and the invoice in one place.",
+    "lead": "MaskinGo replaces phone, text messages and Excel for truck, crane and machine contractors: the job, the driver, the hours worked and the invoice in one place.",
     "stepsTitle": "How it will work",
     "steps": {
       "receive": {
@@ -29,7 +29,7 @@
     "notice": "This is an early version. Registration and sign-in work; jobs, the driver app and invoices come in later stages."
   },
   "Nav": {
-    "home": "Maskinflyt home",
+    "home": "MaskinGo home",
     "login": "Sign in",
     "signup": "Create account",
     "dashboard": "Overview",
@@ -44,7 +44,7 @@
     "myJobs": "My jobs"
   },
   "Auth": {
-    "loginTitle": "Sign in to Maskinflyt",
+    "loginTitle": "Sign in to MaskinGo",
     "signupTitle": "Create your account",
     "signupLead": "You create your company in the next step.",
     "email": "E-mail",
@@ -351,7 +351,7 @@
     "evening": "From {time}: {rate}"
   },
   "Join": {
-    "title": "You have been invited to Maskinflyt",
+    "title": "You have been invited to MaskinGo",
     "personalLink": "Invitations use a personal link now. Ask the person who invited you to create one for you.",
     "invalidTitle": "This invitation link is not valid",
     "invalidBody": "It has already been used, has expired or was cancelled. Ask the person who invited you for a new link.",
@@ -359,7 +359,7 @@
     "validUntil": "Link valid until {date}",
     "signupLead": "Create your account to join. The link works for one person only.",
     "alreadyMember": "You already belong to a company, so you cannot join another one.",
-    "toApp": "Go to Maskinflyt",
+    "toApp": "Go to MaskinGo",
     "accept": "Join the company",
     "acceptErrors": {
       "notFound": "This invitation link is no longer valid. Ask for a new one.",
@@ -369,7 +369,7 @@
     "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it to finish, on any device. You are already a member of the company."
   },
   "Footer": {
-    "text": "Maskinflyt · Built for Norwegian contractors"
+    "text": "MaskinGo · Built for Norwegian contractors"
   },
   "Mfa": {
     "verifyTitle": "Confirm it is you",
@@ -378,7 +378,7 @@
     "send": "Send link",
     "sent": "Link sent to <email></email>.",
     "step1": "Open the email “Your sign-in link”, on this or another device. Check the spam folder if it is not in your inbox.",
-    "step2": "Tap the link and approve the sign-in. This page then opens Maskinflyt by itself.",
+    "step2": "Tap the link and approve the sign-in. This page then opens MaskinGo by itself.",
     "resend": "Send a new link",
     "errors": {
       "rateLimited": "Too many emails were sent. Wait a few minutes and try again.",
@@ -388,7 +388,7 @@
   },
   "Approve": {
     "title": "Approve sign-in",
-    "lead": "Someone signed in to Maskinflyt with your password and is waiting for approval. Approve only if it was you.",
+    "lead": "Someone signed in to MaskinGo with your password and is waiting for approval. Approve only if it was you.",
     "device": "Browser and device",
     "unknownDevice": "Unknown browser",
     "time": "Time",
@@ -397,7 +397,7 @@
     "pending": "Please wait…",
     "loading": "Checking the link…",
     "approved": "Sign-in approved. Go back to the window where you signed in; it continues by itself.",
-    "declined": "Sign-in not approved. If it was not you, someone knows your password: contact the person who runs Maskinflyt.",
+    "declined": "Sign-in not approved. If it was not you, someone knows your password: contact the person who runs MaskinGo.",
     "expired": "This link has expired. Ask for a new link on the sign-in page.",
     "invalid": "This link is invalid or was already used. Ask for a new link on the sign-in page.",
     "error": "Something went wrong. Ask for a new link and try again."
@@ -653,5 +653,31 @@
     },
     "listApproved": "Time approved",
     "listWaiting": "Time to approve"
+  },
+  "JobFiles": {
+    "title": "Photos and signature",
+    "photos": "Photos",
+    "noFiles": "No photos or signature yet.",
+    "addPhoto": "Take a photo",
+    "sending": "Sending…",
+    "sign": "Customer signature (optional)",
+    "signHint": "The customer signs here with a finger.",
+    "signerName": "Customer's name",
+    "saveSignature": "Save signature",
+    "clear": "Clear",
+    "photoAlt": "Photo {number}, {time}",
+    "unavailable": "Cannot be shown now",
+    "signatureAlt": "Signature of {name}",
+    "signedBy": "Signed by {name} · {time}",
+    "errors": {
+      "unreadable": "This photo could not be read. Try another one.",
+      "notAllowed": "You cannot add files to this job.",
+      "tooBig": "The file is too large (at most 2 MB).",
+      "wrongType": "Only photos (JPEG) and signatures can be saved.",
+      "signerRequired": "Write the customer's name.",
+      "tooMany": "At most 30 photos per job.",
+      "alreadySigned": "The customer has already signed this job.",
+      "unknown": "Something went wrong. Try again."
+    }
   }
 }

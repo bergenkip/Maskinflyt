@@ -1,6 +1,6 @@
 {
   "Metadata": {
-    "title": "Maskinflyt",
+    "title": "MaskinGo",
     "description": "Užsakymai, vairuotojai ir sąskaitos transporto, kranų ir technikos įmonėms."
   },
   "LanguageSwitcher": {
@@ -10,7 +10,7 @@
   "Home": {
     "status": "Kuriama",
     "title": "Nuo skambučio iki sąskaitos tą pačią dieną",
-    "lead": "Maskinflyt pakeičia telefoną, SMS ir Excel transporto, kranų ir technikos įmonėms: užsakymas, vairuotojas, darbo laikas ir sąskaita vienoje vietoje.",
+    "lead": "MaskinGo pakeičia telefoną, SMS ir Excel transporto, kranų ir technikos įmonėms: užsakymas, vairuotojas, darbo laikas ir sąskaita vienoje vietoje.",
     "stepsTitle": "Kaip tai veiks",
     "steps": {
       "receive": {
@@ -29,7 +29,7 @@
     "notice": "Tai ankstyva versija. Registracija ir prisijungimas veikia; užsakymai, vairuotojo programa ir sąskaitos bus vėlesniuose etapuose."
   },
   "Nav": {
-    "home": "Maskinflyt pradžia",
+    "home": "MaskinGo pradžia",
     "login": "Prisijungti",
     "signup": "Sukurti paskyrą",
     "dashboard": "Apžvalga",
@@ -44,7 +44,7 @@
     "myJobs": "Mano darbai"
   },
   "Auth": {
-    "loginTitle": "Prisijunkite prie Maskinflyt",
+    "loginTitle": "Prisijunkite prie MaskinGo",
     "signupTitle": "Sukurkite paskyrą",
     "signupLead": "Įmonę sukursite kitame žingsnyje.",
     "email": "El. paštas",
@@ -351,7 +351,7 @@
     "evening": "Nuo {time}: {rate}"
   },
   "Join": {
-    "title": "Jus pakvietė į Maskinflyt",
+    "title": "Jus pakvietė į MaskinGo",
     "personalLink": "Kvietimams dabar naudojama asmeninė nuoroda. Paprašykite jus pakvietusio žmogaus sukurti jums nuorodą.",
     "invalidTitle": "Ši kvietimo nuoroda negalioja",
     "invalidBody": "Ji jau panaudota, nebegalioja arba buvo atšaukta. Paprašykite jus pakvietusio žmogaus naujos nuorodos.",
@@ -359,7 +359,7 @@
     "validUntil": "Nuoroda galioja iki {date}",
     "signupLead": "Susikurkite paskyrą ir prisijungsite prie įmonės. Nuoroda skirta tik vienam žmogui.",
     "alreadyMember": "Jūs jau priklausote įmonei, todėl negalite prisijungti prie kitos.",
-    "toApp": "Eiti į Maskinflyt",
+    "toApp": "Eiti į MaskinGo",
     "accept": "Prisijungti prie įmonės",
     "acceptErrors": {
       "notFound": "Ši kvietimo nuoroda nebegalioja. Paprašykite naujos.",
@@ -369,7 +369,7 @@
     "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją bet kuriame įrenginyje, kad baigtumėte. Jūs jau esate įmonės narys."
   },
   "Footer": {
-    "text": "Maskinflyt · Sukurta Norvegijos rangovams"
+    "text": "MaskinGo · Sukurta Norvegijos rangovams"
   },
   "Mfa": {
     "verifyTitle": "Patvirtinkite, kad tai jūs",
@@ -378,7 +378,7 @@
     "send": "Siųsti nuorodą",
     "sent": "Nuoroda išsiųsta adresu <email></email>.",
     "step1": "Atidarykite laišką „Your sign-in link“ šiame ar kitame įrenginyje. Jei jo nėra gautuose, patikrinkite šlamšto aplanką.",
-    "step2": "Paspauskite nuorodą ir patvirtinkite prisijungimą. Šis puslapis tada pats atidarys Maskinflyt.",
+    "step2": "Paspauskite nuorodą ir patvirtinkite prisijungimą. Šis puslapis tada pats atidarys MaskinGo.",
     "resend": "Siųsti naują nuorodą",
     "errors": {
       "rateLimited": "Išsiųsta per daug laiškų. Palaukite kelias minutes ir bandykite dar kartą.",
@@ -388,7 +388,7 @@
   },
   "Approve": {
     "title": "Patvirtinkite prisijungimą",
-    "lead": "Kažkas prisijungė prie Maskinflyt su jūsų slaptažodžiu ir laukia patvirtinimo. Tvirtinkite tik jei tai buvote jūs.",
+    "lead": "Kažkas prisijungė prie MaskinGo su jūsų slaptažodžiu ir laukia patvirtinimo. Tvirtinkite tik jei tai buvote jūs.",
     "device": "Naršyklė ir įrenginys",
     "unknownDevice": "Nežinoma naršyklė",
     "time": "Laikas",
@@ -397,7 +397,7 @@
     "pending": "Palaukite…",
     "loading": "Tikrinama nuoroda…",
     "approved": "Prisijungimas patvirtintas. Grįžkite į langą, kuriame jungėtės; jis tęs pats.",
-    "declined": "Prisijungimas nepatvirtintas. Jei tai buvote ne jūs, kažkas žino jūsų slaptažodį: susisiekite su Maskinflyt administratoriumi.",
+    "declined": "Prisijungimas nepatvirtintas. Jei tai buvote ne jūs, kažkas žino jūsų slaptažodį: susisiekite su MaskinGo administratoriumi.",
     "expired": "Nuoroda nebegalioja. Prisijungimo puslapyje paprašykite naujos.",
     "invalid": "Nuoroda netinkama arba jau panaudota. Prisijungimo puslapyje paprašykite naujos.",
     "error": "Kažkas nepavyko. Paprašykite naujos nuorodos ir bandykite dar kartą."
@@ -653,5 +653,31 @@
     },
     "listApproved": "Laikas patvirtintas",
     "listWaiting": "Laikas laukia patvirtinimo"
+  },
+  "JobFiles": {
+    "title": "Nuotraukos ir parašas",
+    "photos": "Nuotraukos",
+    "noFiles": "Nuotraukų ir parašo dar nėra.",
+    "addPhoto": "Fotografuoti",
+    "sending": "Siunčiama…",
+    "sign": "Kliento parašas (nebūtinas)",
+    "signHint": "Klientas pasirašo čia pirštu.",
+    "signerName": "Kliento vardas",
+    "saveSignature": "Išsaugoti parašą",
+    "clear": "Išvalyti",
+    "photoAlt": "Nuotrauka {number}, {time}",
+    "unavailable": "Dabar negalima parodyti",
+    "signatureAlt": "{name} parašas",
+    "signedBy": "Pasirašė {name} · {time}",
+    "errors": {
+      "unreadable": "Nepavyko perskaityti nuotraukos. Bandykite kitą.",
+      "notAllowed": "Negalite pridėti failų prie šio darbo.",
+      "tooBig": "Failas per didelis (daugiausia 2 MB).",
+      "wrongType": "Galima išsaugoti tik nuotraukas (JPEG) ir parašus.",
+      "signerRequired": "Įrašykite kliento vardą.",
+      "tooMany": "Daugiausia 30 nuotraukų vienam darbui.",
+      "alreadySigned": "Klientas jau pasirašė šį darbą.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
   }
 }

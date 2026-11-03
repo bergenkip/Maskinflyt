@@ -10,7 +10,7 @@ import { getJobOptions } from "../options";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Jobs");
-  return { title: `${t("addTitle")} · Maskinflyt` };
+  return { title: `${t("addTitle")} · MaskinGo` };
 }
 
 export default async function NewJobPage({ searchParams }: PageProps<"/app/jobs/new">) {

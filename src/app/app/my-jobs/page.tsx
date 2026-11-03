@@ -6,13 +6,16 @@ import { addDays } from "@/lib/calendar";
 import { fromLocalParts, toLocalParts, type JobStatus } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import { mapHref, phoneHref, type JobEventKind, type JobProgress } from "@/lib/progress";
+import { getJobFiles } from "@/lib/job-files-server";
 import { createClient } from "@/lib/supabase/server";
+import { JobFilesView } from "../jobs/job-files-view";
 import { ProgressBadge, progressIcon } from "../jobs/progress-badge";
+import { PhotoButton, SignaturePad } from "./job-files";
 import { NoteForm, StepButtons } from "./job-steps";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("MyJobs");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 type MyJob = {
@@ -73,6 +76,8 @@ export default async function MyJobsPage() {
           .order("created_at")
       : { data: [] };
   const events = (eventRows ?? []) as EventRow[];
+  const files = await getJobFiles(jobs.map((job) => job.id));
+  const tFiles = await getTranslations("JobFiles");
 
   const time = (iso: string) => format.dateTime(new Date(iso), { hour: "2-digit", minute: "2-digit", timeZone });
   const span = (job: MyJob) => tJobs("timeSpan", { start: time(job.starts_at), end: time(job.ends_at) });
@@ -108,6 +113,8 @@ export default async function MyJobsPage() {
               {group.jobs.map((job) => {
                 const phone = phoneHref(job.site_contact);
                 const own = events.filter((event) => event.job_id === job.id);
+                const jobFiles = files.filter((file) => file.job_id === job.id);
+                const signed = jobFiles.some((file) => file.kind === "signature");
                 const open = job.status === "new" || job.status === "planned";
                 return (
                   <li key={job.id}>
@@ -184,6 +191,25 @@ export default async function MyJobsPage() {
                       ) : (
                         <p className="font-medium text-success">{t(job.progress === "finished" ? "finishedNote" : "closedNote")}</p>
                       )}
+
+                      {/* Photos from the site and the customer's signature. */}
+                      <section aria-labelledby={`files-${job.id}`} className="grid gap-3 rounded-lg border border-border p-3">
+                        <h4 id={`files-${job.id}`} className="font-semibold">
+                          {tFiles("title")}
+                        </h4>
+                        <JobFilesView files={jobFiles} timeZone={timeZone} />
+                        <PhotoButton job={job.id} />
+                        {!signed && (
+                          <details className="rounded-lg border border-border">
+                            <summary className={`flex min-h-11 cursor-pointer items-center px-3 font-medium ${focusRing}`}>
+                              {tFiles("sign")}
+                            </summary>
+                            <div className="border-t border-border p-3">
+                              <SignaturePad job={job.id} />
+                            </div>
+                          </details>
+                        )}
+                      </section>
 
                       {own.length > 0 && (
                         <details className="group rounded-lg border border-border">

@@ -7,7 +7,7 @@ import { ResetPasswordPanel } from "../password-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Auth");
-  return { title: `${t("resetTitle")} · Maskinflyt` };
+  return { title: `${t("resetTitle")} · MaskinGo` };
 }
 
 // The e-mailed link (via /auth/callback) lands here with the link's tokens in

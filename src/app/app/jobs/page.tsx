@@ -14,7 +14,7 @@ import { JobsViewNav } from "./view-nav";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Jobs");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 type Row = {

@@ -125,8 +125,12 @@ export async function checkLayout(page: Page) {
   expect(overflow, "page must not scroll sideways").toBeLessThanOrEqual(0);
 
   for (const field of await page.locator("input:visible, select:visible, button:visible").all()) {
-    const box = await field.boundingBox();
-    const what = await field.evaluate((el) => el.outerHTML.slice(0, 160));
+    // A visually hidden input (a styled file picker) is tapped through its label: measure that.
+    const target = (await field.evaluate((el) => el.classList.contains("sr-only") && el.closest("label") !== null))
+      ? field.locator("xpath=ancestor::label[1]")
+      : field;
+    const box = await target.boundingBox();
+    const what = await target.evaluate((el) => el.outerHTML.slice(0, 160));
     expect(box?.height ?? 0, `tap target at least 44px: ${what}`).toBeGreaterThanOrEqual(44);
   }
   for (const field of await page.locator("input:visible, select:visible").all()) {

@@ -12,7 +12,7 @@ import { VehicleForm } from "./vehicle-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Vehicles");
-  return { title: `${t("title")} · Maskinflyt` };
+  return { title: `${t("title")} · MaskinGo` };
 }
 
 export default async function VehiclesPage() {

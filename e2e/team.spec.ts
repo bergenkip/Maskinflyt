@@ -61,7 +61,7 @@ test("owner creates a personal link; a colleague signs up with it, gets a new ro
   // The colleague opens the link, sees the company, gives a name and joins in one step.
   const invitee = await newPage(browser, baseURL!, "en");
   await invitee.page.goto(link);
-  await expect(invitee.page.getByRole("heading", { level: 1 })).toHaveText("You have been invited to Maskinflyt");
+  await expect(invitee.page.getByRole("heading", { level: 1 })).toHaveText("You have been invited to MaskinGo");
   await expect(invitee.page.getByText(company)).toBeVisible();
   await expect(invitee.page.getByText("Role: Dispatcher")).toBeVisible();
   await invitee.page.getByRole("button", { name: "Create account" }).click();
