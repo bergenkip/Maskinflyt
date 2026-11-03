@@ -28,6 +28,8 @@ async function sign(card: Locator, page: Page, name: string) {
     await card.getByText(/^(Customer signature \(optional\)|Kundens signatur \(valgfritt\)|Kliento parašas \(nebūtinas\))$/).click();
   }
   const pad = card.locator("canvas");
+  // The mouse only draws inside the window: bring the pad into view first.
+  await pad.scrollIntoViewIfNeeded();
   const box = (await pad.boundingBox())!;
   await page.mouse.move(box.x + 20, box.y + box.height * 0.7);
   await page.mouse.down();
@@ -35,6 +37,7 @@ async function sign(card: Locator, page: Page, name: string) {
     await page.mouse.move(box.x + dx, box.y + box.height * 0.6 + dy, { steps: 5 });
   }
   await page.mouse.up();
+  await expect(card.getByRole("button", { name: /^(Clear|Tøm|Išvalyti)$/ })).toBeEnabled();
   await card.locator('input[id^="signer-"]').fill(name);
   await card.locator('input[id^="signer-"]').press("Tab");
   await card.locator("button").filter({ hasText: /^(Save signature|Lagre signatur|Išsaugoti parašą)$/ }).click();
