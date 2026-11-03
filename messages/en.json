@@ -660,7 +660,7 @@
     "noFiles": "No photos or signature yet.",
     "addPhoto": "Take a photo",
     "sending": "Sending…",
-    "sign": "Customer signature",
+    "sign": "Customer signature (optional)",
     "signHint": "The customer signs here with a finger.",
     "signerName": "Customer's name",
     "saveSignature": "Save signature",

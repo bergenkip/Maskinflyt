@@ -660,7 +660,7 @@
     "noFiles": "Ingen bilder eller signatur ennå.",
     "addPhoto": "Ta et bilde",
     "sending": "Sender …",
-    "sign": "Kundens signatur",
+    "sign": "Kundens signatur (valgfritt)",
     "signHint": "Kunden signerer her med fingeren.",
     "signerName": "Kundens navn",
     "saveSignature": "Lagre signatur",

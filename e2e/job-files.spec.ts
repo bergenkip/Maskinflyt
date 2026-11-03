@@ -23,7 +23,7 @@ async function photoOf(page: Page) {
 
 // A signature drawn with the pointer, as a finger would.
 async function sign(card: Locator, page: Page, name: string) {
-  await card.getByText(/^(Customer signature|Kundens signatur|Kliento parašas)$/).click();
+  await card.getByText(/^(Customer signature \(optional\)|Kundens signatur \(valgfritt\)|Kliento parašas \(nebūtinas\))$/).click();
   const pad = card.locator("canvas");
   const box = (await pad.boundingBox())!;
   await page.mouse.move(box.x + 20, box.y + box.height * 0.7);
@@ -75,7 +75,7 @@ test("a driver adds a photo and the customer's signature; only the company sees 
   await sign(card, page, "  Per   Hansen ");
   await expect(card.getByText(/^Signed by Per Hansen · /)).toBeVisible();
   await loaded(card.getByRole("img", { name: "Signature of Per Hansen" }));
-  await expect(card.getByText("Customer signature", { exact: true })).toHaveCount(0);
+  await expect(card.getByText("Customer signature (optional)", { exact: true })).toHaveCount(0);
 
   // The links are signed and short-lived; the same file is not public.
   const src = (await photo.getAttribute("src"))!;
@@ -118,7 +118,7 @@ for (const locale of locales) {
       await card.locator('input[type="file"]').setInputFiles(await photoOf(page));
       await expect(card.locator("ul img")).toHaveCount(i);
     }
-    await card.getByText(/^(Customer signature|Kundens signatur|Kliento parašas)$/).click();
+    await card.getByText(/^(Customer signature \(optional\)|Kundens signatur \(valgfritt\)|Kliento parašas \(nebūtinas\))$/).click();
     await shootAllWidths(page, "my-jobs-sign", locale);
     await page.setViewportSize({ width: 375, height: 900 });
     await sign(card, page, "Per Kristian Halvorsen-Bakketun");

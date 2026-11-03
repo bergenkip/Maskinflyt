@@ -660,7 +660,7 @@
     "noFiles": "Nuotraukų ir parašo dar nėra.",
     "addPhoto": "Fotografuoti",
     "sending": "Siunčiama…",
-    "sign": "Kliento parašas",
+    "sign": "Kliento parašas (nebūtinas)",
     "signHint": "Klientas pasirašo čia pirštu.",
     "signerName": "Kliento vardas",
     "saveSignature": "Išsaugoti parašą",
