@@ -17,7 +17,7 @@ export function Brand({ href, label }: { href: string; label: string }) {
         width={758}
         height={96}
         priority
-        className="h-[18px] w-auto min-[400px]:h-5 sm:h-6 dark:hidden"
+        className="h-4 w-auto min-[400px]:h-5 sm:h-6 dark:hidden"
       />
       <Image
         src="/brand/maskingo-wordmark-on-dark.png"
@@ -25,7 +25,7 @@ export function Brand({ href, label }: { href: string; label: string }) {
         width={758}
         height={96}
         priority
-        className="hidden h-[18px] w-auto min-[400px]:h-5 sm:h-6 dark:block"
+        className="hidden h-4 w-auto min-[400px]:h-5 sm:h-6 dark:block"
       />
     </Link>
   );

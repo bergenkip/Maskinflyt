@@ -21,8 +21,8 @@ export function LanguageSwitcher() {
       {/* The native select lies invisibly over a compact button face: phones show
           the language code (NB / EN / LT), wider screens the full name. Tapping
           still opens the system picker with the full names. */}
-      <div className="relative flex min-h-11 items-center gap-1.5 rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent has-disabled:opacity-60">
-        <GlobeIcon className="size-4 text-muted sm:hidden" />
+      <div className="relative flex min-h-11 items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 text-base sm:px-3 text-foreground focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent has-disabled:opacity-60">
+        <GlobeIcon className="size-4 text-muted max-[399px]:hidden sm:hidden" />
         <span aria-hidden="true" className="font-medium sm:hidden">
           {current.toUpperCase()}
         </span>

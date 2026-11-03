@@ -679,5 +679,9 @@
       "alreadySigned": "Kunden har allerede signert dette oppdraget.",
       "unknown": "Noe gikk galt. Prøv igjen."
     }
+  },
+  "Theme": {
+    "toDark": "Bytt til mørk modus",
+    "toLight": "Bytt til lys modus"
   }
 }

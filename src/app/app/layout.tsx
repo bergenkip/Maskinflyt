@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Brand } from "@/components/brand";
 import { AppNav, SettingsLink } from "@/components/app-nav";
 import { SignOutIcon } from "@/components/icons";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
 import { canSeeCustomers, canSeeJobs, canSeeVehicles, needsMfa } from "@/lib/roles";
@@ -20,7 +21,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <header className="sticky top-0 z-20 border-b border-border bg-surface pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-x-4 px-4 py-2 sm:px-6 lg:gap-x-1">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-x-2 px-4 py-2 sm:gap-x-4 sm:px-6 lg:gap-x-1">
           <Brand href="/app" label={t("dashboard")} />
           {/* Phones and tablets: the menu is a tab bar at the bottom of the screen (see AppNav). */}
           <div className="lg:order-2 lg:ml-auto">
@@ -42,16 +43,17 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
             />
           </div>
           <div className="flex items-center gap-1 lg:order-3">
+            <ThemeToggle />
             <SettingsLink label={t("settings")} />
             <form action={signOut}>
               <button
                 type="submit"
                 title={t("signOut")}
-                className="flex min-h-11 items-center gap-2 rounded-lg px-3 font-medium text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg px-2 font-medium text-muted sm:px-3 hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 <SignOutIcon />
-                {/* Computers: icon only, so the header with the whole menu fits one row. */}
-                <span className="lg:sr-only">{t("signOut")}</span>
+                {/* Computers and the narrowest phones: icon only, so the header fits one row. */}
+                <span className="max-[399px]:sr-only lg:sr-only">{t("signOut")}</span>
               </button>
             </form>
           </div>

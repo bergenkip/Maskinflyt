@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
   /* White, with the logo's blues: navy text, blue details. The logo blue
      (#0177fc) is slightly darkened for text and buttons to pass WCAG AA. */
   --background: #ffffff;
@@ -19,24 +20,27 @@
   --on-accent: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0e161c;
-    --surface: #152029;
-    --foreground: #e7edf0;
-    --muted: #9eadb7;
-    --border: #253440;
-    --accent: #5aaaff;
-    --accent-soft: #14304d;
-    --warning: #f2c46d;
-    --warning-soft: #3a2c10;
-    --danger: #ff9b8f;
-    --danger-soft: #3b1714;
-    --success: #7fd19b;
-    --success-soft: #12301d;
-    --on-accent: #0e161c;
-  }
+/* Dark mode is chosen with the sun/moon button (ThemeToggle), not by the phone:
+   neutral graphite, with the logo's blue made lighter for contrast. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #111214;
+  --surface: #1b1c1f;
+  --foreground: #f1f2f4;
+  --muted: #a3a7ae;
+  --border: #2e3036;
+  --accent: #5aaaff;
+  --accent-soft: #1c2a3b;
+  --warning: #f2c46d;
+  --warning-soft: #3a2c10;
+  --danger: #ff9b8f;
+  --danger-soft: #3b1714;
+  --success: #7fd19b;
+  --success-soft: #12301d;
+  --on-accent: #0b0c0e;
 }
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
   --color-background: var(--background);

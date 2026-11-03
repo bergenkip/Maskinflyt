@@ -679,5 +679,9 @@
       "alreadySigned": "Klientas jau pasirašė šį darbą.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
     }
+  },
+  "Theme": {
+    "toDark": "Įjungti tamsų režimą",
+    "toLight": "Įjungti šviesų režimą"
   }
 }
