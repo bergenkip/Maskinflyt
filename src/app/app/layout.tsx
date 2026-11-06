@@ -59,8 +59,8 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
                 className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg px-2 font-medium text-muted sm:px-3 hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 <SignOutIcon />
-                {/* Computers and the narrowest phones: icon only, so the header fits one row. */}
-                <span className="max-[399px]:sr-only lg:sr-only">{t("signOut")}</span>
+                {/* Phones and computers: icon only, so the header fits one row (with the bell). */}
+                <span className="max-sm:sr-only lg:sr-only">{t("signOut")}</span>
               </button>
             </form>
           </div>
