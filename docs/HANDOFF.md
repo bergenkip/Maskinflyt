@@ -134,8 +134,18 @@ Migracija `20261103110000_job_files`, pgTAP `18_job_files` (23 testai).
 - CI: `e2e-auth` dabar paleidžia ir Storage (`storage-api`); `database` darbui `scripts/db-test.sh` sukuria Storage lentelių kopiją (`supabase/tests/storage-stub.sql`), nes tuščias Postgres jų neturi.
 - E2E `e2e/job-files.spec.ts`, nuotraukos `my-jobs-sign`, `my-jobs-files`, `job-files`.
 
+## 6 etapas: papildomos eilutės ir sąskaitos juodraštis (2026-11-06)
+
+Migracija `20261106090000_job_lines`, pgTAP `19_job_lines` (21 testas).
+- `job_lines`: papildomos užsakymo eilutės (medžiagos, kelionė, keltas, paslaugos): aprašymas, kiekis (tikslus dešimtainis, iki 2 skaitmenų), vienetas, vieneto kaina øre, MVA tarifas (0, 12, 15, 25 %). Suma (`amount`) skaičiuojama DB ir apvalinama iki sveiko øre; iš naršyklės jos įrašyti negalima.
+- Mato, prideda, keičia ir šalina tik biuras (savininkai/administratoriai su antru žingsniu, dispečeris). Vairuotojas ir kitos įmonės nemato nieko. Atšaukto užsakymo eilučių keisti negalima.
+- `invoice_draft(job)`: patvirtintas darbo laikas (įprastu ir didesniu tarifu; abi eilutės sudėjus lygiai patvirtinta suma) ir papildomos eilutės. Veikia su naudotojo teisėmis, todėl RLS sprendžia, kas matoma.
+- Sumos `src/lib/invoice.ts`: suma be MVA, MVA pagal tarifą (nuo tarifo eilučių sumos), iš viso.
+- Užsakymo puslapyje skiltis „Sąskaitos juodraštis“: kam (klientas, įm. kodas, adresas, el. paštas arba įspėjimas), eilutės, pridėti/keisti/šalinti, sumos. Ženklas „Juodraštis, niekas neišsiųsta“: nieko nenumeruojama ir nesiunčiama.
+- E2E `e2e/invoice.spec.ts`, nuotraukos `invoice`.
+
 ## Kitas etapas (siūlymas)
-1. Pasirinkti kartu su Li: sąskaitų juodraščiai (be siuntimo) arba GPS (po teisininko patikros).
+1. Pasirinkti kartu su Li: sąskaitų sąrašas ir PDF peržiūra (be siuntimo) arba GPS (po teisininko patikros).
 2. Li norai, laukiantys savo eilės:
    - **Nuotraukos ir parašas klientui** (Li prašymas 2026-11-03). Dabar juos mato tik biuras ir to darbo
      vairuotojas. Variantai: prisegti prie darbo ataskaitos ar sąskaitos juodraščio, arba saugi nuoroda klientui
@@ -146,4 +156,4 @@ Migracija `20261103110000_job_files`, pgTAP `18_job_files` (23 testai).
      Klientas gali užginčyti išsiųstą sąskaitą, o biuras pataiso ir parengia naują. Norvegijoje išsiųstos
      sąskaitos keisti negalima: daroma **kreditnota** (atšaukia seną) ir nauja sąskaita, abi su istorija
      (bokføringsloven; patikrinti su buhalteriu). MVP etape sąskaitos **nesiunčiamos** (CLAUDE.md), todėl
-     pirmiausia: papildymas ir sąskaitos juodraštis; ginčas, kreditnota ir siuntimas (EHF) vėliau.
+     papildymas ir sąskaitos juodraštis padaryti 6 etape; ginčas, kreditnota ir siuntimas (EHF) vėliau.
