@@ -93,6 +93,8 @@ test("the calendar shows a month, a week and a day, and jobs are moved and made 
   await expect(kranbil.getByRole("link", { name: /^Edit job 1, Nordbygg AS, 08:00 AM/ })).toBeVisible();
   await page.getByRole("button", { name: "Undo" }).click();
   await expect(page.getByText(/^Job 1 moved to 07:00 AM–~11:00 AM\.$/)).toBeVisible();
+  // The bar is back at 07:00 before its edge is grabbed, or the drag starts from the old place.
+  await expect(kranbil.getByRole("link", { name: /^Edit job 1, Nordbygg AS, 07:00 AM–~11:00 AM/ })).toBeVisible();
 
   // Made an hour longer by its right edge; it stays so after a reload.
   await drag(page, 1, 1, true);
