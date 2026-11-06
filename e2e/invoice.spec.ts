@@ -141,7 +141,8 @@ for (const locale of locales) {
       await add.locator('button[type="submit"]').click();
       await expect(section.getByRole("listitem").filter({ hasText: line.description })).toHaveCount(1);
     }
-    await openDetails(section.getByRole("listitem").filter({ hasText: "Pukk" }).locator("details"));
+    // Not "Pukk": the form hints say "Pukk 0–16 mm" too (nb).
+    await openDetails(section.getByRole("listitem").filter({ hasText: "levert fra Kokstad steinbrudd" }).locator("details"));
     await section.scrollIntoViewIfNeeded();
     await shootAllWidths(page, "invoice", locale);
 
