@@ -7,7 +7,7 @@ import { InvoiceBell } from "@/components/invoice-bell";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
-import { canSeeCustomers, canSeeJobs, canSeeVehicles, needsMfa } from "@/lib/roles";
+import { canSeeCustomers, canSeeInvoices, canSeeJobs, canSeeVehicles, needsMfa } from "@/lib/roles";
 import { createClient, getUserId } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 
@@ -20,7 +20,8 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
   if (membership && needsMfa(membership.role) && !secondStep) redirect("/mfa");
   // The office's bell: finished jobs whose invoice is not yet marked as sent.
   const office = !!membership && canSeeJobs(membership.role);
-  const waiting = office ? ((await (await createClient()).rpc("invoices_waiting")).data ?? 0) : 0;
+  const invoicing = !!membership && canSeeInvoices(membership.role);
+  const waiting = invoicing ? ((await (await createClient()).rpc("invoices_waiting")).data ?? 0) : 0;
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
@@ -34,6 +35,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
                 dashboard: t("dashboard"),
                 jobs: t("jobs"),
                 myJobs: t("myJobs"),
+                invoices: t("invoices"),
                 customers: t("customers"),
                 vehicles: t("vehicles"),
                 team: t("team"),
@@ -42,12 +44,13 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
               }}
               showJobs={office}
               showMyJobs={membership?.role === "driver"}
+              showInvoices={membership?.role === "accountant"}
               showCustomers={!!membership && canSeeCustomers(membership.role)}
               showVehicles={!!membership && canSeeVehicles(membership.role)}
             />
           </div>
           <div className="flex items-center gap-1 lg:order-3">
-            {office && (
+            {invoicing && (
               <InvoiceBell count={waiting} label={t("invoices")} countLabel={t("invoicesWaiting", { count: waiting })} />
             )}
             <ThemeToggle />

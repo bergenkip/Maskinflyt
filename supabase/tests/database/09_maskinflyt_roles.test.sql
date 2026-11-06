@@ -4,8 +4,8 @@ select plan(12);
 
 select results_eq(
   $$ select unnest(enum_range(null::public.member_role))::text $$,
-  $$ values ('owner'), ('admin'), ('dispatcher'), ('driver') $$,
-  'the roles are owner, admin, dispatcher and driver'
+  $$ values ('owner'), ('admin'), ('dispatcher'), ('driver'), ('accountant') $$,
+  'the roles are owner, admin, dispatcher, driver and accountant'
 );
 
 insert into auth.users (id, email, email_confirmed_at) values

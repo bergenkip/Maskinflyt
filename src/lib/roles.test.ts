@@ -5,6 +5,8 @@ import {
   canEditVehicles,
   canManage,
   canSeeCustomers,
+  canSeeInvoices,
+  canSeeJobs,
   canSeeVehicles,
   invitableRoles,
   needsMfa,
@@ -28,15 +30,15 @@ describe("roles", () => {
   });
 
   it("nobody is invited as owner", () => {
-    expect(invitableRoles("owner")).toEqual(["admin", "dispatcher", "driver"]);
-    expect(invitableRoles("admin")).toEqual(["admin", "dispatcher", "driver"]);
+    expect(invitableRoles("owner")).toEqual(["admin", "dispatcher", "driver", "accountant"]);
+    expect(invitableRoles("admin")).toEqual(["admin", "dispatcher", "driver", "accountant"]);
     expect(invitableRoles("driver")).toEqual([]);
   });
 });
 
 describe("needsMfa", () => {
-  it("asks owners and admins for a code, not dispatchers or drivers", () => {
-    expect(roles.filter(needsMfa)).toEqual(["owner", "admin"]);
+  it("asks owners, admins and accountants for a code, not dispatchers or drivers", () => {
+    expect(roles.filter(needsMfa)).toEqual(["owner", "admin", "accountant"]);
   });
 });
 
@@ -51,6 +53,13 @@ describe("customers", () => {
   it("everyone but drivers keeps customers, only owners and admins set their prices", () => {
     expect(roles.filter(canSeeCustomers)).toEqual(["owner", "admin", "dispatcher"]);
     expect(roles.filter(canEditCustomerRates)).toEqual(["owner", "admin"]);
+  });
+});
+
+describe("accountant", () => {
+  it("sees the invoicing only: no planning, customers or machines", () => {
+    expect(roles.filter(canSeeInvoices)).toEqual(["owner", "admin", "dispatcher", "accountant"]);
+    expect(roles.filter(canSeeJobs)).toEqual(["owner", "admin", "dispatcher"]);
   });
 });
 

@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarIcon, ContactsIcon, HomeIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
+import { CalendarIcon, ContactsIcon, HomeIcon, NoteIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
 
 type Props = {
   labels: {
     dashboard: string;
     jobs: string;
     myJobs: string;
+    invoices: string;
     customers: string;
     vehicles: string;
     team: string;
@@ -18,6 +19,8 @@ type Props = {
   // Drivers see their own jobs instead of the office's jobs, customers and machines.
   showJobs: boolean;
   showMyJobs: boolean;
+  // The accountant has no jobs tab, so the invoices get one (the office has the bell).
+  showInvoices: boolean;
   showCustomers: boolean;
   showVehicles: boolean;
 };
@@ -25,12 +28,15 @@ type Props = {
 // Phones and tablets: a tab bar fixed to the bottom of the screen, within thumb
 // reach; settings sit in the header there (SettingsLink), so five tabs fit.
 // Computers: a row in the header.
-export function AppNav({ labels, showJobs, showMyJobs, showCustomers, showVehicles }: Props) {
+export function AppNav({ labels, showJobs, showMyJobs, showInvoices, showCustomers, showVehicles }: Props) {
   const pathname = usePathname();
   const links = [
     { href: "/app", label: labels.dashboard, icon: HomeIcon, active: pathname === "/app" },
     ...(showMyJobs
       ? [{ href: "/app/my-jobs", label: labels.myJobs, icon: CalendarIcon, active: pathname.startsWith("/app/my-jobs") }]
+      : []),
+    ...(showInvoices
+      ? [{ href: "/app/invoices", label: labels.invoices, icon: NoteIcon, active: pathname.startsWith("/app/invoices") }]
       : []),
     ...(showJobs ? [{ href: "/app/jobs", label: labels.jobs, icon: CalendarIcon, active: pathname.startsWith("/app/jobs") }] : []),
     ...(showCustomers

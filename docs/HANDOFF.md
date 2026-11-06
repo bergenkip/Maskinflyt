@@ -155,8 +155,17 @@ Migracija `20261106130000_job_invoices`, pgTAP `20_job_invoices` (24 testai).
 - Puslapio apačioje: kitų apskaitos programų integracija pagal užklausą (Li prašymas). Kontaktinio adreso dar nėra: pridėti, kai bus domenas ir el. paštas.
 - E2E `e2e/invoices.spec.ts`, nuotraukos `invoices`.
 
+## 8 etapas: buhalterio rolė (2026-11-06)
+
+Migracijos `20261106150000_accountant_role` (tik nauja `member_role` reikšmė) ir `20261106150100_accountant_access`, pgTAP `21_accountant` (18 testų).
+- Rolė `accountant` (nb „Regnskapsfører“, lt „Buhalteris“). Kviečia savininkas arba administratorius, kaip ir kitas roles.
+- Mato tik **atliktus** darbus (ne planavimą), jų klientus, techniką, patvirtintą laiką, juodraščius ir žymas. Kliento, technikos, darbų ir žmonių nekeičia; vairuotojų nuotraukų nemato.
+- Su antru žingsniu (kaip savininkas/administratorius): tvirtina ir taiso laiką, keičia eilutes, žymi „Išsiųsta“ ir atšaukia žymą.
+- Ekrane: meniu skirtukas „Sąskaitos“ ir varpelis; darbo puslapyje tik laikas ir sąskaita, nuoroda „Visos sąskaitos“.
+- E2E `e2e/accountant.spec.ts`, nuotraukos `accountant-job`, `accountant-invoices`.
+
 ## Sąskaitų planas (Li sutarta 2026-11-06)
-- **8: buhalterio rolė**: atskiras prisijungimas, mato ir taiso sąskaitas, nemato dispečerio darbų.
+- ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
 - **9: Fiken**: įmonė prijungia savo Fiken; „Siųsti per Fiken“ sukuria sąskaitą Fiken ir išsiunčia (el. paštas / EHF). Fiken klientui reikia API modulio. Numeruoja ir saugo Fiken; kreditnota Fiken.
 - **10: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
 - **11: sava PDF sąskaita iš MaskinGo**: numeracija, privalomi duomenys (bokføringsforskriften), siuntimas el. paštu, kreditnota, saugojimas 5 m. Reikia pakeisti CLAUDE.md taisyklę atskiru PR ir buhalterio patikros prieš paleidžiant.

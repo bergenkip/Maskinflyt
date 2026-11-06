@@ -8,7 +8,7 @@ import type { InvoiceMark } from "@/lib/invoice";
 import { jobColumns, toJobFormValues, type Job } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import type { JobEventKind, JobProgress } from "@/lib/progress";
-import { canSeeJobs } from "@/lib/roles";
+import { canSeeInvoices } from "@/lib/roles";
 import { getJobFiles } from "@/lib/job-files-server";
 import { createClient } from "@/lib/supabase/server";
 import { BackLink } from "../back-link";
@@ -44,21 +44,24 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
   const { added } = await searchParams;
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeJobs(membership.role)) redirect("/app");
+  if (!canSeeInvoices(membership.role)) redirect("/app");
+  // The accountant sees a finished job's time and invoice only, not the planning.
+  const accountant = membership.role === "accountant";
 
   const { organization } = membership;
   const job = await getJob(id);
   if (!job) notFound();
   const supabase = await createClient();
-  const [t, tMy, tFiles, format, addedBy, options, eventsResult, files, markResult] = await Promise.all([
+  const [t, tMy, tFiles, tInvoices, format, addedBy, options, eventsResult, files, markResult] = await Promise.all([
     getTranslations("Jobs"),
     getTranslations("MyJobs"),
     getTranslations("JobFiles"),
+    getTranslations("Invoices"),
     getFormatter(),
     getAddedBy(organization.id),
-    getJobOptions(organization.id, { customerId: job.customer_id, vehicleId: job.vehicle_id }),
+    accountant ? null : getJobOptions(organization.id, { customerId: job.customer_id, vehicleId: job.vehicle_id }),
     supabase.from("job_events").select("kind, note, created_at").eq("job_id", job.id).order("created_at"),
-    getJobFiles([job.id]),
+    accountant ? [] : getJobFiles([job.id]),
     supabase.from("job_invoices").select("reference, net, vat, total, sent_by, sent_at").eq("job_id", job.id).maybeSingle(),
   ]);
   const mark = (markResult.data ?? null) as InvoiceMark | null;
@@ -76,19 +79,23 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
   return (
     <div className="grid max-w-3xl gap-8">
       <div className="grid gap-2">
-        <BackLink label={t("back")} />
+        {accountant ? <BackLink label={tInvoices("back")} href="/app/invoices" /> : <BackLink label={t("back")} />}
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
           <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t("jobTitle", { number: job.number })}</p>
           <StatusBadge status={job.status} label={t(`statuses.${job.status}`)} size="md" />
         </div>
         {/* Customer names are data and are shown exactly as entered. */}
         <h1 className="text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">
+          {accountant ? (
+            job.customers?.name
+          ) : (
           <Link
             href={`/app/customers/${job.customer_id}`}
             className="rounded-sm underline decoration-border decoration-2 underline-offset-4 hover:decoration-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {job.customers?.name}
           </Link>
+          )}
         </h1>
         {/* Person names are data and are shown exactly as entered. */}
         <p className="text-sm text-muted [overflow-wrap:anywhere]">{addedBy(job)}</p>
@@ -96,6 +103,9 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
 
       {added === "1" && <FormAlert kind="success">{t("added", { number: job.number })}</FormAlert>}
 
+      {/* The planning, the driver's reports and the photos are the office's. */}
+      {!accountant && options && (
+      <>
       <section aria-labelledby="details-title" className={sectionClass}>
         <h2 id="details-title" className="text-lg font-semibold">
           {t("detailsTitle")}
@@ -172,10 +182,14 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
         )}
       </section>
 
+      </>
+      )}
+
       <JobTimeSection job={job} organization={organization} locked={mark !== null} />
 
-      <InvoiceSection job={job} organization={organization} mark={mark} />
+      <InvoiceSection job={job} organization={organization} mark={mark} customerLink={!accountant} />
 
+      {!accountant && (
       <section aria-labelledby="status-title" className={sectionClass}>
         <div className="grid gap-1">
           <h2 id="status-title" className="text-lg font-semibold">
@@ -186,6 +200,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
         </div>
         {mark ? <p className="text-sm text-muted">{t("statusLocked")}</p> : <JobStatusForm id={job.id} status={job.status} />}
       </section>
+      )}
     </div>
   );
 }
