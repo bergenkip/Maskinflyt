@@ -68,7 +68,8 @@ test("the accountant finishes the invoicing of finished jobs and sees nothing of
   await expect(page.getByText("This page could not be found.")).toBeVisible();
   await expect(page.getByRole("region", { name: "Invoice draft" })).toHaveCount(0);
   await page.goto("/app");
-  const bell = page.locator('header a[href="/app/invoices"]');
+  // The bell, not the menu tab that goes to the same page.
+  const bell = page.locator('header a[href="/app/invoices"][aria-label]');
   await expect(bell).toHaveAccessibleName("Invoices: 1 job waits");
 
   // A finished job: only its time and its invoice.
