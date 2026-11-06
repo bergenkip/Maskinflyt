@@ -227,3 +227,32 @@ export async function addTodaysJob(page: Page, job: { customer: string; vehicle:
   await page.waitForURL(/\/app\/jobs\/[0-9a-f-]{36}\?added=1$/);
   return page.url().replace(/\?added=1$/, "");
 }
+
+// A machine with a minimum and a higher rate from 15:00.
+export async function addMachine(page: Page, machine: { name: string; rate: string; minHours: string; from: string; percent: string }) {
+  await page.goto("/app/vehicles");
+  await page.locator('select[name="type"]').selectOption("crane_truck");
+  await page.locator('input[name="name"]').fill(machine.name);
+  await page.locator('input[name="hourlyRate"]').fill(machine.rate);
+  await page.locator('input[name="minHours"]').fill(machine.minHours);
+  await page.locator('input[name="eveningFrom"]').fill(machine.from);
+  await page.locator('select[name="eveningKind"]').selectOption("percent");
+  await page.locator('input[name="eveningValue"]').fill(machine.percent);
+  await page.locator('main form button[type="submit"]').first().click();
+  await expect(page.locator('main [role="status"]')).toBeVisible();
+}
+
+// The person drives the job themselves. Presses within one minute give no
+// working time; `nextMinute` waits for the clock to turn before arriving.
+export async function driveThrough(page: Page, nextMinute = false) {
+  await page.goto("/app/my-jobs");
+  const card = page.getByRole("article");
+  for (const step of ["on_the_way", "arrived"]) {
+    if (step === "arrived" && nextMinute) await page.waitForTimeout(61_000 - (Date.now() % 60_000));
+    await card.locator(`button[name="step"][value="${step}"]`).click();
+    await expect(card.locator(`button[name="step"][value="${step}"]`)).toHaveCount(0);
+  }
+  await card.locator('button[type="button"]').first().click();
+  await card.locator('button[name="step"][value="finished"]').click();
+  await expect(card.locator('button[name="step"]')).toHaveCount(0);
+}

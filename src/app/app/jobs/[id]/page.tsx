@@ -14,6 +14,7 @@ import { BackLink } from "../back-link";
 import { JobFilesView } from "../job-files-view";
 import { JobForm, JobStatusForm } from "../job-forms";
 import { getJobOptions } from "../options";
+import { InvoiceSection } from "./invoice-section";
 import { JobTimeSection } from "./job-time-section";
 import { ProgressBadge, progressIcon } from "../progress-badge";
 import { StatusBadge } from "../status-badge";
@@ -169,6 +170,8 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
       </section>
 
       <JobTimeSection job={job} organization={organization} />
+
+      <InvoiceSection job={job} organization={organization} />
 
       <section aria-labelledby="status-title" className={sectionClass}>
         <div className="grid gap-1">

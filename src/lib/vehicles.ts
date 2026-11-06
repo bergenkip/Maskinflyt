@@ -43,7 +43,7 @@ export function formatRegNumber(stored: string) {
 // A decimal number typed with a comma or a point and at most `decimals`
 // decimals, as a whole number of the smallest unit (1 450,5 with 2 decimals is
 // 145050). Strings only, so no floating-point rounding is involved.
-function parseFixed(input: string, decimals: number): number | null | undefined {
+export function parseFixed(input: string, decimals: number): number | null | undefined {
   const value = input.replace(spaces, "");
   if (value === "") return null;
   const fractionPart = decimals > 0 ? `(?:[.,](\\d{1,${decimals}}))?` : "";
