@@ -1,8 +1,9 @@
-import { expect, type Locator, type Page, test } from "@playwright/test";
+import { expect, type Locator, test } from "@playwright/test";
 import {
   addCustomer,
   addMachine,
   addTodaysJob,
+  approveTime,
   createCompany,
   driveThrough,
   locales,
@@ -15,17 +16,6 @@ import {
 
 // These tests need a running Supabase (local `supabase start` in CI).
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
-
-// A finished job without presses: the office enters and approves the time.
-async function approveTime(page: Page, job: string, time: { start: string; end: string; breaks: string }) {
-  await page.goto(job);
-  const section = page.locator('section[aria-labelledby="time-title"]');
-  await section.locator('input[name="start"]').fill(time.start);
-  await section.locator('input[name="end"]').fill(time.end);
-  await section.locator('input[name="breaks"]').fill(time.breaks);
-  await section.locator('button[type="submit"]').click();
-  await expect(section.locator("summary")).toHaveCount(1);
-}
 
 async function openDetails(details: Locator) {
   if ((await details.getAttribute("open")) === null) await details.locator("summary").click();

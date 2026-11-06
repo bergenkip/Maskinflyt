@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
-import { AlertIcon, NoteIcon, PencilIcon, PlusIcon } from "@/components/icons";
-import { invoiceTotals, toLineFormValues, type DraftLine } from "@/lib/invoice";
+import { AlertIcon, CheckCircleIcon, NoteIcon, PencilIcon, PlusIcon } from "@/components/icons";
+import { invoiceTotals, toLineFormValues, type DraftLine, type InvoiceMark } from "@/lib/invoice";
 import type { JobStatus } from "@/lib/jobs";
 import { createClient } from "@/lib/supabase/server";
+import { MarkSentForm, UnmarkSentForm } from "./invoice-forms";
 import { LineForm, RemoveLineForm } from "./line-forms";
 
 const sectionClass = "grid gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6";
@@ -25,13 +26,15 @@ export type BillTo = {
 
 type Props = {
   job: { id: string; status: JobStatus; customer_id: string; vehicle_id: string | null };
-  organization: { currency: string };
+  organization: { currency: string; timeZone: string };
+  // The mark "sent", when the invoice is sent from the accounting system.
+  mark: InvoiceMark | null;
 };
 
 // The invoice draft of a job: who it goes to, the approved working time, the
 // extra lines the office adds, and the totals with VAT. Only a draft: nothing
 // is numbered or sent, and every extra line can be changed or removed.
-export async function InvoiceSection({ job, organization }: Props) {
+export async function InvoiceSection({ job, organization, mark }: Props) {
   const supabase = await createClient();
   const [draftResult, customerResult, vehicleResult] = await Promise.all([
     supabase.rpc("invoice_draft", { job: job.id }),
@@ -48,6 +51,7 @@ export async function InvoiceSection({ job, organization }: Props) {
     <InvoiceView
       job={job}
       organization={organization}
+      mark={mark}
       lines={(draftResult.data ?? []) as DraftLine[]}
       customer={customerResult.data as BillTo | null}
       vehicleName={(vehicleResult.data as { name: string } | null)?.name ?? null}
@@ -60,6 +64,7 @@ export async function InvoiceSection({ job, organization }: Props) {
 export async function InvoiceView({
   job,
   organization,
+  mark,
   lines,
   customer,
   vehicleName,
@@ -68,6 +73,10 @@ export async function InvoiceView({
   const [t, format, locale] = await Promise.all([getTranslations("Invoice"), getFormatter(), getLocale()]);
   const separator = locale === "en" ? "." : ",";
   const cancelled = job.status === "cancelled";
+  // A sent invoice is locked: nothing is changed or added any more.
+  const locked = cancelled || mark !== null;
+  const when = (iso: string) =>
+    format.dateTime(new Date(iso), { day: "numeric", month: "long", year: "numeric", timeZone: organization.timeZone });
   const money = (ore: number) => format.number(ore / 100, { style: "currency", currency: organization.currency });
   const number = (value: number) => format.number(Number(value), { maximumFractionDigits: 2 });
   const hasTime = lines.some((line) => line.kind !== "line");
@@ -95,12 +104,26 @@ export async function InvoiceView({
             {t("title")}
           </h2>
           {/* The state is shown with an icon and with words, never by colour alone. */}
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
-            <NoteIcon className="size-4" />
-            {t("draftBadge")}
-          </span>
+          {mark ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-3 py-1 text-sm font-medium text-success">
+              <CheckCircleIcon className="size-4" />
+              {t("sentBadge")}
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+              <NoteIcon className="size-4" />
+              {t("draftBadge")}
+            </span>
+          )}
         </div>
-        <p className="text-sm text-muted">{cancelled ? t("cancelled") : t("lead")}</p>
+        {/* Invoice numbers are data and are shown exactly as written. */}
+        <p className="text-sm text-muted [overflow-wrap:anywhere]">
+          {cancelled
+            ? t("cancelled")
+            : mark
+              ? t(mark.reference ? "sentLeadNumber" : "sentLead", { when: when(mark.sent_at), number: mark.reference ?? "" })
+              : t("lead")}
+        </p>
       </div>
 
       {failed && <p className="text-danger">{t("errors.unknown")}</p>}
@@ -140,7 +163,7 @@ export async function InvoiceView({
                 <p className="row-span-2 font-semibold tabular-nums">{money(line.amount)}</p>
                 <p className="text-sm text-muted tabular-nums [overflow-wrap:anywhere]">{detail(line)}</p>
               </div>
-              {line.kind === "line" && line.line_id && !cancelled && (
+              {line.kind === "line" && line.line_id && !locked && (
                 <details className="rounded-lg border border-border">
                   <summary className={summaryClass}>
                     <PencilIcon className="size-4" />
@@ -156,9 +179,9 @@ export async function InvoiceView({
           ))}
         </ul>
       )}
-      {hasTime && <p className="text-sm text-muted">{t("timeFromApproval")}</p>}
+      {hasTime && !locked && <p className="text-sm text-muted">{t("timeFromApproval")}</p>}
 
-      {!cancelled && (
+      {!locked && (
         <details className="rounded-lg border border-border" open={lines.length === 0 || undefined}>
           <summary className={summaryClass}>
             <PlusIcon className="size-4" />
@@ -185,6 +208,26 @@ export async function InvoiceView({
             <dd className="text-right text-lg font-semibold tabular-nums">{money(totals.total)}</dd>
           </div>
         </dl>
+      )}
+
+      {/* Sent from the accounting system, then marked here; MaskinGo sends nothing. */}
+      {!mark && hasTime && job.status === "done" && (
+        <div className="grid gap-3 border-t border-border pt-4">
+          <div className="grid gap-1">
+            <h3 className="font-semibold">{t("markTitle")}</h3>
+            <p className="text-sm text-muted">{t("markLead")}</p>
+          </div>
+          <MarkSentForm job={job.id} />
+        </div>
+      )}
+      {mark && (
+        <details className="rounded-lg border border-border">
+          <summary className={summaryClass}>{t("unmarkTitle")}</summary>
+          <div className="grid gap-3 border-t border-border p-3">
+            <p className="text-sm text-muted">{t("unmarkLead")}</p>
+            <UnmarkSentForm job={job.id} />
+          </div>
+        </details>
       )}
     </section>
   );

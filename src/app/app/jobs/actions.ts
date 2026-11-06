@@ -23,7 +23,7 @@ export type Overlap = {
 export type JobFormState = {
   values?: JobFormValues;
   fieldErrors?: Partial<Record<keyof JobFormValues, JobFieldError>>;
-  error?: "notAllowed" | "notAvailable" | "unknown";
+  error?: "notAllowed" | "notAvailable" | "locked" | "unknown";
   // The machine or driver is already on another job at that time.
   overlaps?: Overlap[];
   savedAt?: number;
@@ -38,6 +38,8 @@ function mapError(values: JobFormValues, error: { code?: string }): JobFormState
   // A customer, machine or driver of another company, or a driver who has left.
   if (error.code === "23503") return { values, error: "notAvailable" };
   if (error.code === "42501") return { values, error: "notAllowed" };
+  // The invoice is marked as sent: what it says about the job stays.
+  if (error.code === "55006") return { values, error: "locked" };
   return { values, error: "unknown" };
 }
 
@@ -176,7 +178,7 @@ export async function updateJob(_prev: JobFormState, formData: FormData): Promis
   return saveJob(formData, String(formData.get("id") ?? ""));
 }
 
-export type JobStatusState = { error?: "notAllowed" | "needsVehicleAndDriver" | "unknown" };
+export type JobStatusState = { error?: "notAllowed" | "needsVehicleAndDriver" | "locked" | "unknown" };
 
 // "new" restores a cancelled job (or reopens a done one); the database makes it
 // "planned" again when it has a machine and a driver.
@@ -189,6 +191,7 @@ export async function setJobStatus(_prev: JobStatusState, formData: FormData): P
   const { data, error } = await supabase.from("jobs").update({ status }).eq("id", id).select("id");
   if (error) {
     if (error.code === "23514") return { error: "needsVehicleAndDriver" };
+    if (error.code === "55006") return { error: "locked" };
     return { error: error.code === "42501" ? "notAllowed" : "unknown" };
   }
   if (!data || data.length === 0) return { error: "notAllowed" };

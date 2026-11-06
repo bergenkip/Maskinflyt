@@ -144,8 +144,30 @@ Migracija `20261106090000_job_lines`, pgTAP `19_job_lines` (21 testas).
 - Užsakymo puslapyje skiltis „Sąskaitos juodraštis“: kam (klientas, įm. kodas, adresas, el. paštas arba įspėjimas), eilutės, pridėti/keisti/šalinti, sumos. Ženklas „Juodraštis, niekas neišsiųsta“: nieko nenumeruojama ir nesiunčiama.
 - E2E `e2e/invoice.spec.ts`, nuotraukos `invoice`.
 
+## 7 etapas: sąskaitų vieta ir varpelis (2026-11-06)
+
+Migracija `20261106130000_job_invoices`, pgTAP `20_job_invoices` (24 testai).
+- Li sprendimas: MaskinGo pats sąskaitų dar nesiunčia (CLAUDE.md taisyklė lieka). Biuras išsiunčia iš savo apskaitos programos ir pažymi „Išsiųsta“ (su sąskaitos numeriu, jei nori).
+- `job_invoices`: žyma, numeris, sumos tuo metu (øre). Rašoma tik per `mark_invoice_sent` (tik atliktas darbas su patvirtintu, įkainotu laiku; biuras, savininkai/administratoriai su antru žingsniu). Žymą per klaidą biuras gali atšaukti.
+- Pažymėtas juodraštis užrakintas (klaida `55006`): nauji laiko patvirtinimai, eilučių keitimas, užsakymo būsena, klientas, technika ir laikas.
+- `invoice_queue()`: atlikti darbai su būsena `time` / `ready` / `sent` ir suma. `invoices_waiting()`: skaičius varpeliui.
+- Puslapis `/app/invoices` (trys grupės) ir varpelis antraštėje (tik biurui) su skaičiumi; skaičius ir nuorodos pavadinime, ne tik spalva.
+- Puslapio apačioje: kitų apskaitos programų integracija pagal užklausą (Li prašymas). Kontaktinio adreso dar nėra: pridėti, kai bus domenas ir el. paštas.
+- E2E `e2e/invoices.spec.ts`, nuotraukos `invoices`.
+
+## Sąskaitų planas (Li sutarta 2026-11-06)
+- **8: buhalterio rolė**: atskiras prisijungimas, mato ir taiso sąskaitas, nemato dispečerio darbų.
+- **9: Fiken**: įmonė prijungia savo Fiken; „Siųsti per Fiken“ sukuria sąskaitą Fiken ir išsiunčia (el. paštas / EHF). Fiken klientui reikia API modulio. Numeruoja ir saugo Fiken; kreditnota Fiken.
+- **10: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
+- **11: sava PDF sąskaita iš MaskinGo**: numeracija, privalomi duomenys (bokføringsforskriften), siuntimas el. paštu, kreditnota, saugojimas 5 m. Reikia pakeisti CLAUDE.md taisyklę atskiru PR ir buhalterio patikros prieš paleidžiant.
+- Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
+- **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio
+  išdirbtas valandas ir viršvalandžius (pvz. +50 %, +100 %), buhalteris patikrina ir patvirtina. Tai atlyginimo valandos,
+  ne kliento sąskaitos valandos; pradžiai užpildyti iš patvirtintų darbų laikų. Patikrinti: arbeidsmiljøloven §10-6
+  (viršvalandžių priedas bent 40 %) ir įmonės tarifinė sutartis; eksportas į algų programą (pvz. Tripletex/Fiken lønn).
+
 ## Kitas etapas (siūlymas)
-1. Pasirinkti kartu su Li: sąskaitų sąrašas ir PDF peržiūra (be siuntimo) arba GPS (po teisininko patikros).
+1. Sąskaitų planas aukščiau (8–11), arba GPS (po teisininko patikros).
 2. Li norai, laukiantys savo eilės:
    - **Nuotraukos ir parašas klientui** (Li prašymas 2026-11-03). Dabar juos mato tik biuras ir to darbo
      vairuotojas. Variantai: prisegti prie darbo ataskaitos ar sąskaitos juodraščio, arba saugi nuoroda klientui
