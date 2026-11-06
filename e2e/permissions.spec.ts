@@ -76,7 +76,9 @@ test("an owner gives a driver extra rights, and they add exactly that", async ({
   for (const locale of locales) {
     await owner.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
     await owner.page.goto("/app/team");
-    await owner.page.getByRole("listitem").filter({ hasText: "Sander Lie" }).scrollIntoViewIfNeeded();
+    const member = owner.page.getByRole("listitem").filter({ hasText: "Sander Lie" });
+    await member.locator("summary").click();
+    await member.scrollIntoViewIfNeeded();
     await shootAllWidths(owner.page, "team-rights", locale);
   }
 

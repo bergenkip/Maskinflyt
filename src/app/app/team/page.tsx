@@ -144,7 +144,9 @@ export default async function TeamPage() {
                     </div>
                   )}
                   {grantable.length > 0 && (
-                    <details className="rounded-lg border border-border" open={extras.length > 0 || undefined}>
+                    // Folded at first: the count in the summary tells what is given. Not tied to the
+                    // rights, or saving the last one off would fold the form over its own message.
+                    <details className="rounded-lg border border-border">
                       <summary className="flex min-h-11 cursor-pointer items-center gap-2 px-3 font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
                         {t("permissionsTitle")}
                         {extras.length > 0 && <span className="text-sm font-normal text-muted">({extras.length})</span>}
