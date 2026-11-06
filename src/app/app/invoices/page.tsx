@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { QueueRow } from "@/lib/invoice";
 import { getCurrentMembership } from "@/lib/membership";
-import { canSeeJobs } from "@/lib/roles";
+import { canSeeInvoices } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 import { InvoiceQueueView } from "./queue-view";
 
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function InvoicesPage() {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeJobs(membership.role)) redirect("/app");
+  if (!canSeeInvoices(membership.role)) redirect("/app");
   const { organization } = membership;
 
   const supabase = await createClient();

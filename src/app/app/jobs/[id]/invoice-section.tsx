@@ -29,12 +29,14 @@ type Props = {
   organization: { currency: string; timeZone: string };
   // The mark "sent", when the invoice is sent from the accounting system.
   mark: InvoiceMark | null;
+  // The accountant does not change customers, so no link to the customer page.
+  customerLink?: boolean;
 };
 
 // The invoice draft of a job: who it goes to, the approved working time, the
 // extra lines the office adds, and the totals with VAT. Only a draft: nothing
 // is numbered or sent, and every extra line can be changed or removed.
-export async function InvoiceSection({ job, organization, mark }: Props) {
+export async function InvoiceSection({ job, organization, mark, customerLink = true }: Props) {
   const supabase = await createClient();
   const [draftResult, customerResult, vehicleResult] = await Promise.all([
     supabase.rpc("invoice_draft", { job: job.id }),
@@ -52,6 +54,7 @@ export async function InvoiceSection({ job, organization, mark }: Props) {
       job={job}
       organization={organization}
       mark={mark}
+      customerLink={customerLink}
       lines={(draftResult.data ?? []) as DraftLine[]}
       customer={customerResult.data as BillTo | null}
       vehicleName={(vehicleResult.data as { name: string } | null)?.name ?? null}
@@ -65,6 +68,7 @@ export async function InvoiceView({
   job,
   organization,
   mark,
+  customerLink = true,
   lines,
   customer,
   vehicleName,
@@ -142,9 +146,11 @@ export async function InvoiceView({
               <AlertIcon className="mt-0.5 size-5 shrink-0" />
               <span>
                 {t("noEmail")}{" "}
-                <Link href={`/app/customers/${customer.id}`} className={linkClass}>
-                  {t("openCustomer")}
-                </Link>
+                {customerLink && (
+                  <Link href={`/app/customers/${customer.id}`} className={linkClass}>
+                    {t("openCustomer")}
+                  </Link>
+                )}
               </span>
             </p>
           )}

@@ -144,7 +144,8 @@
     "owner": "Savininkas",
     "admin": "Administratorius",
     "dispatcher": "Dispečeris",
-    "driver": "Vairuotojas"
+    "driver": "Vairuotojas",
+    "accountant": "Buhalteris"
   },
   "Settings": {
     "title": "Nustatymai",
@@ -164,7 +165,7 @@
     "inviteTitle": "Pakvieskite kolegą",
     "inviteLead": "Pasirinkite rolę ir sukurkite asmeninę nuorodą. Nusiųskite ją vienam kolegai: jis per ją susikurs paskyrą ir prisijungs. Nuoroda veikia vieną kartą ir galioja 7 dienas.",
     "role": "Rolė",
-    "roleHint": "Administratoriai valdo žmones. Dispečeriai planuoja darbus ir techniką. Vairuotojai atlieka darbus.",
+    "roleHint": "Administratoriai valdo žmones. Dispečeriai planuoja darbus ir techniką. Vairuotojai atlieka darbus. Buhalteriai tikrina atliktų darbų laiką ir sąskaitas.",
     "inviteSubmit": "Sukurti kvietimo nuorodą",
     "linkLabel": "Asmeninė nuoroda vienam žmogui",
     "copy": "Kopijuoti nuorodą",
@@ -783,6 +784,7 @@
     "sentNumber": "Išsiųsta {day}, nr. {number}",
     "moreSent": "{count, plural, one {# senesnė yra} few {# senesnės yra} other {# senesnių yra}} prie savo darbų.",
     "otherSystemsTitle": "Kita apskaitos programa?",
-    "otherSystems": "Siuntimas tiesiai iš Fiken ir Tripletex jau ruošiamas. Naudojate kitą programą, pavyzdžiui Visma, PowerOffice ar 24SevenOffice? Susisiekite su mumis, ir sukursime jūsų įmonei reikalingą integraciją."
+    "otherSystems": "Siuntimas tiesiai iš Fiken ir Tripletex jau ruošiamas. Naudojate kitą programą, pavyzdžiui Visma, PowerOffice ar 24SevenOffice? Susisiekite su mumis, ir sukursime jūsų įmonei reikalingą integraciją.",
+    "back": "Visos sąskaitos"
   }
 }

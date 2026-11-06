@@ -261,9 +261,18 @@ export async function driveThrough(page: Page, nextMinute = false) {
 export async function approveTime(page: Page, job: string, time: { start: string; end: string; breaks: string }) {
   await page.goto(job);
   const section = page.locator('section[aria-labelledby="time-title"]');
-  await section.locator('input[name="start"]').fill(time.start);
-  await section.locator('input[name="end"]').fill(time.end);
-  await section.locator('input[name="breaks"]').fill(time.breaks);
-  await section.locator('button[type="submit"]').click();
-  await expect(section.locator("summary")).toHaveCount(1);
+  // The form with fields, not the one-press approval of the driver's presses.
+  const form = section.locator('form:has(input[type="time"])');
+  // When the presses crossed a minute there is a draft: the fields are a correction, with a reason.
+  const correction = section.locator('details:has(form input[type="time"])');
+  const drafted = (await correction.count()) > 0;
+  if (drafted) await correction.locator("summary").click();
+  await form.locator('input[name="start"]').fill(time.start);
+  await form.locator('input[name="end"]').fill(time.end);
+  await form.locator('input[name="breaks"]').fill(time.breaks);
+  if (drafted) await form.locator('[name="reason"]').fill("Entered from the paper timesheet");
+  await form.locator('button[type="submit"]').click();
+  // Approved: only the correction form is left, folded away.
+  await expect(section.locator("form")).toHaveCount(1);
+  await expect(correction).toHaveCount(1);
 }

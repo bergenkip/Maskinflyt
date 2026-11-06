@@ -144,7 +144,8 @@
     "owner": "Owner",
     "admin": "Administrator",
     "dispatcher": "Dispatcher",
-    "driver": "Driver"
+    "driver": "Driver",
+    "accountant": "Accountant"
   },
   "Settings": {
     "title": "Settings",
@@ -164,7 +165,7 @@
     "inviteTitle": "Invite a colleague",
     "inviteLead": "Choose a role and create a personal link. Send it to one colleague: they create an account with it and join. The link works once and is valid for 7 days.",
     "role": "Role",
-    "roleHint": "Administrators manage people. Dispatchers plan jobs and machines. Drivers do the jobs.",
+    "roleHint": "Administrators manage people. Dispatchers plan jobs and machines. Drivers do the jobs. Accountants check the time and the invoices of finished jobs.",
     "inviteSubmit": "Create invitation link",
     "linkLabel": "Personal link for one person",
     "copy": "Copy link",
@@ -783,6 +784,7 @@
     "sentNumber": "Sent {day}, no. {number}",
     "moreSent": "{count, plural, one {# older one is} other {# older ones are}} on their jobs.",
     "otherSystemsTitle": "Another accounting system?",
-    "otherSystems": "Sending straight from Fiken and Tripletex is on the way. Do you use another system, such as Visma, PowerOffice or 24SevenOffice? Contact us, and we can build the integration your company needs."
+    "otherSystems": "Sending straight from Fiken and Tripletex is on the way. Do you use another system, such as Visma, PowerOffice or 24SevenOffice? Contact us, and we can build the integration your company needs.",
+    "back": "All invoices"
   }
 }

@@ -1,4 +1,5 @@
-export const roles = ["owner", "admin", "dispatcher", "driver"] as const;
+// The accountant (regnskapsfører) finishes the invoicing only (see the accountant migration).
+export const roles = ["owner", "admin", "dispatcher", "driver", "accountant"] as const;
 export type Role = (typeof roles)[number];
 
 export function isRole(value: unknown): value is Role {
@@ -16,7 +17,7 @@ export function canManage(actor: Role, target: Role): boolean {
 // Roles the actor may give to a member (owner only by an owner).
 export function assignableRoles(actor: Role): Role[] {
   if (actor === "owner") return [...roles];
-  if (actor === "admin") return ["admin", "dispatcher", "driver"];
+  if (actor === "admin") return ["admin", "dispatcher", "driver", "accountant"];
   return [];
 }
 
@@ -28,17 +29,18 @@ export function invitableRoles(actor: Role): Role[] {
 // Mirror the RLS policies on vehicles: owners and admins add and change
 // machines, dispatchers read the list to plan jobs, drivers do not see it.
 export function canSeeVehicles(role: Role): boolean {
-  return role !== "driver";
+  return role !== "driver" && role !== "accountant";
 }
 
 export function canEditVehicles(role: Role): boolean {
   return role === "owner" || role === "admin";
 }
 
-// Owners and admins manage people and the company, so after the password
-// they also confirm with a link e-mailed to them (the database checks this too).
+// Owners and admins manage people and the company, and accountants handle the
+// money, so after the password they also confirm with a link e-mailed to them
+// (the database checks this too).
 export function needsMfa(role: Role): boolean {
-  return role === "owner" || role === "admin";
+  return role === "owner" || role === "admin" || role === "accountant";
 }
 
 // Mirrors private.second_step_done in the database: the session was created
@@ -59,7 +61,7 @@ export function secondStepDone(claims: unknown): boolean {
 // Mirror the RLS policies on customers: owners, admins and dispatchers add and
 // change customers (orders come in by phone); drivers do not see the list.
 export function canSeeCustomers(role: Role): boolean {
-  return role !== "driver";
+  return role !== "driver" && role !== "accountant";
 }
 
 // A customer's own prices are set by owners and admins; dispatchers read them.
@@ -70,10 +72,15 @@ export function canEditCustomerRates(role: Role): boolean {
 // Mirror the RLS policies on jobs: owners, admins and dispatchers add, plan and
 // change jobs; drivers will see their own jobs in a later stage.
 export function canSeeJobs(role: Role): boolean {
+  return role !== "driver" && role !== "accountant";
+}
+
+// The invoicing: the office and the accountant (who sees finished jobs only).
+export function canSeeInvoices(role: Role): boolean {
   return role !== "driver";
 }
 
 // Mirrors public.set_main_machine: those who plan jobs choose each person's main machine.
 export function canChooseMainMachines(role: Role): boolean {
-  return role !== "driver";
+  return role !== "driver" && role !== "accountant";
 }
