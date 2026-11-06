@@ -256,3 +256,14 @@ export async function driveThrough(page: Page, nextMinute = false) {
   await card.locator('button[name="step"][value="finished"]').click();
   await expect(card.locator('button[name="step"]')).toHaveCount(0);
 }
+
+// A finished job without presses: the office enters and approves the time.
+export async function approveTime(page: Page, job: string, time: { start: string; end: string; breaks: string }) {
+  await page.goto(job);
+  const section = page.locator('section[aria-labelledby="time-title"]');
+  await section.locator('input[name="start"]').fill(time.start);
+  await section.locator('input[name="end"]').fill(time.end);
+  await section.locator('input[name="breaks"]').fill(time.breaks);
+  await section.locator('button[type="submit"]').click();
+  await expect(section.locator("summary")).toHaveCount(1);
+}

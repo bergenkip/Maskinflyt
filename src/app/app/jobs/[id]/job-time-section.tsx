@@ -28,11 +28,13 @@ export type Approved = Sheet & { id: string; corrected: boolean; reason: string 
 type Props = {
   job: { id: string; status: JobStatus; starts_at: string; ends_at: string };
   organization: { id: string; timeZone: string; currency: string };
+  // The invoice is marked as sent: the time is only shown.
+  locked?: boolean;
 };
 
 // The job's working time: what the driver's presses give, its approval by the
 // office (or a correction with a reason), and the price, only to look at.
-export async function JobTimeSection({ job, organization }: Props) {
+export async function JobTimeSection({ job, organization, locked }: Props) {
   const supabase = await createClient();
   const [names, approvedResult, draftResult] = await Promise.all([
     getMemberNames(organization.id),
@@ -49,6 +51,7 @@ export async function JobTimeSection({ job, organization }: Props) {
     <JobTimeView
       job={job}
       organization={organization}
+      locked={locked}
       names={names}
       versions={(approvedResult.data ?? []) as Approved[]}
       draft={((draftResult.data ?? []) as Sheet[])[0]}
@@ -61,13 +64,14 @@ export async function JobTimeSection({ job, organization }: Props) {
 export async function JobTimeView({
   job,
   organization,
+  locked,
   names,
   versions,
   draft,
   failed,
 }: Props & { names: Map<string, string>; versions: Approved[]; draft?: Sheet; failed: boolean }) {
   const { timeZone, currency } = organization;
-  const done = job.status === "done";
+  const done = job.status === "done" && !locked;
   const [t, format] = await Promise.all([getTranslations("JobTime"), getFormatter()]);
   const approved = versions[0];
 

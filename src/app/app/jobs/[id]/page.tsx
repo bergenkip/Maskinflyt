@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { FormAlert } from "@/components/form";
 import { getAddedBy } from "@/lib/added-by";
+import type { InvoiceMark } from "@/lib/invoice";
 import { jobColumns, toJobFormValues, type Job } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import type { JobEventKind, JobProgress } from "@/lib/progress";
@@ -49,7 +50,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
   const job = await getJob(id);
   if (!job) notFound();
   const supabase = await createClient();
-  const [t, tMy, tFiles, format, addedBy, options, eventsResult, files] = await Promise.all([
+  const [t, tMy, tFiles, format, addedBy, options, eventsResult, files, markResult] = await Promise.all([
     getTranslations("Jobs"),
     getTranslations("MyJobs"),
     getTranslations("JobFiles"),
@@ -58,7 +59,9 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
     getJobOptions(organization.id, { customerId: job.customer_id, vehicleId: job.vehicle_id }),
     supabase.from("job_events").select("kind, note, created_at").eq("job_id", job.id).order("created_at"),
     getJobFiles([job.id]),
+    supabase.from("job_invoices").select("reference, net, vat, total, sent_by, sent_at").eq("job_id", job.id).maybeSingle(),
   ]);
+  const mark = (markResult.data ?? null) as InvoiceMark | null;
   const events = (eventsResult.data ?? []) as EventRow[];
   const when = (iso: string) =>
     format.dateTime(new Date(iso), { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: organization.timeZone });
@@ -169,9 +172,9 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
         )}
       </section>
 
-      <JobTimeSection job={job} organization={organization} />
+      <JobTimeSection job={job} organization={organization} locked={mark !== null} />
 
-      <InvoiceSection job={job} organization={organization} />
+      <InvoiceSection job={job} organization={organization} mark={mark} />
 
       <section aria-labelledby="status-title" className={sectionClass}>
         <div className="grid gap-1">
@@ -181,7 +184,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
           <StatusBadge status={job.status} label={t(`statuses.${job.status}`)} size="md" />
           <p className="text-muted">{t(`statusLead.${job.status}`)}</p>
         </div>
-        <JobStatusForm id={job.id} status={job.status} />
+        {mark ? <p className="text-sm text-muted">{t("statusLocked")}</p> : <JobStatusForm id={job.id} status={job.status} />}
       </section>
     </div>
   );

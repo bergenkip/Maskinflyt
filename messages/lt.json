@@ -41,7 +41,9 @@
     "vehicles": "Technika",
     "customers": "Klientai",
     "jobs": "Užsakymai",
-    "myJobs": "Mano darbai"
+    "myJobs": "Mano darbai",
+    "invoices": "Sąskaitos",
+    "invoicesWaiting": "{count, plural, one {laukia # darbas} few {laukia # darbai} other {laukia # darbų}}"
   },
   "Auth": {
     "loginTitle": "Prisijunkite prie MaskinGo",
@@ -487,7 +489,8 @@
       "needsVehicleAndDriver": "Pirmiausia pasirinkite techniką ir vairuotoją.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
       "durationInvalid": "Įrašykite, kiek apytiksliai truks darbas: nuo 15 minučių iki 24 valandų, pvz. 4 val. 30 min.",
-      "timeNoteTooLong": "Ne daugiau kaip 200 simbolių."
+      "timeNoteTooLong": "Ne daugiau kaip 200 simbolių.",
+      "locked": "Sąskaita pažymėta kaip išsiųsta, todėl klientas, technika, laikas ir būsena nebekeičiami."
     },
     "newCustomerOption": "+ Naujas klientas",
     "newCustomerTitle": "Naujas klientas",
@@ -507,7 +510,8 @@
     "viewLabel": "Rodyti užsakymus kaip",
     "viewList": "Sąrašas",
     "viewCalendar": "Kalendorius",
-    "timeSpan": "{start}–~{end}"
+    "timeSpan": "{start}–~{end}",
+    "statusLocked": "Sąskaita pažymėta kaip išsiųsta: būsena lieka „Atlikta“. Norėdami ją keisti, atšaukite žymą sąskaitos skiltyje."
   },
   "Calendar": {
     "title": "Kalendorius",
@@ -649,7 +653,8 @@
       "notAllowed": "Darbo laiką tvirtina tik biuras. Savininkai ir administratoriai pirmiausia patvirtina prisijungimą.",
       "notDone": "Galima patvirtinti tik baigto darbo laiką.",
       "changed": "Laikas tuo metu pasikeitė. Perkraukite puslapį.",
-      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
+      "locked": "Sąskaita pažymėta kaip išsiųsta, todėl laiko keisti negalima."
     },
     "listApproved": "Laikas patvirtintas",
     "listWaiting": "Laikas laukia patvirtinimo"
@@ -731,7 +736,53 @@
       "lineTooLarge": "Viena eilutė gali būti ne didesnė nei 1 000 000 kr.",
       "notAllowed": "Negalite keisti sąskaitos juodraščio. Savininkams ir administratoriams reikia dviejų žingsnių prisijungimo.",
       "cancelled": "Užsakymas atšauktas, todėl sąskaitos eilučių nėra.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
+      "locked": "Sąskaita pažymėta kaip išsiųsta, todėl juodraštis užrakintas."
+    },
+    "sentBadge": "Pažymėta kaip išsiųsta",
+    "sentLead": "Pažymėta kaip išsiųsta {when}. Juodraštis užrakintas.",
+    "sentLeadNumber": "Pažymėta kaip išsiųsta {when}, sąskaitos nr. {number}. Juodraštis užrakintas.",
+    "markTitle": "Išsiuntėte iš savo apskaitos programos?",
+    "markLead": "MaskinGo sąskaitų nesiunčia. Išsiųskite sąskaitą iš Fiken, Tripletex ar kitos programos ir pažymėkite čia: juodraštis užrakinamas, o darbas dingsta iš varpelio.",
+    "reference": "Sąskaitos numeris (neprivaloma)",
+    "referenceHint": "Kaip apskaitos programoje, pavyzdžiui 1042",
+    "markSent": "Pažymėti kaip išsiųstą",
+    "unmarkTitle": "Pažymėjote per klaidą?",
+    "unmarkLead": "Atšaukite žymą, ir juodraštį vėl bus galima keisti. Darykite tai tik jei sąskaita nebuvo išsiųsta.",
+    "unmark": "Atšaukti žymą",
+    "unmarking": "Atšaukiama…",
+    "markErrors": {
+      "referenceTooLong": "Sąskaitos numeris gali būti ne ilgesnis nei 40 simbolių.",
+      "notAllowed": "Negalite žymėti sąskaitų. Savininkams ir administratoriams reikia dviejų žingsnių prisijungimo.",
+      "timeRequired": "Pirmiausia patvirtinkite darbo laiką.",
+      "already": "Sąskaita jau pažymėta kaip išsiųsta.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
     }
+  },
+  "Invoices": {
+    "title": "Sąskaitos",
+    "lead": "Atlikti darbai: patvirtinkite darbo laiką, patikrinkite juodraštį, išsiųskite sąskaitą iš savo apskaitos programos ir pažymėkite kaip išsiųstą.",
+    "error": "Sąrašo nepavyko įkelti. Bandykite dar kartą.",
+    "groups": {
+      "time": "Darbo laikas laukia patvirtinimo ({count})",
+      "ready": "Paruošta sąskaitai ({count})",
+      "sent": "Pažymėta kaip išsiųsta ({count})"
+    },
+    "empty": {
+      "time": "Nėra atliktų darbų, kurių laikas laukia.",
+      "ready": "Niekas nelaukia sąskaitos.",
+      "sent": "Dar nė viena sąskaita nepažymėta kaip išsiųsta."
+    },
+    "action": {
+      "time": "Patvirtinti laiką",
+      "ready": "Patikrinti juodraštį ir pažymėti",
+      "sent": "Išsiųsta"
+    },
+    "finished": "Atlikta {day}",
+    "sent": "Išsiųsta {day}",
+    "sentNumber": "Išsiųsta {day}, nr. {number}",
+    "moreSent": "{count, plural, one {# senesnė yra} few {# senesnės yra} other {# senesnių yra}} prie savo darbų.",
+    "otherSystemsTitle": "Kita apskaitos programa?",
+    "otherSystems": "Siuntimas tiesiai iš Fiken ir Tripletex jau ruošiamas. Naudojate kitą programą, pavyzdžiui Visma, PowerOffice ar 24SevenOffice? Susisiekite su mumis, ir sukursime jūsų įmonei reikalingą integraciją."
   }
 }

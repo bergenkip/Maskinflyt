@@ -13,7 +13,7 @@ import { createClient } from "@/lib/supabase/server";
 export type LineState = {
   values?: LineFormValues;
   fieldErrors?: Partial<Record<keyof LineFormValues, LineFieldError>>;
-  error?: "notAllowed" | "cancelled" | "unknown";
+  error?: "notAllowed" | "cancelled" | "locked" | "unknown";
   savedAt?: number;
 };
 
@@ -21,6 +21,7 @@ function failure(error: { code?: string } | null): LineState["error"] {
   if (!error) return undefined;
   if (error.code === "42501") return "notAllowed";
   if (error.code === "55000") return "cancelled";
+  if (error.code === "55006") return "locked";
   return "unknown";
 }
 

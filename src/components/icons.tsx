@@ -243,3 +243,9 @@ export const NoteIcon = (props: IconProps) => (
     <path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5" />
   </Icon>
 );
+
+export const BellIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0" />
+  </Icon>
+);

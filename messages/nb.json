@@ -41,7 +41,9 @@
     "vehicles": "Maskiner",
     "customers": "Kunder",
     "jobs": "Oppdrag",
-    "myJobs": "Mine oppdrag"
+    "myJobs": "Mine oppdrag",
+    "invoices": "Fakturaer",
+    "invoicesWaiting": "{count, plural, one {# oppdrag venter} other {# oppdrag venter}}"
   },
   "Auth": {
     "loginTitle": "Logg inn i MaskinGo",
@@ -487,7 +489,8 @@
       "needsVehicleAndDriver": "Velg maskin og sjåfør først.",
       "unknown": "Noe gikk galt. Prøv igjen.",
       "durationInvalid": "Skriv hvor lenge oppdraget forventes å ta: fra 15 minutter til 24 timer, for eksempel 4 timer 30 min.",
-      "timeNoteTooLong": "Maks 200 tegn."
+      "timeNoteTooLong": "Maks 200 tegn.",
+      "locked": "Fakturaen er merket som sendt, så kunde, maskin, tid og status blir som de er."
     },
     "newCustomerOption": "+ Ny kunde",
     "newCustomerTitle": "Ny kunde",
@@ -507,7 +510,8 @@
     "viewLabel": "Vis oppdrag som",
     "viewList": "Liste",
     "viewCalendar": "Kalender",
-    "timeSpan": "{start}–~{end}"
+    "timeSpan": "{start}–~{end}",
+    "statusLocked": "Fakturaen er merket som sendt: statusen blir «Ferdig». Angre merkingen i fakturadelen for å endre den."
   },
   "Calendar": {
     "title": "Kalender",
@@ -649,7 +653,8 @@
       "notAllowed": "Bare kontoret godkjenner arbeidstid. Eiere og administratorer bekrefter innloggingen først.",
       "notDone": "Bare tiden for et ferdig oppdrag kan godkjennes.",
       "changed": "Tiden er endret i mellomtiden. Last inn siden på nytt.",
-      "unknown": "Noe gikk galt. Prøv igjen."
+      "unknown": "Noe gikk galt. Prøv igjen.",
+      "locked": "Fakturaen er merket som sendt, så tiden kan ikke endres."
     },
     "listApproved": "Tid godkjent",
     "listWaiting": "Tid til godkjenning"
@@ -731,7 +736,53 @@
       "lineTooLarge": "Én linje kan være høyst 1 000 000 kr.",
       "notAllowed": "Du kan ikke endre fakturautkastet. Eiere og administratorer trenger innlogging i to trinn.",
       "cancelled": "Oppdraget er avlyst, så det har ingen fakturalinjer.",
+      "unknown": "Noe gikk galt. Prøv igjen.",
+      "locked": "Fakturaen er merket som sendt, så utkastet er låst."
+    },
+    "sentBadge": "Merket som sendt",
+    "sentLead": "Merket som sendt {when}. Utkastet er låst.",
+    "sentLeadNumber": "Merket som sendt {when}, fakturanr. {number}. Utkastet er låst.",
+    "markTitle": "Sendt fra regnskapssystemet?",
+    "markLead": "MaskinGo sender ikke fakturaer. Send fakturaen fra Fiken, Tripletex eller et annet system, og merk den her: utkastet låses og oppdraget forsvinner fra bjella.",
+    "reference": "Fakturanummer (valgfritt)",
+    "referenceHint": "Som i regnskapssystemet, for eksempel 1042",
+    "markSent": "Merk som sendt",
+    "unmarkTitle": "Merket ved en feil?",
+    "unmarkLead": "Angre merkingen, så kan utkastet endres igjen. Gjør det bare hvis fakturaen ikke ble sendt.",
+    "unmark": "Angre merkingen",
+    "unmarking": "Angrer …",
+    "markErrors": {
+      "referenceTooLong": "Fakturanummeret kan være høyst 40 tegn.",
+      "notAllowed": "Du kan ikke merke fakturaer. Eiere og administratorer trenger innlogging i to trinn.",
+      "timeRequired": "Godkjenn arbeidstiden først.",
+      "already": "Fakturaen er allerede merket som sendt.",
       "unknown": "Noe gikk galt. Prøv igjen."
     }
+  },
+  "Invoices": {
+    "title": "Fakturaer",
+    "lead": "Ferdige oppdrag: godkjenn arbeidstiden, sjekk utkastet, send fakturaen fra regnskapssystemet og merk den som sendt.",
+    "error": "Listen kunne ikke lastes. Prøv igjen.",
+    "groups": {
+      "time": "Arbeidstid venter på godkjenning ({count})",
+      "ready": "Klar til fakturering ({count})",
+      "sent": "Merket som sendt ({count})"
+    },
+    "empty": {
+      "time": "Ingen ferdige oppdrag venter på tiden.",
+      "ready": "Ingenting venter på fakturering.",
+      "sent": "Ingen fakturaer er merket som sendt ennå."
+    },
+    "action": {
+      "time": "Godkjenn tiden",
+      "ready": "Sjekk utkastet og merk som sendt",
+      "sent": "Sendt"
+    },
+    "finished": "Ferdig {day}",
+    "sent": "Sendt {day}",
+    "sentNumber": "Sendt {day}, nr. {number}",
+    "moreSent": "{count, plural, one {# eldre ligger} other {# eldre ligger}} på oppdragene sine.",
+    "otherSystemsTitle": "Et annet regnskapssystem?",
+    "otherSystems": "Sending rett fra Fiken og Tripletex er på vei. Bruker dere et annet system, for eksempel Visma, PowerOffice eller 24SevenOffice? Kontakt oss, så kan vi lage integrasjonen bedriften trenger."
   }
 }

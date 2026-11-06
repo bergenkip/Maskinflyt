@@ -126,3 +126,19 @@ export function invoiceTotals(lines: Pick<DraftLine, "vat_rate" | "amount">[]) {
   const vatTotal = vat.reduce((sum, row) => sum + row.vat, 0);
   return { net, vat, vatTotal, total: net + vatTotal };
 }
+
+// The invoice number in the company's accounting system, kept with the mark "sent".
+export const MAX_INVOICE_REFERENCE_LENGTH = 40;
+
+export type InvoiceMark = { reference: string | null; net: number; vat: number; total: number; sent_by: string | null; sent_at: string };
+export type QueueState = "time" | "ready" | "sent";
+export type QueueRow = {
+  job_id: string;
+  number: number;
+  customer: string;
+  ends_at: string;
+  state: QueueState;
+  total: number | null;
+  reference: string | null;
+  sent_at: string | null;
+};

@@ -41,7 +41,9 @@
     "vehicles": "Machines",
     "customers": "Customers",
     "jobs": "Jobs",
-    "myJobs": "My jobs"
+    "myJobs": "My jobs",
+    "invoices": "Invoices",
+    "invoicesWaiting": "{count, plural, one {# job waits} other {# jobs wait}}"
   },
   "Auth": {
     "loginTitle": "Sign in to MaskinGo",
@@ -487,7 +489,8 @@
       "needsVehicleAndDriver": "Choose a machine and a driver first.",
       "unknown": "Something went wrong. Try again.",
       "durationInvalid": "Enter how long the job is expected to take: from 15 minutes to 24 hours, for example 4 hours 30 min.",
-      "timeNoteTooLong": "At most 200 characters."
+      "timeNoteTooLong": "At most 200 characters.",
+      "locked": "The invoice is marked as sent, so the customer, machine, time and status stay as they are."
     },
     "newCustomerOption": "+ New customer",
     "newCustomerTitle": "New customer",
@@ -507,7 +510,8 @@
     "viewLabel": "Show jobs as",
     "viewList": "List",
     "viewCalendar": "Calendar",
-    "timeSpan": "{start}–~{end}"
+    "timeSpan": "{start}–~{end}",
+    "statusLocked": "The invoice is marked as sent: the status stays “Done”. Take the mark back in the invoice section to change it."
   },
   "Calendar": {
     "title": "Calendar",
@@ -649,7 +653,8 @@
       "notAllowed": "Only the office approves working time. Owners and administrators confirm their sign-in first.",
       "notDone": "Only a finished job's time can be approved.",
       "changed": "The time changed meanwhile. Reload the page.",
-      "unknown": "Something went wrong. Try again."
+      "unknown": "Something went wrong. Try again.",
+      "locked": "The invoice is marked as sent, so the time can't change."
     },
     "listApproved": "Time approved",
     "listWaiting": "Time to approve"
@@ -731,7 +736,53 @@
       "lineTooLarge": "One line can be at most 1 000 000 kr.",
       "notAllowed": "You can't change the invoice draft. Owners and admins need two-step sign-in.",
       "cancelled": "The job is cancelled, so it has no invoice lines.",
+      "unknown": "Something went wrong. Try again.",
+      "locked": "The invoice is marked as sent, so the draft is locked."
+    },
+    "sentBadge": "Marked as sent",
+    "sentLead": "Marked as sent on {when}. The draft is locked.",
+    "sentLeadNumber": "Marked as sent on {when}, invoice no. {number}. The draft is locked.",
+    "markTitle": "Sent from your accounting system?",
+    "markLead": "MaskinGo does not send invoices. Send the invoice from Fiken, Tripletex or another system, then mark it here: the draft is locked and the job leaves the bell.",
+    "reference": "Invoice number (optional)",
+    "referenceHint": "As in your accounting system, for example 1042",
+    "markSent": "Mark as sent",
+    "unmarkTitle": "Marked by mistake?",
+    "unmarkLead": "Take the mark back, and the draft can be changed again. Only do this if the invoice was not sent.",
+    "unmark": "Take back the mark",
+    "unmarking": "Taking back…",
+    "markErrors": {
+      "referenceTooLong": "The invoice number can be at most 40 characters.",
+      "notAllowed": "You can't mark invoices. Owners and admins need two-step sign-in.",
+      "timeRequired": "Approve the working time first.",
+      "already": "The invoice is already marked as sent.",
       "unknown": "Something went wrong. Try again."
     }
+  },
+  "Invoices": {
+    "title": "Invoices",
+    "lead": "Finished jobs: approve the working time, check the draft, send the invoice from your accounting system and mark it as sent.",
+    "error": "The list could not be loaded. Try again.",
+    "groups": {
+      "time": "Working time waits for approval ({count})",
+      "ready": "Ready to invoice ({count})",
+      "sent": "Marked as sent ({count})"
+    },
+    "empty": {
+      "time": "No finished jobs wait for their time.",
+      "ready": "Nothing waits to be invoiced.",
+      "sent": "No invoices are marked as sent yet."
+    },
+    "action": {
+      "time": "Approve the time",
+      "ready": "Check the draft and mark as sent",
+      "sent": "Sent"
+    },
+    "finished": "Finished {day}",
+    "sent": "Sent {day}",
+    "sentNumber": "Sent {day}, no. {number}",
+    "moreSent": "{count, plural, one {# older one is} other {# older ones are}} on their jobs.",
+    "otherSystemsTitle": "Another accounting system?",
+    "otherSystems": "Sending straight from Fiken and Tripletex is on the way. Do you use another system, such as Visma, PowerOffice or 24SevenOffice? Contact us, and we can build the integration your company needs."
   }
 }

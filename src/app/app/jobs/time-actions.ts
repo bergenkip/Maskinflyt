@@ -13,7 +13,7 @@ import { createClient } from "@/lib/supabase/server";
 export type TimeState = {
   values?: TimeFormValues;
   fieldErrors?: Partial<Record<keyof TimeFormValues, TimeFieldError | "reasonRequired">>;
-  error?: "notAllowed" | "notDone" | "unknown";
+  error?: "notAllowed" | "notDone" | "locked" | "unknown";
   savedAt?: number;
 };
 
@@ -37,6 +37,7 @@ export async function approveTime(_prev: TimeState, formData: FormData): Promise
     if (error.hint === "reason_required") return { values, fieldErrors: { reason: "reasonRequired" } };
     if (error.code === "42501") return { values, error: "notAllowed" };
     if (error.code === "55000") return { values, error: "notDone" };
+    if (error.code === "55006") return { values, error: "locked" };
     if (error.code === "22023") return { values, fieldErrors: { breaks: "breaksInvalid" } };
     return { values, error: "unknown" };
   }

@@ -3,11 +3,12 @@ import { getTranslations } from "next-intl/server";
 import { Brand } from "@/components/brand";
 import { AppNav, SettingsLink } from "@/components/app-nav";
 import { SignOutIcon } from "@/components/icons";
+import { InvoiceBell } from "@/components/invoice-bell";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
 import { canSeeCustomers, canSeeJobs, canSeeVehicles, needsMfa } from "@/lib/roles";
-import { getUserId } from "@/lib/supabase/server";
+import { createClient, getUserId } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 
 export default async function AppLayout({ children }: LayoutProps<"/app">) {
@@ -17,6 +18,9 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
   // run side by side; each is cached for the page that renders next.
   const [membership, secondStep, t] = await Promise.all([getCurrentMembership(), hasSecondStep(), getTranslations("Nav")]);
   if (membership && needsMfa(membership.role) && !secondStep) redirect("/mfa");
+  // The office's bell: finished jobs whose invoice is not yet marked as sent.
+  const office = !!membership && canSeeJobs(membership.role);
+  const waiting = office ? ((await (await createClient()).rpc("invoices_waiting")).data ?? 0) : 0;
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
@@ -36,13 +40,16 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
                 settings: t("settings"),
                 mainMenu: t("mainMenu"),
               }}
-              showJobs={!!membership && canSeeJobs(membership.role)}
+              showJobs={office}
               showMyJobs={membership?.role === "driver"}
               showCustomers={!!membership && canSeeCustomers(membership.role)}
               showVehicles={!!membership && canSeeVehicles(membership.role)}
             />
           </div>
           <div className="flex items-center gap-1 lg:order-3">
+            {office && (
+              <InvoiceBell count={waiting} label={t("invoices")} countLabel={t("invoicesWaiting", { count: waiting })} />
+            )}
             <ThemeToggle />
             <SettingsLink label={t("settings")} />
             <form action={signOut}>
@@ -52,8 +59,8 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
                 className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg px-2 font-medium text-muted sm:px-3 hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 <SignOutIcon />
-                {/* Computers and the narrowest phones: icon only, so the header fits one row. */}
-                <span className="max-[399px]:sr-only lg:sr-only">{t("signOut")}</span>
+                {/* Phones and computers: icon only, so the header fits one row (with the bell). */}
+                <span className="max-sm:sr-only lg:sr-only">{t("signOut")}</span>
               </button>
             </form>
           </div>
