@@ -63,7 +63,11 @@ test("the accountant finishes the invoicing of finished jobs and sees nothing of
   await expect(menu.getByRole("link", { name: "Customers" })).toHaveCount(0);
   await page.goto("/app/jobs");
   await expect(page).toHaveURL(/\/app$/);
-  expect((await page.goto(planned))?.status(), "a planned job is not the accountant's").toBe(404);
+  // The app streams behind a loading screen, so the answer is 200 with Next's not-found page.
+  await page.goto(planned);
+  await expect(page.getByText("This page could not be found.")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Invoice draft" })).toHaveCount(0);
+  await page.goto("/app");
   const bell = page.locator('header a[href="/app/invoices"]');
   await expect(bell).toHaveAccessibleName("Invoices: 1 job waits");
 
