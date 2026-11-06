@@ -8,7 +8,7 @@ import type { InvoiceMark } from "@/lib/invoice";
 import { jobColumns, toJobFormValues, type Job } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import type { JobEventKind, JobProgress } from "@/lib/progress";
-import { canSeeInvoices } from "@/lib/roles";
+import { canSeeInvoices, canSeeJobs } from "@/lib/roles";
 import { getJobFiles } from "@/lib/job-files-server";
 import { createClient } from "@/lib/supabase/server";
 import { BackLink } from "../back-link";
@@ -44,9 +44,10 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
   const { added } = await searchParams;
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeInvoices(membership.role)) redirect("/app");
-  // The accountant sees a finished job's time and invoice only, not the planning.
-  const accountant = membership.role === "accountant";
+  if (!canSeeInvoices(membership)) redirect("/app");
+  // The accountant (or anyone with the invoicing right only) sees a finished
+  // job's time and invoice, not the planning.
+  const accountant = !canSeeJobs(membership);
 
   const { organization } = membership;
   const job = await getJob(id);

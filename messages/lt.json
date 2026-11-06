@@ -147,6 +147,16 @@
     "driver": "Vairuotojas",
     "accountant": "Buhalteris"
   },
+  "Permissions": {
+    "plan_jobs": "Planuoti darbus",
+    "plan_jobsHint": "Darbai, kalendorius ir klientai, kaip dispečeriui. Kartu ir sąskaitos.",
+    "invoicing": "Sąskaitos",
+    "invoicingHint": "Patvirtinti baigtų darbų laiką ir pažymėti jų sąskaitas išsiųstomis, kaip buhalteriui.",
+    "machines": "Technika ir kainos",
+    "machinesHint": "Pridėti ir keisti techniką, valandinius įkainius ir klientų kainas.",
+    "invite": "Kviesti žmones",
+    "inviteHint": "Kurti kvietimo nuorodas vairuotojams ir dispečeriams."
+  },
   "Settings": {
     "title": "Nustatymai",
     "languageTitle": "Kalba",
@@ -195,7 +205,14 @@
     "mainMachineFor": "Pagrindinė {name} technika",
     "mainMachineNone": "Nėra pagrindinės technikos",
     "saveMainMachine": "Išsaugoti techniką",
-    "mainMachineSaved": "Pagrindinė technika išsaugota. Ji bus siūloma, kai šiam žmogui skirsite darbą."
+    "mainMachineSaved": "Pagrindinė technika išsaugota. Ji bus siūloma, kai šiam žmogui skirsite darbą.",
+    "permissionsTitle": "Papildomos teisės",
+    "permissionsFor": "Papildomos teisės: {name}",
+    "permissionsLead": "Jos tik prideda prie rolės. Sąskaitoms, technikai ir kvietimams jungiantis reikia antrojo žingsnio el. paštu.",
+    "permissionsShown": "Taip pat: {list}",
+    "savePermissions": "Išsaugoti teises",
+    "permissionsSaved": "Teisės išsaugotos. Jos galioja nuo kito žmogaus atidaryto puslapio.",
+    "readOnlyInvite": "Galite kviesti vairuotojus ir dispečerius. Roles ir teises keičia tik savininkai ir administratoriai."
   },
   "Customers": {
     "title": "Klientai",

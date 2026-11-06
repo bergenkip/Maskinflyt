@@ -40,7 +40,7 @@ const filterClass =
 export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">) {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeJobs(membership.role)) redirect("/app");
+  if (!canSeeJobs(membership)) redirect("/app");
 
   const { organization } = membership;
   const { show } = await searchParams;

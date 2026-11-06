@@ -147,6 +147,16 @@
     "driver": "Driver",
     "accountant": "Accountant"
   },
+  "Permissions": {
+    "plan_jobs": "Plan jobs",
+    "plan_jobsHint": "Jobs, calendar and customers, as a dispatcher. The invoicing comes with it.",
+    "invoicing": "Invoicing",
+    "invoicingHint": "Approve the time of finished jobs and mark their invoices as sent, as an accountant.",
+    "machines": "Machines and prices",
+    "machinesHint": "Add and change machines, hourly rates and customers' own prices.",
+    "invite": "Invite people",
+    "inviteHint": "Create invitation links for drivers and dispatchers."
+  },
   "Settings": {
     "title": "Settings",
     "languageTitle": "Language",
@@ -195,7 +205,14 @@
     "mainMachineFor": "Main machine for {name}",
     "mainMachineNone": "No main machine",
     "saveMainMachine": "Save machine",
-    "mainMachineSaved": "Main machine saved. It is suggested when this person gets a job."
+    "mainMachineSaved": "Main machine saved. It is suggested when this person gets a job.",
+    "permissionsTitle": "Extra rights",
+    "permissionsFor": "Extra rights for {name}",
+    "permissionsLead": "They only add to the role. Invoicing, machines and inviting ask for the e-mailed second step at sign-in.",
+    "permissionsShown": "Also: {list}",
+    "savePermissions": "Save rights",
+    "permissionsSaved": "Rights saved. They apply from the person's next page.",
+    "readOnlyInvite": "You can invite drivers and dispatchers. Only owners and administrators change roles and rights."
   },
   "Customers": {
     "title": "Customers",

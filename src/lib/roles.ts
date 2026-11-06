@@ -6,6 +6,54 @@ export function isRole(value: unknown): value is Role {
   return typeof value === "string" && (roles as readonly string[]).includes(value);
 }
 
+// Extra rights an owner or admin gives a dispatcher, driver or accountant, on
+// top of the role (see the extra permissions migration). They only add.
+export const permissions = ["plan_jobs", "invoicing", "machines", "invite"] as const;
+export type Permission = (typeof permissions)[number];
+
+export function isPermission(value: unknown): value is Permission {
+  return typeof value === "string" && (permissions as readonly string[]).includes(value);
+}
+
+// What a member may do: the role, and any extra rights.
+export type Access = Role | { role: Role; permissions?: readonly string[] };
+
+function roleOf(access: Access): Role {
+  return typeof access === "string" ? access : access.role;
+}
+
+function has(access: Access, permission: Permission): boolean {
+  return typeof access !== "string" && (access.permissions ?? []).includes(permission);
+}
+
+// Mirrors private.has_role: plan_jobs counts as a dispatcher, invoicing as an accountant.
+function plans(access: Access): boolean {
+  const role = roleOf(access);
+  return role === "owner" || role === "admin" || role === "dispatcher" || has(access, "plan_jobs");
+}
+
+function invoices(access: Access): boolean {
+  return plans(access) || roleOf(access) === "accountant" || has(access, "invoicing");
+}
+
+function managesMachines(access: Access): boolean {
+  const role = roleOf(access);
+  return role === "owner" || role === "admin" || has(access, "machines");
+}
+
+// Which extra rights add something for this role (owners and admins have them all).
+export function grantablePermissions(role: Role): Permission[] {
+  if (role === "owner" || role === "admin") return [];
+  if (role === "dispatcher") return ["machines", "invite"];
+  if (role === "accountant") return ["plan_jobs", "machines", "invite"];
+  return [...permissions];
+}
+
+// Mirrors public.set_member_permissions: owners and admins, for the other roles.
+export function canGrantPermissions(actor: Role, target: Role): boolean {
+  return (actor === "owner" || actor === "admin") && grantablePermissions(target).length > 0;
+}
+
 // Mirrors private.may_manage in the database, which is what actually decides.
 // The UI only uses this to hide controls a person may not use.
 export function canManage(actor: Role, target: Role): boolean {
@@ -21,26 +69,38 @@ export function assignableRoles(actor: Role): Role[] {
   return [];
 }
 
-// Nobody is invited straight in as owner; ownership is given later.
-export function invitableRoles(actor: Role): Role[] {
-  return assignableRoles(actor).filter((role) => role !== "owner");
+// Nobody is invited straight in as owner; ownership is given later. With the
+// invite right a member invites drivers and dispatchers (public.create_invitation).
+export function invitableRoles(actor: Access): Role[] {
+  const own = assignableRoles(roleOf(actor)).filter((role) => role !== "owner");
+  if (own.length > 0) return own;
+  return has(actor, "invite") ? ["dispatcher", "driver"] : [];
 }
 
 // Mirror the RLS policies on vehicles: owners and admins add and change
 // machines, dispatchers read the list to plan jobs, drivers do not see it.
-export function canSeeVehicles(role: Role): boolean {
-  return role !== "driver" && role !== "accountant";
+export function canSeeVehicles(access: Access): boolean {
+  return plans(access) || managesMachines(access);
 }
 
-export function canEditVehicles(role: Role): boolean {
-  return role === "owner" || role === "admin";
+export function canEditVehicles(access: Access): boolean {
+  return managesMachines(access);
 }
 
 // Owners and admins manage people and the company, and accountants handle the
 // money, so after the password they also confirm with a link e-mailed to them
 // (the database checks this too).
-export function needsMfa(role: Role): boolean {
-  return role === "owner" || role === "admin" || role === "accountant";
+// Extra rights for money, machines or people need it too; planning does not (as for dispatchers).
+export function needsMfa(access: Access): boolean {
+  const role = roleOf(access);
+  return (
+    role === "owner" ||
+    role === "admin" ||
+    role === "accountant" ||
+    has(access, "invoicing") ||
+    has(access, "machines") ||
+    has(access, "invite")
+  );
 }
 
 // Mirrors private.second_step_done in the database: the session was created
@@ -60,27 +120,27 @@ export function secondStepDone(claims: unknown): boolean {
 
 // Mirror the RLS policies on customers: owners, admins and dispatchers add and
 // change customers (orders come in by phone); drivers do not see the list.
-export function canSeeCustomers(role: Role): boolean {
-  return role !== "driver" && role !== "accountant";
+export function canSeeCustomers(access: Access): boolean {
+  return plans(access);
 }
 
 // A customer's own prices are set by owners and admins; dispatchers read them.
-export function canEditCustomerRates(role: Role): boolean {
-  return role === "owner" || role === "admin";
+export function canEditCustomerRates(access: Access): boolean {
+  return managesMachines(access);
 }
 
 // Mirror the RLS policies on jobs: owners, admins and dispatchers add, plan and
 // change jobs; drivers will see their own jobs in a later stage.
-export function canSeeJobs(role: Role): boolean {
-  return role !== "driver" && role !== "accountant";
+export function canSeeJobs(access: Access): boolean {
+  return plans(access);
 }
 
 // The invoicing: the office and the accountant (who sees finished jobs only).
-export function canSeeInvoices(role: Role): boolean {
-  return role !== "driver";
+export function canSeeInvoices(access: Access): boolean {
+  return invoices(access);
 }
 
 // Mirrors public.set_main_machine: those who plan jobs choose each person's main machine.
-export function canChooseMainMachines(role: Role): boolean {
-  return role !== "driver" && role !== "accountant";
+export function canChooseMainMachines(access: Access): boolean {
+  return plans(access);
 }

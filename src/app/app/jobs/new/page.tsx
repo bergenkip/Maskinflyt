@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewJobPage({ searchParams }: PageProps<"/app/jobs/new">) {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeJobs(membership.role)) redirect("/app");
+  if (!canSeeJobs(membership)) redirect("/app");
 
   const { organization } = membership;
   const { customer, date, start, vehicle, driver } = await searchParams;
