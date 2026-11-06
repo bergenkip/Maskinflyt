@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function InvoicesPage() {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeInvoices(membership.role)) redirect("/app");
+  if (!canSeeInvoices(membership)) redirect("/app");
   const { organization } = membership;
 
   const supabase = await createClient();

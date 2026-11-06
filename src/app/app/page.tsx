@@ -31,9 +31,9 @@ export default async function DashboardPage() {
 
   const { organization, role } = membership;
   const isAdmin = role === "owner" || role === "admin";
-  const showVehicles = canSeeVehicles(role);
-  const showCustomers = canSeeCustomers(role);
-  const showJobs = canSeeJobs(role);
+  const showVehicles = canSeeVehicles(membership);
+  const showCustomers = canSeeCustomers(membership);
+  const showJobs = canSeeJobs(membership);
   const supabase = await createClient();
   const userId = await getUserId();
 

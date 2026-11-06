@@ -1,14 +1,18 @@
 import { describe, expect, it } from "vitest";
 import {
   assignableRoles,
+  canChooseMainMachines,
   canEditCustomerRates,
+  canGrantPermissions,
   canEditVehicles,
   canManage,
   canSeeCustomers,
   canSeeInvoices,
   canSeeJobs,
   canSeeVehicles,
+  grantablePermissions,
   invitableRoles,
+  isPermission,
   needsMfa,
   roles,
   secondStepDone,
@@ -80,5 +84,60 @@ describe("secondStepDone", () => {
     expect(secondStepDone({})).toBe(false);
     expect(secondStepDone(null)).toBe(false);
     expect(secondStepDone(undefined)).toBe(false);
+  });
+
+  describe("extra rights", () => {
+    const driver = (...permissions: string[]) => ({ role: "driver" as const, permissions });
+
+    it("plan_jobs plans like a dispatcher, with the invoicing, without the second step", () => {
+      const planner = driver("plan_jobs");
+      expect(canSeeJobs(planner)).toBe(true);
+      expect(canSeeCustomers(planner)).toBe(true);
+      expect(canSeeVehicles(planner)).toBe(true);
+      expect(canChooseMainMachines(planner)).toBe(true);
+      expect(canSeeInvoices(planner)).toBe(true);
+      expect(canEditVehicles(planner)).toBe(false);
+      expect(invitableRoles(planner)).toEqual([]);
+      expect(needsMfa(planner)).toBe(false);
+    });
+
+    it("invoicing shows the invoices only, with the second step", () => {
+      const invoicer = driver("invoicing");
+      expect(canSeeInvoices(invoicer)).toBe(true);
+      expect(canSeeJobs(invoicer)).toBe(false);
+      expect(needsMfa(invoicer)).toBe(true);
+    });
+
+    it("machines changes machines and prices, with the second step", () => {
+      const mechanic = { role: "dispatcher" as const, permissions: ["machines"] };
+      expect(canEditVehicles(mechanic)).toBe(true);
+      expect(canEditCustomerRates(mechanic)).toBe(true);
+      expect(canSeeVehicles(driver("machines"))).toBe(true);
+      expect(canSeeJobs(driver("machines"))).toBe(false);
+      expect(needsMfa(mechanic)).toBe(true);
+    });
+
+    it("invite invites drivers and dispatchers only", () => {
+      expect(invitableRoles(driver("invite"))).toEqual(["dispatcher", "driver"]);
+      expect(invitableRoles({ role: "admin", permissions: ["invite"] })).toContain("admin");
+      expect(needsMfa(driver("invite"))).toBe(true);
+    });
+
+    it("no rights is the plain role, and unknown rights count for nothing", () => {
+      expect(canSeeJobs(driver())).toBe(false);
+      expect(canSeeJobs(driver("everything"))).toBe(false);
+      expect(isPermission("plan_jobs")).toBe(true);
+      expect(isPermission("everything")).toBe(false);
+    });
+
+    it("owners and admins give the rights that add something, to the other roles", () => {
+      expect(grantablePermissions("driver")).toEqual(["plan_jobs", "invoicing", "machines", "invite"]);
+      expect(grantablePermissions("dispatcher")).toEqual(["machines", "invite"]);
+      expect(grantablePermissions("accountant")).toEqual(["plan_jobs", "machines", "invite"]);
+      expect(grantablePermissions("admin")).toEqual([]);
+      expect(canGrantPermissions("admin", "driver")).toBe(true);
+      expect(canGrantPermissions("owner", "admin")).toBe(false);
+      expect(canGrantPermissions("dispatcher", "driver")).toBe(false);
+    });
   });
 });

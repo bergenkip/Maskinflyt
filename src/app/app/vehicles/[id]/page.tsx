@@ -22,7 +22,7 @@ export default async function VehiclePage({ params }: PageProps<"/app/vehicles/[
   const { id } = await params;
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canEditVehicles(membership.role)) redirect("/app/vehicles");
+  if (!canEditVehicles(membership)) redirect("/app/vehicles");
   if (!uuid.test(id)) notFound();
 
   const supabase = await createClient();

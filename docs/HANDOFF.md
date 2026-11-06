@@ -164,11 +164,26 @@ Migracijos `20261106150000_accountant_role` (tik nauja `member_role` reikšmė) 
 - Ekrane: meniu skirtukas „Sąskaitos“ ir varpelis; darbo puslapyje tik laikas ir sąskaita, nuoroda „Visos sąskaitos“.
 - E2E `e2e/accountant.spec.ts`, nuotraukos `accountant-job`, `accountant-invoices`.
 
+## 9 etapas: papildomos teisės komandos nariams (2026-11-06)
+
+Migracija `20261106170000_extra_permissions`, pgTAP `22_extra_permissions` (24 testai).
+- `memberships.permissions` (text[]): `plan_jobs`, `invoicing`, `machines`, `invite`. Tik prideda prie rolės.
+- Suteikia savininkas arba administratorius (su antru žingsniu) per `set_member_permissions`; tik dispečeriams,
+  vairuotojams ir buhalteriams. Tiesiogiai į lentelę rašyti negalima.
+- `plan_jobs` = dispečerio teisės (kartu ir sąskaitos), be antro žingsnio. `invoicing` = buhalterio teisės (su antru žingsniu).
+  Abi veikia per `private.has_role`, kuris dabar laiko narį dispečeriu / buhalteriu, jei jis turi tą teisę.
+- `machines`: technika ir kainos (atskiros RLS taisyklės, su antru žingsniu). `invite`: kviečia vairuotojus ir
+  dispečerius, mato ir atšaukia savo kvietimus (su antru žingsniu).
+- Ekrane: „Komanda“ → prie žmogaus „Papildomos teisės“ su jungikliais; po role rodoma „Taip pat: …“.
+  Programoje `src/lib/roles.ts` funkcijos priima `Access` (rolė + teisės).
+- E2E `e2e/permissions.spec.ts`, nuotraukos `team-rights`.
+
 ## Sąskaitų planas (Li sutarta 2026-11-06)
 - ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
-- **9: Fiken**: įmonė prijungia savo Fiken; „Siųsti per Fiken“ sukuria sąskaitą Fiken ir išsiunčia (el. paštas / EHF). Fiken klientui reikia API modulio. Numeruoja ir saugo Fiken; kreditnota Fiken.
-- **10: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
-- **11: sava PDF sąskaita iš MaskinGo**: numeracija, privalomi duomenys (bokføringsforskriften), siuntimas el. paštu, kreditnota, saugojimas 5 m. Reikia pakeisti CLAUDE.md taisyklę atskiru PR ir buhalterio patikros prieš paleidžiant.
+- ~~9: papildomos teisės~~ – padaryta (Li prašymas, įterpta prieš Fiken).
+- **10: Fiken**: įmonė prijungia savo Fiken; „Siųsti per Fiken“ sukuria sąskaitą Fiken ir išsiunčia (el. paštas / EHF). Fiken klientui reikia API modulio. Numeruoja ir saugo Fiken; kreditnota Fiken.
+- **11: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
+- **12: sava PDF sąskaita iš MaskinGo**: numeracija, privalomi duomenys (bokføringsforskriften), siuntimas el. paštu, kreditnota, saugojimas 5 m. Reikia pakeisti CLAUDE.md taisyklę atskiru PR ir buhalterio patikros prieš paleidžiant.
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
 - **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio
   išdirbtas valandas ir viršvalandžius (pvz. +50 %, +100 %), buhalteris patikrina ir patvirtina. Tai atlyginimo valandos,
@@ -176,7 +191,7 @@ Migracijos `20261106150000_accountant_role` (tik nauja `member_role` reikšmė) 
   (viršvalandžių priedas bent 40 %) ir įmonės tarifinė sutartis; eksportas į algų programą (pvz. Tripletex/Fiken lønn).
 
 ## Kitas etapas (siūlymas)
-1. Sąskaitų planas aukščiau (8–11), arba GPS (po teisininko patikros).
+1. Sąskaitų planas aukščiau (10–12), arba GPS (po teisininko patikros).
 2. Li norai, laukiantys savo eilės:
    - **Nuotraukos ir parašas klientui** (Li prašymas 2026-11-03). Dabar juos mato tik biuras ir to darbo
      vairuotojas. Variantai: prisegti prie darbo ataskaitos ar sąskaitos juodraščio, arba saugi nuoroda klientui

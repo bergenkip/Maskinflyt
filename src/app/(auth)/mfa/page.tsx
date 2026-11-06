@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function MfaPage() {
   if (!(await getUserId())) redirect("/login");
   const membership = await getCurrentMembership();
-  if (!membership || !needsMfa(membership.role) || (await hasSecondStep())) redirect("/app");
+  if (!membership || !needsMfa(membership) || (await hasSecondStep())) redirect("/app");
 
   const t = await getTranslations("Mfa");
   const tNav = await getTranslations("Nav");

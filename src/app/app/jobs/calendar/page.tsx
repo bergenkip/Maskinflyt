@@ -54,7 +54,7 @@ const MONTH_CHIPS = 3;
 export default async function CalendarPage({ searchParams }: PageProps<"/app/jobs/calendar">) {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeJobs(membership.role)) redirect("/app");
+  if (!canSeeJobs(membership)) redirect("/app");
 
   const { organization } = membership;
   const { timeZone } = organization;

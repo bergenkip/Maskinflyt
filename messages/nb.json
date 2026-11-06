@@ -147,6 +147,16 @@
     "driver": "Sjåfør",
     "accountant": "Regnskapsfører"
   },
+  "Permissions": {
+    "plan_jobs": "Planlegge oppdrag",
+    "plan_jobsHint": "Oppdrag, kalender og kunder, som en disponent. Faktureringen følger med.",
+    "invoicing": "Fakturering",
+    "invoicingHint": "Godkjenne timer for ferdige oppdrag og merke fakturaene som sendt, som en regnskapsfører.",
+    "machines": "Maskiner og priser",
+    "machinesHint": "Legge til og endre maskiner, timepriser og kunders egne priser.",
+    "invite": "Invitere folk",
+    "inviteHint": "Lage invitasjonslenker for sjåfører og disponenter."
+  },
   "Settings": {
     "title": "Innstillinger",
     "languageTitle": "Språk",
@@ -195,7 +205,14 @@
     "mainMachineFor": "Hovedmaskin for {name}",
     "mainMachineNone": "Ingen hovedmaskin",
     "saveMainMachine": "Lagre maskin",
-    "mainMachineSaved": "Hovedmaskinen er lagret. Den foreslås når personen får et oppdrag."
+    "mainMachineSaved": "Hovedmaskinen er lagret. Den foreslås når personen får et oppdrag.",
+    "permissionsTitle": "Ekstra rettigheter",
+    "permissionsFor": "Ekstra rettigheter for {name}",
+    "permissionsLead": "De kommer i tillegg til rollen. Fakturering, maskiner og invitasjoner krever det andre steget på e-post ved innlogging.",
+    "permissionsShown": "Også: {list}",
+    "savePermissions": "Lagre rettigheter",
+    "permissionsSaved": "Rettighetene er lagret. De gjelder fra personens neste side.",
+    "readOnlyInvite": "Du kan invitere sjåfører og disponenter. Bare eiere og administratorer endrer roller og rettigheter."
   },
   "Customers": {
     "title": "Kunder",

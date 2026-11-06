@@ -28,10 +28,10 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
   const { added } = await searchParams;
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeCustomers(membership.role)) redirect("/app");
+  if (!canSeeCustomers(membership)) redirect("/app");
   if (!uuid.test(id)) notFound();
 
-  const { organization, role } = membership;
+  const { organization } = membership;
   const supabase = await createClient();
   const [t, tJobs, format, locale, addedBy, { data }, vehicles, rates] = await Promise.all([
     getTranslations("Customers"),
@@ -51,7 +51,7 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
   ]);
   if (!data) notFound();
   const customer = data as Customer;
-  const mayEditRates = canEditCustomerRates(role);
+  const mayEditRates = canEditCustomerRates(membership);
   const ownRates = new Map(((rates.data ?? []) as RateRow[]).map((rate) => [rate.vehicle_id, rate.hourly_rate]));
   // Machines out of use are listed only when the customer still has a price for them.
   const priced = ((vehicles.data ?? []) as VehicleRow[]).filter((vehicle) => vehicle.active || ownRates.has(vehicle.id));
