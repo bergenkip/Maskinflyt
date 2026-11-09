@@ -18,10 +18,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function VehiclesPage() {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeVehicles(membership.role)) redirect("/app");
+  if (!canSeeVehicles(membership)) redirect("/app");
 
-  const { organization, role } = membership;
-  const mayEdit = canEditVehicles(role);
+  const { organization } = membership;
+  const mayEdit = canEditVehicles(membership);
   const supabase = await createClient();
   const [t, format, addedBy, result] = await Promise.all([
     getTranslations("Vehicles"),

@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewCustomerPage() {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
-  if (!canSeeCustomers(membership.role)) redirect("/app");
+  if (!canSeeCustomers(membership)) redirect("/app");
   const t = await getTranslations("Customers");
 
   return (

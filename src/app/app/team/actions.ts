@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { inviteUrl } from "@/lib/invitations";
 import { getCurrentMembership } from "@/lib/membership";
-import { isRole } from "@/lib/roles";
+import { isPermission, isRole } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 
 // Every action re-checks rights in the database (SECURITY DEFINER functions);
@@ -106,6 +106,21 @@ export async function setMainMachine(_prev: TeamActionState, formData: FormData)
   const { error } = await supabase.rpc("set_main_machine", { membership_id: membershipId, vehicle_id: vehicleId || null });
   if (error) return mapTeamError(error);
 
+  revalidatePath("/app/team");
+  return { done: true };
+}
+
+// Extra rights for a member: the ticked boxes replace what they had.
+export async function setPermissions(_prev: TeamActionState, formData: FormData): Promise<TeamActionState> {
+  const membershipId = String(formData.get("membershipId") ?? "");
+  const chosen = formData.getAll("permission");
+  if (!uuid.test(membershipId) || !chosen.every(isPermission)) return { error: "unknown" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_member_permissions", { membership_id: membershipId, new_permissions: chosen });
+  if (error) return mapTeamError(error);
+
+  // The member's menu and pages change on their next request.
   revalidatePath("/app/team");
   return { done: true };
 }

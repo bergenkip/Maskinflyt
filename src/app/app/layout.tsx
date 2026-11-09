@@ -17,10 +17,10 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
   // Owners and admins first confirm with a link e-mailed to them. The lookups
   // run side by side; each is cached for the page that renders next.
   const [membership, secondStep, t] = await Promise.all([getCurrentMembership(), hasSecondStep(), getTranslations("Nav")]);
-  if (membership && needsMfa(membership.role) && !secondStep) redirect("/mfa");
+  if (membership && needsMfa(membership) && !secondStep) redirect("/mfa");
   // The office's bell: finished jobs whose invoice is not yet marked as sent.
-  const office = !!membership && canSeeJobs(membership.role);
-  const invoicing = !!membership && canSeeInvoices(membership.role);
+  const office = !!membership && canSeeJobs(membership);
+  const invoicing = !!membership && canSeeInvoices(membership);
   const waiting = invoicing ? ((await (await createClient()).rpc("invoices_waiting")).data ?? 0) : 0;
 
   return (
@@ -44,9 +44,9 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
               }}
               showJobs={office}
               showMyJobs={membership?.role === "driver"}
-              showInvoices={membership?.role === "accountant"}
-              showCustomers={!!membership && canSeeCustomers(membership.role)}
-              showVehicles={!!membership && canSeeVehicles(membership.role)}
+              showInvoices={invoicing && !office}
+              showCustomers={!!membership && canSeeCustomers(membership)}
+              showVehicles={!!membership && canSeeVehicles(membership)}
             />
           </div>
           <div className="flex items-center gap-1 lg:order-3">

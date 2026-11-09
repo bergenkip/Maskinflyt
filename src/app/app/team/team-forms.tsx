@@ -3,12 +3,14 @@
 import { useTranslations } from "next-intl";
 import { useActionState, useRef, useState } from "react";
 import { FormAlert, SubmitButton } from "@/components/form";
+import { CheckIcon } from "@/components/icons";
 import {
   changeRole,
   inviteMember,
   removeMember,
   revokeInvitation,
   setMainMachine,
+  setPermissions,
   type InviteState,
   type TeamActionState,
 } from "./actions";
@@ -241,6 +243,86 @@ export function MainMachineForm({
       )}
       {state.error && (
         <p role="alert" className="basis-full text-sm font-medium text-danger">
+          {t(`errors.${state.error}`)}
+        </p>
+      )}
+    </form>
+  );
+}
+
+// Extra rights on top of the role: one box each, saved together.
+export function PermissionsForm({
+  membershipId,
+  name,
+  options,
+  current,
+}: {
+  membershipId: string;
+  name: string;
+  options: { value: string; label: string; hint: string }[];
+  current: string[];
+}) {
+  const t = useTranslations("Team");
+  const tAuth = useTranslations("Auth");
+  const [state, action, pending] = useActionState<TeamActionState, FormData>(setPermissions, {});
+
+  return (
+    <form action={action} className="grid gap-3">
+      <input type="hidden" name="membershipId" value={membershipId} />
+      <fieldset className="grid gap-1">
+        <legend className="mb-1 text-sm font-medium">{t("permissionsFor", { name })}</legend>
+        {/* The key renders the boxes afresh with the saved rights (React resets forms after an action). */}
+        <div key={current.join(",")} className="grid gap-2">
+          {options.map((option) => {
+            const id = `permission-${membershipId}-${option.value}`;
+            // The real checkbox covers the whole row (border included), so all of it is the tap target.
+            return (
+              <label
+                key={option.value}
+                htmlFor={id}
+                className="relative flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-border bg-surface p-3 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-1 has-[:focus-visible]:outline-accent"
+              >
+                <input
+                  id={id}
+                  type="checkbox"
+                  name="permission"
+                  value={option.value}
+                  defaultChecked={current.includes(option.value)}
+                  aria-labelledby={`${id}-label`}
+                  aria-describedby={`${id}-hint`}
+                  className="peer absolute -inset-px m-0 cursor-pointer appearance-none rounded-lg opacity-0"
+                />
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md border-2 border-muted bg-surface text-transparent peer-checked:border-accent peer-checked:bg-accent peer-checked:text-on-accent"
+                >
+                  <CheckIcon className="size-4" />
+                </span>
+                <span className="grid min-w-0 gap-0.5">
+                  <span id={`${id}-label`} className="font-medium">
+                    {option.label}
+                  </span>
+                  <span id={`${id}-hint`} className="text-sm text-muted">
+                    {option.hint}
+                  </span>
+                </span>
+              </label>
+            );
+          })}
+        </div>
+      </fieldset>
+      <div>
+        <button type="submit" disabled={pending} className={secondaryButtonClass}>
+          {pending ? tAuth("pending") : t("savePermissions")}
+        </button>
+      </div>
+      {state.done && !pending && (
+        <p role="status" className="text-sm font-medium text-success">
+          {t("permissionsSaved")}
+        </p>
+      )}
+      {state.error && (
+        <p role="alert" className="text-sm font-medium text-danger">
           {t(`errors.${state.error}`)}
         </p>
       )}

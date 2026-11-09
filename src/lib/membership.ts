@@ -7,6 +7,8 @@ export type { Role } from "./roles";
 
 export type CurrentMembership = {
   role: Role;
+  // Extra rights on top of the role (see roles.ts).
+  permissions: string[];
   organization: { id: string; name: string; orgNumber: string | null; currency: string; timeZone: string };
 };
 
@@ -20,7 +22,7 @@ export const getCurrentMembership = cache(async (): Promise<CurrentMembership | 
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("memberships")
-    .select("role, organizations(id, name, org_number, currency, timezone)")
+    .select("role, permissions, organizations(id, name, org_number, currency, timezone)")
     .eq("user_id", userId)
     .order("created_at")
     .limit(1)
@@ -37,6 +39,7 @@ export const getCurrentMembership = cache(async (): Promise<CurrentMembership | 
   if (!org) return null;
   return {
     role: data.role as Role,
+    permissions: (data.permissions as string[] | null) ?? [],
     organization: { id: org.id, name: org.name, orgNumber: org.org_number, currency: org.currency, timeZone: org.timezone },
   };
 });
