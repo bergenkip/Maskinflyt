@@ -178,12 +178,27 @@ Migracija `20261106170000_extra_permissions`, pgTAP `22_extra_permissions` (24 t
   Programoje `src/lib/roles.ts` funkcijos priima `Access` (rolė + teisės).
 - E2E `e2e/permissions.spec.ts`, nuotraukos `team-rights`.
 
+## 12a etapas: įmonės sąskaitų duomenys (2026-11-10)
+
+Li sprendimas 2026-11-10: Fiken vėliau, pirmiausia sava sąskaitų sistema (CLAUDE.md taisyklė pakeista PR #24).
+Migracija `20261110090000_invoice_settings`, pgTAP `23_invoice_settings` (23 testai).
+- `invoice_settings` (viena eilutė įmonei): adresas, MVA registracija, Foretaksregisteret, banko sąskaita (11 sk., MOD11),
+  mokėjimo terminas (0–90 d.), el. paštas ir telefonas (nebūtini), pirmos sąskaitos numeris (12b jį užrakins).
+- Rašoma tik per `save_invoice_settings` (savininkas/administratorius su antru žingsniu); kartu išsaugo ir įmonės kodą,
+  nes jis privalomas kiekvienoje sąskaitoje. Skaito biuras ir buhalteris; vairuotojas ir kitos įmonės nemato nieko.
+- Puslapis `/app/invoices/settings`: forma, peržiūra „Sąskaitoje“ (pardavėjo dalis). Sąskaitų puslapyje nuoroda su būsena
+  „Užpildyta“ / „Trūksta“ (ikona ir tekstas). Patikra `src/lib/invoice-settings.ts` (+ testai).
+- E2E `e2e/invoice-settings.spec.ts`, nuotraukos `invoice-settings`, `invoices-with-settings`.
+
 ## Sąskaitų planas (Li sutarta 2026-11-06)
 - ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
 - ~~9: papildomos teisės~~ – padaryta (Li prašymas, įterpta prieš Fiken).
 - **10: Fiken**: įmonė prijungia savo Fiken; „Siųsti per Fiken“ sukuria sąskaitą Fiken ir išsiunčia (el. paštas / EHF). Fiken klientui reikia API modulio. Numeruoja ir saugo Fiken; kreditnota Fiken.
 - **11: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
-- **12: sava PDF sąskaita iš MaskinGo**: numeracija, privalomi duomenys (bokføringsforskriften), siuntimas el. paštu, kreditnota, saugojimas 5 m. Reikia pakeisti CLAUDE.md taisyklę atskiru PR ir buhalterio patikros prieš paleidžiant.
+- **12: sava PDF sąskaita iš MaskinGo** (Li: daroma dabar, prieš Fiken). CLAUDE.md taisyklė pakeista (PR #24). Dalys:
+  ~~12a įmonės sąskaitų duomenys~~ (padaryta); 12b išrašymas su numeriu be spragų ir PDF; 12c siuntimas el. paštu;
+  12d kreditnota; 12e eksportas (CSV/Excel + PDF į Fiken, Tripletex ir kt. kaip jau išrašytas pardavimas, ne nauja sąskaita;
+  vėliau Fiken API). Prieš tikrus klientus: buhalterio patikra.
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
 - **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio
   išdirbtas valandas ir viršvalandžius (pvz. +50 %, +100 %), buhalteris patikrina ir patvirtina. Tai atlyginimo valandos,
@@ -212,5 +227,5 @@ Migracija `20261106170000_extra_permissions`, pgTAP `22_extra_permissions` (24 t
      Baigtą darbą biuras gali papildyti (papildomos eilutės, medžiagos, laikas) iki sąskaitos juodraščio.
      Klientas gali užginčyti išsiųstą sąskaitą, o biuras pataiso ir parengia naują. Norvegijoje išsiųstos
      sąskaitos keisti negalima: daroma **kreditnota** (atšaukia seną) ir nauja sąskaita, abi su istorija
-     (bokføringsloven; patikrinti su buhalteriu). MVP etape sąskaitos **nesiunčiamos** (CLAUDE.md), todėl
+     (bokføringsloven; patikrinti su buhalteriu). Iki 12 etapo sąskaitos nebuvo siunčiamos, todėl
      papildymas ir sąskaitos juodraštis padaryti 6 etape; ginčas, kreditnota ir siuntimas (EHF) vėliau.

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { ArrowRightIcon, CheckCircleIcon, ClockIcon, NoteIcon } from "@/components/icons";
+import { AlertIcon, ArrowRightIcon, BuildingIcon, CheckCircleIcon, ClockIcon, NoteIcon } from "@/components/icons";
 import type { QueueRow, QueueState } from "@/lib/invoice";
 
 // The sent list is the newest first; older ones stay on their jobs.
@@ -17,12 +17,20 @@ export async function InvoiceQueueView({
   rows,
   organization,
   failed,
+  settingsReady,
 }: {
   rows: QueueRow[];
   organization: { currency: string; timeZone: string };
   failed: boolean;
+  settingsReady: boolean;
 }) {
-  const [t, tJobs, format] = await Promise.all([getTranslations("Invoices"), getTranslations("Jobs"), getFormatter()]);
+  const [t, tJobs, tSettings, format] = await Promise.all([
+    getTranslations("Invoices"),
+    getTranslations("Jobs"),
+    getTranslations("InvoiceSettings"),
+    getFormatter(),
+  ]);
+  const SettingsState = settingsReady ? CheckCircleIcon : AlertIcon;
   const money = (ore: number) => format.number(ore / 100, { style: "currency", currency: organization.currency });
   const day = (iso: string) =>
     format.dateTime(new Date(iso), { day: "numeric", month: "long", year: "numeric", timeZone: organization.timeZone });
@@ -33,6 +41,20 @@ export async function InvoiceQueueView({
         <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
         <p className="text-muted">{t("lead")}</p>
       </div>
+      <Link
+        href="/app/invoices/settings"
+        className="group flex min-h-11 items-center gap-3 rounded-xl border border-border bg-surface p-4 hover:border-accent/60 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      >
+        <BuildingIcon className="size-5 shrink-0 text-muted" />
+        <span className="flex min-w-0 flex-1 flex-wrap items-center justify-between gap-x-3 gap-y-1">
+          <span className="font-semibold">{tSettings("link")}</span>
+          <span className={`flex items-center gap-1.5 text-sm font-medium ${settingsReady ? "text-success" : "text-warning"}`}>
+            <SettingsState className="size-4" />
+            {tSettings(settingsReady ? "stateReady" : "stateMissing")}
+          </span>
+        </span>
+        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+      </Link>
       {failed && <p className="text-danger">{t("error")}</p>}
 
       {groups.map(({ state, icon: Icon, tone, anchor }) => {

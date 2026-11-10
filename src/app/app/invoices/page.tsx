@@ -21,6 +21,16 @@ export default async function InvoicesPage() {
   const { organization } = membership;
 
   const supabase = await createClient();
-  const result = await supabase.rpc("invoice_queue");
-  return <InvoiceQueueView rows={(result.data ?? []) as QueueRow[]} organization={organization} failed={Boolean(result.error)} />;
+  const [result, settings] = await Promise.all([
+    supabase.rpc("invoice_queue"),
+    supabase.from("invoice_settings").select("organization_id").eq("organization_id", organization.id).maybeSingle(),
+  ]);
+  return (
+    <InvoiceQueueView
+      rows={(result.data ?? []) as QueueRow[]}
+      organization={organization}
+      failed={Boolean(result.error)}
+      settingsReady={Boolean(settings.data) && Boolean(organization.orgNumber)}
+    />
+  );
 }
