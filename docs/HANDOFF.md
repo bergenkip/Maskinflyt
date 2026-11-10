@@ -190,6 +190,17 @@ Migracija `20261106170000_extra_permissions`, pgTAP `22_extra_permissions` (24 t
   ne kliento sąskaitos valandos; pradžiai užpildyti iš patvirtintų darbų laikų. Patikrinti: arbeidsmiljøloven §10-6
   (viršvalandžių priedas bent 40 %) ir įmonės tarifinė sutartis; eksportas į algų programą (pvz. Tripletex/Fiken lønn).
 
+## Domenas, el. paštas ir laiškų šablonai (2026-11-10)
+
+- Domenas `maskingo.no` (one.com) prijungtas prie Vercel; `www` nukreipia į `maskingo.no`. Production `*.vercel.app` adresai nukreipiami į `maskingo.no` (`src/proxy.ts`, PR #23).
+- Resend: `maskingo.no` patvirtintas (ES regionas), ta pati nemokama paskyra kaip Synlio. Supabase siunčia per Resend SMTP
+  (`smtp.resend.com:465`, siuntėjas `"Maskingo" <hei@maskingo.no>`). Supabase Site URL `https://maskingo.no`, Redirect URLs `https://maskingo.no/**`.
+- Gaunami laiškai: Resend Receiving įjungtas, šakninis MX → `receive-euw1.forge.rmta.net`; dėžutė `hei@maskingo.no` Resend → Inboxes.
+- Laiškų šablonai (registracija, prisijungimo patvirtinimas, slaptažodžio atkūrimas) nb/en/lt: tekstai `scripts/email-templates.mjs`,
+  sugeneruoti failai `supabase/templates/`. Kalba imama iš `auth.users` metadata `email_locale`, kurią palaiko DB trigeriai
+  (asmeninis pasirinkimas → įmonės kalba → registracijos puslapio kalba → `nb`). Į hosted projektą šablonus po merge įkelia
+  `.github/workflows/email-templates-deploy.yml` (Supabase Management API, tas pats `SUPABASE_ACCESS_TOKEN`).
+
 ## Kitas etapas (siūlymas)
 1. Sąskaitų planas aukščiau (10–12), arba GPS (po teisininko patikros).
 2. Li norai, laukiantys savo eilės:

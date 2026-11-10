@@ -245,6 +245,20 @@ otp_expiry = 3600
 # admin_email = "admin@email.com"
 # sender_name = "Admin"
 
+# MaskinGo e-mail templates (nb/en/lt). Built by scripts/email-templates.mjs;
+# the hosted project gets them from .github/workflows/email-templates-deploy.yml.
+[auth.email.template.confirmation]
+subject = '{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}Patvirtinkite el. pašto adresą – MaskinGo{{ else if eq $l "en" }}Confirm your email – MaskinGo{{ else }}Bekreft e-postadressen din – MaskinGo{{ end }}'
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.magic_link]
+subject = '{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}Patvirtinkite prisijungimą – MaskinGo{{ else if eq $l "en" }}Approve your sign-in – MaskinGo{{ else }}Godkjenn innloggingen – MaskinGo{{ end }}'
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.recovery]
+subject = '{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}Atkurkite slaptažodį – MaskinGo{{ else if eq $l "en" }}Reset your password – MaskinGo{{ else }}Tilbakestill passordet – MaskinGo{{ end }}'
+content_path = "./supabase/templates/recovery.html"
+
 # Uncomment to customize email template
 # [auth.email.template.invite]
 # subject = "You have been invited"

@@ -1,0 +1,60 @@
+name: Deploy e-mail templates
+
+# Uploads the Supabase Auth e-mail templates in supabase/templates (subjects
+# and bodies of confirmation, magic_link and recovery) to the hosted project
+# after they change on main, so nobody has to paste them in the dashboard.
+# Uses the same settings as db-deploy.yml:
+#   repository variable SUPABASE_PROJECT_ID
+#   repository secret SUPABASE_ACCESS_TOKEN
+
+on:
+  push:
+    branches: [main]
+    paths: ["supabase/templates/**", ".github/workflows/email-templates-deploy.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: email-templates-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.SUPABASE_PROJECT_ID != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the request body
+        run: |
+          node --input-type=module -e '
+            import { readFileSync, writeFileSync } from "node:fs";
+            const body = {};
+            for (const name of ["confirmation", "magic_link", "recovery"]) {
+              body[`mailer_subjects_${name}`] = readFileSync(`supabase/templates/${name}.subject.txt`, "utf8").trim();
+              body[`mailer_templates_${name}_content`] = readFileSync(`supabase/templates/${name}.html`, "utf8");
+            }
+            writeFileSync("templates.json", JSON.stringify(body));
+          '
+      - name: Upload to Supabase
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          PROJECT_REF: ${{ vars.SUPABASE_PROJECT_ID }}
+        run: |
+          curl --fail-with-body -sS -o response.json -w "HTTP %{http_code}\n" \
+            -X PATCH "https://api.supabase.com/v1/projects/$PROJECT_REF/config/auth" \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data @templates.json
+      - name: Check the saved subjects
+        run: |
+          node -e '
+            const saved = require("./response.json");
+            const sent = require("./templates.json");
+            for (const key of Object.keys(sent)) {
+              if (saved[key] !== sent[key]) { console.error("not saved: " + key); process.exit(1); }
+              console.log("saved: " + key);
+            }
+          '

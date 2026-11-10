@@ -1,0 +1,91 @@
+{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Patvirtinkite prisijungimą</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f6f8;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f8;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border:1px solid #dfe4ea;border-radius:12px;">
+<tr><td style="padding:28px 28px 0 28px;">
+<a href="https://maskingo.no" style="text-decoration:none;"><img src="https://maskingo.no/brand/maskingo-wordmark.png" width="190" height="24" alt="MaskinGo" style="display:block;border:0;width:190px;height:24px;color:#012042;font:bold 20px Arial,sans-serif;"></a>
+</td></tr>
+<tr><td style="padding:24px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#012042;">
+<h1 style="margin:0 0 12px 0;font-size:22px;line-height:1.3;font-weight:700;">Patvirtinkite prisijungimą</h1>
+<p style="margin:0 0 24px 0;font-size:16px;line-height:1.5;color:#012042;">Kažkas jungiasi prie jūsų MaskinGo paskyros. Jei tai jūs, paspauskite mygtuką ir patvirtinkite. Nuoroda veikia vieną kartą ir greitai nustoja galioti.</p>
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="border-radius:8px;background:#0068d9;">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-size:16px;font-weight:600;line-height:1.2;color:#ffffff;text-decoration:none;border-radius:8px;">Patvirtinti prisijungimą</a>
+</td></tr></table>
+<p style="margin:24px 0 4px 0;font-size:14px;line-height:1.5;color:#536173;">Mygtukas neveikia? Nukopijuokite šią nuorodą į naršyklę:</p>
+<p style="margin:0 0 24px 0;font-size:13px;line-height:1.5;word-break:break-all;"><a href="{{ .ConfirmationURL }}" style="color:#0068d9;">{{ .ConfirmationURL }}</a></p>
+<p style="margin:0 0 28px 0;padding-top:16px;border-top:1px solid #dfe4ea;font-size:14px;line-height:1.5;color:#536173;">Jei tai ne jūs, nespauskite nuorodos ir pakeiskite slaptažodį.</p>
+</td></tr>
+</table>
+<p style="margin:16px 0 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;color:#536173;">Išsiuntė MaskinGo · <a href="https://maskingo.no" style="color:#536173;">maskingo.no</a></p>
+</td></tr>
+</table>
+</body>
+</html>{{ else if eq $l "en" }}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Approve your sign-in</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f6f8;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f8;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border:1px solid #dfe4ea;border-radius:12px;">
+<tr><td style="padding:28px 28px 0 28px;">
+<a href="https://maskingo.no" style="text-decoration:none;"><img src="https://maskingo.no/brand/maskingo-wordmark.png" width="190" height="24" alt="MaskinGo" style="display:block;border:0;width:190px;height:24px;color:#012042;font:bold 20px Arial,sans-serif;"></a>
+</td></tr>
+<tr><td style="padding:24px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#012042;">
+<h1 style="margin:0 0 12px 0;font-size:22px;line-height:1.3;font-weight:700;">Approve your sign-in</h1>
+<p style="margin:0 0 24px 0;font-size:16px;line-height:1.5;color:#012042;">Someone is signing in to your MaskinGo account. If it's you, tap the button to approve. The link works once and expires soon.</p>
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="border-radius:8px;background:#0068d9;">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-size:16px;font-weight:600;line-height:1.2;color:#ffffff;text-decoration:none;border-radius:8px;">Approve sign-in</a>
+</td></tr></table>
+<p style="margin:24px 0 4px 0;font-size:14px;line-height:1.5;color:#536173;">Button not working? Copy this link into your browser:</p>
+<p style="margin:0 0 24px 0;font-size:13px;line-height:1.5;word-break:break-all;"><a href="{{ .ConfirmationURL }}" style="color:#0068d9;">{{ .ConfirmationURL }}</a></p>
+<p style="margin:0 0 28px 0;padding-top:16px;border-top:1px solid #dfe4ea;font-size:14px;line-height:1.5;color:#536173;">If this wasn't you, don't tap the link, and change your password.</p>
+</td></tr>
+</table>
+<p style="margin:16px 0 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;color:#536173;">Sent by MaskinGo · <a href="https://maskingo.no" style="color:#536173;">maskingo.no</a></p>
+</td></tr>
+</table>
+</body>
+</html>{{ else }}<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Godkjenn innloggingen</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f6f8;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f8;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border:1px solid #dfe4ea;border-radius:12px;">
+<tr><td style="padding:28px 28px 0 28px;">
+<a href="https://maskingo.no" style="text-decoration:none;"><img src="https://maskingo.no/brand/maskingo-wordmark.png" width="190" height="24" alt="MaskinGo" style="display:block;border:0;width:190px;height:24px;color:#012042;font:bold 20px Arial,sans-serif;"></a>
+</td></tr>
+<tr><td style="padding:24px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#012042;">
+<h1 style="margin:0 0 12px 0;font-size:22px;line-height:1.3;font-weight:700;">Godkjenn innloggingen</h1>
+<p style="margin:0 0 24px 0;font-size:16px;line-height:1.5;color:#012042;">Noen logger inn på MaskinGo-kontoen din. Hvis det er deg, trykk på knappen for å godkjenne. Lenken virker én gang og utløper snart.</p>
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="border-radius:8px;background:#0068d9;">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-size:16px;font-weight:600;line-height:1.2;color:#ffffff;text-decoration:none;border-radius:8px;">Godkjenn innlogging</a>
+</td></tr></table>
+<p style="margin:24px 0 4px 0;font-size:14px;line-height:1.5;color:#536173;">Virker ikke knappen? Kopier denne lenken inn i nettleseren:</p>
+<p style="margin:0 0 24px 0;font-size:13px;line-height:1.5;word-break:break-all;"><a href="{{ .ConfirmationURL }}" style="color:#0068d9;">{{ .ConfirmationURL }}</a></p>
+<p style="margin:0 0 28px 0;padding-top:16px;border-top:1px solid #dfe4ea;font-size:14px;line-height:1.5;color:#536173;">Hvis det ikke var deg, ikke trykk på lenken, og bytt passord.</p>
+</td></tr>
+</table>
+<p style="margin:16px 0 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;color:#536173;">Sendt av MaskinGo · <a href="https://maskingo.no" style="color:#536173;">maskingo.no</a></p>
+</td></tr>
+</table>
+</body>
+</html>{{ end }}
