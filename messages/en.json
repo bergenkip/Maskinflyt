@@ -1,7 +1,9 @@
 {
   "Metadata": {
     "title": "MaskinGo",
-    "description": "Jobs, drivers and invoices for truck, crane and machine contractors."
+    "description": "Plan jobs, assign driver and machine, log hours from the phone and create an invoice draft the same day. Built for Norwegian truck, crane and machine contractors.",
+    "homeTitle": "MaskinGo · Jobs, hours and invoices for machine contractors",
+    "ogAlt": "MaskinGo: from phone call to invoice the same day"
   },
   "LanguageSwitcher": {
     "label": "Language",

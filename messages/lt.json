@@ -1,7 +1,9 @@
 {
   "Metadata": {
     "title": "MaskinGo",
-    "description": "Užsakymai, vairuotojai ir sąskaitos transporto, kranų ir technikos įmonėms."
+    "description": "Planuokite užsakymus, priskirkite vairuotoją ir techniką, registruokite darbo laiką telefonu ir tą pačią dieną paruoškite sąskaitos juodraštį. Sukurta Norvegijos transporto, kranų ir technikos įmonėms.",
+    "homeTitle": "MaskinGo · Užsakymai, darbo laikas ir sąskaitos technikos įmonėms",
+    "ogAlt": "MaskinGo: nuo skambučio iki sąskaitos tą pačią dieną"
   },
   "LanguageSwitcher": {
     "label": "Kalba",

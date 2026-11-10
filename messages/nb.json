@@ -1,7 +1,9 @@
 {
   "Metadata": {
     "title": "MaskinGo",
-    "description": "Oppdrag, sjåfører og fakturaer for transport-, kran- og maskinentreprenører."
+    "description": "Planlegg oppdrag, sett opp sjåfør og maskin, registrer timer fra mobilen og lag fakturautkast samme dag. Laget for transport-, kran- og maskinentreprenører i Norge.",
+    "homeTitle": "MaskinGo · Oppdrag, timer og faktura for maskinentreprenører",
+    "ogAlt": "MaskinGo: fra telefon til faktura samme dag"
   },
   "LanguageSwitcher": {
     "label": "Språk",

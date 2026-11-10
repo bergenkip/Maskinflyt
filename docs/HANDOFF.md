@@ -229,3 +229,12 @@ Migracija `20261110110000_invoice_settings`, pgTAP `23_invoice_settings` (23 tes
      sąskaitos keisti negalima: daroma **kreditnota** (atšaukia seną) ir nauja sąskaita, abi su istorija
      (bokføringsloven; patikrinti su buhalteriu). Iki 12 etapo sąskaitos nebuvo siunčiamos, todėl
      papildymas ir sąskaitos juodraštis padaryti 6 etape; ginčas, kreditnota ir siuntimas (EHF) vėliau.
+
+## SEO pagrindai (2026-11-10)
+Paieškoje rodomi tik `/`, `/signup`, `/login` ir tik gyvoje svetainėje (`VERCEL_ENV=production`).
+Visi kiti puslapiai (`/app`, slaptažodžio, kvietimų nuorodos) turi `noindex`; `/app` ir `/auth` dar ir `X-Robots-Tag` antraštę.
+Failai: `src/lib/site.ts` (adresas, `publicPaths`, `publicPageMetadata`), `src/app/robots.ts`, `sitemap.ts`, `manifest.ts`,
+`opengraph-image.tsx` (dalinimosi paveikslėlis, norvegiškai), JSON-LD pradžios puslapyje (be kainų ir įvertinimų, kol jų nėra).
+Kalba nustatoma slapuku tuo pačiu adresu, todėl `hreflang` nėra: Google mato norvegišką versiją.
+Atskiri adresai kalboms (pvz. `/en`) būtų atskiras etapas.
+Testai: `src/lib/site.test.ts`, `e2e/seo.spec.ts`.
