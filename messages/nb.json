@@ -782,7 +782,6 @@
     "issuedBadge": "Faktura nr. {number}",
     "issuedLead": "Utstedt {date}, forfall {due}. Fakturaen er låst: en feil rettes med en kreditnota.",
     "openPdf": "Åpne faktura {number} (PDF)",
-    "sendLater": "MaskinGo sender ikke fakturaer på e-post ennå: åpne PDF-en og send den til kunden selv.",
     "issueTitle": "Utsted fakturaen",
     "issueLead": "MaskinGo gir fakturaen neste nummer og lager PDF-en. Etterpå kan den ikke endres: en feil rettes med en kreditnota.",
     "issue": "Utsted faktura",
@@ -801,7 +800,33 @@
       "buyerRequired": "Fakturaen trenger kundens adresse eller organisasjonsnummer.",
       "unknown": "Noe gikk galt. Prøv igjen."
     },
-    "issuedTitle": "Faktura"
+    "issuedTitle": "Faktura",
+    "sendTitle": "Send den til kunden på e-post",
+    "sendLead": "Kunden får fakturaen som PDF-vedlegg. Svar går til firmaets e-post.",
+    "sendToLabel": "Send til",
+    "sendHint": "Kundens faktura-e-post. Endre den hvis fakturaen skal et annet sted.",
+    "sendTestHint": "Testmodus til en regnskapsfører har sjekket fakturaene: bare .test-adresser, og e-posten går til e-posttjenestens testinnboks, ikke til en person.",
+    "send": "Send faktura",
+    "sendConfirm": "Sende faktura {number} til {email}?",
+    "sendNow": "Ja, send den",
+    "sendPending": "Sender …",
+    "sent": "Fakturaen er sendt til {email}.",
+    "sendErrors": {
+      "invalidEmail": "Skriv en gyldig e-postadresse.",
+      "testOnly": "I testmodus kan bare .test-adresser brukes.",
+      "notConfigured": "E-postsending er ikke satt opp ennå. Åpne PDF-en og send den selv.",
+      "notAllowed": "Du kan ikke sende fakturaer. Eiere, administratorer og regnskapsførere trenger innlogging i to trinn.",
+      "tooMany": "Fakturaen er sendt 5 ganger i dag. Prøv igjen i morgen.",
+      "failed": "E-posten kunne ikke sendes. Prøv igjen om litt.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    },
+    "sendingsTitle": "Sendt på e-post",
+    "sending": {
+      "sent": "Sendt til {email}, {when}",
+      "failed": "Ikke sendt til {email}, {when}",
+      "sending": "Sender til {email}, {when}"
+    },
+    "sendingTest": "(test)"
   },
   "Invoices": {
     "title": "Fakturaer",
