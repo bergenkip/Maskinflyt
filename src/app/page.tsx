@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
+import { SITE_NAME, SITE_URL, publicPageMetadata } from "@/lib/site";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [t, locale] = await Promise.all([getTranslations("Metadata"), getLocale()]);
+  return publicPageMetadata({ path: "/", title: t("homeTitle"), description: t("description"), locale, imageAlt: t("ogAlt") });
+}
 
 const steps = ["receive", "check", "approve"] as const;
 
@@ -13,9 +21,49 @@ const stepIcons: Record<(typeof steps)[number], ReactNode> = {
 export default function Home() {
   const t = useTranslations("Home");
   const tFooter = useTranslations("Footer");
+  const tMeta = useTranslations("Metadata");
+  const locale = useLocale();
+
+  // Tells search engines what MaskinGo is (schema.org). Only facts that are
+  // true today: no prices, ratings or reviews until they really exist.
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}/brand/maskingo-logo-full.png`,
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: SITE_NAME,
+        url: SITE_URL,
+        inLanguage: locale,
+        publisher: { "@id": `${SITE_URL}/#organization` },
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: SITE_NAME,
+        url: SITE_URL,
+        description: tMeta("description"),
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web, iOS, Android",
+        inLanguage: ["nb", "en", "lt"],
+        publisher: { "@id": `${SITE_URL}/#organization` },
+      },
+    ],
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
+      <script
+        type="application/ld+json"
+        // Our own constant data; "<" is escaped so no text can close the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
       <SiteHeader />
 
       {/* The header reaches the screen edges; the content keeps clear of the notch in landscape. */}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { publicPageMetadata } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { FormAlert } from "@/components/form";
 import { signIn } from "../actions";
@@ -7,8 +8,14 @@ import { AuthForm } from "../auth-form";
 import { safeNextPath } from "../validation";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Nav");
-  return { title: `${t("login")} · MaskinGo` };
+  const [t, tMeta, locale] = await Promise.all([getTranslations("Nav"), getTranslations("Metadata"), getLocale()]);
+  return publicPageMetadata({
+    path: "/login",
+    title: `${t("login")} · MaskinGo`,
+    description: tMeta("description"),
+    locale,
+    imageAlt: tMeta("ogAlt"),
+  });
 }
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {

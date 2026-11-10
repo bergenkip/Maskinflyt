@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
     // Catalog CSV files may be up to 2 MB (src/lib/catalog/csv.ts).
     serverActions: { bodySizeLimit: "3mb" },
   },
+  // The signed-in app and the sign-in callback never belong in search results,
+  // also when a page forgets its own "noindex" tag.
+  async headers() {
+    return ["/app", "/app/:path*", "/auth/:path*"].map((source) => ({
+      source,
+      headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+    }));
+  },
   turbopack: {
     rules: {
       "*.css": {

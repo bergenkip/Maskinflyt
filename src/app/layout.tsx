@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
+import { SITE_NAME, SITE_URL, isIndexable, ogLocale } from "@/lib/site";
 import { THEME_COOKIE, resolveTheme, themeColors } from "@/lib/theme";
 import "./globals.css";
 
@@ -17,10 +18,25 @@ const geistMono = Geist_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Metadata");
+  const [t, locale] = await Promise.all([getTranslations("Metadata"), getLocale()]);
+  const indexable = isIndexable();
   return {
+    // Relative links (canonical, share picture) become https://maskingo.no/...
+    metadataBase: new URL(SITE_URL),
+    applicationName: SITE_NAME,
     title: t("title"),
     description: t("description"),
+    // Pages that should be found in search (start, sign up, log in) opt in
+    // themselves; everything else stays out of search results by default.
+    robots: { index: false, follow: indexable },
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      title: t("title"),
+      description: t("description"),
+      locale: ogLocale(locale),
+    },
+    twitter: { card: "summary_large_image" },
   };
 }
 
