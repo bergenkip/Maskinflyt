@@ -2,9 +2,20 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
+// The company's own address. The live site also answers on *.vercel.app, and
+// the e-mail links (confirmation, password, second step) point back to the
+// address the person used, so the live site always moves people here first.
+const SITE = "https://maskingo.no";
+
 // Refreshes the Supabase session on every page request and keeps
 // signed-out visitors out of /app.
 export async function proxy(request: NextRequest) {
+  // Only the live site: previews (VERCEL_ENV=preview) keep their own address for testing.
+  const host = (request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "").split(":")[0];
+  if (process.env.VERCEL_ENV === "production" && host.endsWith(".vercel.app")) {
+    return NextResponse.redirect(new URL(request.nextUrl.pathname + request.nextUrl.search, SITE), 308);
+  }
+
   const env = getSupabaseEnv();
   if (!env) return NextResponse.next({ request });
 
