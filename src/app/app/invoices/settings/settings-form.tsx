@@ -137,7 +137,8 @@ export function InvoiceSettingsForm({ initial }: { initial: InvoiceSettingsValue
           error={error("firstNumber")}
         />
       </div>
-      <div className="grid gap-5 sm:grid-cols-2">
+      {/* One per row: the long "(optional)" labels would push one field below the other. */}
+      <div className="grid gap-5">
         <Field
           name="email"
           type="email"

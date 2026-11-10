@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { ArrowRightIcon, BuildingIcon } from "@/components/icons";
+import { ArrowRightIcon } from "@/components/icons";
 import { formatPhone } from "@/lib/customers";
 import {
   canEditInvoiceSettings,
@@ -15,6 +15,7 @@ import { getCurrentMembership } from "@/lib/membership";
 import { formatOrgNumber } from "@/lib/org-number";
 import { canSeeInvoices } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
+import { SellerPreview } from "./seller-preview";
 import { InvoiceSettingsForm } from "./settings-form";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -79,27 +80,7 @@ export default async function InvoiceSettingsPage() {
             </h2>
             <p className="text-muted">{t("previewLead")}</p>
           </div>
-          {/* The company's own details are data and are shown exactly as entered. */}
-          <div className="flex items-start gap-3 rounded-lg border border-dashed border-border p-4">
-            <BuildingIcon className="mt-0.5 size-5 shrink-0 text-muted" />
-            <address className="grid min-w-0 gap-0.5 not-italic [overflow-wrap:anywhere]">
-              <span className="font-semibold">{organization.name}</span>
-              <span>{settings.street}</span>
-              <span>
-                {settings.postal_code} {settings.city}
-              </span>
-              <span className="tabular-nums">
-                {t("orgLine", { number: formatOrgNumber(organization.orgNumber, country) })}
-                {settings.vat_registered && ` ${t("vatSuffix")}`}
-              </span>
-              {settings.in_business_register && <span>{t("businessRegister")}</span>}
-              <span className="tabular-nums">{t("accountLine", { account: formatBankAccount(settings.bank_account) })}</span>
-              <span>{t("termsLine", { days: settings.payment_days })}</span>
-              {settings.email && <span>{settings.email}</span>}
-              {settings.phone && <span className="tabular-nums">{formatPhone(settings.phone)}</span>}
-              <span className="mt-2 text-sm text-muted tabular-nums">{t("firstLine", { number: settings.first_number })}</span>
-            </address>
-          </div>
+          <SellerPreview name={organization.name} orgNumber={organization.orgNumber} country={country} settings={settings} />
         </section>
       ) : (
         !editable && <p className="rounded-xl border border-dashed border-border p-4 text-muted">{t("missing")}</p>

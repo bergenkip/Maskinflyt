@@ -823,7 +823,7 @@
     "bankAccount": "Kontonummer",
     "bankAccountHint": "11 siffer, for eksempel 1234 56 78903.",
     "paymentDays": "Betalingsfrist (dager)",
-    "paymentDaysHint": "Dager fra fakturadato til forfall, 0–90.",
+    "paymentDaysHint": "Dager fra fakturadato til forfall, fra 0 til 90.",
     "email": "E-post for spørsmål om faktura (valgfritt)",
     "phone": "Telefon (valgfritt)",
     "firstNumber": "Første fakturanummer",

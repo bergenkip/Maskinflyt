@@ -823,7 +823,7 @@
     "bankAccount": "Bank account",
     "bankAccountHint": "11 digits, for example 1234 56 78903.",
     "paymentDays": "Payment terms (days)",
-    "paymentDaysHint": "Days from the invoice date to the due date, 0–90.",
+    "paymentDaysHint": "Days from the invoice date to the due date, from 0 to 90.",
     "email": "E-mail for invoice questions (optional)",
     "phone": "Phone (optional)",
     "firstNumber": "First invoice number",

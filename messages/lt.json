@@ -823,7 +823,7 @@
     "bankAccount": "Banko sąskaita",
     "bankAccountHint": "11 skaitmenų, pavyzdžiui 1234 56 78903.",
     "paymentDays": "Mokėjimo terminas (dienomis)",
-    "paymentDaysHint": "Dienos nuo sąskaitos datos iki apmokėjimo, 0–90.",
+    "paymentDaysHint": "Dienos nuo sąskaitos datos iki apmokėjimo, nuo 0 iki 90.",
     "email": "El. paštas klausimams dėl sąskaitų (nebūtina)",
     "phone": "Telefonas (nebūtina)",
     "firstNumber": "Pirmos sąskaitos numeris",
