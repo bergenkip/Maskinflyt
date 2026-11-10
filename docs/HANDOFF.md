@@ -181,7 +181,7 @@ Migracija `20261106170000_extra_permissions`, pgTAP `22_extra_permissions` (24 t
 ## 12a etapas: įmonės sąskaitų duomenys (2026-11-10)
 
 Li sprendimas 2026-11-10: Fiken vėliau, pirmiausia sava sąskaitų sistema (CLAUDE.md taisyklė pakeista PR #24).
-Migracija `20261110090000_invoice_settings`, pgTAP `23_invoice_settings` (23 testai).
+Migracija `20261110110000_invoice_settings`, pgTAP `23_invoice_settings` (23 testai).
 - `invoice_settings` (viena eilutė įmonei): adresas, MVA registracija, Foretaksregisteret, banko sąskaita (11 sk., MOD11),
   mokėjimo terminas (0–90 d.), el. paštas ir telefonas (nebūtini), pirmos sąskaitos numeris (12b jį užrakins).
 - Rašoma tik per `save_invoice_settings` (savininkas/administratorius su antru žingsniu); kartu išsaugo ir įmonės kodą,
