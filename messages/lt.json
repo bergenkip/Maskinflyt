@@ -805,7 +805,7 @@
     "sendLead": "Klientas gauna sąskaitą kaip PDF priedą. Atsakymai keliauja į įmonės el. paštą.",
     "sendToLabel": "Siųsti adresu",
     "sendHint": "Kliento sąskaitų el. paštas. Pakeiskite, jei sąskaitą reikia siųsti kitur.",
-    "sendTestHint": "Bandomasis režimas, kol buhalteris nepatikrino sąskaitų: tik .test adresai, o laiškas keliauja į el. pašto paslaugos bandomąją dėžutę, ne žmogui.",
+    "sendTestHint": "Bandomasis režimas: tik .test adresai, o laiškas keliauja į el. pašto paslaugos bandomąją dėžutę, ne žmogui.",
     "send": "Siųsti sąskaitą",
     "sendConfirm": "Siųsti sąskaitą {number} adresu {email}?",
     "sendNow": "Taip, siųsti",

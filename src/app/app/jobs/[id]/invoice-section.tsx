@@ -112,7 +112,7 @@ export async function InvoiceView({
   issued: IssuedInvoiceRow | null;
   // Every e-mailing of the issued invoice, newest first.
   sendings?: InvoiceSending[];
-  // Until an accountant has checked the invoices: .test addresses and the test inbox only.
+  // Without INVOICE_EMAIL_LIVE (local and CI): .test addresses and the test inbox only.
   testMode?: boolean;
   settingsReady: boolean;
 }) {

@@ -8,8 +8,8 @@ import { formatAmount, formatDate, type IssuedInvoice } from "../pdf/invoice-pdf
 
 export const INVOICE_FROM_ADDRESS = "faktura@maskingo.no";
 
-// Until an accountant has checked MaskinGo's invoices, every e-mail goes to the
-// e-mail service's test inbox, and only .test addresses are accepted.
+// Without INVOICE_EMAIL_LIVE=1 (local development and CI) every e-mail goes to
+// the e-mail service's test inbox, and only .test addresses are accepted.
 export const TEST_INBOX = "delivered@resend.dev";
 
 export function invoiceEmailLive(): boolean {

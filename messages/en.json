@@ -805,7 +805,7 @@
     "sendLead": "The customer gets the invoice as a PDF attachment. Replies go to the company's e-mail.",
     "sendToLabel": "Send to",
     "sendHint": "The customer's invoice e-mail. Change it if the invoice should go elsewhere.",
-    "sendTestHint": "Test mode until an accountant has checked the invoices: only .test addresses, and the e-mail goes to the e-mail service's test inbox, not to a person.",
+    "sendTestHint": "Test mode: only .test addresses, and the e-mail goes to the e-mail service's test inbox, not to a person.",
     "send": "Send invoice",
     "sendConfirm": "Send invoice {number} to {email}?",
     "sendNow": "Yes, send it",

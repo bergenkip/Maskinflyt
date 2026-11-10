@@ -13,7 +13,7 @@ create table public.invoice_sendings (
   organization_id uuid not null references public.organizations (id) on delete restrict,
   invoice_id uuid not null references public.invoices (id) on delete restrict,
   to_email text not null check (char_length(to_email) between 3 and 254 and to_email ~ '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
-  -- Until an accountant has checked MaskinGo's invoices, e-mails go to the
+  -- In test mode (local development and CI), e-mails go to the
   -- e-mail service's test inbox only (and only for .test addresses).
   test_mode boolean not null,
   status text not null default 'sending' check (status in ('sending', 'sent', 'failed')),
@@ -92,7 +92,7 @@ begin
     raise exception 'The e-mail address is not valid' using errcode = '22023', hint = 'invalid_email';
   end if;
   if test_mode and address !~ '\.test$' then
-    raise exception 'Only .test addresses until an accountant has checked the invoices' using errcode = '22023', hint = 'test_only';
+    raise exception 'Only .test addresses in test mode' using errcode = '22023', hint = 'test_only';
   end if;
 
   -- One sending at a time per invoice, and a few a day.

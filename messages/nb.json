@@ -805,7 +805,7 @@
     "sendLead": "Kunden får fakturaen som PDF-vedlegg. Svar går til firmaets e-post.",
     "sendToLabel": "Send til",
     "sendHint": "Kundens faktura-e-post. Endre den hvis fakturaen skal et annet sted.",
-    "sendTestHint": "Testmodus til en regnskapsfører har sjekket fakturaene: bare .test-adresser, og e-posten går til e-posttjenestens testinnboks, ikke til en person.",
+    "sendTestHint": "Testmodus: bare .test-adresser, og e-posten går til e-posttjenestens testinnboks, ikke til en person.",
     "send": "Send faktura",
     "sendConfirm": "Sende faktura {number} til {email}?",
     "sendNow": "Ja, send den",
