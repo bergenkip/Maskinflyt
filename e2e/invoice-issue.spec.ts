@@ -101,6 +101,7 @@ test("the office issues a numbered invoice with its PDF, and it is locked", asyn
   await expect(form.getByLabel("First invoice number")).toHaveAccessibleDescription(/The numbering has started/);
 
   // E-mailed to the customer, in test mode: only .test addresses, to the test inbox.
+  await page.goto(job);
   const to = section.getByLabel("Send to", { exact: true });
   await expect(to).toHaveValue("faktura@nordbygg.test");
   await expect(section).toContainText("only .test addresses");
