@@ -9,8 +9,8 @@
 // migration). printf "%v" turns a missing value into "<nil>" instead of a
 // template error, so such users get Norwegian.
 //
-// Hosted project: paste each subject and body into Supabase → Authentication →
-// Emails → Templates. Local Supabase reads them through supabase/config.toml.
+// Hosted project: .github/workflows/email-templates-deploy.yml uploads them
+// after they change on main. Local Supabase reads them through config.toml.
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 

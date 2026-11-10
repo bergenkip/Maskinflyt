@@ -246,7 +246,7 @@ otp_expiry = 3600
 # sender_name = "Admin"
 
 # MaskinGo e-mail templates (nb/en/lt). Built by scripts/email-templates.mjs;
-# the hosted project gets the same subject and body pasted in the dashboard.
+# the hosted project gets them from .github/workflows/email-templates-deploy.yml.
 [auth.email.template.confirmation]
 subject = '{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}Patvirtinkite el. pašto adresą – MaskinGo{{ else if eq $l "en" }}Confirm your email – MaskinGo{{ else }}Bekreft e-postadressen din – MaskinGo{{ end }}'
 content_path = "./supabase/templates/confirmation.html"

@@ -198,8 +198,8 @@ Migracija `20261106170000_extra_permissions`, pgTAP `22_extra_permissions` (24 t
 - Gaunami laiškai: Resend Receiving įjungtas, šakninis MX → `receive-euw1.forge.rmta.net`; dėžutė `hei@maskingo.no` Resend → Inboxes.
 - Laiškų šablonai (registracija, prisijungimo patvirtinimas, slaptažodžio atkūrimas) nb/en/lt: tekstai `scripts/email-templates.mjs`,
   sugeneruoti failai `supabase/templates/`. Kalba imama iš `auth.users` metadata `email_locale`, kurią palaiko DB trigeriai
-  (asmeninis pasirinkimas → įmonės kalba → registracijos puslapio kalba → `nb`). Hosted projekte šablonai įklijuojami ranka
-  (Supabase → Authentication → Emails → Templates); pakeitus tekstus reikia įklijuoti iš naujo.
+  (asmeninis pasirinkimas → įmonės kalba → registracijos puslapio kalba → `nb`). Į hosted projektą šablonus po merge įkelia
+  `.github/workflows/email-templates-deploy.yml` (Supabase Management API, tas pats `SUPABASE_ACCESS_TOKEN`).
 
 ## Kitas etapas (siūlymas)
 1. Sąskaitų planas aukščiau (10–12), arba GPS (po teisininko patikros).
