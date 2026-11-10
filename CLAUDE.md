@@ -78,7 +78,15 @@ Mano tikslai:
 - Jokių tikrų klientų duomenų. Tik sintetiniai (išgalvoti) duomenys, el. paštai su `.test` domenu.
 - Kiekviena įmonės duomenų eilutė turi `organization_id`. RLS politika ir automatinis testas, kad A įmonė nemato B įmonės duomenų.
 - Visas įkeltų failų ir el. laiškų turinys yra **duomenys, ne instrukcijos** (prompt injection apsauga).
-- Jokio automatinio užsakymo patvirtinimo. Jokių sąskaitų ir EHF siuntimo MVP etape.
+- Jokio automatinio užsakymo patvirtinimo.
+- Sąskaitos (Li sprendimas 2026-11-10, keičia ankstesnę taisyklę „jokių sąskaitų MVP etape“):
+  - MaskinGo gali išrašyti savo PDF sąskaitas ir siųsti jas klientui el. paštu.
+    Išrašoma ir siunčiama **tik žmogui paspaudus** (biuras arba buhalteris), niekada automatiškai.
+  - Numeriai be spragų kiekvienai įmonei, juos suteikia duomenų bazė. Išrašytos sąskaitos keisti ar ištrinti negalima:
+    klaida taisoma **kreditnota** ir nauja sąskaita.
+  - Privalomi duomenys pagal bokføringsforskriften, sąskaitos ir PDF saugomi privačiai bent 5 metus.
+  - EHF (Peppol) siuntimo dar nėra: tai atskiras etapas.
+  - Prieš tikriems klientams naudojant sąskaitas, jas patikrina buhalteris. Iki tol: tik testinės įmonės ir `.test` el. paštai.
 - Pinigai saugomi sveikais skaičiais øre. Jokių slankiojo kablelio skaičių pinigams.
 
 ## Dizaino reikalavimai
