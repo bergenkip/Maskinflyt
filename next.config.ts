@@ -4,6 +4,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 // Every page depends on the signed-in user and their language, so we keep
 // classic dynamic rendering instead of Cache Components for now.
 const nextConfig: NextConfig = {
+  // The invoice PDF's fonts are read from disk at run time (src/lib/pdf/invoice-pdf.ts).
+  outputFileTracingIncludes: {
+    "/app/**": ["./src/lib/pdf/fonts/*.ttf"],
+  },
   experimental: {
     // Catalog CSV files may be up to 2 MB (src/lib/catalog/csv.ts).
     serverActions: { bodySizeLimit: "3mb" },

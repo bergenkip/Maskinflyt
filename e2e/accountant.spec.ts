@@ -87,6 +87,7 @@ test("the accountant finishes the invoicing of finished jobs and sees nothing of
   await section.getByRole("button", { name: "Add line" }).click();
   await expect(section.getByRole("listitem").filter({ hasText: "Bompenger" })).toContainText("NOK 80.00");
   await expect(section).toContainText("NOK 15,830.00");
+  await section.getByText("Sent from another accounting system instead?").click();
   await section.getByLabel("Invoice number (optional)").fill("1042");
   await section.getByRole("button", { name: "Mark as sent" }).click();
   await expect(section.getByText("Marked as sent", { exact: true })).toBeVisible();

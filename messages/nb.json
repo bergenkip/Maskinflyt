@@ -763,8 +763,8 @@
     "sentBadge": "Merket som sendt",
     "sentLead": "Merket som sendt {when}. Utkastet er låst.",
     "sentLeadNumber": "Merket som sendt {when}, fakturanr. {number}. Utkastet er låst.",
-    "markTitle": "Sendt fra regnskapssystemet?",
-    "markLead": "MaskinGo sender ikke fakturaer. Send fakturaen fra Fiken, Tripletex eller et annet system, og merk den her: utkastet låses og oppdraget forsvinner fra bjella.",
+    "markTitle": "Sendt fra et annet regnskapssystem i stedet?",
+    "markLead": "Sender du fakturaen fra Fiken, Tripletex eller et annet system, skal du ikke utstede den her. Merk den som sendt: utkastet låses og oppdraget forsvinner fra bjella.",
     "reference": "Fakturanummer (valgfritt)",
     "referenceHint": "Som i regnskapssystemet, for eksempel 1042",
     "markSent": "Merk som sendt",
@@ -778,11 +778,34 @@
       "timeRequired": "Godkjenn arbeidstiden først.",
       "already": "Fakturaen er allerede merket som sendt.",
       "unknown": "Noe gikk galt. Prøv igjen."
-    }
+    },
+    "issuedBadge": "Faktura nr. {number}",
+    "issuedLead": "Utstedt {date}, forfall {due}. Fakturaen er låst: en feil rettes med en kreditnota.",
+    "openPdf": "Åpne faktura {number} (PDF)",
+    "sendLater": "MaskinGo sender ikke fakturaer på e-post ennå: åpne PDF-en og send den til kunden selv.",
+    "issueTitle": "Utsted fakturaen",
+    "issueLead": "MaskinGo gir fakturaen neste nummer og lager PDF-en. Etterpå kan den ikke endres: en feil rettes med en kreditnota.",
+    "issue": "Utsted faktura",
+    "issueConfirm": "Utstede den nå? Dette kan ikke angres.",
+    "issueNow": "Ja, utsted fakturaen",
+    "issueCancel": "Ikke ennå",
+    "issueNeedsSettings": "Fyll ut firmaets fakturaopplysninger først.",
+    "openSettings": "Åpne fakturaopplysningene",
+    "issueNeedsBuyer": "Fakturaen trenger kundens adresse eller organisasjonsnummer.",
+    "pdfFailed": "Fakturaen er utstedt, men PDF-en kunne ikke lages ennå. Åpne den for å prøve igjen.",
+    "issueErrors": {
+      "notAllowed": "Du kan ikke utstede fakturaer. Eiere, administratorer og regnskapsførere trenger innlogging i to trinn.",
+      "timeRequired": "Godkjenn arbeidstiden først.",
+      "already": "Fakturaen er allerede utstedt eller merket som sendt.",
+      "settingsRequired": "Fyll ut firmaets fakturaopplysninger først.",
+      "buyerRequired": "Fakturaen trenger kundens adresse eller organisasjonsnummer.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    },
+    "issuedTitle": "Faktura"
   },
   "Invoices": {
     "title": "Fakturaer",
-    "lead": "Ferdige oppdrag: godkjenn arbeidstiden, sjekk utkastet, send fakturaen fra regnskapssystemet og merk den som sendt.",
+    "lead": "Ferdige oppdrag: godkjenn arbeidstiden, sjekk utkastet, og utsted fakturaen her eller merk den som sendt fra regnskapssystemet.",
     "error": "Listen kunne ikke lastes. Prøv igjen.",
     "groups": {
       "time": "Arbeidstid venter på godkjenning ({count})",
@@ -810,7 +833,7 @@
   "InvoiceSettings": {
     "title": "Fakturaopplysninger",
     "lead": "Det fakturaene sier om firmaet ditt. Bokføringsforskriften krever disse på hver faktura.",
-    "notYet": "MaskinGo lager ikke fakturaer ennå: det kommer i neste steg. Da er disse opplysningene klare.",
+    "notYet": "Hver faktura beholder opplysningene den ble utstedt med: en senere endring her endrer ikke fakturaer som allerede er utstedt.",
     "back": "Alle fakturaer",
     "link": "Fakturaopplysninger",
     "orgNumber": "Organisasjonsnummer",
@@ -856,7 +879,8 @@
       "phoneInvalid": "Skriv et gyldig telefonnummer.",
       "firstNumberInvalid": "Skriv et helt tall, 1 eller mer.",
       "notAllowed": "Bare eiere og administratorer endrer fakturaopplysningene.",
-      "unknown": "Kunne ikke lagre. Prøv igjen."
+      "unknown": "Kunne ikke lagre. Prøv igjen.",
+      "firstNumberLocked": "Nummereringen har startet: første nummer kan ikke lenger endres."
     }
   }
 }

@@ -55,6 +55,7 @@ test("the bell counts finished jobs until their invoice is marked as sent, and a
   // Marked as sent with the number from the accounting system: locked and out of the bell.
   await ready.getByRole("link").click();
   const section = page.getByRole("region", { name: "Invoice draft" });
+  await section.getByText("Sent from another accounting system instead?").click();
   await section.getByLabel("Invoice number (optional)").fill("1042");
   await section.getByRole("button", { name: "Mark as sent" }).click();
   await expect(section.getByText("Marked as sent", { exact: true })).toBeVisible();
@@ -98,6 +99,7 @@ for (const locale of locales) {
 
     await approveTime(page, job, { start: "06:30", end: "17:15", breaks: "45" });
     const section = page.locator('section[aria-labelledby="invoice-title"]');
+    await section.locator("details").filter({ has: page.locator('input[name="reference"]') }).locator("summary").click();
     await section.locator('input[name="reference"]').fill("2026-001042");
     await section.locator('input[name="reference"]').press("Enter");
     await expect(section.locator("summary")).toHaveCount(1);
