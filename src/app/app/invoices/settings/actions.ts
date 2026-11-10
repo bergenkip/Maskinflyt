@@ -32,6 +32,7 @@ const hintFields: Record<string, [keyof InvoiceSettingsValues, InvoiceSettingsFi
   invalid_email: ["email", "emailInvalid"],
   invalid_phone: ["phone", "phoneInvalid"],
   invalid_first_number: ["firstNumber", "firstNumberInvalid"],
+  first_number_locked: ["firstNumber", "firstNumberLocked"],
 };
 
 export async function saveInvoiceSettings(_prev: InvoiceSettingsState, formData: FormData): Promise<InvoiceSettingsState> {

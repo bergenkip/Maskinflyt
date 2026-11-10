@@ -761,8 +761,8 @@
     "sentBadge": "Marked as sent",
     "sentLead": "Marked as sent on {when}. The draft is locked.",
     "sentLeadNumber": "Marked as sent on {when}, invoice no. {number}. The draft is locked.",
-    "markTitle": "Sent from your accounting system?",
-    "markLead": "MaskinGo does not send invoices. Send the invoice from Fiken, Tripletex or another system, then mark it here: the draft is locked and the job leaves the bell.",
+    "markTitle": "Sent from another accounting system instead?",
+    "markLead": "If you send this invoice from Fiken, Tripletex or another system, don't issue it here. Mark it as sent: the draft is locked and the job leaves the bell.",
     "reference": "Invoice number (optional)",
     "referenceHint": "As in your accounting system, for example 1042",
     "markSent": "Mark as sent",
@@ -776,11 +776,34 @@
       "timeRequired": "Approve the working time first.",
       "already": "The invoice is already marked as sent.",
       "unknown": "Something went wrong. Try again."
-    }
+    },
+    "issuedBadge": "Invoice no. {number}",
+    "issuedLead": "Issued on {date}, due on {due}. The invoice is locked: a mistake is corrected with a credit note.",
+    "openPdf": "Open invoice {number} (PDF)",
+    "sendLater": "MaskinGo does not e-mail invoices yet: open the PDF and send it to the customer yourself.",
+    "issueTitle": "Issue the invoice",
+    "issueLead": "MaskinGo gives the invoice the next number and makes its PDF. After that it cannot be changed: a mistake is corrected with a credit note.",
+    "issue": "Issue invoice",
+    "issueConfirm": "Issue it now? This cannot be undone.",
+    "issueNow": "Yes, issue the invoice",
+    "issueCancel": "Not yet",
+    "issueNeedsSettings": "Fill in the company's invoice details first.",
+    "openSettings": "Open the invoice details",
+    "issueNeedsBuyer": "The invoice needs the customer's address or organisation number.",
+    "pdfFailed": "The invoice is issued, but its PDF could not be made yet. Open it to try again.",
+    "issueErrors": {
+      "notAllowed": "You can't issue invoices. Owners, admins and accountants need two-step sign-in.",
+      "timeRequired": "Approve the working time first.",
+      "already": "The invoice is already issued or marked as sent.",
+      "settingsRequired": "Fill in the company's invoice details first.",
+      "buyerRequired": "The invoice needs the customer's address or organisation number.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "issuedTitle": "Invoice"
   },
   "Invoices": {
     "title": "Invoices",
-    "lead": "Finished jobs: approve the working time, check the draft, send the invoice from your accounting system and mark it as sent.",
+    "lead": "Finished jobs: approve the working time, check the draft, then issue the invoice here or mark it as sent from your accounting system.",
     "error": "The list could not be loaded. Try again.",
     "groups": {
       "time": "Working time waits for approval ({count})",
@@ -808,7 +831,7 @@
   "InvoiceSettings": {
     "title": "Invoice details",
     "lead": "What your invoices say about your company. Norwegian law (bokføringsforskriften) asks for these on every invoice.",
-    "notYet": "MaskinGo does not issue invoices yet: that comes in the next step. These details will be ready for it.",
+    "notYet": "Each invoice keeps the details it was issued with: a later change here does not change invoices already issued.",
     "back": "All invoices",
     "link": "Invoice details",
     "orgNumber": "Organisation number",
@@ -854,7 +877,8 @@
       "phoneInvalid": "Enter a valid phone number.",
       "firstNumberInvalid": "Enter a whole number, 1 or more.",
       "notAllowed": "Only owners and admins change the invoice details.",
-      "unknown": "Could not save. Try again."
+      "unknown": "Could not save. Try again.",
+      "firstNumberLocked": "The numbering has started: the first number can no longer change."
     }
   }
 }

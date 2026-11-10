@@ -66,7 +66,8 @@ export type InvoiceSettingsFieldError =
   | "paymentDaysInvalid"
   | "emailInvalid"
   | "phoneInvalid"
-  | "firstNumberInvalid";
+  | "firstNumberInvalid"
+  | "firstNumberLocked";
 
 export type InvoiceSettingsFields = {
   org_number: string;

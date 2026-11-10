@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { AlertIcon, CheckCircleIcon, NoteIcon, PencilIcon, PlusIcon } from "@/components/icons";
+import { issuedInvoiceColumns, type IssuedInvoiceRow } from "@/lib/invoices-server";
 import { invoiceTotals, toLineFormValues, type DraftLine, type InvoiceMark } from "@/lib/invoice";
 import type { JobStatus } from "@/lib/jobs";
 import { createClient } from "@/lib/supabase/server";
-import { MarkSentForm, UnmarkSentForm } from "./invoice-forms";
+import { IssueInvoiceForm, MarkSentForm, UnmarkSentForm } from "./invoice-forms";
 import { LineForm, RemoveLineForm } from "./line-forms";
 
 const sectionClass = "grid gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6";
@@ -38,7 +39,7 @@ type Props = {
 // is numbered or sent, and every extra line can be changed or removed.
 export async function InvoiceSection({ job, organization, mark, customerLink = true }: Props) {
   const supabase = await createClient();
-  const [draftResult, customerResult, vehicleResult] = await Promise.all([
+  const [draftResult, customerResult, vehicleResult, issuedResult, settingsResult] = await Promise.all([
     supabase.rpc("invoice_draft", { job: job.id }),
     supabase
       .from("customers")
@@ -48,7 +49,11 @@ export async function InvoiceSection({ job, organization, mark, customerLink = t
     job.vehicle_id
       ? supabase.from("vehicles").select("name").eq("id", job.vehicle_id).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
+    supabase.from("invoices").select(issuedInvoiceColumns).eq("job_id", job.id).maybeSingle(),
+    // Issuing needs the company's invoice details and its organisation number.
+    supabase.from("invoice_settings").select("organization_id, organizations(org_number)").maybeSingle(),
   ]);
+  const settings = settingsResult.data as { organizations: { org_number: string | null } | null } | null;
   return (
     <InvoiceView
       job={job}
@@ -59,6 +64,8 @@ export async function InvoiceSection({ job, organization, mark, customerLink = t
       customer={customerResult.data as BillTo | null}
       vehicleName={(vehicleResult.data as { name: string } | null)?.name ?? null}
       failed={Boolean(draftResult.error || customerResult.error)}
+      issued={(issuedResult.data as IssuedInvoiceRow | null) ?? null}
+      settingsReady={Boolean(settings?.organizations?.org_number)}
     />
   );
 }
@@ -73,12 +80,25 @@ export async function InvoiceView({
   customer,
   vehicleName,
   failed,
-}: Props & { lines: DraftLine[]; customer: BillTo | null; vehicleName: string | null; failed: boolean }) {
+  issued,
+  settingsReady,
+}: Props & {
+  lines: DraftLine[];
+  customer: BillTo | null;
+  vehicleName: string | null;
+  failed: boolean;
+  // The invoice MaskinGo issued for this job, if any.
+  issued: IssuedInvoiceRow | null;
+  settingsReady: boolean;
+}) {
   const [t, format, locale] = await Promise.all([getTranslations("Invoice"), getFormatter(), getLocale()]);
   const separator = locale === "en" ? "." : ",";
   const cancelled = job.status === "cancelled";
   // A sent invoice is locked: nothing is changed or added any more.
   const locked = cancelled || mark !== null;
+  // Bokføringsforskriften: the buyer's address or organisation number.
+  const buyerReady = Boolean(customer && (customer.org_number || (customer.street && customer.postal_code && customer.city)));
+  const day = (date: string) => format.dateTime(new Date(`${date}T12:00:00Z`), { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   const when = (iso: string) =>
     format.dateTime(new Date(iso), { day: "numeric", month: "long", year: "numeric", timeZone: organization.timeZone });
   const money = (ore: number) => format.number(ore / 100, { style: "currency", currency: organization.currency });
@@ -105,10 +125,15 @@ export async function InvoiceView({
       <div className="grid gap-1">
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <h2 id="invoice-title" className="text-lg font-semibold">
-            {t("title")}
+            {t(issued ? "issuedTitle" : "title")}
           </h2>
           {/* The state is shown with an icon and with words, never by colour alone. */}
-          {mark ? (
+          {issued ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-3 py-1 text-sm font-medium text-success">
+              <CheckCircleIcon className="size-4" />
+              {t("issuedBadge", { number: issued.number })}
+            </span>
+          ) : mark ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-3 py-1 text-sm font-medium text-success">
               <CheckCircleIcon className="size-4" />
               {t("sentBadge")}
@@ -124,7 +149,9 @@ export async function InvoiceView({
         <p className="text-sm text-muted [overflow-wrap:anywhere]">
           {cancelled
             ? t("cancelled")
-            : mark
+            : issued
+              ? t("issuedLead", { date: day(issued.issue_date), due: day(issued.due_date) })
+              : mark
               ? t(mark.reference ? "sentLeadNumber" : "sentLead", { when: when(mark.sent_at), number: mark.reference ?? "" })
               : t("lead")}
         </p>
@@ -216,17 +243,67 @@ export async function InvoiceView({
         </dl>
       )}
 
-      {/* Sent from the accounting system, then marked here; MaskinGo sends nothing. */}
+      {issued && (
+        <div className="grid gap-3 border-t border-border pt-4">
+          <a
+            href={`/app/invoices/${issued.id}/pdf`}
+            target="_blank"
+            rel="noopener"
+            className="flex min-h-11 items-center justify-center gap-2 rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
+          >
+            <NoteIcon className="size-5" />
+            {t("openPdf", { number: issued.number })}
+          </a>
+          <p className="text-sm text-muted">{t("sendLater")}</p>
+        </div>
+      )}
+
+      {/* MaskinGo issues the invoice: numbered, locked, with its PDF. */}
       {!mark && hasTime && job.status === "done" && (
         <div className="grid gap-3 border-t border-border pt-4">
           <div className="grid gap-1">
-            <h3 className="font-semibold">{t("markTitle")}</h3>
-            <p className="text-sm text-muted">{t("markLead")}</p>
+            <h3 className="font-semibold">{t("issueTitle")}</h3>
+            <p className="text-sm text-muted">{t("issueLead")}</p>
           </div>
-          <MarkSentForm job={job.id} />
+          {!settingsReady && (
+            <p className="flex items-start gap-1.5 font-medium text-warning">
+              <AlertIcon className="mt-0.5 size-5 shrink-0" />
+              <span>
+                {t("issueNeedsSettings")}{" "}
+                <Link href="/app/invoices/settings" className={linkClass}>
+                  {t("openSettings")}
+                </Link>
+              </span>
+            </p>
+          )}
+          {customer && !buyerReady && (
+            <p className="flex items-start gap-1.5 font-medium text-warning">
+              <AlertIcon className="mt-0.5 size-5 shrink-0" />
+              <span>
+                {t("issueNeedsBuyer")}{" "}
+                {customerLink && (
+                  <Link href={`/app/customers/${customer.id}`} className={linkClass}>
+                    {t("openCustomer")}
+                  </Link>
+                )}
+              </span>
+            </p>
+          )}
+          {settingsReady && buyerReady && <IssueInvoiceForm job={job.id} />}
         </div>
       )}
-      {mark && (
+
+      {/* Or sent from another accounting system, then marked here (folded: issuing is the usual way). */}
+      {!mark && hasTime && job.status === "done" && (
+        <details className="rounded-lg border border-border">
+          <summary className={summaryClass}>{t("markTitle")}</summary>
+          <div className="grid gap-3 border-t border-border p-3">
+            <p className="text-sm text-muted">{t("markLead")}</p>
+            <MarkSentForm job={job.id} />
+          </div>
+        </details>
+      )}
+      {mark && !issued && (
         <details className="rounded-lg border border-border">
           <summary className={summaryClass}>{t("unmarkTitle")}</summary>
           <div className="grid gap-3 border-t border-border p-3">

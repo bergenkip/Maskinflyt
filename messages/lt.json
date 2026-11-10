@@ -761,8 +761,8 @@
     "sentBadge": "Pažymėta kaip išsiųsta",
     "sentLead": "Pažymėta kaip išsiųsta {when}. Juodraštis užrakintas.",
     "sentLeadNumber": "Pažymėta kaip išsiųsta {when}, sąskaitos nr. {number}. Juodraštis užrakintas.",
-    "markTitle": "Išsiuntėte iš savo apskaitos programos?",
-    "markLead": "MaskinGo sąskaitų nesiunčia. Išsiųskite sąskaitą iš Fiken, Tripletex ar kitos programos ir pažymėkite čia: juodraštis užrakinamas, o darbas dingsta iš varpelio.",
+    "markTitle": "O gal siunčiate iš kitos apskaitos programos?",
+    "markLead": "Jei šią sąskaitą siunčiate iš Fiken, Tripletex ar kitos programos, čia jos neišrašykite. Pažymėkite kaip išsiųstą: juodraštis užrakinamas, o darbas dingsta iš varpelio.",
     "reference": "Sąskaitos numeris (neprivaloma)",
     "referenceHint": "Kaip apskaitos programoje, pavyzdžiui 1042",
     "markSent": "Pažymėti kaip išsiųstą",
@@ -776,11 +776,34 @@
       "timeRequired": "Pirmiausia patvirtinkite darbo laiką.",
       "already": "Sąskaita jau pažymėta kaip išsiųsta.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
-    }
+    },
+    "issuedBadge": "Sąskaita Nr. {number}",
+    "issuedLead": "Išrašyta {date}, apmokėti iki {due}. Sąskaita užrakinta: klaida taisoma kreditine sąskaita.",
+    "openPdf": "Atidaryti sąskaitą {number} (PDF)",
+    "sendLater": "MaskinGo dar nesiunčia sąskaitų el. paštu: atidarykite PDF ir nusiųskite klientui patys.",
+    "issueTitle": "Išrašyti sąskaitą",
+    "issueLead": "MaskinGo suteikia sąskaitai kitą numerį ir sukuria PDF. Po to jos pakeisti nebegalima: klaida taisoma kreditine sąskaita.",
+    "issue": "Išrašyti sąskaitą",
+    "issueConfirm": "Išrašyti dabar? To atšaukti negalima.",
+    "issueNow": "Taip, išrašyti sąskaitą",
+    "issueCancel": "Dar ne",
+    "issueNeedsSettings": "Pirmiausia užpildykite įmonės sąskaitų duomenis.",
+    "openSettings": "Atidaryti sąskaitų duomenis",
+    "issueNeedsBuyer": "Sąskaitai reikia kliento adreso arba įmonės kodo.",
+    "pdfFailed": "Sąskaita išrašyta, bet PDF dar nepavyko sukurti. Atidarykite ją, ir bus bandoma dar kartą.",
+    "issueErrors": {
+      "notAllowed": "Negalite išrašyti sąskaitų. Savininkams, administratoriams ir buhalteriams reikia prisijungimo dviem žingsniais.",
+      "timeRequired": "Pirmiausia patvirtinkite darbo laiką.",
+      "already": "Sąskaita jau išrašyta arba pažymėta kaip išsiųsta.",
+      "settingsRequired": "Pirmiausia užpildykite įmonės sąskaitų duomenis.",
+      "buyerRequired": "Sąskaitai reikia kliento adreso arba įmonės kodo.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "issuedTitle": "Sąskaita"
   },
   "Invoices": {
     "title": "Sąskaitos",
-    "lead": "Atlikti darbai: patvirtinkite darbo laiką, patikrinkite juodraštį, išsiųskite sąskaitą iš savo apskaitos programos ir pažymėkite kaip išsiųstą.",
+    "lead": "Atlikti darbai: patvirtinkite darbo laiką, patikrinkite juodraštį, tada išrašykite sąskaitą čia arba pažymėkite ją kaip išsiųstą iš apskaitos programos.",
     "error": "Sąrašo nepavyko įkelti. Bandykite dar kartą.",
     "groups": {
       "time": "Darbo laikas laukia patvirtinimo ({count})",
@@ -808,7 +831,7 @@
   "InvoiceSettings": {
     "title": "Sąskaitų duomenys",
     "lead": "Ką sąskaitos sako apie jūsų įmonę. Norvegijos įstatymas (bokføringsforskriften) reikalauja jų kiekvienoje sąskaitoje.",
-    "notYet": "MaskinGo sąskaitų dar neišrašo: tai kitas žingsnis. Tada šie duomenys bus paruošti.",
+    "notYet": "Kiekviena sąskaita išlaiko duomenis, su kuriais buvo išrašyta: vėlesnis pakeitimas čia jau išrašytų sąskaitų nekeičia.",
     "back": "Visos sąskaitos",
     "link": "Sąskaitų duomenys",
     "orgNumber": "Įmonės kodas",
@@ -854,7 +877,8 @@
       "phoneInvalid": "Įveskite teisingą telefono numerį.",
       "firstNumberInvalid": "Įveskite sveiką skaičių, 1 arba daugiau.",
       "notAllowed": "Sąskaitų duomenis keičia tik savininkai ir administratoriai.",
-      "unknown": "Nepavyko išsaugoti. Bandykite dar kartą."
+      "unknown": "Nepavyko išsaugoti. Bandykite dar kartą.",
+      "firstNumberLocked": "Numeracija jau prasidėjo: pirmo numerio pakeisti nebegalima."
     }
   }
 }

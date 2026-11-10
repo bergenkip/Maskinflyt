@@ -190,13 +190,30 @@ Migracija `20261110110000_invoice_settings`, pgTAP `23_invoice_settings` (23 tes
   „Užpildyta“ / „Trūksta“ (ikona ir tekstas). Patikra `src/lib/invoice-settings.ts` (+ testai).
 - E2E `e2e/invoice-settings.spec.ts`, nuotraukos `invoice-settings`, `invoices-with-settings`.
 
+## 12b etapas: sąskaitos išrašymas su numeriu ir PDF (2026-11-10)
+
+Migracija `20261110120000_invoices`, pgTAP `24_invoices` (33 testai).
+- `issue_invoice(job)`: tik atliktas darbas su patvirtintu laiku, tik su įmonės sąskaitų duomenimis ir kliento adresu arba
+  įmonės kodu. Numeris be spragų (`private.invoice_counters`, užrakinama iki transakcijos pabaigos; nepavykęs bandymas numerio nesunaudoja).
+  Kopijuoja pardavėją, pirkėją, darbą, eilutes (norvegiškai) ir sumas. Ne MVA mokėtojui: visos eilutės 0 %.
+  Įrašo ir `job_invoices` žymą (užrakina darbą); tos žymos atšaukti nebegalima.
+- Išrašo: dispečeris arba savininkas/administratorius/buhalteris su antru žingsniu. Skaito biuras ir buhalteris.
+- `invoices` ir `invoice_lines` niekada nekeičiami ir netrinami (trigeris, net DB savininkui). Pirmas numeris užrakinamas po pirmos sąskaitos.
+- PDF: `src/lib/pdf/invoice-pdf.ts` (pdf-lib + Geist šriftas, OFL licencija `src/lib/pdf/fonts/OFL.txt`), A4, norvegiškai, keli puslapiai.
+  Privatus aplankas `invoices`, kelias `<org>/<invoice>.pdf`: įkeliamas vieną kartą, nekeičiamas ir netrinamas.
+  `/app/invoices/[id]/pdf` atiduoda PDF (jei jo dar nėra, sukuria iš kopijos).
+- Darbo puslapyje: „Išrašyti sąskaitą“ su patvirtinimu; išrašytos sąskaitos ženklas, datos ir „Atidaryti sąskaitą (PDF)“.
+  „Pažymėti kaip išsiųstą“ liko kaip alternatyva (suskleista) tiems, kas siunčia iš kitos programos.
+- E2E `e2e/invoice-issue.spec.ts`, nuotraukos `invoice-issue`, `invoice-issued`.
+- Dar nėra: siuntimas el. paštu (12c), kreditnota (12d), eksportas (12e). Prieš tikrus klientus: buhalterio patikra.
+
 ## Sąskaitų planas (Li sutarta 2026-11-06)
 - ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
 - ~~9: papildomos teisės~~ – padaryta (Li prašymas, įterpta prieš Fiken).
 - **10: Fiken**: įmonė prijungia savo Fiken; „Siųsti per Fiken“ sukuria sąskaitą Fiken ir išsiunčia (el. paštas / EHF). Fiken klientui reikia API modulio. Numeruoja ir saugo Fiken; kreditnota Fiken.
 - **11: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
 - **12: sava PDF sąskaita iš MaskinGo** (Li: daroma dabar, prieš Fiken). CLAUDE.md taisyklė pakeista (PR #24). Dalys:
-  ~~12a įmonės sąskaitų duomenys~~ (padaryta); 12b išrašymas su numeriu be spragų ir PDF; 12c siuntimas el. paštu;
+  ~~12a įmonės sąskaitų duomenys~~ (padaryta); ~~12b išrašymas su numeriu be spragų ir PDF~~ (padaryta); 12c siuntimas el. paštu;
   12d kreditnota; 12e eksportas (CSV/Excel + PDF į Fiken, Tripletex ir kt. kaip jau išrašytas pardavimas, ne nauja sąskaita;
   vėliau Fiken API). Prieš tikrus klientus: buhalterio patikra.
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
