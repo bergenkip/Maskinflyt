@@ -1,5 +1,15 @@
 import { expect, type Page, test } from "@playwright/test";
-import { addVehicle, createCompany, inviteColleague, newCompanyName, newEmail, newPage, signUp } from "./helpers";
+import {
+  addVehicle,
+  createCompany,
+  inviteColleague,
+  locales,
+  newCompanyName,
+  newEmail,
+  newPage,
+  shootAllWidths,
+  signUp,
+} from "./helpers";
 
 // These tests need a running Supabase (local `supabase start` in CI).
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
@@ -128,6 +138,21 @@ test("the calendar shows a month, a week and a day, and jobs are moved and made 
   const card = page.getByRole("listitem").filter({ has: page.getByRole("heading", { name: "Kranbil 1" }) });
   await expect(card.getByRole("link", { name: /^Edit job 1, Nordbygg AS, 07:00/ })).toBeVisible();
   await expect(card.getByRole("link", { name: "New job for Kranbil 1" })).toBeVisible();
+
+  // "Back to today" only away from today, and it brings today back.
+  await page.goto("/app/jobs/calendar");
+  await expect(page.getByRole("link", { name: "Back to today" })).toHaveCount(0);
+  await page.goto(`/app/jobs/calendar?date=${day}`);
+  await page.getByRole("link", { name: "Back to today" }).click();
+  await expect(page.getByRole("link", { name: "Back to today" })).toHaveCount(0);
+
+  // The month away from today (with the button), in every language, phone to desktop.
+  for (const locale of locales) {
+    await owner.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
+    await page.goto(`/app/jobs/calendar?date=${day}`);
+    await shootAllWidths(page, "calendar-month", locale);
+  }
+  await owner.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
 
   // Drivers do not plan, so the calendar leads back to the overview.
   await driver.page.goto("/app/jobs/calendar");
