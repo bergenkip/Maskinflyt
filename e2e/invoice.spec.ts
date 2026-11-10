@@ -119,7 +119,8 @@ for (const locale of locales) {
     await approveTime(page, job, { start: "06:30", end: "17:15", breaks: "45" });
 
     const section = page.locator('section[aria-labelledby="invoice-title"]');
-    const add = section.locator("details").last();
+    // The add-line form folds after the lines (and before the folded mark-as-sent form).
+    const add = section.locator("details").filter({ has: page.locator('input[name="description"]') }).last();
     await openDetails(add);
     const separator = locale === "en" ? "." : ",";
     for (const line of [

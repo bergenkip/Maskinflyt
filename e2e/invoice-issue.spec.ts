@@ -58,8 +58,9 @@ test("the office issues a numbered invoice with its PDF, and it is locked", asyn
   for (const locale of locales) {
     await owner.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
     await page.goto(job);
-    await section.locator('form button[type="button"]').first().click();
-    await expect(section.locator('form button[type="submit"]').last()).toBeVisible();
+    const issueForm = section.locator("form").filter({ has: page.locator('button[type="button"]') });
+    await issueForm.locator('button[type="button"]').click();
+    await expect(issueForm.locator('button[type="submit"]')).toBeVisible();
     await section.scrollIntoViewIfNeeded();
     await shootAllWidths(page, "invoice-issue", locale);
   }

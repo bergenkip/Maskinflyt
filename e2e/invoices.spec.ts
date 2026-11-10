@@ -99,6 +99,7 @@ for (const locale of locales) {
 
     await approveTime(page, job, { start: "06:30", end: "17:15", breaks: "45" });
     const section = page.locator('section[aria-labelledby="invoice-title"]');
+    await section.locator("details").filter({ has: page.locator('input[name="reference"]') }).locator("summary").click();
     await section.locator('input[name="reference"]').fill("2026-001042");
     await section.locator('input[name="reference"]').press("Enter");
     await expect(section.locator("summary")).toHaveCount(1);
