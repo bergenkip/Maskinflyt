@@ -1,0 +1,1 @@
+{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}Atkurkite slaptažodį – MaskinGo{{ else if eq $l "en" }}Reset your password – MaskinGo{{ else }}Tilbakestill passordet – MaskinGo{{ end }}

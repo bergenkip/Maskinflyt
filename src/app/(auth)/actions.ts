@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { setLinkSession } from "@/lib/supabase/link-session";
 import { createClient } from "@/lib/supabase/server";
@@ -67,8 +68,10 @@ export async function signUp(_prev: AuthFormState, formData: FormData): Promise<
     email,
     password,
     options: {
-      // Copied into the profile by a database trigger.
-      data: { first_name: firstName, last_name: lastName, invite_token: invite },
+      // Names are copied into the profile by a database trigger. email_locale is
+      // the language of this page, used by the confirmation e-mail template
+      // until the person or their company sets one (email_locale migration).
+      data: { first_name: firstName, last_name: lastName, invite_token: invite, email_locale: await getLocale() },
       emailRedirectTo: origin ? `${origin}/confirm` : undefined,
     },
   });

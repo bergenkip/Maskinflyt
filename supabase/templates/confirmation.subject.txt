@@ -1,0 +1,1 @@
+{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}Patvirtinkite el. pašto adresą – MaskinGo{{ else if eq $l "en" }}Confirm your email – MaskinGo{{ else }}Bekreft e-postadressen din – MaskinGo{{ end }}

@@ -1,0 +1,1 @@
+{{ $l := printf "%v" .Data.email_locale }}{{ if eq $l "lt" }}Patvirtinkite prisijungimą – MaskinGo{{ else if eq $l "en" }}Approve your sign-in – MaskinGo{{ else }}Godkjenn innloggingen – MaskinGo{{ end }}
