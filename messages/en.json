@@ -782,7 +782,6 @@
     "issuedBadge": "Invoice no. {number}",
     "issuedLead": "Issued on {date}, due on {due}. The invoice is locked: a mistake is corrected with a credit note.",
     "openPdf": "Open invoice {number} (PDF)",
-    "sendLater": "MaskinGo does not e-mail invoices yet: open the PDF and send it to the customer yourself.",
     "issueTitle": "Issue the invoice",
     "issueLead": "MaskinGo gives the invoice the next number and makes its PDF. After that it cannot be changed: a mistake is corrected with a credit note.",
     "issue": "Issue invoice",
@@ -801,7 +800,33 @@
       "buyerRequired": "The invoice needs the customer's address or organisation number.",
       "unknown": "Something went wrong. Try again."
     },
-    "issuedTitle": "Invoice"
+    "issuedTitle": "Invoice",
+    "sendTitle": "E-mail it to the customer",
+    "sendLead": "The customer gets the invoice as a PDF attachment. Replies go to the company's e-mail.",
+    "sendToLabel": "Send to",
+    "sendHint": "The customer's invoice e-mail. Change it if the invoice should go elsewhere.",
+    "sendTestHint": "Test mode: only .test addresses, and the e-mail goes to the e-mail service's test inbox, not to a person.",
+    "send": "Send invoice",
+    "sendConfirm": "Send invoice {number} to {email}?",
+    "sendNow": "Yes, send it",
+    "sendPending": "Sending…",
+    "sent": "The invoice is sent to {email}.",
+    "sendErrors": {
+      "invalidEmail": "Write a valid e-mail address.",
+      "testOnly": "In test mode only .test addresses can be used.",
+      "notConfigured": "E-mail sending is not set up yet. Open the PDF and send it yourself.",
+      "notAllowed": "You can't send invoices. Owners, admins and accountants need two-step sign-in.",
+      "tooMany": "The invoice was e-mailed 5 times today. Try again tomorrow.",
+      "failed": "The e-mail could not be sent. Try again in a moment.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "sendingsTitle": "E-mailed",
+    "sending": {
+      "sent": "Sent to {email}, {when}",
+      "failed": "Not sent to {email}, {when}",
+      "sending": "Sending to {email}, {when}"
+    },
+    "sendingTest": "(test)"
   },
   "Invoices": {
     "title": "Invoices",

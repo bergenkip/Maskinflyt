@@ -205,7 +205,23 @@ Migracija `20261110120000_invoices`, pgTAP `24_invoices` (33 testai).
 - Darbo puslapyje: „Išrašyti sąskaitą“ su patvirtinimu; išrašytos sąskaitos ženklas, datos ir „Atidaryti sąskaitą (PDF)“.
   „Pažymėti kaip išsiųstą“ liko kaip alternatyva (suskleista) tiems, kas siunčia iš kitos programos.
 - E2E `e2e/invoice-issue.spec.ts`, nuotraukos `invoice-issue`, `invoice-issued`.
-- Dar nėra: siuntimas el. paštu (12c), kreditnota (12d), eksportas (12e). Prieš tikrus klientus: buhalterio patikra.
+- Dar nėra: siuntimas el. paštu (12c), kreditnota (12d), eksportas (12e).
+
+## 12c etapas: sąskaitos siuntimas el. paštu (2026-11-10)
+
+Migracija `20261110130000_invoice_sendings`, pgTAP `25_invoice_sendings` (20 testų).
+- `invoice_sendings`: kiekvienas siuntimas (kam, kas, kada, bandomasis ar ne, būsena `sending`/`sent`/`failed`, Resend id).
+  Netrinamas; būseną vieną kartą užbaigia tas, kas pradėjo. `start_invoice_sending(invoice, to_email, test_mode)` tikrina teises
+  (kaip išrašymui), adresą, bandomąjį režimą ir ribą: 5 siuntimai per parą vienai sąskaitai. `finish_invoice_sending(sending, sent, provider_id)`.
+- Laiškas `src/lib/email/invoice-email.ts` (norvegiškai, PDF priedas, siuntėjas `"<įmonė> via MaskinGo" <faktura@maskingo.no>`,
+  Reply-To įmonės el. paštas). Siuntimas `src/lib/email/resend.ts` (Resend HTTP API, `Idempotency-Key` = siuntimo id).
+- Vercel aplinkos kintamieji: `RESEND_API_KEY` (Li įdeda pats, Production + Preview, Sensitive). Be jo: klaida „siuntimas neparuoštas“.
+  `INVOICE_EMAIL_LIVE=1` (Vercel Production + Preview, įjungta 2026-11-10 Li sprendimu; CLAUDE.md taisyklė apie buhalterio
+  patikrą pašalinta). Be jo bandomasis režimas (vietoje ir CI): tik `.test` adresai, laiškas keliauja į `delivered@resend.dev`,
+  tema ir tekstas pažymėti „TEST“.
+- Darbo puslapyje (išrašyta sąskaita): „Siųsti sąskaitą“ su gavėju (kliento sąskaitų el. paštas, galima keisti) ir patvirtinimu;
+  „Išsiųsta el. paštu“ istorija su ikona ir tekstu.
+- E2E: `e2e/resend-stub.mjs` (vietinis Resend pakaitalas, paleidžia `playwright.config.ts`), tikrinama `e2e/invoice-issue.spec.ts`.
 
 ## Sąskaitų planas (Li sutarta 2026-11-06)
 - ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
@@ -213,9 +229,9 @@ Migracija `20261110120000_invoices`, pgTAP `24_invoices` (33 testai).
 - **10: Fiken**: įmonė prijungia savo Fiken; „Siųsti per Fiken“ sukuria sąskaitą Fiken ir išsiunčia (el. paštas / EHF). Fiken klientui reikia API modulio. Numeruoja ir saugo Fiken; kreditnota Fiken.
 - **11: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
 - **12: sava PDF sąskaita iš MaskinGo** (Li: daroma dabar, prieš Fiken). CLAUDE.md taisyklė pakeista (PR #24). Dalys:
-  ~~12a įmonės sąskaitų duomenys~~ (padaryta); ~~12b išrašymas su numeriu be spragų ir PDF~~ (padaryta); 12c siuntimas el. paštu;
+  ~~12a įmonės sąskaitų duomenys~~ (padaryta); ~~12b išrašymas su numeriu be spragų ir PDF~~ (padaryta); ~~12c siuntimas el. paštu~~ (padaryta);
   12d kreditnota; 12e eksportas (CSV/Excel + PDF į Fiken, Tripletex ir kt. kaip jau išrašytas pardavimas, ne nauja sąskaita;
-  vėliau Fiken API). Prieš tikrus klientus: buhalterio patikra.
+  vėliau Fiken API).
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
 - **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio
   išdirbtas valandas ir viršvalandžius (pvz. +50 %, +100 %), buhalteris patikrina ir patvirtina. Tai atlyginimo valandos,

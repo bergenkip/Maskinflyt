@@ -10,6 +10,7 @@ import {
   newEmail,
   newOrgNumber,
   newPage,
+  resendStub,
   shootAllWidths,
   signUp,
 } from "./helpers";
@@ -22,7 +23,8 @@ test("the office issues a numbered invoice with its PDF, and it is locked", asyn
   const owner = await newPage(browser, baseURL!, "en");
   const { page } = owner;
   await signUp(page, newEmail("invoice-issue"), "Anna", "Berg");
-  await createCompany(page, newCompanyName("invoice-issue"));
+  const company = newCompanyName("invoice-issue");
+  await createCompany(page, company);
   await addMachine(page, { name: "Kranbil 1", rate: "1200", minHours: "", from: "15:00", percent: "50" });
   // A company customer with its organisation number (the invoice needs it, or an address).
   await page.goto("/app/customers/new");
@@ -97,6 +99,36 @@ test("the office issues a numbered invoice with its PDF, and it is locked", asyn
   await form.getByLabel("First invoice number").fill("500");
   await form.getByRole("button", { name: "Save invoice details" }).click();
   await expect(form.getByLabel("First invoice number")).toHaveAccessibleDescription(/The numbering has started/);
+
+  // E-mailed to the customer, in test mode: only .test addresses, to the test inbox.
+  await page.goto(job);
+  const to = section.getByLabel("Send to", { exact: true });
+  await expect(to).toHaveValue("faktura@nordbygg.test");
+  await expect(section).toContainText("only .test addresses");
+  await to.fill("post@nordbygg.no");
+  await section.getByRole("button", { name: "Send invoice" }).click();
+  await expect(section).toContainText("Send invoice 1 to post@nordbygg.no?");
+  await section.getByRole("button", { name: "Yes, send it" }).click();
+  await expect(to).toHaveAccessibleDescription(/In test mode only \.test addresses can be used\./);
+  await to.fill("faktura@nordbygg.test");
+  await section.getByRole("button", { name: "Send invoice" }).click();
+  await section.getByRole("button", { name: "Yes, send it" }).click();
+  await expect(section.getByRole("status")).toHaveText("The invoice is sent to faktura@nordbygg.test.");
+  await expect(section.getByRole("listitem").filter({ hasText: "Sent to faktura@nordbygg.test" })).toContainText("(test)");
+
+  const emails = (await (await page.request.get(`${resendStub}/emails`)).json()) as {
+    to: string[]; subject: string; text: string; from: string; reply_to?: string[]; authorized: boolean;
+    attachments: { filename: string; content: string }[];
+  }[];
+  const email = emails.find((sent) => sent.subject === `TEST: Faktura 1 fra ${company}`);
+  expect(email, "the e-mail reached the e-mail service").toBeDefined();
+  expect(email!.authorized).toBe(true);
+  expect(email!.to).toEqual(["delivered@resend.dev"]);
+  expect(email!.from).toBe(`"${company} via MaskinGo" <faktura@maskingo.no>`);
+  expect(email!.text).toContain("Mottaker: faktura@nordbygg.test");
+  expect(email!.text).toContain("Kontonummer: 1234 56 78903");
+  expect(email!.attachments.map((file) => file.filename)).toEqual(["Faktura-1.pdf"]);
+  expect(Buffer.from(email!.attachments[0].content, "base64").subarray(0, 5).toString()).toBe("%PDF-");
 
   // The issued state, in every language and width.
   for (const locale of locales) {
