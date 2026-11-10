@@ -229,13 +229,15 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
           >
             <ChevronLeftIcon />
           </Link>
-          <Link
-            href={here({ date: today })}
-            aria-current={shownToday ? "date" : undefined}
-            className={`flex min-h-11 items-center rounded-lg border border-border bg-surface px-4 font-medium hover:bg-accent-soft ${focusRing}`}
-          >
-            {t("today")}
-          </Link>
+          {/* Only away from today: a "Today" label that never changed read as the chosen day. */}
+          {!shownToday && (
+            <Link
+              href={here({ date: today })}
+              className={`flex min-h-11 items-center rounded-lg border border-border bg-surface px-3 text-sm font-medium hover:bg-accent-soft sm:px-4 sm:text-base ${focusRing}`}
+            >
+              {t("backToToday")}
+            </Link>
+          )}
           <Link
             href={here({ date: step(1) })}
             aria-label={t(stepLabels[view][1])}
