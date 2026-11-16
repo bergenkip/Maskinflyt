@@ -10,10 +10,10 @@
     "submit": "Change language"
   },
   "Home": {
-    "status": "In development",
+    "badge": "For truck, crane and machine contractors",
     "title": "From phone call to invoice the same day",
     "lead": "MaskinGo replaces phone, text messages and Excel for truck, crane and machine contractors: the job, the driver, the hours worked and the invoice in one place.",
-    "stepsTitle": "How it will work",
+    "stepsTitle": "How it works",
     "steps": {
       "receive": {
         "title": "Plan",
@@ -25,10 +25,38 @@
       },
       "approve": {
         "title": "Invoice",
-        "body": "An invoice draft is made from the approved hours. A person checks it before anything is sent."
+        "body": "The invoice is made from approved hours and sent as a PDF by e-mail when you press Send. Nothing is sent automatically."
       }
     },
-    "notice": "This is an early version. Registration and sign-in work; jobs, the driver app and invoices come in later stages."
+    "featuresTitle": "What you get",
+    "features": {
+      "jobs": {
+        "title": "Jobs and calendar",
+        "body": "Every job with customer, address, machine and driver. Day and week views show who is free."
+      },
+      "driver": {
+        "title": "Driver app on the phone",
+        "body": "Drivers see only their own jobs, tap On the way, Arrived and Finished, and add photos and the customer’s signature."
+      },
+      "hours": {
+        "title": "Hours without timesheets",
+        "body": "Working time is recorded from the taps. The office can correct it before the hours are approved."
+      },
+      "customers": {
+        "title": "Customers and prices",
+        "body": "Customer register with org. number and custom hourly rates per machine. Minimum time per machine is applied automatically."
+      },
+      "invoices": {
+        "title": "Invoices with PDF",
+        "body": "Sequential invoice numbers, a PDF and e-mail delivery to the customer."
+      },
+      "team": {
+        "title": "Team and roles",
+        "body": "Admin, dispatcher, driver and accountant each see only what they need."
+      }
+    },
+    "contactTitle": "Want to try MaskinGo?",
+    "contactBody": "MaskinGo is new and is being built together with its first users. Create an account, or write to us:"
   },
   "Nav": {
     "home": "MaskinGo home",

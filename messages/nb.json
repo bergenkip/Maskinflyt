@@ -10,10 +10,10 @@
     "submit": "Bytt språk"
   },
   "Home": {
-    "status": "Under utvikling",
+    "badge": "For transport-, kran- og maskinentreprenører",
     "title": "Fra telefon til faktura samme dag",
     "lead": "MaskinGo erstatter telefon, SMS og Excel for transport-, kran- og maskinentreprenører: oppdraget, sjåføren, arbeidstiden og fakturaen på ett sted.",
-    "stepsTitle": "Slik skal det fungere",
+    "stepsTitle": "Slik fungerer det",
     "steps": {
       "receive": {
         "title": "Planlegge",
@@ -25,10 +25,38 @@
       },
       "approve": {
         "title": "Fakturere",
-        "body": "Et fakturautkast lages fra godkjente timer. En person kontrollerer det før noe sendes."
+        "body": "Fakturaen lages fra godkjente timer og sendes som PDF på e-post når du trykker Send. Ingenting sendes automatisk."
       }
     },
-    "notice": "Dette er en tidlig versjon. Registrering og innlogging fungerer; oppdrag, sjåførappen og fakturaer kommer i senere steg."
+    "featuresTitle": "Det du får",
+    "features": {
+      "jobs": {
+        "title": "Oppdrag og kalender",
+        "body": "Alle oppdrag med kunde, adresse, maskin og sjåfør. Dag- og ukevisning viser hvem som er ledig."
+      },
+      "driver": {
+        "title": "Sjåførapp på mobilen",
+        "body": "Sjåføren ser bare sine oppdrag, trykker På vei, Ankommet og Ferdig, og legger ved bilder og kundens signatur."
+      },
+      "hours": {
+        "title": "Timer uten timelister",
+        "body": "Arbeidstiden registreres fra trykkene. Kontoret kan rette før timene godkjennes."
+      },
+      "customers": {
+        "title": "Kunder og priser",
+        "body": "Kunderegister med org.nr. og egne timepriser per maskin. Minstetid per maskin regnes med automatisk."
+      },
+      "invoices": {
+        "title": "Faktura med PDF",
+        "body": "Fortløpende fakturanummer, PDF og sending på e-post til kunden."
+      },
+      "team": {
+        "title": "Team og roller",
+        "body": "Administrator, disponent, sjåfør og regnskapsfører ser bare det de trenger."
+      }
+    },
+    "contactTitle": "Vil du prøve MaskinGo?",
+    "contactBody": "MaskinGo er nytt og utvikles sammen med de første brukerne. Opprett en konto, eller skriv til oss:"
   },
   "Nav": {
     "home": "MaskinGo forside",
