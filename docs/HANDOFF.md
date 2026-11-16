@@ -285,6 +285,8 @@ Migracija `20261116120000_hour_sheets`, pgTAP `27_hour_sheets` (30 testų).
   kurią įmonė dar patvirtina arba atmeta (jokio automatinio patvirtinimo). Įmonė paskyroje nustato, kada dirba ir kada ne.
   Registruojantis įmonė pasirenka, ar jos puslapis viešas. Viešų puslapių **katalogas** žmonėms, ieškantiems paslaugų
   (pagal paslaugą ir vietą), indeksuojamas Google, panašiai kaip skelbimai.
+  Įmonės galės registruotis **tik į katalogą** (be užsakymų, vairuotojų valdymo ir kitų sistemos dalių), pvz. kaip
+  atskiras (pigesnis arba nemokamas) planas.
 - **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio
   išdirbtas valandas ir viršvalandžius (pvz. +50 %, +100 %), buhalteris patikrina ir patvirtina. Tai atlyginimo valandos,
   ne kliento sąskaitos valandos; pradžiai užpildyti iš patvirtintų darbų laikų. Patikrinti: arbeidsmiljøloven §10-6
