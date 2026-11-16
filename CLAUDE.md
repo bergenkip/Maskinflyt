@@ -86,7 +86,6 @@ Mano tikslai:
     klaida taisoma **kreditnota** ir nauja sąskaita.
   - Privalomi duomenys pagal bokføringsforskriften, sąskaitos ir PDF saugomi privačiai bent 5 metus.
   - EHF (Peppol) siuntimo dar nėra: tai atskiras etapas.
-  - Prieš tikriems klientams naudojant sąskaitas, jas patikrina buhalteris. Iki tol: tik testinės įmonės ir `.test` el. paštai.
 - Pinigai saugomi sveikais skaičiais øre. Jokių slankiojo kablelio skaičių pinigams.
 
 ## Dizaino reikalavimai

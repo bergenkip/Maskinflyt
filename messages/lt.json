@@ -782,7 +782,6 @@
     "issuedBadge": "Sąskaita Nr. {number}",
     "issuedLead": "Išrašyta {date}, apmokėti iki {due}. Sąskaita užrakinta: klaida taisoma kreditine sąskaita.",
     "openPdf": "Atidaryti sąskaitą {number} (PDF)",
-    "sendLater": "MaskinGo dar nesiunčia sąskaitų el. paštu: atidarykite PDF ir nusiųskite klientui patys.",
     "issueTitle": "Išrašyti sąskaitą",
     "issueLead": "MaskinGo suteikia sąskaitai kitą numerį ir sukuria PDF. Po to jos pakeisti nebegalima: klaida taisoma kreditine sąskaita.",
     "issue": "Išrašyti sąskaitą",
@@ -801,7 +800,33 @@
       "buyerRequired": "Sąskaitai reikia kliento adreso arba įmonės kodo.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
     },
-    "issuedTitle": "Sąskaita"
+    "issuedTitle": "Sąskaita",
+    "sendTitle": "Siųsti klientui el. paštu",
+    "sendLead": "Klientas gauna sąskaitą kaip PDF priedą. Atsakymai keliauja į įmonės el. paštą.",
+    "sendToLabel": "Siųsti adresu",
+    "sendHint": "Kliento sąskaitų el. paštas. Pakeiskite, jei sąskaitą reikia siųsti kitur.",
+    "sendTestHint": "Bandomasis režimas: tik .test adresai, o laiškas keliauja į el. pašto paslaugos bandomąją dėžutę, ne žmogui.",
+    "send": "Siųsti sąskaitą",
+    "sendConfirm": "Siųsti sąskaitą {number} adresu {email}?",
+    "sendNow": "Taip, siųsti",
+    "sendPending": "Siunčiama…",
+    "sent": "Sąskaita išsiųsta adresu {email}.",
+    "sendErrors": {
+      "invalidEmail": "Įrašykite teisingą el. pašto adresą.",
+      "testOnly": "Bandomajame režime galima naudoti tik .test adresus.",
+      "notConfigured": "El. laiškų siuntimas dar neparuoštas. Atidarykite PDF ir nusiųskite patys.",
+      "notAllowed": "Jūs negalite siųsti sąskaitų. Savininkams, administratoriams ir buhalteriams reikia prisijungimo dviem žingsniais.",
+      "tooMany": "Sąskaita šiandien išsiųsta jau 5 kartus. Bandykite rytoj.",
+      "failed": "Laiško išsiųsti nepavyko. Pabandykite po minutės.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "sendingsTitle": "Išsiųsta el. paštu",
+    "sending": {
+      "sent": "Išsiųsta adresu {email}, {when}",
+      "failed": "Neišsiųsta adresu {email}, {when}",
+      "sending": "Siunčiama adresu {email}, {when}"
+    },
+    "sendingTest": "(bandymas)"
   },
   "Invoices": {
     "title": "Sąskaitos",

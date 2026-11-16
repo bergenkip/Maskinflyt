@@ -158,6 +158,9 @@ export async function newPage(browser: Browser, baseURL: string, locale: string)
   return { context, page: await context.newPage() };
 }
 
+// The local stand-in for Resend that the app e-mails through (e2e/resend-stub.mjs, started by playwright.config.ts).
+export const resendStub = "http://127.0.0.1:3199";
+
 export function newCompanyName(tag: string) {
   return `E2E ${tag} ${Date.now()} ${Math.random().toString(36).slice(2, 6)} AS`;
 }
