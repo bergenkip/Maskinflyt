@@ -250,6 +250,23 @@ mato tie patys, kas mato sąskaitas (`canSeeInvoices`, RLS).
 - Logika `src/lib/invoice-export.ts` (Vitest), užkrovimas `src/lib/invoice-export-server.ts` (puslapiais po 1000 eilučių).
   E2E `e2e/invoice-issue.spec.ts` parsisiunčia CSV ir ZIP ir tikrina turinį.
 
+## 13a etapas: valandų lapas atlyginimui (2026-11-16)
+
+Li pageidavimai: lapą pildo pats darbuotojas, labai paprastai; laikotarpis nuo–iki; viršvalandžiai nuo pasirinktos
+valandos su pasirinktu %, galima antras (didesnis) lygis; patvirtinus PDF išsiunčiamas buhalteriui el. paštu.
+Migracija `20261116120000_hour_sheets`, pgTAP `27_hour_sheets` (30 testų).
+- `hour_settings`: `overtime_after` (min., numatyta 480 = 8 val.), `overtime_percent` (50), nebūtinas antras lygis
+  (`overtime2_after` > pirmo, `overtime2_percent` > pirmo), `accountant_email`. Keičia savininkas/admin (`save_hour_settings`).
+- `hour_sheets` (vieno žmogaus, iki 62 d., laikotarpiai nesikerta) ir `hour_sheet_days` (data, pradžia, pabaiga – jei
+  ankstesnė už pradžią, tai kitas rytas, pertrauka, pastaba). Funkcijos: `create_hour_sheet`, `save_hour_sheet_day`,
+  `remove_hour_sheet_day`, `delete_hour_sheet` (tik nepatvirtintas), `submit_hour_sheet` (padalija kiekvieną dieną:
+  įprastos / 1 lygis / 2 lygis, išsaugo taisykles ir vardą, užrakina; grąžina buhalterio el. paštą),
+  `record_hour_sheet_email`. Viršvalandžiai skaičiuojami tik pagal dienos valandas (savaitės ribos nėra).
+- Skaito: pats darbuotojas; savininkas, admin (su antru žingsniu) ir buhalteris – visus. Kolegos ir kitos įmonės – nieko.
+- Ekranai: meniu „Valandos“ (`/app/hours`), lapas `/app/hours/[id]`, nustatymai `/app/hours/settings`, PDF `/app/hours/[id]/pdf`.
+  PDF „Timeliste“ norvegiškai (`src/lib/pdf/hours-pdf.ts`), laiškas iš `timeliste@maskingo.no`, atsakymas eina darbuotojui.
+- 13b (kitas): buhalterio vaizdas – visų darbuotojų lapai, ir kiek darbų darbuotojas atliko (paspaudus – kurie).
+
 ## Sąskaitų planas (Li sutarta 2026-11-06)
 - ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
 - ~~9: papildomos teisės~~ – padaryta (Li prašymas, įterpta prieš Fiken).
@@ -259,6 +276,13 @@ mato tie patys, kas mato sąskaitas (`canSeeInvoices`, RLS).
   ~~12a įmonės sąskaitų duomenys~~ (padaryta); ~~12b išrašymas su numeriu be spragų ir PDF~~ (padaryta); ~~12c siuntimas el. paštu~~ (padaryta);
   ~~12d kreditnota~~ (padaryta); ~~12e eksportas (CSV + PDF ZIP buhalteriui)~~ (padaryta); vėliau Fiken API.
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
+- **Fiken ir Tripletex atidėti** (Li sprendimas 2026-11-16): daroma vėliau. Kainos: Fiken API-modul klientui 99 kr/mėn.,
+  Tripletex „Integrasjoner“ 129 kr/mėn. (Smart; Pro/Komplett įskaičiuota), Tripletex consumer token paraiška ~2–3 sav.
+- **Vėlesnis etapas: viešas įmonės puslapis klientams** (Li idėja 2026-11-16). Įmonė gauna puslapį, kurį siunčia klientams:
+  įmonės informacija, ką daro, kontaktai; klientas mato laisvus laikus ir siunčia norimos paslaugos užsakymo užklausą,
+  kurią įmonė dar patvirtina arba atmeta (jokio automatinio patvirtinimo). Įmonė paskyroje nustato, kada dirba ir kada ne.
+  Registruojantis įmonė pasirenka, ar jos puslapis viešas. Viešų puslapių **katalogas** žmonėms, ieškantiems paslaugų
+  (pagal paslaugą ir vietą), indeksuojamas Google, panašiai kaip skelbimai.
 - **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio
   išdirbtas valandas ir viršvalandžius (pvz. +50 %, +100 %), buhalteris patikrina ir patvirtina. Tai atlyginimo valandos,
   ne kliento sąskaitos valandos; pradžiai užpildyti iš patvirtintų darbų laikų. Patikrinti: arbeidsmiljøloven §10-6

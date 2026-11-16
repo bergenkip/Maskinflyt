@@ -73,7 +73,8 @@
     "jobs": "Užsakymai",
     "myJobs": "Mano darbai",
     "invoices": "Sąskaitos",
-    "invoicesWaiting": "{count, plural, one {laukia # darbas} few {laukia # darbai} other {laukia # darbų}}"
+    "invoicesWaiting": "{count, plural, one {laukia # darbas} few {laukia # darbai} other {laukia # darbų}}",
+    "hours": "Valandos"
   },
   "Auth": {
     "loginTitle": "Prisijunkite prie MaskinGo",
@@ -991,5 +992,111 @@
     "invoice": "Sąskaita {number}",
     "creditNote": "Kreditinė sąskaita {number} sąskaitai {invoice}",
     "more": "Dar {count} yra failuose."
+  },
+  "Hours": {
+    "title": "Valandos",
+    "lead": "Jūsų valandų lapas atlyginimui: pasirinkite laikotarpį, įrašykite kiekvieną darbo dieną ir patvirtinkite. Buhalteris gaus jį PDF formatu.",
+    "rules": "Viršvalandžiai: po {after} val. per dieną +{percent} %",
+    "rules2": "po {after} val. +{percent} %",
+    "settingsLink": "Viršvalandžiai ir buhalteris",
+    "newTitle": "Naujas valandų lapas",
+    "from": "Nuo",
+    "to": "Iki",
+    "create": "Pradėti lapą",
+    "newErrors": {
+      "invalid": "Pasirinkite abi datas.",
+      "order": "Pirmoji data turi būti ankstesnė už paskutinę.",
+      "tooLong": "Pasirinkite ne daugiau kaip 62 dienas.",
+      "overlap": "Kai kurioms iš šių dienų jau turite lapą.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "listTitle": "Mano valandų lapai",
+    "empty": "Lapų dar nėra. Pradėkite pirmąjį viršuje.",
+    "period": "{from} – {to}",
+    "status": {
+      "draft": "Pildomas",
+      "submitted": "Patvirtintas"
+    },
+    "hoursTotal": "{hours} val.",
+    "back": "Mano valandų lapai",
+    "dayTitle": "Pridėti dieną",
+    "day": "Data",
+    "starts": "Pradžia",
+    "ends": "Pabaiga",
+    "endsHint": "Pabaiga anksčiau už pradžią reiškia kitą rytą.",
+    "break": "Pertrauka (minutėmis)",
+    "note": "Pastaba (nebūtina)",
+    "noteHint": "Pavyzdžiui, dirbtuvės ar laukimas.",
+    "saveDay": "Išsaugoti dieną",
+    "savedDay": "Išsaugota. Galite pildyti kitą dieną.",
+    "dayErrors": {
+      "day": "Pasirinkite datą lapo laikotarpyje.",
+      "starts": "Įrašykite, kada pradėjote darbą.",
+      "ends": "Įrašykite, kada baigėte darbą.",
+      "break": "Pertrauka turi būti trumpesnė už darbą.",
+      "note": "Ne daugiau kaip 200 simbolių.",
+      "locked": "Lapas patvirtintas, jo keisti nebegalima.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "daysTitle": "Dienos ({count})",
+    "noDays": "Dienų dar nėra. Pridėkite pirmąją viršuje.",
+    "remove": "Pašalinti {day}",
+    "breakShort": "pertrauka {minutes} min.",
+    "hours": "Valandos",
+    "normal": "Įprastos",
+    "overtime": "Viršvalandžiai +{percent} %",
+    "total": "Iš viso",
+    "confirmTitle": "Patvirtinti ir siųsti",
+    "confirmLead": "Kai dienos teisingos, patvirtinkite. Lapas užrakinamas, o PDF išsiunčiamas buhalteriui el. paštu.",
+    "confirmLeadNoEmail": "Kai dienos teisingos, patvirtinkite. Lapas užrakinamas. Buhalterio el. paštas dar neįrašytas, todėl lapas liks tik čia.",
+    "confirm": "Patvirtinti ir siųsti",
+    "confirmSure": "Patvirtinti {count, plural, one {# dieną} few {# dienas} other {# dienų}}, {hours} val.? Vėliau jo keisti nebus galima.",
+    "confirmYes": "Taip, patvirtinti",
+    "cancel": "Atšaukti",
+    "submitErrors": {
+      "empty": "Pirmiausia įrašykite bent vieną dieną.",
+      "locked": "Lapas jau patvirtintas.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "deleteTitle": "Netinkamas laikotarpis?",
+    "deleteHint": "Lapą galima ištrinti, kol jis nepatvirtintas.",
+    "delete": "Ištrinti šį lapą",
+    "confirmedAt": "Patvirtinta {time}",
+    "email": {
+      "sent": "Išsiųsta el. paštu {email}",
+      "failed": "Laiško adresu {email} išsiųsti nepavyko.",
+      "none": "Neišsiųsta: buhalterio el. paštas neįrašytas."
+    },
+    "resend": "Siųsti dar kartą",
+    "openPdf": "Atidaryti PDF"
+  },
+  "HourSettings": {
+    "title": "Viršvalandžiai ir buhalteris",
+    "lead": "Taisyklės, pagal kurias skaidomas kiekvienas valandų lapas, ir kur siunčiami patvirtinti lapai.",
+    "back": "Valandos",
+    "level1Title": "Viršvalandžiai",
+    "after": "Nuo (valandų per dieną)",
+    "afterHint": "Pavyzdžiui, 8 arba 7,5.",
+    "percent": "Priedas (%)",
+    "level2Title": "Didesni viršvalandžiai (nebūtina)",
+    "level2Hint": "Pavyzdžiui, nuo 10 valandų +100 %. Palikite tuščią, jei nenaudojama.",
+    "after2": "Nuo (valandų per dieną)",
+    "percent2": "Priedas (%)",
+    "email": "Buhalterio el. paštas",
+    "emailHint": "Patvirtinti lapai čia siunčiami PDF formatu.",
+    "law": "Norvegijos įstatymas (arbeidsmiljøloven §10-6) reikalauja bent 40 % priedo už viršvalandžius. Kolektyvinė sutartis gali reikalauti daugiau.",
+    "save": "Išsaugoti",
+    "saved": "Išsaugota.",
+    "errors": {
+      "after": "Įrašykite nuo 1 iki 24 valandų.",
+      "percent": "Įrašykite procentą nuo 1 iki 300.",
+      "after2": "Turi prasidėti vėliau nei pirmas lygis.",
+      "percent2": "Turi būti didesnis nei pirmas lygis.",
+      "email": "El. pašto adresas neteisingas.",
+      "notAllowed": "Keisti gali tik savininkas ir administratoriai.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "readOnly": "Keisti gali tik savininkas ir administratoriai.",
+    "noEmail": "El. paštas neįrašytas"
   }
 }

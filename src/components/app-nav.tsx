@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarIcon, ContactsIcon, HomeIcon, NoteIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
+import { CalendarIcon, ClockIcon, ContactsIcon, HomeIcon, NoteIcon, SettingsIcon, TruckIcon, UsersIcon } from "./icons";
 
 type Props = {
   labels: {
     dashboard: string;
     jobs: string;
     myJobs: string;
+    hours: string;
     invoices: string;
     customers: string;
     vehicles: string;
@@ -45,6 +46,8 @@ export function AppNav({ labels, showJobs, showMyJobs, showInvoices, showCustome
     ...(showVehicles
       ? [{ href: "/app/vehicles", label: labels.vehicles, icon: TruckIcon, active: pathname.startsWith("/app/vehicles") }]
       : []),
+    // Everyone keeps their own hours sheet for the pay.
+    { href: "/app/hours", label: labels.hours, icon: ClockIcon, active: pathname.startsWith("/app/hours") },
     { href: "/app/team", label: labels.team, icon: UsersIcon, active: pathname.startsWith("/app/team") },
     { href: "/app/settings", label: labels.settings, icon: SettingsIcon, active: pathname.startsWith("/app/settings"), headerOnly: true },
   ];

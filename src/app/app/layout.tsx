@@ -35,6 +35,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
                 dashboard: t("dashboard"),
                 jobs: t("jobs"),
                 myJobs: t("myJobs"),
+                hours: t("hours"),
                 invoices: t("invoices"),
                 customers: t("customers"),
                 vehicles: t("vehicles"),
