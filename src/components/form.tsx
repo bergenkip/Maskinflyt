@@ -39,7 +39,7 @@ export function Field({ name, label, hint, error, id, ...input }: FieldProps) {
   );
 }
 
-function FieldError({ id, children }: { id: string; children: ReactNode }) {
+export function FieldError({ id, children }: { id: string; children: ReactNode }) {
   return (
     <p id={id} className="flex items-start gap-1.5 text-sm font-medium text-danger">
       <svg aria-hidden="true" viewBox="0 0 24 24" className="mt-0.5 size-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">

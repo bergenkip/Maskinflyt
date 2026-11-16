@@ -957,5 +957,39 @@
       "unknown": "Kunne ikke lagre. Prøv igjen.",
       "firstNumberLocked": "Nummereringen har startet: første nummer kan ikke lenger endres."
     }
+  },
+  "InvoiceExport": {
+    "title": "Eksport til regnskapsfører",
+    "lead": "Last ned fakturaene og kreditnotaene for en periode: én CSV-fil til regnskapssystemet eller et regneark, og alle PDF-ene i én ZIP-fil.",
+    "back": "Alle fakturaer",
+    "link": "Eksport til regnskapsfører",
+    "linkHint": "CSV og PDF-er for en periode",
+    "periodTitle": "Periode",
+    "from": "Fra",
+    "to": "Til",
+    "show": "Vis",
+    "thisMonth": "Denne måneden",
+    "lastMonth": "Forrige måned",
+    "errors": {
+      "invalid": "Velg begge datoene.",
+      "order": "Første dato må komme før siste dato.",
+      "tooLong": "Velg en periode på høyst ett år."
+    },
+    "error": "Fakturaene kunne ikke lastes. Prøv igjen.",
+    "resultTitle": "{from} – {to}",
+    "empty": "Ingen fakturaer eller kreditnotaer ble utstedt i denne perioden.",
+    "counts": "{invoices, plural, one {# faktura} other {# fakturaer}} og {creditNotes, plural, one {# kreditnota} other {# kreditnotaer}}",
+    "net": "Uten MVA",
+    "vat": "MVA",
+    "total": "Sum",
+    "downloadCsv": "Last ned CSV",
+    "csvHint": "Én rad per dokument og MVA-sats. Kreditnotaer har negative beløp.",
+    "downloadZip": "Last ned PDF-er (ZIP)",
+    "zipHint": "Alle fakturaer og kreditnotaer nøyaktig slik de ble utstedt.",
+    "zipTooMany": "Mer enn {max} dokumenter: velg en kortere periode for å laste ned PDF-ene.",
+    "listTitle": "Dokumenter",
+    "invoice": "Faktura {number}",
+    "creditNote": "Kreditnota {number} for faktura {invoice}",
+    "more": "{count} til ligger i filene."
   }
 }
