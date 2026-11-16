@@ -854,7 +854,29 @@
       "failed": "Not sent to {email}, {when}",
       "sending": "Sending to {email}, {when}"
     },
-    "sendingTest": "(test)"
+    "sendingTest": "(test)",
+    "credit": "Credit invoice",
+    "creditTitle": "Credit the invoice",
+    "creditLead": "A credit note cancels the whole invoice with the same amounts, negative. The job then opens again: correct the draft and issue a new invoice. The invoice and its credit note are kept.",
+    "creditReason": "Why is it credited?",
+    "creditReasonHint": "Shown on the credit note, for example “Wrong number of hours”.",
+    "creditConfirm": "Credit invoice {number}? This cannot be undone.",
+    "creditNow": "Yes, credit it",
+    "creditErrors": {
+      "notAllowed": "You can't credit invoices. Owners, admins and accountants need two-step sign-in.",
+      "invalidReason": "Write why the invoice is credited (up to 300 characters).",
+      "already": "The invoice is already credited.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "historyTitle": "Earlier invoices and credit notes",
+    "historyInvoice": "Invoice {number}, credited",
+    "historyCredit": "Credit note {number} for invoice {invoice}",
+    "historyMeta": "{date} · {amount}",
+    "historyReason": "Reason: {reason}",
+    "openCreditPdf": "Open credit note {number} (PDF)",
+    "sendCreditTitle": "E-mail the credit note to the customer",
+    "sendCredit": "Send credit note",
+    "sendCreditConfirm": "Send credit note {number} to {email}?"
   },
   "Invoices": {
     "title": "Invoices",

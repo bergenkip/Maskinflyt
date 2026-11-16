@@ -44,6 +44,9 @@ export type IssuedInvoice = {
   net: number;
   vat: number;
   total: number;
+  // A credit note: the invoice it credits, and why. Its amounts are negative.
+  kind?: "invoice" | "credit_note";
+  credit?: { number: number; issue_date: string; reason: string };
 };
 
 export type IssuedLine = {
@@ -111,7 +114,9 @@ export async function invoicePdf(invoice: IssuedInvoice, lines: IssuedLine[]): P
   doc.registerFontkit(fontkit);
   const regular = await doc.embedFont(regularBytes, { subset: true });
   const bold = await doc.embedFont(boldBytes, { subset: true });
-  doc.setTitle(`Faktura ${invoice.number}`);
+  const credit = invoice.kind === "credit_note" ? invoice.credit : undefined;
+  const title = credit ? "Kreditnota" : "Faktura";
+  doc.setTitle(`${title} ${invoice.number}`);
   doc.setAuthor(invoice.seller.name);
   doc.setCreator("MaskinGo");
   doc.setProducer("MaskinGo");
@@ -132,21 +137,29 @@ export async function invoicePdf(invoice: IssuedInvoice, lines: IssuedLine[]): P
   };
   const line = (at: number) => page.drawLine({ start: { x: MARGIN, y: at }, end: { x: right, y: at }, thickness: 0.75, color: rule });
 
-  // The seller, left; "Faktura" and its numbers, right.
+  // The seller, left; "Faktura" (or "Kreditnota") and its numbers, right.
   for (const [i, part] of wrap(seller.name, bold, 14, width / 2).entries()) text(part, MARGIN, y - i * 17, { font: bold, size: 14 });
-  textRight("Faktura", right, y - 4, { font: bold, size: 22 });
+  textRight(title, right, y - 4, { font: bold, size: 22 });
   let sy = y - 17 * wrap(seller.name, bold, 14, width / 2).length - 2;
   for (const part of [seller.street, `${seller.postal_code} ${seller.city}`, orgLine, ...(seller.in_business_register ? ["Foretaksregisteret"] : [])]) {
     text(part, MARGIN, sy, { color: muted });
     sy -= 13;
   }
 
-  const facts: [string, string][] = [
-    ["Fakturanummer", String(invoice.number)],
-    ["Fakturadato", formatDate(invoice.issue_date)],
-    ["Forfallsdato", formatDate(invoice.due_date)],
-    ["Oppdrag", String(invoice.job.number)],
-  ];
+  const facts: [string, string][] = credit
+    ? [
+        ["Kreditnotanummer", String(invoice.number)],
+        ["Kreditnotadato", formatDate(invoice.issue_date)],
+        ["Krediterer faktura", String(credit.number)],
+        ["Fakturadato", formatDate(credit.issue_date)],
+        ["Oppdrag", String(invoice.job.number)],
+      ]
+    : [
+        ["Fakturanummer", String(invoice.number)],
+        ["Fakturadato", formatDate(invoice.issue_date)],
+        ["Forfallsdato", formatDate(invoice.due_date)],
+        ["Oppdrag", String(invoice.job.number)],
+      ];
   let fy = y - 40;
   for (const [label, value] of facts) {
     text(label, right - 190, fy, { color: muted });
@@ -156,7 +169,7 @@ export async function invoicePdf(invoice: IssuedInvoice, lines: IssuedLine[]): P
   y = Math.min(sy, fy) - 18;
 
   // The buyer.
-  text("Faktureres til", MARGIN, y, { color: muted, size: 9 });
+  text(credit ? "Kunde" : "Faktureres til", MARGIN, y, { color: muted, size: 9 });
   y -= 15;
   for (const part of wrap(buyer.name, bold, 11, width / 2)) {
     text(part, MARGIN, y, { font: bold, size: 11 });
@@ -205,7 +218,7 @@ export async function invoicePdf(invoice: IssuedInvoice, lines: IssuedLine[]): P
     if (y - height < MARGIN + 40) {
       page = doc.addPage(A4);
       y = A4[1] - MARGIN;
-      text(`Faktura ${invoice.number} (fortsatt)`, MARGIN, y, { color: muted, size: 9 });
+      text(`${title} ${invoice.number} (fortsatt)`, MARGIN, y, { color: muted, size: 9 });
       y -= 24;
       header();
     }
@@ -221,12 +234,15 @@ export async function invoicePdf(invoice: IssuedInvoice, lines: IssuedLine[]): P
   y -= 14;
 
   // The totals, from the copy; VAT per rate as on the job page.
-  const totals = invoiceTotals(lines.map((l) => ({ amount: l.amount, vat_rate: l.vat_rate })));
+  // A credit note's VAT is counted from the credited amounts, then turned negative (rounding as on the invoice).
+  const sign = credit ? -1 : 1;
+  const counted = invoiceTotals(lines.map((l) => ({ amount: sign * l.amount, vat_rate: l.vat_rate })));
+  const totals = { ...counted, vat: counted.vat.map((row) => ({ rate: row.rate, base: sign * row.base, vat: sign * row.vat || 0 })) };
   const totalRows: [string, string][] = [["Sum eks. MVA", formatAmount(invoice.net)]];
   if (seller.vat_registered) {
     for (const row of totals.vat) totalRows.push([`MVA ${row.rate} % av ${formatAmount(row.base)}`, formatAmount(row.vat)]);
   }
-  if (y < MARGIN + 160) {
+  if (y < MARGIN + (credit ? 240 : 160)) {
     page = doc.addPage(A4);
     y = A4[1] - MARGIN;
   }
@@ -237,23 +253,49 @@ export async function invoicePdf(invoice: IssuedInvoice, lines: IssuedLine[]): P
   }
   page.drawLine({ start: { x: cols.quantity - 60, y: y + 6 }, end: { x: right, y: y + 6 }, thickness: 0.75, color: rule });
   y -= 8;
-  textRight(`Å betale (${invoice.currency})`, cols.price, y, { font: bold, size: 12 });
+  textRight(credit ? `Kreditert (${invoice.currency})` : `Å betale (${invoice.currency})`, cols.price, y, { font: bold, size: 12 });
   textRight(formatAmount(invoice.total), right, y, { font: bold, size: 12 });
   y -= 36;
 
-  // How to pay.
-  const boxHeight = 52;
-  page.drawRectangle({ x: MARGIN, y: y - boxHeight + 18, width, height: boxHeight, borderColor: rule, borderWidth: 0.75 });
-  const pay: [string, string][] = [
-    ["Kontonummer", formatBankAccount(seller.bank_account)],
-    ["Forfallsdato", formatDate(invoice.due_date)],
-    ["Merk betalingen med", `Faktura ${invoice.number}`],
-  ];
-  pay.forEach(([label, value], i) => {
-    const x = MARGIN + 14 + i * ((width - 28) / 3);
-    text(label, x, y, { color: muted, size: 9 });
-    text(value, x, y - 18, { font: bold, size: 12 });
-  });
+  if (credit) {
+    // Why, and what it means for the customer.
+    const inner = width - 28;
+    const reason = wrap(credit.reason, bold, 11, inner);
+    const note = wrap(
+      `Kreditnotaen opphever faktura ${credit.number} i sin helhet. Er fakturaen betalt, betales beløpet tilbake.`,
+      regular,
+      10,
+      inner,
+    );
+    const boxHeight = 30 + reason.length * 14 + note.length * 13;
+    page.drawRectangle({ x: MARGIN, y: y - boxHeight + 18, width, height: boxHeight, borderColor: rule, borderWidth: 0.75 });
+    let ry = y;
+    text("Årsak", MARGIN + 14, ry, { color: muted, size: 9 });
+    ry -= 16;
+    for (const part of reason) {
+      text(part, MARGIN + 14, ry, { font: bold, size: 11 });
+      ry -= 14;
+    }
+    ry -= 2;
+    for (const part of note) {
+      text(part, MARGIN + 14, ry);
+      ry -= 13;
+    }
+  } else {
+    // How to pay.
+    const boxHeight = 52;
+    page.drawRectangle({ x: MARGIN, y: y - boxHeight + 18, width, height: boxHeight, borderColor: rule, borderWidth: 0.75 });
+    const pay: [string, string][] = [
+      ["Kontonummer", formatBankAccount(seller.bank_account)],
+      ["Forfallsdato", formatDate(invoice.due_date)],
+      ["Merk betalingen med", `Faktura ${invoice.number}`],
+    ];
+    pay.forEach(([label, value], i) => {
+      const x = MARGIN + 14 + i * ((width - 28) / 3);
+      text(label, x, y, { color: muted, size: 9 });
+      text(value, x, y - 18, { font: bold, size: 12 });
+    });
+  }
 
   // The seller's contact, at the foot of every page.
   const contact = [seller.name, orgLine, seller.email, seller.phone && formatPhone(seller.phone)].filter(Boolean).join("  ·  ");

@@ -58,6 +58,26 @@ describe("invoice PDF", () => {
     if (process.env.PDF_OUT) await writeFile(`${process.env.PDF_OUT}/invoice.pdf`, bytes);
   });
 
+  it("makes a credit note with negative amounts, the credited invoice and the reason", async () => {
+    expect(formatAmount(-1629294)).toBe(`\u2212${formatAmount(1629294)}`);
+    const credit = {
+      ...invoice,
+      number: 1002,
+      due_date: invoice.issue_date,
+      net: -invoice.net,
+      vat: -invoice.vat,
+      total: -invoice.total,
+      kind: "credit_note" as const,
+      credit: { number: 1001, issue_date: "2026-11-10", reason: "Feil antall timer: kunden var ferdig klokken 15, ikke 17. ".repeat(4).trim() },
+    };
+    const negative = lines.map((line) => ({ ...line, quantity: String(-Number(line.quantity)), amount: -line.amount }));
+    const bytes = await invoicePdf(credit, negative);
+    const doc = await PDFDocument.load(bytes);
+    expect(doc.getTitle()).toBe("Kreditnota 1002");
+    expect(doc.getPageCount()).toBe(1);
+    if (process.env.PDF_OUT) await writeFile(`${process.env.PDF_OUT}/credit-note.pdf`, bytes);
+  });
+
   it("continues on more pages when there are many lines", async () => {
     const many = Array.from({ length: 60 }, (_, i) => ({ ...lines[2], position: i + 1, description: `Ferje ${i + 1}, Bergen–Stavanger med lang tekst som må brytes over flere linjer` }));
     const bytes = await invoicePdf(invoice, many);

@@ -61,6 +61,25 @@ describe("invoice e-mail", () => {
     expect(email.text.split("\n")[0]).toContain("ikke en ekte faktura. Mottaker: faktura@nordbygg.test");
   });
 
+  it("carries a credit note with what it credits and why", () => {
+    const credit = {
+      ...invoice,
+      number: 1002,
+      total: -invoice.total,
+      kind: "credit_note" as const,
+      credit: { number: 1001, issue_date: "2026-11-10", reason: "Feil <antall> timer" },
+    };
+    const email = invoiceEmail(credit, { to: "faktura@nordbygg.test", testMode: false });
+    expect(email.subject).toBe('Kreditnota 1002 fra Fjellkran "Vest" <AS>');
+    expect(email.text).toContain("Vedlagt finner du kreditnota 1002");
+    expect(email.text).toContain("Krediterer faktura: 1001 (10.11.2026)");
+    expect(email.text).toContain("Kreditert beløp: \u221216\u00a0292,94 NOK");
+    expect(email.text).toContain("Årsak: Feil <antall> timer");
+    expect(email.text).not.toContain("Kontonummer");
+    expect(email.html).toContain("Feil &lt;antall&gt; timer");
+    expect(email.filename).toBe("Kreditnota-1002.pdf");
+  });
+
   it("is in test mode unless switched on", () => {
     expect(invoiceEmailLive()).toBe(false);
     vi.stubEnv("INVOICE_EMAIL_LIVE", "1");

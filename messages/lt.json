@@ -854,7 +854,29 @@
       "failed": "Neišsiųsta adresu {email}, {when}",
       "sending": "Siunčiama adresu {email}, {when}"
     },
-    "sendingTest": "(bandymas)"
+    "sendingTest": "(bandymas)",
+    "credit": "Kredituoti sąskaitą",
+    "creditTitle": "Kredituoti sąskaitą",
+    "creditLead": "Kreditinė sąskaita panaikina visą sąskaitą tomis pačiomis, tik neigiamomis sumomis. Po to darbas vėl atrakinamas: pataisykite juodraštį ir išrašykite naują sąskaitą. Sąskaita ir kreditinė sąskaita išsaugomos.",
+    "creditReason": "Kodėl kredituojama?",
+    "creditReasonHint": "Rodoma kreditinėje sąskaitoje, pvz. „Neteisingas valandų skaičius“.",
+    "creditConfirm": "Kredituoti sąskaitą {number}? To atšaukti negalima.",
+    "creditNow": "Taip, kredituoti",
+    "creditErrors": {
+      "notAllowed": "Jūs negalite kredituoti sąskaitų. Savininkams, administratoriams ir buhalteriams reikia prisijungimo dviem žingsniais.",
+      "invalidReason": "Parašykite, kodėl sąskaita kredituojama (iki 300 simbolių).",
+      "already": "Sąskaita jau kredituota.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    },
+    "historyTitle": "Ankstesnės sąskaitos ir kreditinės sąskaitos",
+    "historyInvoice": "Sąskaita {number}, kredituota",
+    "historyCredit": "Kreditinė sąskaita {number} sąskaitai {invoice}",
+    "historyMeta": "{date} · {amount}",
+    "historyReason": "Priežastis: {reason}",
+    "openCreditPdf": "Atidaryti kreditinę sąskaitą {number} (PDF)",
+    "sendCreditTitle": "Siųsti kreditinę sąskaitą klientui el. paštu",
+    "sendCredit": "Siųsti kreditinę sąskaitą",
+    "sendCreditConfirm": "Siųsti kreditinę sąskaitą {number} adresu {email}?"
   },
   "Invoices": {
     "title": "Sąskaitos",
