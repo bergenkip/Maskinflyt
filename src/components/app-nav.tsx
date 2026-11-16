@@ -28,7 +28,8 @@ type Props = {
 
 // Phones and tablets: a tab bar fixed to the bottom of the screen, within thumb
 // reach; settings sit in the header there (SettingsLink), so five tabs fit.
-// Computers: a row in the header.
+// Computers (1280 px and wider): a row in the header. Below that, tablets in
+// landscape too get the tab bar, as the header has no room for every tab.
 export function AppNav({ labels, showJobs, showMyJobs, showInvoices, showCustomers, showVehicles }: Props) {
   const pathname = usePathname();
   const links = [
@@ -55,17 +56,17 @@ export function AppNav({ labels, showJobs, showMyJobs, showInvoices, showCustome
   return (
     <nav
       aria-label={labels.mainMenu}
-      className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-surface pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] shadow-[0_-1px_12px_rgb(0_0_0/0.06)] lg:static lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+      className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-surface pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] shadow-[0_-1px_12px_rgb(0_0_0/0.06)] xl:static xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
     >
-      <ul className="flex lg:gap-1">
+      <ul className="flex xl:gap-1">
         {links.map(({ href, label, icon: Icon, active, headerOnly }) => (
-          <li key={href} className={`min-w-0 flex-1 lg:flex-none ${headerOnly ? "hidden lg:block" : ""}`}>
+          <li key={href} className={`min-w-0 flex-1 xl:flex-none ${headerOnly ? "hidden xl:block" : ""}`}>
             <Link
               href={href}
               aria-current={active ? "page" : undefined}
-              className="group flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 text-xs font-medium text-muted hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent aria-[current=page]:text-accent sm:text-sm lg:min-h-11 lg:flex-row lg:gap-1.5 lg:rounded-lg lg:px-2 xl:text-base lg:hover:bg-accent-soft lg:focus-visible:outline-offset-2 lg:aria-[current=page]:bg-accent-soft"
+              className="group flex min-h-14 flex-col items-center justify-center gap-0.5 px-0.5 text-xs max-[400px]:text-[11px] font-medium text-muted hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent aria-[current=page]:text-accent sm:text-sm xl:min-h-11 xl:flex-row xl:gap-1.5 xl:rounded-lg xl:px-2 xl:hover:bg-accent-soft xl:focus-visible:outline-offset-2 xl:aria-[current=page]:bg-accent-soft"
             >
-              <span className="flex h-7 w-12 items-center justify-center rounded-full transition-colors group-aria-[current=page]:bg-accent-soft lg:h-auto lg:w-auto lg:bg-transparent lg:group-aria-[current=page]:bg-transparent">
+              <span className="flex h-7 w-12 items-center justify-center rounded-full transition-colors group-aria-[current=page]:bg-accent-soft xl:h-auto xl:w-auto xl:bg-transparent xl:group-aria-[current=page]:bg-transparent">
                 <Icon className="size-5" />
               </span>
               <span className="max-w-full truncate">{label}</span>
@@ -85,7 +86,7 @@ export function SettingsLink({ label }: { label: string }) {
       href="/app/settings"
       aria-label={label}
       aria-current={pathname.startsWith("/app/settings") ? "page" : undefined}
-      className="flex size-11 items-center justify-center rounded-lg text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent lg:hidden"
+      className="flex size-11 items-center justify-center rounded-lg text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent xl:hidden"
     >
       <SettingsIcon className="size-5" />
     </Link>

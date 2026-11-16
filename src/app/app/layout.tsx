@@ -26,10 +26,10 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <header className="sticky top-0 z-20 border-b border-border bg-surface pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-x-2 px-4 py-2 sm:gap-x-4 sm:px-6 lg:gap-x-1">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-x-2 px-4 py-2 sm:gap-x-4 sm:px-6 xl:gap-x-1">
           <Brand href="/app" label={t("dashboard")} />
-          {/* Phones and tablets: the menu is a tab bar at the bottom of the screen (see AppNav). */}
-          <div className="lg:order-2 lg:ml-auto">
+          {/* Phones and tablets (also in landscape): the menu is a tab bar at the bottom of the screen (see AppNav). */}
+          <div className="xl:order-2 xl:ml-auto">
             <AppNav
               labels={{
                 dashboard: t("dashboard"),
@@ -50,7 +50,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
               showVehicles={!!membership && canSeeVehicles(membership)}
             />
           </div>
-          <div className="flex items-center gap-1 lg:order-3">
+          <div className="flex items-center gap-1 xl:order-3">
             {invoicing && (
               <InvoiceBell count={waiting} label={t("invoices")} countLabel={t("invoicesWaiting", { count: waiting })} />
             )}
@@ -64,7 +64,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
               >
                 <SignOutIcon />
                 {/* Phones and computers: icon only, so the header fits one row (with the bell). */}
-                <span className="max-sm:sr-only lg:sr-only">{t("signOut")}</span>
+                <span className="max-sm:sr-only xl:sr-only">{t("signOut")}</span>
               </button>
             </form>
           </div>
@@ -72,7 +72,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
       </header>
       {/* The header reaches the screen edges; the content keeps clear of the notch in landscape. */}
       <div className="flex flex-1 flex-col pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-6 lg:pb-10">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-6 xl:pb-10">
           {children}
         </main>
       </div>
