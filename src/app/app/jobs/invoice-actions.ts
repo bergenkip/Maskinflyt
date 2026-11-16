@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { normalizeEmail } from "@/lib/customers";
 import { invoiceEmail, invoiceEmailLive, TEST_INBOX } from "@/lib/email/invoice-email";
 import { emailConfigured, sendEmail } from "@/lib/email/resend";
-import { MAX_INVOICE_REFERENCE_LENGTH } from "@/lib/invoice";
+import { MAX_CREDIT_REASON_LENGTH, MAX_INVOICE_REFERENCE_LENGTH } from "@/lib/invoice";
 import { getCurrentMembership } from "@/lib/membership";
 import { getInvoicePdf } from "@/lib/invoices-server";
 import { createClient } from "@/lib/supabase/server";
@@ -167,4 +167,47 @@ export async function sendInvoice(_prev: SendState, formData: FormData): Promise
   done(job);
   if (!result.ok) return { to: input, error: result.reason === "notConfigured" ? "notConfigured" : "failed" };
   return { to, sentAt: Date.now() };
+}
+
+export type CreditState = {
+  reason?: string;
+  error?: "notAllowed" | "invalidReason" | "already" | "unknown";
+  pdfFailed?: boolean;
+  creditedAt?: number;
+};
+
+const creditErrors: Record<string, CreditState["error"]> = {
+  not_allowed: "notAllowed",
+  invalid_reason: "invalidReason",
+  already_credited: "already",
+  not_an_invoice: "already",
+};
+
+// Credit an issued invoice in full: the database numbers the credit note and
+// opens the job again; then the credit note's PDF is made and stored.
+export async function creditInvoice(_prev: CreditState, formData: FormData): Promise<CreditState> {
+  if (!(await getCurrentMembership())) redirect("/app/onboarding");
+  const job = String(formData.get("job") ?? "");
+  const invoice = String(formData.get("invoice") ?? "");
+  const reason = String(formData.get("reason") ?? "").trim().replace(/\s+/g, " ");
+  if (!uuid.test(job) || !uuid.test(invoice)) return { reason, error: "unknown" };
+  if (reason.length < 1 || reason.length > MAX_CREDIT_REASON_LENGTH) return { reason, error: "invalidReason" };
+
+  const supabase = await createClient();
+  const { data: creditId, error } = await supabase.rpc("credit_invoice", { invoice, reason });
+  if (error) {
+    const known = error.hint ? creditErrors[error.hint] : undefined;
+    if (known) return { reason, error: known };
+    if (error.code === "42501") return { reason, error: "notAllowed" };
+    return { reason, error: "unknown" };
+  }
+
+  let pdfFailed = false;
+  try {
+    if (!(await getInvoicePdf(creditId as string))) pdfFailed = true;
+  } catch {
+    pdfFailed = true;
+  }
+  done(job);
+  return { creditedAt: Date.now(), pdfFailed };
 }

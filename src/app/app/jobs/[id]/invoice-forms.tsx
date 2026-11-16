@@ -3,12 +3,14 @@
 import { useTranslations } from "next-intl";
 import { useActionState, useState } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
-import { MAX_INVOICE_REFERENCE_LENGTH } from "@/lib/invoice";
+import { MAX_CREDIT_REASON_LENGTH, MAX_INVOICE_REFERENCE_LENGTH } from "@/lib/invoice";
 import {
+  creditInvoice,
   issueInvoice,
   markInvoiceSent,
   sendInvoice,
   unmarkInvoiceSent,
+  type CreditState,
   type IssueState,
   type MarkState,
   type SendState,
@@ -111,12 +113,15 @@ export function SendInvoiceForm({
   number,
   defaultTo,
   testMode,
+  creditNote = false,
 }: {
   job: string;
   invoice: string;
   number: number;
   defaultTo: string;
   testMode: boolean;
+  // A credit note is sent the same way, with its own words.
+  creditNote?: boolean;
 }) {
   const t = useTranslations("Invoice");
   const [state, action] = useActionState<SendState, FormData>(sendInvoice, {});
@@ -154,7 +159,7 @@ export function SendInvoiceForm({
       />
       {sure ? (
         <div className="grid gap-3 rounded-lg border border-warning/50 bg-warning-soft p-3">
-          <p className="font-medium [overflow-wrap:anywhere]">{t("sendConfirm", { number, email: to.trim() })}</p>
+          <p className="font-medium [overflow-wrap:anywhere]">{t(creditNote ? "sendCreditConfirm" : "sendConfirm", { number, email: to.trim() })}</p>
           <div className="flex flex-col gap-2 sm:flex-row">
             <SubmitButton pendingLabel={t("sendPending")}>{t("sendNow")}</SubmitButton>
             <button
@@ -173,7 +178,66 @@ export function SendInvoiceForm({
           disabled={to.trim() === ""}
           className={`flex min-h-11 items-center justify-center rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-70 sm:justify-self-start ${focusRing}`}
         >
-          {t("send")}
+          {t(creditNote ? "sendCredit" : "send")}
+        </button>
+      )}
+    </form>
+  );
+}
+
+// Credit the issued invoice in full, with a reason. It cannot be undone, so
+// the button asks once more.
+export function CreditInvoiceForm({ job, invoice, number }: { job: string; invoice: string; number: number }) {
+  const t = useTranslations("Invoice");
+  const tAuth = useTranslations("Auth");
+  const [state, action] = useActionState<CreditState, FormData>(creditInvoice, {});
+  const [reason, setReason] = useState(state.reason ?? "");
+  const [sure, setSure] = useState(false);
+  const fieldError = state.error === "invalidReason" ? t("creditErrors.invalidReason") : undefined;
+  return (
+    <form action={action} noValidate className="grid gap-3">
+      <input type="hidden" name="job" value={job} />
+      <input type="hidden" name="invoice" value={invoice} />
+      <div aria-live="polite">
+        {state.error && !fieldError && <FormAlert kind="error">{t(`creditErrors.${state.error}`)}</FormAlert>}
+        {state.pdfFailed && <FormAlert kind="error">{t("pdfFailed")}</FormAlert>}
+      </div>
+      <Field
+        name="reason"
+        id={`credit-reason-${invoice}`}
+        label={t("creditReason")}
+        hint={t("creditReasonHint")}
+        maxLength={MAX_CREDIT_REASON_LENGTH}
+        autoComplete="off"
+        value={reason}
+        onChange={(event) => {
+          setReason(event.target.value);
+          setSure(false);
+        }}
+        error={fieldError}
+      />
+      {sure ? (
+        <div className="grid gap-3 rounded-lg border border-danger/40 bg-danger-soft p-3">
+          <p className="font-medium">{t("creditConfirm", { number })}</p>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <SubmitButton pendingLabel={tAuth("pending")}>{t("creditNow")}</SubmitButton>
+            <button
+              type="button"
+              onClick={() => setSure(false)}
+              className={`flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`}
+            >
+              {t("issueCancel")}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setSure(true)}
+          disabled={reason.trim() === ""}
+          className={`flex min-h-11 items-center justify-center rounded-lg border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
+        >
+          {t("credit")}
         </button>
       )}
     </form>

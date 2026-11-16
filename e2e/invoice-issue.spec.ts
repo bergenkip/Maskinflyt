@@ -130,6 +130,30 @@ test("the office issues a numbered invoice with its PDF, and it is locked", asyn
   expect(email!.attachments.map((file) => file.filename)).toEqual(["Faktura-1.pdf"]);
   expect(Buffer.from(email!.attachments[0].content, "base64").subarray(0, 5).toString()).toBe("%PDF-");
 
+  // A mistake: credited in full, with a reason; the job opens again for invoice 3.
+  const credit = section.locator("details").filter({ hasText: "Credit the invoice" });
+  await credit.locator("summary").click();
+  await expect(credit.getByRole("button", { name: "Credit invoice" })).toBeDisabled();
+  await credit.getByLabel("Why is it credited?").fill("Wrong number of hours");
+  await credit.getByRole("button", { name: "Credit invoice" }).click();
+  await expect(credit).toContainText("Credit invoice 1? This cannot be undone.");
+  await credit.getByRole("button", { name: "Yes, credit it" }).click();
+  await expect(section.getByText("Credit note 2 for invoice 1")).toBeVisible();
+  await expect(section.getByText("Invoice 1, credited")).toBeVisible();
+  await expect(section).toContainText("Reason: Wrong number of hours");
+  const creditHref = await section.getByRole("link", { name: "Open credit note 2 (PDF)" }).getAttribute("href");
+  const creditPdf = await page.request.get(creditHref!);
+  expect(creditPdf.status()).toBe(200);
+  expect(creditPdf.headers()["content-disposition"]).toContain('filename="Kreditnota-2.pdf"');
+  expect((await creditPdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
+
+  // The draft can be corrected again, and the new invoice gets the next number.
+  await expect(section.getByRole("button", { name: "Add line" })).toHaveCount(1);
+  await section.getByRole("button", { name: "Issue invoice" }).click();
+  await section.getByRole("button", { name: "Yes, issue the invoice" }).click();
+  await expect(section.getByText("Invoice no. 3", { exact: true })).toBeVisible();
+  await expect(section.getByRole("link", { name: "Open invoice 1 (PDF)" })).toBeVisible();
+
   // The issued state, in every language and width.
   for (const locale of locales) {
     await owner.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);

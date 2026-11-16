@@ -4,19 +4,24 @@ import { createClient } from "@/lib/supabase/server";
 
 export const INVOICES_BUCKET = "invoices";
 
-export type IssuedInvoiceRow = IssuedInvoice & { id: string; organization_id: string; job_id: string; issued_at: string };
+export type IssuedInvoiceRow = IssuedInvoice & {
+  id: string;
+  organization_id: string;
+  job_id: string;
+  issued_at: string;
+  kind: "invoice" | "credit_note";
+  credits: string | null;
+  reason: string | null;
+};
 export const issuedInvoiceColumns =
-  "id, organization_id, job_id, number, issue_date, due_date, currency, seller, buyer, job, net, vat, total, issued_at";
+  "id, organization_id, job_id, number, issue_date, due_date, currency, seller, buyer, job, net, vat, total, issued_at, kind, credits, reason";
+
+// "Faktura-1001.pdf" or "Kreditnota-1002.pdf".
+export const invoiceFileName = (invoice: { kind?: string; number: number }) =>
+  `${invoice.kind === "credit_note" ? "Kreditnota" : "Faktura"}-${invoice.number}.pdf`;
 
 // <organization id>/<invoice id>.pdf: the only path the bucket's policies accept.
 export const invoicePdfPath = (invoice: { id: string; organization_id: string }) => `${invoice.organization_id}/${invoice.id}.pdf`;
-
-// The issued invoice of a job, as the person may read it (RLS decides).
-export async function getJobInvoice(jobId: string): Promise<IssuedInvoiceRow | null> {
-  const supabase = await createClient();
-  const { data } = await supabase.from("invoices").select(issuedInvoiceColumns).eq("job_id", jobId).maybeSingle();
-  return (data as IssuedInvoiceRow | null) ?? null;
-}
 
 // The PDF of an issued invoice, made from its copy in the database. It is
 // stored once: the bucket refuses to replace it, so a second call only reads it.
@@ -25,6 +30,11 @@ export async function getInvoicePdf(invoiceId: string): Promise<{ invoice: Issue
   const { data } = await supabase.from("invoices").select(issuedInvoiceColumns).eq("id", invoiceId).maybeSingle();
   const invoice = data as IssuedInvoiceRow | null;
   if (!invoice) return null;
+  if (invoice.kind === "credit_note" && invoice.credits) {
+    const { data: credited } = await supabase.from("invoices").select("number, issue_date").eq("id", invoice.credits).maybeSingle();
+    if (!credited) return null;
+    invoice.credit = { number: credited.number, issue_date: credited.issue_date, reason: invoice.reason ?? "" };
+  }
   const path = invoicePdfPath(invoice);
   const bucket = supabase.storage.from(INVOICES_BUCKET);
 

@@ -37,12 +37,26 @@ export type InvoiceEmail = {
 export function invoiceEmail(invoice: IssuedInvoice, options: { to: string; testMode: boolean }): InvoiceEmail {
   const seller = invoice.seller.name;
   const amount = `${formatAmount(invoice.total)} ${invoice.currency}`;
-  const facts: [string, string][] = [
-    ["Fakturanummer", String(invoice.number)],
-    ["Beløp å betale", amount],
-    ["Forfallsdato", formatDate(invoice.due_date)],
-    ["Kontonummer", formatBankAccount(invoice.seller.bank_account)],
-  ];
+  const credit = invoice.kind === "credit_note" ? invoice.credit : undefined;
+  // "faktura 1001" or "kreditnota 1002".
+  const document = `${credit ? "kreditnota" : "faktura"} ${invoice.number}`;
+  const facts: [string, string][] = credit
+    ? [
+        ["Kreditnotanummer", String(invoice.number)],
+        ["Krediterer faktura", `${credit.number} (${formatDate(credit.issue_date)})`],
+        ["Kreditert beløp", amount],
+        ["Årsak", credit.reason],
+      ]
+    : [
+        ["Fakturanummer", String(invoice.number)],
+        ["Beløp å betale", amount],
+        ["Forfallsdato", formatDate(invoice.due_date)],
+        ["Kontonummer", formatBankAccount(invoice.seller.bank_account)],
+      ];
+  const closing = credit
+    ? `Kreditnotaen opphever faktura ${credit.number} i sin helhet. Er fakturaen betalt, betales beløpet tilbake.`
+    : `Merk betalingen med fakturanummer ${invoice.number}.`;
+  const questions = invoice.seller.email ? ` Spørsmål om ${credit ? "kreditnotaen" : "fakturaen"}? Svar på denne e-posten.` : "";
   const test = options.testMode
     ? `TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke en ekte faktura. Mottaker: ${options.to}`
     : null;
@@ -51,12 +65,12 @@ export function invoiceEmail(invoice: IssuedInvoice, options: { to: string; test
     ...(test ? [test, ""] : []),
     "Hei,",
     "",
-    `Vedlagt finner du faktura ${invoice.number} fra ${seller}.`,
+    `Vedlagt finner du ${document} fra ${seller}.`,
     "",
     ...facts.map(([label, value]) => `${label}: ${value}`),
     "",
-    `Merk betalingen med fakturanummer ${invoice.number}.`,
-    invoice.seller.email ? "Spørsmål om fakturaen? Svar på denne e-posten." : "",
+    closing,
+    questions.trim(),
     "",
     "Vennlig hilsen",
     seller,
@@ -71,9 +85,9 @@ export function invoiceEmail(invoice: IssuedInvoice, options: { to: string; test
 <div style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #dfe3e8;border-radius:12px;padding:24px">
 ${test ? `<p style="margin:0 0 16px;padding:12px;border-radius:8px;background:#fff4d6;color:#6b4e00;font-weight:600">${escapeHtml(test)}</p>` : ""}
 <p style="margin:0 0 16px">Hei,</p>
-<p style="margin:0 0 16px">Vedlagt finner du faktura ${invoice.number} fra ${escapeHtml(seller)}.</p>
+<p style="margin:0 0 16px">Vedlagt finner du ${document} fra ${escapeHtml(seller)}.</p>
 <table role="presentation" style="border-collapse:collapse;margin:0 0 16px">${facts.map(row).join("")}</table>
-<p style="margin:0 0 16px">Merk betalingen med fakturanummer ${invoice.number}.${invoice.seller.email ? " Spørsmål om fakturaen? Svar på denne e-posten." : ""}</p>
+<p style="margin:0 0 16px">${escapeHtml(closing + questions)}</p>
 <p style="margin:0">Vennlig hilsen<br>${escapeHtml(seller)}</p>
 </div>
 <p style="max-width:560px;margin:12px auto 0;font-size:13px;color:#5b6472">Sendt med MaskinGo for ${escapeHtml(seller)}.</p>
@@ -82,9 +96,9 @@ ${test ? `<p style="margin:0 0 16px;padding:12px;border-radius:8px;background:#f
   return {
     from: `"${senderName(seller)}" <${INVOICE_FROM_ADDRESS}>`,
     replyTo: invoice.seller.email ?? undefined,
-    subject: `${options.testMode ? "TEST: " : ""}Faktura ${invoice.number} fra ${seller.replace(/[\r\n]+/g, " ")}`,
+    subject: `${options.testMode ? "TEST: " : ""}${credit ? "Kreditnota" : "Faktura"} ${invoice.number} fra ${seller.replace(/[\r\n]+/g, " ")}`,
     text,
     html,
-    filename: `Faktura-${invoice.number}.pdf`,
+    filename: `${credit ? "Kreditnota" : "Faktura"}-${invoice.number}.pdf`,
   };
 }

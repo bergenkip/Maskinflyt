@@ -223,6 +223,19 @@ Migracija `20261110130000_invoice_sendings`, pgTAP `25_invoice_sendings` (20 tes
   „Išsiųsta el. paštu“ istorija su ikona ir tekstu.
 - E2E: `e2e/resend-stub.mjs` (vietinis Resend pakaitalas, paleidžia `playwright.config.ts`), tikrinama `e2e/invoice-issue.spec.ts`.
 
+## 12d etapas: kreditnota (2026-11-16)
+
+Migracija `20261116090000_credit_notes`, pgTAP `26_credit_notes` (22 testai).
+- `invoices` gavo `kind` (`invoice`/`credit_note`), `credits` (kurią sąskaitą kredituoja) ir `reason`. Kreditnotos sumos neigiamos.
+  `unique(job_id)` pašalintas: darbas gali turėti sąskaitą, kreditnotą ir naują sąskaitą. Viena sąskaita kredituojama tik kartą.
+- `credit_invoice(invoice, reason)`: teisės kaip išrašymui; visada visa sąskaita; numeris iš to paties sąrašo be spragų;
+  eilutės nukopijuojamos su neigiamais kiekiais ir sumomis; ištrinama `job_invoices` žyma, todėl darbas vėl atrakinamas ir
+  galima išrašyti naują sąskaitą. `private.check_unmark` leidžia žymą trinti tik kai sąskaita kredituota.
+- PDF „Kreditnota“ (numeris, data, kredituojama sąskaita ir jos data, priežastis, „Kreditert“), failas `Kreditnota-N.pdf`.
+  Laiškas „Kreditnota N fra …“. Dalinės kreditnotos nėra (Li sutarė: visa sąskaita + nauja).
+- Darbo puslapyje: „Kredituoti sąskaitą“ (suskleista, priežastis + patvirtinimas); „Ankstesnės sąskaitos ir kreditinės sąskaitos“
+  su PDF nuorodomis, siuntimu el. paštu ir siuntimų istorija.
+
 ## Sąskaitų planas (Li sutarta 2026-11-06)
 - ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
 - ~~9: papildomos teisės~~ – padaryta (Li prašymas, įterpta prieš Fiken).
@@ -230,7 +243,7 @@ Migracija `20261110130000_invoice_sendings`, pgTAP `25_invoice_sendings` (20 tes
 - **11: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
 - **12: sava PDF sąskaita iš MaskinGo** (Li: daroma dabar, prieš Fiken). CLAUDE.md taisyklė pakeista (PR #24). Dalys:
   ~~12a įmonės sąskaitų duomenys~~ (padaryta); ~~12b išrašymas su numeriu be spragų ir PDF~~ (padaryta); ~~12c siuntimas el. paštu~~ (padaryta);
-  12d kreditnota; 12e eksportas (CSV/Excel + PDF į Fiken, Tripletex ir kt. kaip jau išrašytas pardavimas, ne nauja sąskaita;
+  ~~12d kreditnota~~ (padaryta); 12e eksportas (CSV/Excel + PDF į Fiken, Tripletex ir kt. kaip jau išrašytas pardavimas, ne nauja sąskaita;
   vėliau Fiken API).
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
 - **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio

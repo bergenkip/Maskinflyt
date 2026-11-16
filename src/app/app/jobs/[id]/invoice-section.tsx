@@ -6,7 +6,7 @@ import { issuedInvoiceColumns, type IssuedInvoiceRow } from "@/lib/invoices-serv
 import { invoiceTotals, toLineFormValues, type DraftLine, type InvoiceMark } from "@/lib/invoice";
 import type { JobStatus } from "@/lib/jobs";
 import { createClient } from "@/lib/supabase/server";
-import { IssueInvoiceForm, MarkSentForm, SendInvoiceForm, UnmarkSentForm } from "./invoice-forms";
+import { CreditInvoiceForm, IssueInvoiceForm, MarkSentForm, SendInvoiceForm, UnmarkSentForm } from "./invoice-forms";
 import { LineForm, RemoveLineForm } from "./line-forms";
 
 const sectionClass = "grid gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6";
@@ -17,6 +17,7 @@ const linkClass =
 
 export type InvoiceSending = {
   id: string;
+  invoice_id: string;
   to_email: string;
   test_mode: boolean;
   status: "sending" | "sent" | "failed";
@@ -58,19 +59,23 @@ export async function InvoiceSection({ job, organization, mark, customerLink = t
     job.vehicle_id
       ? supabase.from("vehicles").select("name").eq("id", job.vehicle_id).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
-    supabase.from("invoices").select(issuedInvoiceColumns).eq("job_id", job.id).maybeSingle(),
+    supabase.from("invoices").select(issuedInvoiceColumns).eq("job_id", job.id).order("number", { ascending: false }),
     // Issuing needs the company's invoice details and its organisation number.
     supabase.from("invoice_settings").select("organization_id, organizations(org_number)").maybeSingle(),
   ]);
   const settings = settingsResult.data as { organizations: { org_number: string | null } | null } | null;
-  const issued = (issuedResult.data as IssuedInvoiceRow | null) ?? null;
-  const { data: sendings } = issued
-    ? await supabase
-        .from("invoice_sendings")
-        .select("id, to_email, test_mode, status, created_at")
-        .eq("invoice_id", issued.id)
-        .order("created_at", { ascending: false })
-    : { data: [] };
+  const documents = (issuedResult.data ?? []) as IssuedInvoiceRow[];
+  const { data: sendings } =
+    documents.length > 0
+      ? await supabase
+          .from("invoice_sendings")
+          .select("id, invoice_id, to_email, test_mode, status, created_at")
+          .in(
+            "invoice_id",
+            documents.map((document) => document.id),
+          )
+          .order("created_at", { ascending: false })
+      : { data: [] };
   return (
     <InvoiceView
       job={job}
@@ -81,7 +86,7 @@ export async function InvoiceSection({ job, organization, mark, customerLink = t
       customer={customerResult.data as BillTo | null}
       vehicleName={(vehicleResult.data as { name: string } | null)?.name ?? null}
       failed={Boolean(draftResult.error || customerResult.error)}
-      issued={issued}
+      documents={documents}
       sendings={(sendings ?? []) as InvoiceSending[]}
       testMode={!invoiceEmailLive()}
       settingsReady={Boolean(settings?.organizations?.org_number)}
@@ -99,7 +104,7 @@ export async function InvoiceView({
   customer,
   vehicleName,
   failed,
-  issued,
+  documents = [],
   sendings = [],
   testMode = true,
   settingsReady,
@@ -108,15 +113,20 @@ export async function InvoiceView({
   customer: BillTo | null;
   vehicleName: string | null;
   failed: boolean;
-  // The invoice MaskinGo issued for this job, if any.
-  issued: IssuedInvoiceRow | null;
-  // Every e-mailing of the issued invoice, newest first.
+  // The invoices and credit notes MaskinGo issued for this job, newest first.
+  documents?: IssuedInvoiceRow[];
+  // Every e-mailing of them, newest first.
   sendings?: InvoiceSending[];
   // Without INVOICE_EMAIL_LIVE (local and CI): .test addresses and the test inbox only.
   testMode?: boolean;
   settingsReady: boolean;
 }) {
   const [t, format, locale] = await Promise.all([getTranslations("Invoice"), getFormatter(), getLocale()]);
+  // The invoice that stands: the newest one no credit note cancels.
+  const creditedBy = new Map(documents.filter((d) => d.credits).map((d) => [d.credits!, d]));
+  const issued = documents.find((d) => d.kind === "invoice" && !creditedBy.has(d.id)) ?? null;
+  const earlier = documents.filter((d) => d !== issued);
+  const numberOf = new Map(documents.map((d) => [d.id, d.number]));
   const separator = locale === "en" ? "." : ",";
   const cancelled = job.status === "cancelled";
   // A sent invoice is locked: nothing is changed or added any more.
@@ -272,15 +282,7 @@ export async function InvoiceView({
 
       {issued && (
         <div className="grid gap-4 border-t border-border pt-4">
-          <a
-            href={`/app/invoices/${issued.id}/pdf`}
-            target="_blank"
-            rel="noopener"
-            className="flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
-          >
-            <NoteIcon className="size-5" />
-            {t("openPdf", { number: issued.number })}
-          </a>
+          <PdfLink href={`/app/invoices/${issued.id}/pdf`} label={t("openPdf", { number: issued.number })} />
           <div className="grid gap-3">
             <div className="grid gap-1">
               <h3 className="font-semibold">{t("sendTitle")}</h3>
@@ -294,29 +296,67 @@ export async function InvoiceView({
               testMode={testMode}
             />
           </div>
-          {sendings.length > 0 && (
-            <div className="grid gap-2">
-              <h3 className="font-semibold">{t("sendingsTitle")}</h3>
-              <ul className="grid gap-2">
-                {sendings.map((sending) => (
-                  <li key={sending.id} className="flex items-start gap-2 [overflow-wrap:anywhere]">
-                    {/* The result with an icon and with words. Addresses are data, shown as entered. */}
-                    {sending.status === "sent" ? (
-                      <CheckCircleIcon className="mt-0.5 size-5 shrink-0 text-success" />
-                    ) : sending.status === "failed" ? (
+          <Sendings list={sendings.filter((sending) => sending.invoice_id === issued.id)} title={t("sendingsTitle")} t={t} when={whenTime} />
+          {/* Correcting it: a credit note, then a new invoice. Folded: it is the rare way. */}
+          <details className="rounded-lg border border-border">
+            <summary className={summaryClass}>{t("creditTitle")}</summary>
+            <div className="grid gap-3 border-t border-border p-3">
+              <p className="text-sm text-muted">{t("creditLead")}</p>
+              <CreditInvoiceForm job={job.id} invoice={issued.id} number={issued.number} />
+            </div>
+          </details>
+        </div>
+      )}
+
+      {earlier.length > 0 && (
+        <div className="grid gap-3 border-t border-border pt-4">
+          <h3 className="font-semibold">{t("historyTitle")}</h3>
+          <ul className="grid gap-3">
+            {earlier.map((document) => (
+              <li key={document.id} className="grid gap-3 rounded-lg border border-border p-4">
+                <div className="grid gap-1">
+                  {/* What it is, with an icon and with words. */}
+                  <p className="flex items-start gap-2 font-semibold">
+                    {document.kind === "credit_note" ? (
                       <XCircleIcon className="mt-0.5 size-5 shrink-0 text-danger" />
                     ) : (
-                      <ClockIcon className="mt-0.5 size-5 shrink-0 text-muted" />
+                      <NoteIcon className="mt-0.5 size-5 shrink-0 text-muted" />
                     )}
                     <span>
-                      {t(`sending.${sending.status}`, { email: sending.to_email, when: whenTime(sending.created_at) })}
-                      {sending.test_mode && <span className="text-muted"> {t("sendingTest")}</span>}
+                      {document.kind === "credit_note"
+                        ? t("historyCredit", { number: document.number, invoice: numberOf.get(document.credits!) ?? "" })
+                        : t("historyInvoice", { number: document.number })}
                     </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+                  </p>
+                  <p className="text-sm text-muted tabular-nums">
+                    {t("historyMeta", { date: day(document.issue_date), amount: money(document.total) })}
+                  </p>
+                  {/* The reason is data, shown as written. */}
+                  {document.reason && <p className="[overflow-wrap:anywhere]">{t("historyReason", { reason: document.reason })}</p>}
+                </div>
+                <PdfLink
+                  href={`/app/invoices/${document.id}/pdf`}
+                  label={t(document.kind === "credit_note" ? "openCreditPdf" : "openPdf", { number: document.number })}
+                />
+                {document.kind === "credit_note" && (
+                  <details className="rounded-lg border border-border">
+                    <summary className={summaryClass}>{t("sendCreditTitle")}</summary>
+                    <div className="grid gap-3 border-t border-border p-3">
+                      <SendInvoiceForm
+                        job={job.id}
+                        invoice={document.id}
+                        number={document.number}
+                        defaultTo={document.buyer.email ?? sendTo ?? ""}
+                        testMode={testMode}
+                        creditNote
+                      />
+                    </div>
+                  </details>
+                )}
+                <Sendings list={sendings.filter((sending) => sending.invoice_id === document.id)} title={t("sendingsTitle")} t={t} when={whenTime} />
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
@@ -375,5 +415,57 @@ export async function InvoiceView({
         </details>
       )}
     </section>
+  );
+}
+
+function PdfLink({ href, label }: { href: string; label: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener"
+      className="flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
+    >
+      <NoteIcon className="size-5 shrink-0" />
+      <span className="[overflow-wrap:anywhere]">{label}</span>
+    </a>
+  );
+}
+
+// Every e-mailing of one invoice or credit note: the result with an icon and with words.
+function Sendings({
+  list,
+  title,
+  t,
+  when,
+}: {
+  list: InvoiceSending[];
+  title: string;
+  t: Awaited<ReturnType<typeof getTranslations<"Invoice">>>;
+  when: (iso: string) => string;
+}) {
+  if (list.length === 0) return null;
+  return (
+    <div className="grid gap-2">
+      <h4 className="font-semibold">{title}</h4>
+      <ul className="grid gap-2">
+        {list.map((sending) => (
+          <li key={sending.id} className="flex items-start gap-2 [overflow-wrap:anywhere]">
+            {sending.status === "sent" ? (
+              <CheckCircleIcon className="mt-0.5 size-5 shrink-0 text-success" />
+            ) : sending.status === "failed" ? (
+              <XCircleIcon className="mt-0.5 size-5 shrink-0 text-danger" />
+            ) : (
+              <ClockIcon className="mt-0.5 size-5 shrink-0 text-muted" />
+            )}
+            {/* Addresses are data, shown as entered. */}
+            <span>
+              {t(`sending.${sending.status}`, { email: sending.to_email, when: when(sending.created_at) })}
+              {sending.test_mode && <span className="text-muted"> {t("sendingTest")}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

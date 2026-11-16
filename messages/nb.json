@@ -826,7 +826,29 @@
       "failed": "Ikke sendt til {email}, {when}",
       "sending": "Sender til {email}, {when}"
     },
-    "sendingTest": "(test)"
+    "sendingTest": "(test)",
+    "credit": "Krediter faktura",
+    "creditTitle": "Krediter fakturaen",
+    "creditLead": "En kreditnota opphever hele fakturaen med de samme beløpene, negative. Deretter åpnes oppdraget igjen: rett utkastet og utsted en ny faktura. Fakturaen og kreditnotaen tas vare på.",
+    "creditReason": "Hvorfor krediteres den?",
+    "creditReasonHint": "Står på kreditnotaen, for eksempel «Feil antall timer».",
+    "creditConfirm": "Kreditere faktura {number}? Dette kan ikke angres.",
+    "creditNow": "Ja, krediter den",
+    "creditErrors": {
+      "notAllowed": "Du kan ikke kreditere fakturaer. Eiere, administratorer og regnskapsførere trenger innlogging i to trinn.",
+      "invalidReason": "Skriv hvorfor fakturaen krediteres (inntil 300 tegn).",
+      "already": "Fakturaen er allerede kreditert.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    },
+    "historyTitle": "Tidligere fakturaer og kreditnotaer",
+    "historyInvoice": "Faktura {number}, kreditert",
+    "historyCredit": "Kreditnota {number} for faktura {invoice}",
+    "historyMeta": "{date} · {amount}",
+    "historyReason": "Årsak: {reason}",
+    "openCreditPdf": "Åpne kreditnota {number} (PDF)",
+    "sendCreditTitle": "Send kreditnotaen til kunden på e-post",
+    "sendCredit": "Send kreditnota",
+    "sendCreditConfirm": "Sende kreditnota {number} til {email}?"
   },
   "Invoices": {
     "title": "Fakturaer",

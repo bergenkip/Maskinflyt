@@ -129,6 +129,8 @@ export function invoiceTotals(lines: Pick<DraftLine, "vat_rate" | "amount">[]) {
 
 // The invoice number in the company's accounting system, kept with the mark "sent".
 export const MAX_INVOICE_REFERENCE_LENGTH = 40;
+// Why an invoice is credited, as the credit note says (public.credit_invoice checks it too).
+export const MAX_CREDIT_REASON_LENGTH = 300;
 
 export type InvoiceMark = { reference: string | null; net: number; vat: number; total: number; sent_by: string | null; sent_at: string };
 export type QueueState = "time" | "ready" | "sent";
