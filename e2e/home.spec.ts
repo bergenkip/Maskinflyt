@@ -33,6 +33,17 @@ for (const locale of locales) {
         .evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
       expect(fontSize, "16px+ so iPhone Safari does not zoom").toBeGreaterThanOrEqual(16);
 
+      // The start page leads to sign-up and shows how to reach us.
+      const main = page.getByRole("main");
+      await expect(main.locator('a[href="/signup"]').first()).toBeVisible();
+      await expect(main.locator('a[href="/login"]')).toBeVisible();
+      await expect(main.locator('a[href="mailto:hei@maskingo.no"]')).toBeVisible();
+      await expect(main.getByRole("heading", { level: 3 })).toHaveCount(9);
+      for (const link of await main.getByRole("link").all()) {
+        const box = await link.boundingBox();
+        expect(box?.height ?? 0, "button at least 44px tall").toBeGreaterThanOrEqual(44);
+      }
+
       await page.screenshot({
         path: `test-results/screenshots/home-${locale}-${width}.png`,
         fullPage: true,

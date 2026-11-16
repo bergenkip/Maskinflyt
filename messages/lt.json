@@ -10,10 +10,10 @@
     "submit": "Keisti kalbą"
   },
   "Home": {
-    "status": "Kuriama",
+    "badge": "Transporto, kranų ir technikos įmonėms",
     "title": "Nuo skambučio iki sąskaitos tą pačią dieną",
     "lead": "MaskinGo pakeičia telefoną, SMS ir Excel transporto, kranų ir technikos įmonėms: užsakymas, vairuotojas, darbo laikas ir sąskaita vienoje vietoje.",
-    "stepsTitle": "Kaip tai veiks",
+    "stepsTitle": "Kaip tai veikia",
     "steps": {
       "receive": {
         "title": "Planavimas",
@@ -25,10 +25,38 @@
       },
       "approve": {
         "title": "Sąskaita",
-        "body": "Sąskaitos juodraštis sudaromas iš patvirtintų valandų. Prieš siunčiant jį patikrina žmogus."
+        "body": "Sąskaita sudaroma iš patvirtintų valandų ir išsiunčiama PDF el. paštu, kai paspaudžiate „Siųsti“. Niekas nesiunčiama automatiškai."
       }
     },
-    "notice": "Tai ankstyva versija. Registracija ir prisijungimas veikia; užsakymai, vairuotojo programa ir sąskaitos bus vėlesniuose etapuose."
+    "featuresTitle": "Ką gaunate",
+    "features": {
+      "jobs": {
+        "title": "Užsakymai ir kalendorius",
+        "body": "Visi užsakymai su klientu, adresu, technika ir vairuotoju. Dienos ir savaitės vaizde matyti, kas laisvas."
+      },
+      "driver": {
+        "title": "Vairuotojo programa telefone",
+        "body": "Vairuotojas mato tik savo užsakymus, spaudžia „Pakeliui“, „Atvykau“ ir „Baigiau“, prideda nuotraukas ir kliento parašą."
+      },
+      "hours": {
+        "title": "Valandos be žiniaraščių",
+        "body": "Darbo laikas įrašomas pagal paspaudimus. Biuras gali pataisyti prieš patvirtindamas valandas."
+      },
+      "customers": {
+        "title": "Klientai ir kainos",
+        "body": "Klientų registras su org. nr. ir atskirais valandiniais įkainiais kiekvienai mašinai. Minimalus laikas pritaikomas automatiškai."
+      },
+      "invoices": {
+        "title": "Sąskaitos su PDF",
+        "body": "Iš eilės einantys numeriai, PDF ir siuntimas klientui el. paštu."
+      },
+      "team": {
+        "title": "Komanda ir rolės",
+        "body": "Administratorius, dispečeris, vairuotojas ir buhalteris mato tik tai, ko jiems reikia."
+      }
+    },
+    "contactTitle": "Norite išbandyti MaskinGo?",
+    "contactBody": "MaskinGo yra naujas ir kuriamas kartu su pirmaisiais naudotojais. Susikurkite paskyrą arba parašykite mums:"
   },
   "Nav": {
     "home": "MaskinGo pradžia",
