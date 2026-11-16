@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { unzipSync } from "fflate";
 import {
   addMachine,
   addTodaysJob,
@@ -13,6 +14,7 @@ import {
   resendStub,
   shootAllWidths,
   signUp,
+  today,
 } from "./helpers";
 
 // These tests need a running Supabase (local `supabase start` in CI).
@@ -160,6 +162,57 @@ test("the office issues a numbered invoice with its PDF, and it is locked", asyn
     await page.goto(job);
     await section.scrollIntoViewIfNeeded();
     await shootAllWidths(page, "invoice-issued", locale);
+  }
+
+  // The export for the accountant: this month's documents as CSV and as PDFs.
+  await owner.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
+  await page.goto("/app/invoices");
+  await page.getByRole("link", { name: /Export for the accountant/ }).click();
+  await expect(page.getByRole("heading", { name: "Export for the accountant", level: 1 })).toBeVisible();
+  const result = page.locator("section").filter({ has: page.locator("#result-title") });
+  await expect(result).toContainText("2 invoices and 1 credit note");
+  await expect(result.getByRole("listitem")).toHaveText([/Invoice 1/, /Credit note 2 for invoice 1/, /Invoice 3/]);
+
+  const csvHref = await result.getByRole("link", { name: "Download CSV" }).getAttribute("href");
+  const csvResponse = await page.request.get(csvHref!);
+  expect(csvResponse.status()).toBe(200);
+  expect(csvResponse.headers()["content-disposition"]).toMatch(/attachment; filename="MaskinGo-fakturaer-\d{4}-\d{2}-01-\d{4}-\d{2}-\d{2}\.csv"/);
+  const csv = (await csvResponse.body()).toString("utf8");
+  expect(csv.startsWith("\uFEFFType;Nummer;Dato;")).toBe(true);
+  const csvRows = csv.slice(1).trim().split("\r\n").map((row) => row.split(";"));
+  const date = today.split("-").reverse().join(".");
+  expect(csvRows.slice(1).map((row) => [row[0], row[1], row[2], row[6]])).toEqual([
+    ["Faktura", "1", date, ""],
+    ["Kreditnota", "2", date, "1"],
+    ["Faktura", "3", date, ""],
+  ]);
+  // The credit note cancels invoice 1 to the øre.
+  expect(csvRows[2].slice(9, 12)).toEqual(csvRows[1].slice(9, 12).map((amount) => `-${amount}`));
+
+  const zipHref = await result.getByRole("link", { name: "Download PDFs (ZIP)" }).getAttribute("href");
+  const zipResponse = await page.request.get(zipHref!);
+  expect(zipResponse.status()).toBe(200);
+  const files = unzipSync(new Uint8Array(await zipResponse.body()));
+  expect(Object.keys(files).sort()).toEqual(["Faktura-1.pdf", "Faktura-3.pdf", "Kreditnota-2.pdf"]);
+  for (const pdf of Object.values(files)) expect(Buffer.from(pdf.subarray(0, 5)).toString()).toBe("%PDF-");
+
+  // A wrong period is told at the field; none is asked from the server.
+  await page.getByLabel("From", { exact: true }).fill("2026-12-31");
+  await page.getByLabel("To", { exact: true }).fill("2026-12-01");
+  await page.getByRole("button", { name: "Show", exact: true }).click();
+  await expect(page.getByText("The first date must come before the last.")).toBeVisible();
+  expect((await page.request.get("/app/invoices/export/csv?from=2026-12-31&to=2026-12-01")).status()).toBe(400);
+
+  // Someone signed out gets no file.
+  const stranger = await browser.newContext({ baseURL });
+  const strangerCsv = await stranger.request.get(csvHref!, { maxRedirects: 0 });
+  expect(strangerCsv.status()).not.toBe(200);
+  await stranger.close();
+
+  for (const locale of locales) {
+    await owner.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
+    await page.goto("/app/invoices/export");
+    await shootAllWidths(page, "invoice-export", locale);
   }
 
   await owner.context.close();

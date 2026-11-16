@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { AlertIcon, ArrowRightIcon, BuildingIcon, CheckCircleIcon, ClockIcon, NoteIcon } from "@/components/icons";
+import { AlertIcon, ArrowRightIcon, BuildingIcon, CheckCircleIcon, ClockIcon, DownloadIcon, NoteIcon } from "@/components/icons";
 import type { QueueRow, QueueState } from "@/lib/invoice";
 
 // The sent list is the newest first; older ones stay on their jobs.
@@ -24,10 +24,11 @@ export async function InvoiceQueueView({
   failed: boolean;
   settingsReady: boolean;
 }) {
-  const [t, tJobs, tSettings, format] = await Promise.all([
+  const [t, tJobs, tSettings, tExport, format] = await Promise.all([
     getTranslations("Invoices"),
     getTranslations("Jobs"),
     getTranslations("InvoiceSettings"),
+    getTranslations("InvoiceExport"),
     getFormatter(),
   ]);
   const SettingsState = settingsReady ? CheckCircleIcon : AlertIcon;
@@ -52,6 +53,17 @@ export async function InvoiceQueueView({
             <SettingsState className="size-4" />
             {tSettings(settingsReady ? "stateReady" : "stateMissing")}
           </span>
+        </span>
+        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+      </Link>
+      <Link
+        href="/app/invoices/export"
+        className="group -mt-6 flex min-h-11 items-center gap-3 rounded-xl border border-border bg-surface p-4 hover:border-accent/60 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      >
+        <DownloadIcon className="size-5 shrink-0 text-muted" />
+        <span className="flex min-w-0 flex-1 flex-wrap items-center justify-between gap-x-3 gap-y-1">
+          <span className="font-semibold">{tExport("link")}</span>
+          <span className="text-sm text-muted">{tExport("linkHint")}</span>
         </span>
         <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
       </Link>

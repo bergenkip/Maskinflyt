@@ -957,5 +957,39 @@
       "unknown": "Nepavyko išsaugoti. Bandykite dar kartą.",
       "firstNumberLocked": "Numeracija jau prasidėjo: pirmo numerio pakeisti nebegalima."
     }
+  },
+  "InvoiceExport": {
+    "title": "Eksportas buhalteriui",
+    "lead": "Atsisiųskite laikotarpio sąskaitas ir kreditines sąskaitas: vieną CSV failą apskaitos programai ar skaičiuoklei ir visus PDF viename ZIP faile.",
+    "back": "Visos sąskaitos",
+    "link": "Eksportas buhalteriui",
+    "linkHint": "CSV ir PDF už laikotarpį",
+    "periodTitle": "Laikotarpis",
+    "from": "Nuo",
+    "to": "Iki",
+    "show": "Rodyti",
+    "thisMonth": "Šis mėnuo",
+    "lastMonth": "Praėjęs mėnuo",
+    "errors": {
+      "invalid": "Pasirinkite abi datas.",
+      "order": "Pirmoji data turi būti ankstesnė už paskutinę.",
+      "tooLong": "Pasirinkite ne ilgesnį kaip vienų metų laikotarpį."
+    },
+    "error": "Sąskaitų nepavyko įkelti. Bandykite dar kartą.",
+    "resultTitle": "{from} – {to}",
+    "empty": "Šiuo laikotarpiu neišrašyta nei sąskaitų, nei kreditinių sąskaitų.",
+    "counts": "{invoices, plural, one {# sąskaita} few {# sąskaitos} other {# sąskaitų}} ir {creditNotes, plural, one {# kreditinė sąskaita} few {# kreditinės sąskaitos} other {# kreditinių sąskaitų}}",
+    "net": "Be PVM",
+    "vat": "PVM",
+    "total": "Iš viso",
+    "downloadCsv": "Atsisiųsti CSV",
+    "csvHint": "Viena eilutė kiekvienam dokumentui ir PVM tarifui. Stulpelių pavadinimai norvegiški, kaip sąskaitose; kreditinių sąskaitų sumos neigiamos.",
+    "downloadZip": "Atsisiųsti PDF (ZIP)",
+    "zipHint": "Visos sąskaitos ir kreditinės sąskaitos tiksliai tokios, kokios išrašytos.",
+    "zipTooMany": "Daugiau nei {max} dokumentų: PDF atsisiųsti pasirinkite trumpesnį laikotarpį.",
+    "listTitle": "Dokumentai",
+    "invoice": "Sąskaita {number}",
+    "creditNote": "Kreditinė sąskaita {number} sąskaitai {invoice}",
+    "more": "Dar {count} yra failuose."
   }
 }

@@ -205,7 +205,7 @@ Migracija `20261110120000_invoices`, pgTAP `24_invoices` (33 testai).
 - Darbo puslapyje: „Išrašyti sąskaitą“ su patvirtinimu; išrašytos sąskaitos ženklas, datos ir „Atidaryti sąskaitą (PDF)“.
   „Pažymėti kaip išsiųstą“ liko kaip alternatyva (suskleista) tiems, kas siunčia iš kitos programos.
 - E2E `e2e/invoice-issue.spec.ts`, nuotraukos `invoice-issue`, `invoice-issued`.
-- Dar nėra: siuntimas el. paštu (12c), kreditnota (12d), eksportas (12e).
+- Vėliau padaryta: siuntimas el. paštu (12c), kreditnota (12d), eksportas (12e).
 
 ## 12c etapas: sąskaitos siuntimas el. paštu (2026-11-10)
 
@@ -236,6 +236,20 @@ Migracija `20261116090000_credit_notes`, pgTAP `26_credit_notes` (22 testai).
 - Darbo puslapyje: „Kredituoti sąskaitą“ (suskleista, priežastis + patvirtinimas); „Ankstesnės sąskaitos ir kreditinės sąskaitos“
   su PDF nuorodomis, siuntimu el. paštu ir siuntimų istorija.
 
+## 12e etapas: eksportas buhalteriui (2026-11-16)
+
+Be migracijos (duomenys jau yra). Puslapis `/app/invoices/export` (nuoroda „Eksportas buhalteriui“ sąskaitų puslapyje),
+mato tie patys, kas mato sąskaitas (`canSeeInvoices`, RLS).
+- Laikotarpis (nuo–iki, abi dienos įskaitomos, daugiausia 366 d.), greiti mygtukai „Šis mėnuo“ / „Praėjęs mėnuo“
+  (įmonės laiko zona). Rodo sąskaitų ir kreditnotų skaičių, sumas ir dokumentų sąrašą (iki 50).
+- `/app/invoices/export/csv`: viena eilutė kiekvienam dokumentui ir PVM tarifui; `;`, kablelis dešimtainėms, BOM,
+  datos dd.mm.yyyy, stulpeliai norvegiškai; kreditnotos neigiamos, su kredituojamos sąskaitos numeriu.
+  Tekstas, prasidedantis `= + - @`, gauna `'` (Excel formulių injekcijos apsauga). PVM apvalinamas kaip PostgreSQL `round()`.
+- `/app/invoices/export/zip`: visi PDF (`Faktura-N.pdf`, `Kreditnota-N.pdf`) per `getInvoicePdf`, `fflate` (be suspaudimo),
+  daugiausia 300 dokumentų vienam ZIP.
+- Logika `src/lib/invoice-export.ts` (Vitest), užkrovimas `src/lib/invoice-export-server.ts` (puslapiais po 1000 eilučių).
+  E2E `e2e/invoice-issue.spec.ts` parsisiunčia CSV ir ZIP ir tikrina turinį.
+
 ## Sąskaitų planas (Li sutarta 2026-11-06)
 - ~~8: buhalterio rolė~~ – padaryta (žr. aukščiau).
 - ~~9: papildomos teisės~~ – padaryta (Li prašymas, įterpta prieš Fiken).
@@ -243,8 +257,7 @@ Migracija `20261116090000_credit_notes`, pgTAP `26_credit_notes` (22 testai).
 - **11: Tripletex**: tas pats; reikia Tripletex integracijos paraiškos (consumer token, ~2–3 sav.), pateikti anksčiau.
 - **12: sava PDF sąskaita iš MaskinGo** (Li: daroma dabar, prieš Fiken). CLAUDE.md taisyklė pakeista (PR #24). Dalys:
   ~~12a įmonės sąskaitų duomenys~~ (padaryta); ~~12b išrašymas su numeriu be spragų ir PDF~~ (padaryta); ~~12c siuntimas el. paštu~~ (padaryta);
-  ~~12d kreditnota~~ (padaryta); 12e eksportas (CSV/Excel + PDF į Fiken, Tripletex ir kt. kaip jau išrašytas pardavimas, ne nauja sąskaita;
-  vėliau Fiken API).
+  ~~12d kreditnota~~ (padaryta); ~~12e eksportas (CSV + PDF ZIP buhalteriui)~~ (padaryta); vėliau Fiken API.
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
 - **Po sąskaitų: vairuotojų darbo valandų lapas atlyginimui** (Li prašymas 2026-11-06). Vairuotojas surašo mėnesio
   išdirbtas valandas ir viršvalandžius (pvz. +50 %, +100 %), buhalteris patikrina ir patvirtina. Tai atlyginimo valandos,

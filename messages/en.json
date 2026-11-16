@@ -957,5 +957,39 @@
       "unknown": "Could not save. Try again.",
       "firstNumberLocked": "The numbering has started: the first number can no longer change."
     }
+  },
+  "InvoiceExport": {
+    "title": "Export for the accountant",
+    "lead": "Download the invoices and credit notes of a period: one CSV file for the accounting system or a spreadsheet, and every PDF in one ZIP file.",
+    "back": "All invoices",
+    "link": "Export for the accountant",
+    "linkHint": "CSV and PDFs for a period",
+    "periodTitle": "Period",
+    "from": "From",
+    "to": "To",
+    "show": "Show",
+    "thisMonth": "This month",
+    "lastMonth": "Last month",
+    "errors": {
+      "invalid": "Choose both dates.",
+      "order": "The first date must come before the last.",
+      "tooLong": "Choose a period of at most one year."
+    },
+    "error": "The invoices could not be loaded. Try again.",
+    "resultTitle": "{from} – {to}",
+    "empty": "No invoices or credit notes were issued in this period.",
+    "counts": "{invoices, plural, one {# invoice} other {# invoices}} and {creditNotes, plural, one {# credit note} other {# credit notes}}",
+    "net": "Without VAT",
+    "vat": "VAT",
+    "total": "Total",
+    "downloadCsv": "Download CSV",
+    "csvHint": "One row per document and VAT rate. The column names are Norwegian, as on the invoices; credit notes have negative amounts.",
+    "downloadZip": "Download PDFs (ZIP)",
+    "zipHint": "Every invoice and credit note exactly as issued.",
+    "zipTooMany": "More than {max} documents: choose a shorter period to download the PDFs.",
+    "listTitle": "Documents",
+    "invoice": "Invoice {number}",
+    "creditNote": "Credit note {number} for invoice {invoice}",
+    "more": "{count, plural, one {# more is} other {# more are}} in the files."
   }
 }
