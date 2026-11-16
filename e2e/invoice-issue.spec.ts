@@ -148,7 +148,7 @@ test("the office issues a numbered invoice with its PDF, and it is locked", asyn
   expect((await creditPdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
 
   // The draft can be corrected again, and the new invoice gets the next number.
-  await expect(section.getByRole("button", { name: "Add line" })).toHaveCount(1);
+  await expect(section.locator("summary").filter({ hasText: "Add a line" })).toBeVisible();
   await section.getByRole("button", { name: "Issue invoice" }).click();
   await section.getByRole("button", { name: "Yes, issue the invoice" }).click();
   await expect(section.getByText("Invoice no. 3", { exact: true })).toBeVisible();

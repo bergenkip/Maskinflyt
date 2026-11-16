@@ -85,7 +85,21 @@ export function ResetPasswordPanel({ email }: { email: string | null }) {
     if (window.location.hash) window.history.replaceState(null, "", window.location.pathname);
     // Without tokens: a used or expired link says so in the fragment; otherwise a session from earlier may do.
     const result = accessToken && refreshToken ? startPasswordReset(accessToken, refreshToken) : Promise.resolve(failed ? null : email);
-    result.then(setAccount, () => setAccount(null));
+    // The server action's answer can bring back the address it started from (with the
+    // tokens), so the fragment is removed again once it has answered.
+    const clear = () => {
+      if (window.location.hash) window.history.replaceState(null, "", window.location.pathname);
+    };
+    result.then(
+      (value) => {
+        clear();
+        setAccount(value);
+      },
+      () => {
+        clear();
+        setAccount(null);
+      },
+    );
   }, [email]);
 
   if (account === undefined) return <p role="status" className="text-muted">{t("resetChecking")}</p>;
