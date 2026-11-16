@@ -278,6 +278,8 @@ Migracija `20261116120000_hour_sheets`, pgTAP `27_hour_sheets` (30 testų).
 - Kitos programos (Visma, PowerOffice, 24SevenOffice ir kt.) – integracija pagal kliento užklausą.
 - **Fiken ir Tripletex atidėti** (Li sprendimas 2026-11-16): daroma vėliau. Kainos: Fiken API-modul klientui 99 kr/mėn.,
   Tripletex „Integrasjoner“ 129 kr/mėn. (Smart; Pro/Komplett įskaičiuota), Tripletex consumer token paraiška ~2–3 sav.
+- **Prieš viešą puslapį: atsiskaitymo sistema** (Li 2026-11-16): mėnesio prenumerata su keliais planais. Reikia Li sprendimų:
+  mokėjimų paslauga (siūlyta Stripe), planai ir kainos, bandomasis laikotarpis.
 - **Vėlesnis etapas: viešas įmonės puslapis klientams** (Li idėja 2026-11-16). Įmonė gauna puslapį, kurį siunčia klientams:
   įmonės informacija, ką daro, kontaktai; klientas mato laisvus laikus ir siunčia norimos paslaugos užsakymo užklausą,
   kurią įmonė dar patvirtina arba atmeta (jokio automatinio patvirtinimo). Įmonė paskyroje nustato, kada dirba ir kada ne.
