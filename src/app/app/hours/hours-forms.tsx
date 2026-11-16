@@ -149,7 +149,7 @@ export function HourSettingsForm({ initial }: { initial: HourSettingsValues }) {
       </div>
       <fieldset className="grid gap-4">
         <legend className="mb-3 font-semibold">{t("level1Title")}</legend>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Field name="after" id="hours-after" inputMode="decimal" label={t("after")} hint={t("afterHint")} required defaultValue={values.after} error={error("after")} />
           <Field name="percent" id="hours-percent" inputMode="numeric" label={t("percent")} required defaultValue={values.percent} error={error("percent")} />
         </div>
@@ -157,7 +157,7 @@ export function HourSettingsForm({ initial }: { initial: HourSettingsValues }) {
       <fieldset className="grid gap-4">
         <legend className="mb-1 font-semibold">{t("level2Title")}</legend>
         <p className="text-sm text-muted">{t("level2Hint")}</p>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Field name="after2" id="hours-after2" inputMode="decimal" label={t("after2")} defaultValue={values.after2} error={error("after2")} />
           <Field name="percent2" id="hours-percent2" inputMode="numeric" label={t("percent2")} defaultValue={values.percent2} error={error("percent2")} />
         </div>
