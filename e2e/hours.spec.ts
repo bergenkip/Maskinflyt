@@ -114,3 +114,68 @@ test("a driver fills in an hours sheet, confirms it, and the accountant gets the
   await driver.context.close();
   await colleague.context.close();
 });
+
+test("overtime by the time of day: 15–19 +50 % and 19–06 +100 %", async ({ browser, baseURL }) => {
+  test.setTimeout(120_000);
+  const owner = await newPage(browser, baseURL!, "en");
+  await signUp(owner.page, newEmail("hours-clock"), "Anna", "Berg");
+  await createCompany(owner.page, newCompanyName("hours-clock"));
+  const { page } = owner;
+
+  await page.goto("/app/hours/settings");
+  const settings = page.locator("main form");
+  await settings.getByRole("radio", { name: /By the time of day/ }).check();
+  await expect(settings.getByLabel("From (hours a day)")).toHaveCount(0);
+  await settings.getByLabel("From", { exact: true }).first().fill("15:00");
+  await settings.getByLabel("To", { exact: true }).first().fill("19:00");
+  await settings.getByLabel("Extra pay (%)").first().fill("50");
+  await settings.getByLabel("From", { exact: true }).nth(1).fill("19:00");
+  await settings.getByLabel("Extra pay (%)").nth(1).fill("100");
+  await settings.getByRole("button", { name: "Save" }).click();
+  // The second window needs its end too.
+  await expect(settings.getByLabel("To", { exact: true }).nth(1)).toHaveAccessibleDescription("Choose when it ends, not the same as the start.");
+  await settings.getByLabel("To", { exact: true }).nth(1).fill("06:00");
+  await settings.getByRole("button", { name: "Save" }).click();
+  await expect(settings.getByRole("status")).toHaveText("Saved.");
+  for (const locale of locales) {
+    await owner.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
+    await page.goto("/app/hours/settings");
+    await shootAllWidths(page, "hour-settings-clock", locale);
+  }
+  await owner.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
+
+  // The owner keeps a sheet too: one long day and one night.
+  await page.goto("/app/hours");
+  await expect(page.getByText("Overtime: 15:00–19:00 +50 %, 19:00–06:00 +100 %")).toBeVisible();
+  await page.getByLabel("From", { exact: true }).fill("2026-11-01");
+  await page.getByLabel("To", { exact: true }).fill("2026-11-30");
+  await page.getByRole("button", { name: "Start the sheet" }).click();
+  await page.waitForURL(/\/app\/hours\/[0-9a-f-]{36}$/);
+  const form = page.locator("form").filter({ has: page.getByRole("button", { name: "Save the day" }) });
+  await form.getByLabel("Date").fill("2026-11-02");
+  await form.getByLabel("Start").fill("07:00");
+  await form.getByLabel("End", { exact: true }).fill("21:00");
+  await form.getByLabel("Break (minutes)").fill("30");
+  await form.getByRole("button", { name: "Save the day" }).click();
+  await expect(page.getByRole("status")).toHaveText("Saved. The next day is ready to fill in.");
+  await form.getByLabel("Start").fill("22:00");
+  await form.getByLabel("End", { exact: true }).fill("06:00");
+  await form.getByRole("button", { name: "Save the day" }).click();
+  await expect(page.getByRole("heading", { name: "Days (2)" })).toBeVisible();
+
+  const days = page.locator("main ul").first();
+  await expect(days.getByRole("listitem").first()).toContainText("13.50 h");
+  await expect(days.getByRole("listitem").first()).toContainText("Overtime +50 %: 4.00 · Overtime +100 %: 2.00");
+  await expect(days.getByRole("listitem").nth(1)).toContainText("Overtime +100 %: 7.50");
+  await expect(page.locator("dl")).toContainText("Total21.00 h");
+  await expect(page.locator("dl")).toContainText("Normal7.50 h");
+
+  // Confirmed with the same numbers (the database splits it again), and the PDF is made.
+  await page.getByRole("button", { name: "Confirm and send" }).click();
+  await page.getByRole("button", { name: "Yes, confirm" }).click();
+  await expect(page.getByText(/^Confirmed /)).toBeVisible();
+  await expect(page.locator("dl")).toContainText("Overtime +100 %9.50 h");
+  const pdf = await page.request.get(`${page.url()}/pdf`);
+  expect(pdf.status()).toBe(200);
+  await owner.context.close();
+});

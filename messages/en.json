@@ -1068,7 +1068,9 @@
       "none": "Not e-mailed: no accountant e-mail is saved."
     },
     "resend": "Send again",
-    "openPdf": "Open the PDF"
+    "openPdf": "Open the PDF",
+    "rulesClock": "Overtime: {from}–{to} +{percent} %",
+    "rulesClock2": "{from}–{to} +{percent} %"
   },
   "HourSettings": {
     "title": "Overtime and accountant",
@@ -1094,9 +1096,23 @@
       "percent2": "Must pay more than the first level.",
       "email": "The e-mail address is not valid.",
       "notAllowed": "Only the owner and admins change these.",
-      "unknown": "Something went wrong. Try again."
+      "unknown": "Something went wrong. Try again.",
+      "from": "Choose when it starts.",
+      "to": "Choose when it ends, not the same as the start.",
+      "from2": "Choose when it starts.",
+      "to2": "Choose when it ends, not the same as the start."
     },
     "readOnly": "Only the owner and admins change these.",
-    "noEmail": "No e-mail saved"
+    "noEmail": "No e-mail saved",
+    "modeTitle": "How is overtime counted?",
+    "modeDaily": "By hours a day",
+    "modeDailyHint": "For example after 8 hours.",
+    "modeClock": "By the time of day",
+    "modeClockHint": "For example from 15:00 to 19:00.",
+    "from": "From",
+    "to": "To",
+    "windowHint": "An end before the start runs past midnight, like 19:00–06:00.",
+    "clockBreak": "The break comes off the normal hours first.",
+    "level2ClockHint": "For example from 19:00 to 06:00 +100 %. Where it overlaps the first level, this one counts. Leave empty if not used."
   }
 }

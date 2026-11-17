@@ -1,10 +1,10 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
-import { sheetFileName, type SheetDay } from "./hours";
+import { ruleColumns, sheetFileName, toHourRules, type SheetDay } from "./hours";
 import { hoursPdf, type ConfirmedSheet } from "./pdf/hours-pdf";
 
 export const sheetColumns =
-  "id, organization_id, user_id, period_from, period_to, status, employee_name, overtime_after, overtime_percent, overtime2_after, overtime2_percent, worked_minutes, normal_minutes, overtime_minutes, overtime2_minutes, submitted_at, email_to, email_status, emailed_at, created_at";
+  `id, organization_id, user_id, period_from, period_to, status, employee_name, ${ruleColumns}, worked_minutes, normal_minutes, overtime_minutes, overtime2_minutes, submitted_at, email_to, email_status, emailed_at, created_at`;
 export const dayColumns = "day, starts, ends, break_minutes, note, worked_minutes, normal_minutes, overtime_minutes, overtime2_minutes";
 
 export type SheetRow = {
@@ -19,6 +19,11 @@ export type SheetRow = {
   overtime_percent: number | null;
   overtime2_after: number | null;
   overtime2_percent: number | null;
+  overtime_mode: string | null;
+  overtime_from: string | null;
+  overtime_to: string | null;
+  overtime2_from: string | null;
+  overtime2_to: string | null;
   worked_minutes: number | null;
   normal_minutes: number | null;
   overtime_minutes: number | null;
@@ -49,10 +54,7 @@ export async function getSheetPdf(sheetId: string): Promise<{ sheet: ConfirmedSh
     period_to: row.period_to,
     submitted_at: row.submitted_at,
     timezone: company.timezone,
-    overtime_after: row.overtime_after ?? 480,
-    overtime_percent: row.overtime_percent ?? 50,
-    overtime2_after: row.overtime2_after,
-    overtime2_percent: row.overtime2_percent,
+    ...toHourRules(row),
     worked_minutes: row.worked_minutes ?? 0,
     normal_minutes: row.normal_minutes ?? 0,
     overtime_minutes: row.overtime_minutes ?? 0,

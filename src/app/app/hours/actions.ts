@@ -6,7 +6,7 @@ import { normalizeEmail } from "@/lib/customers";
 import { hoursEmail } from "@/lib/email/hours-email";
 import { invoiceEmailLive, TEST_INBOX } from "@/lib/email/invoice-email";
 import { emailConfigured, sendEmail } from "@/lib/email/resend";
-import { MAX_SHEET_DAYS, parseHours, validateDay, type DayFieldError } from "@/lib/hours";
+import { MAX_SHEET_DAYS, parseHours, validateDay, type DayFieldError, type OvertimeMode } from "@/lib/hours";
 import { getSheetPdf } from "@/lib/hours-server";
 import { parsePeriod } from "@/lib/invoice-export";
 import { getCurrentMembership } from "@/lib/membership";
@@ -174,8 +174,19 @@ export async function resendSheet(_prev: SubmitState, formData: FormData): Promi
   return { email, at: Date.now() };
 }
 
-export type HourSettingsValues = { after: string; percent: string; after2: string; percent2: string; email: string };
-export type HourSettingsField = keyof HourSettingsValues;
+export type HourSettingsValues = {
+  mode: OvertimeMode;
+  after: string;
+  percent: string;
+  after2: string;
+  percent2: string;
+  from: string;
+  to: string;
+  from2: string;
+  to2: string;
+  email: string;
+};
+export type HourSettingsField = Exclude<keyof HourSettingsValues, "mode">;
 export type HourSettingsState = {
   values?: HourSettingsValues;
   errors?: HourSettingsField[];
@@ -183,28 +194,46 @@ export type HourSettingsState = {
   savedAt?: number;
 };
 
+const clockTime = /^([01]\d|2[0-3]):[0-5]\d$/;
+
 export async function saveHourSettings(_prev: HourSettingsState, formData: FormData): Promise<HourSettingsState> {
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
+  const text = (name: string) => String(formData.get(name) ?? "").trim();
   const values: HourSettingsValues = {
-    after: String(formData.get("after") ?? "").trim(),
-    percent: String(formData.get("percent") ?? "").trim(),
-    after2: String(formData.get("after2") ?? "").trim(),
-    percent2: String(formData.get("percent2") ?? "").trim(),
-    email: String(formData.get("email") ?? "").trim(),
+    mode: text("mode") === "clock" ? "clock" : "daily",
+    after: text("after"),
+    percent: text("percent"),
+    after2: text("after2"),
+    percent2: text("percent2"),
+    from: text("from").slice(0, 5),
+    to: text("to").slice(0, 5),
+    from2: text("from2").slice(0, 5),
+    to2: text("to2").slice(0, 5),
+    email: text("email"),
   };
-  const percentOf = (text: string) => (/^\d{1,3}$/.test(text) && Number(text) >= 1 && Number(text) <= 300 ? Number(text) : null);
-  const after = parseHours(values.after);
+  const clock = values.mode === "clock";
+  const percentOf = (value: string) => (/^\d{1,3}$/.test(value) && Number(value) >= 1 && Number(value) <= 300 ? Number(value) : null);
   const percent = percentOf(values.percent);
-  const second = values.after2 !== "" || values.percent2 !== "";
-  const after2 = second ? parseHours(values.after2) : null;
+  const after = clock ? null : parseHours(values.after);
+  const second = clock ? values.from2 !== "" || values.to2 !== "" || values.percent2 !== "" : values.after2 !== "" || values.percent2 !== "";
+  const after2 = second && !clock ? parseHours(values.after2) : null;
   const percent2 = second ? percentOf(values.percent2) : null;
   const email = values.email ? normalizeEmail(values.email) : null;
 
   const errors: HourSettingsField[] = [];
-  if (after === null) errors.push("after");
   if (percent === null) errors.push("percent");
-  if (second && (after2 === null || (after !== null && after2 <= after))) errors.push("after2");
+  if (clock) {
+    if (!clockTime.test(values.from)) errors.push("from");
+    if (!clockTime.test(values.to) || values.to === values.from) errors.push("to");
+    if (second) {
+      if (!clockTime.test(values.from2)) errors.push("from2");
+      if (!clockTime.test(values.to2) || values.to2 === values.from2) errors.push("to2");
+    }
+  } else {
+    if (after === null) errors.push("after");
+    if (second && (after2 === null || (after !== null && after2 <= after))) errors.push("after2");
+  }
   if (second && (percent2 === null || (percent !== null && percent2 <= percent))) errors.push("percent2");
   if (values.email && !email) errors.push("email");
   if (errors.length) return { values, errors };
@@ -212,16 +241,23 @@ export async function saveHourSettings(_prev: HourSettingsState, formData: FormD
   const supabase = await createClient();
   const { error } = await supabase.rpc("save_hour_settings", {
     org: membership.organization.id,
-    overtime_after: after,
+    overtime_mode: values.mode,
     overtime_percent: percent,
+    overtime_after: after,
     overtime2_after: after2,
     overtime2_percent: percent2,
+    overtime_from: clock ? values.from : null,
+    overtime_to: clock ? values.to : null,
+    overtime2_from: clock && second ? values.from2 : null,
+    overtime2_to: clock && second ? values.to2 : null,
     accountant_email: email,
   });
   if (error) {
     if (error.hint === "invalid_email") return { values, errors: ["email"] };
     if (error.hint === "invalid_overtime2") return { values, errors: ["after2", "percent2"] };
-    if (error.hint === "invalid_overtime") return { values, errors: ["after", "percent"] };
+    if (error.hint === "invalid_overtime") return { values, errors: clock ? ["percent"] : ["after", "percent"] };
+    if (error.hint === "invalid_window") return { values, errors: ["from", "to"] };
+    if (error.hint === "invalid_window2") return { values, errors: ["from2", "to2", "percent2"] };
     if (error.code === "42501") return { values, error: "notAllowed" };
     return { values, error: "unknown" };
   }
