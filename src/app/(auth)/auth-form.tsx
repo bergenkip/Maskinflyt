@@ -22,9 +22,14 @@ type Props = {
   switchHref?: string;
 };
 
+// Opens in a new tab, so a half-filled sign-up form is not lost.
+const legalLink =
+  "font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+
 export function AuthForm({ mode, action, initialError, notice, invite, next, intro, switchHref }: Props) {
   const t = useTranslations("Auth");
   const tNav = useTranslations("Nav");
+  const tLegal = useTranslations("Legal");
   const [state, formAction] = useActionState(action, { error: initialError });
   const isSignUp = mode === "signUp";
 
@@ -110,6 +115,22 @@ export function AuthForm({ mode, action, initialError, notice, invite, next, int
           </Link>
         )}
         <SubmitButton pendingLabel={t("pending")}>{isSignUp ? t("signupSubmit") : t("loginSubmit")}</SubmitButton>
+        {isSignUp && (
+          <p className="text-sm leading-relaxed text-muted">
+            {tLegal.rich("signupConsent", {
+              terms: (chunks) => (
+                <Link href="/vilkar" target="_blank" className={legalLink}>
+                  {chunks}
+                </Link>
+              ),
+              privacy: (chunks) => (
+                <Link href="/personvern" target="_blank" className={legalLink}>
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
+        )}
       </form>
 
       <p className="text-muted">

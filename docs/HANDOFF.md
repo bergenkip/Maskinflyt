@@ -297,3 +297,10 @@ Failai: `src/lib/site.ts` (adresas, `publicPaths`, `publicPageMetadata`), `src/a
 Kalba nustatoma slapuku tuo pačiu adresu, todėl `hreflang` nėra: Google mato norvegišką versiją.
 Atskiri adresai kalboms (pvz. `/en`) būtų atskiras etapas.
 Testai: `src/lib/site.test.ts`, `e2e/seo.spec.ts`.
+
+## Privatumo politika ir naudojimo sąlygos (2026-11-17, juodraštis)
+Puslapiai `/personvern` ir `/vilkar` (nb/en/lt), tekstai `messages/*.json` → `Legal`, įmonės duomenys `src/lib/legal.ts`
+(`COMPANY`, `LEGAL_UPDATED`). Nuorodos poraštėje (`src/components/site-footer.tsx`) ir po registracijos mygtuku.
+Faktai patikrinti 2026-11-17: Supabase `eu-north-1` (Stokholmas), Vercel funkcijos `arn1`, Resend ES regionas,
+slapukai tik būtini (Supabase sesija, `NEXT_LOCALE`, `theme`), jokios analitikos, GPS nerenkama.
+Prieš tikrus klientus: teisininko peržiūra ir databehandleravtale (sąlygose pažadėta).

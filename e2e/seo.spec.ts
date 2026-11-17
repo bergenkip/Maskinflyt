@@ -16,7 +16,13 @@ test("sitemap lists only the public pages on maskingo.no", async ({ request }) =
   const res = await request.get("/sitemap.xml");
   expect(res.status()).toBe(200);
   const locs = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-  expect(locs).toEqual(["https://maskingo.no", "https://maskingo.no/signup", "https://maskingo.no/login"]);
+  expect(locs).toEqual([
+    "https://maskingo.no",
+    "https://maskingo.no/signup",
+    "https://maskingo.no/login",
+    "https://maskingo.no/personvern",
+    "https://maskingo.no/vilkar",
+  ]);
 });
 
 test("home page has title, description, canonical, share picture and structured data", async ({

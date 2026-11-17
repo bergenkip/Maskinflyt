@@ -419,7 +419,8 @@
     "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it to finish, on any device. You are already a member of the company."
   },
   "Footer": {
-    "text": "MaskinGo · Built for Norwegian contractors"
+    "text": "MaskinGo · Built for Norwegian contractors",
+    "linksLabel": "Links"
   },
   "Mfa": {
     "verifyTitle": "Confirm it is you",
@@ -991,5 +992,146 @@
     "invoice": "Invoice {number}",
     "creditNote": "Credit note {number} for invoice {invoice}",
     "more": "{count, plural, one {# more is} other {# more are}} in the files."
+  },
+  "Legal": {
+    "updated": "Last updated {date}",
+    "draftNote": "This is a draft that a lawyer will review before MaskinGo is used with real customer data.",
+    "privacy": {
+      "title": "Privacy policy",
+      "lead": "This page explains which personal data MaskinGo processes, why, and what rights you have.",
+      "sections": [
+        {
+          "title": "Who is responsible",
+          "body": [
+            "{company} (org. no. {orgNumber}), {address}, is the controller for data about user accounts and visitors to maskingo.no.",
+            "Send privacy questions to {email}."
+          ]
+        },
+        {
+          "title": "Data a company enters",
+          "body": [
+            "A company using MaskinGo enters data about its customers, employees and jobs. The company is the controller for that data, and {company} is its processor. We use it only to provide the service to the company.",
+            "To see, correct or delete such data, contact the company that entered it."
+          ]
+        },
+        {
+          "title": "What data we process",
+          "body": [
+            "Account: name, e-mail address, language, role and which company you belong to. The password is stored only as a cryptographic hash.",
+            "Company: name, organisation number and invoice details.",
+            "Sign-in: for owners and admins we store the time and browser type of the extra sign-in step by e-mail.",
+            "Jobs: times from the On the way, Arrived and Finished taps, and uploaded photos and signatures. We do not collect location (GPS).",
+            "Invoices: the content of invoices and who they were e-mailed to.",
+            "Operations: our providers log IP address and time to keep the service secure and running."
+          ]
+        },
+        {
+          "title": "Purpose and legal basis",
+          "body": [
+            "We process the data to provide the service under the agreement with you or your company (GDPR Art. 6(1)(b)).",
+            "Security logs and protection against abuse rely on our legitimate interest (Art. 6(1)(f)).",
+            "Invoices and accounting records are kept because the Norwegian Bookkeeping Act requires it (Art. 6(1)(c))."
+          ]
+        },
+        {
+          "title": "Providers",
+          "body": [
+            "Supabase: database, sign-in and files. Stored in Stockholm, Sweden.",
+            "Vercel: runs the website. Server functions run in Stockholm, Sweden.",
+            "Resend: sends e-mail, in its EU region.",
+            "All three are US companies. The data is stored in the EU/EEA, but a provider may in some cases access it from the US. Such transfers rely on the EU Standard Contractual Clauses or the EU–US Data Privacy Framework."
+          ]
+        },
+        {
+          "title": "How long we keep data",
+          "body": [
+            "Account data is kept for as long as the account exists.",
+            "Invoices and accounting records are kept for at least 5 years after the end of the financial year, as the Bookkeeping Act requires, even if the account is deleted."
+          ]
+        },
+        {
+          "title": "Cookies",
+          "body": [
+            "We use only necessary cookies: to keep you signed in, and to remember language and light or dark theme (for one year). We use no analytics or advertising cookies, so we do not ask for consent."
+          ]
+        },
+        {
+          "title": "Your rights",
+          "body": [
+            "You can ask for access, correction, deletion, restriction and data portability, and you can object to processing. Write to {email} and we will reply within 30 days.",
+            "You can also complain to the Norwegian Data Protection Authority (Datatilsynet, datatilsynet.no)."
+          ]
+        },
+        {
+          "title": "Changes",
+          "body": [
+            "If this policy changes significantly, we will tell users by e-mail or in the app."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of use",
+      "lead": "These terms apply when a company and its users use MaskinGo.",
+      "sections": [
+        {
+          "title": "The parties",
+          "body": [
+            "The service is provided by {company} (org. no. {orgNumber}), {address}. The agreement is made with the company that creates its firm in MaskinGo. The person who creates it confirms that they may bind the company."
+          ]
+        },
+        {
+          "title": "Accounts and access",
+          "body": [
+            "Each user has their own account and keeps the password secret. The company's owners and admins decide who gets access and which role, and are responsible for removing access when someone leaves."
+          ]
+        },
+        {
+          "title": "The company's data",
+          "body": [
+            "The company owns the data it enters. We process it only to provide the service. Before the service is used with real customer data, we sign a separate data processing agreement with the company."
+          ]
+        },
+        {
+          "title": "Invoices",
+          "body": [
+            "MaskinGo creates invoices from the data the company enters. An invoice is issued and sent only when a person presses the button. The company is responsible for the content, VAT and bookkeeping."
+          ]
+        },
+        {
+          "title": "Price",
+          "body": [
+            "Price and payment terms are agreed in writing with each company. Without such an agreement, use is free."
+          ]
+        },
+        {
+          "title": "Availability",
+          "body": [
+            "MaskinGo is new and under active development. We do our best to keep the service available and secure, but cannot promise it will always be free of errors or interruptions."
+          ]
+        },
+        {
+          "title": "Liability",
+          "body": [
+            "We are not liable for indirect losses, such as lost profit. Our total liability is limited to what the company has paid for the service in the last 12 months."
+          ]
+        },
+        {
+          "title": "Ending the agreement",
+          "body": [
+            "The company can stop using the service at any time by writing to {email}. We can end the agreement with 30 days' notice, or immediately in case of serious misuse. When the agreement ends, we delete the company's data, except what the law requires us to keep."
+          ]
+        },
+        {
+          "title": "Changes and governing law",
+          "body": [
+            "We give at least 30 days' notice of significant changes to these terms. The agreement is governed by Norwegian law."
+          ]
+        }
+      ]
+    },
+    "signupConsent": "By creating an account you accept the <terms>terms of use</terms> and confirm that you have read the <privacy>privacy policy</privacy>.",
+    "footerPrivacy": "Privacy",
+    "footerTerms": "Terms"
   }
 }
