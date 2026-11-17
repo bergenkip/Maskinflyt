@@ -3,7 +3,7 @@ import { LEGAL_UPDATED, fillCompany, type LegalSection } from "@/lib/legal";
 
 // One legal text (privacy policy or terms): title, date, a draft notice and
 // numbered sections. The texts live in messages/*.json under "Legal".
-export function LegalDocument({ kind }: { kind: "privacy" | "terms" }) {
+export function LegalDocument({ kind }: { kind: "privacy" | "terms" | "dpa" }) {
   const t = useTranslations("Legal");
   const format = useFormatter();
   const sections = t.raw(`${kind}.sections`) as LegalSection[];
@@ -13,7 +13,8 @@ export function LegalDocument({ kind }: { kind: "privacy" | "terms" }) {
     <article className="[overflow-wrap:anywhere] hyphens-auto">
       <h1 className="text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">{t(`${kind}.title`)}</h1>
       <p className="mt-2 text-sm text-muted">{t("updated", { date: updated })}</p>
-      <p className="mt-6 text-lg leading-relaxed text-muted">{t(`${kind}.lead`)}</p>
+      {/* raw: the lead may name the company, filled in below like the sections. */}
+      <p className="mt-6 text-lg leading-relaxed text-muted">{fillCompany(t.raw(`${kind}.lead`) as string)}</p>
 
       <p
         role="note"

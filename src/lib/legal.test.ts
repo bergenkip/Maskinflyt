@@ -19,9 +19,11 @@ describe.each([
   ["lt", lt],
 ])("legal texts in %s", (_name, messages) => {
   it("use only known placeholders", () => {
-    const texts = [messages.Legal.privacy, messages.Legal.terms].flatMap((doc) =>
-      doc.sections.flatMap((section) => [section.title, ...section.body]),
-    );
+    const texts = [messages.Legal.privacy, messages.Legal.terms, messages.Legal.dpa].flatMap((doc) => [
+      doc.title,
+      doc.lead,
+      ...doc.sections.flatMap((section) => [section.title, ...section.body]),
+    ]);
     for (const text of texts) {
       expect(fillCompany(text)).not.toMatch(/\{[a-zA-Z]+\}/);
     }

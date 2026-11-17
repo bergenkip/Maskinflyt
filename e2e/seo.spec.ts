@@ -22,6 +22,7 @@ test("sitemap lists only the public pages on maskingo.no", async ({ request }) =
     "https://maskingo.no/login",
     "https://maskingo.no/personvern",
     "https://maskingo.no/vilkar",
+    "https://maskingo.no/databehandleravtale",
   ]);
 });
 

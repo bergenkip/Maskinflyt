@@ -1010,7 +1010,7 @@
         {
           "title": "Duomenys, kuriuos įveda įmonė",
           "body": [
-            "MaskinGo naudojanti įmonė įveda duomenis apie savo klientus, darbuotojus ir užsakymus. Šių duomenų valdytoja yra įmonė, o {company} yra duomenų tvarkytojas. Juos naudojame tik paslaugai įmonei teikti.",
+            "MaskinGo naudojanti įmonė įveda duomenis apie savo klientus, darbuotojus ir užsakymus. Šių duomenų valdytoja yra įmonė, o {company} yra duomenų tvarkytojas pagal duomenų tvarkymo sutartį. Juos naudojame tik paslaugai įmonei teikti.",
             "Norėdami tokius duomenis pamatyti, pataisyti ar ištrinti, kreipkitės į juos įvedusią įmonę."
           ]
         },
@@ -1029,8 +1029,15 @@
           "title": "Tikslas ir teisinis pagrindas",
           "body": [
             "Duomenis tvarkome, kad teiktume paslaugą pagal sutartį su jumis ar jūsų įmone (BDAR 6 str. 1 d. b p.).",
-            "Saugumo žurnalai ir apsauga nuo piktnaudžiavimo grindžiami teisėtu interesu (6 str. 1 d. f p.).",
-            "Sąskaitos ir apskaitos dokumentai saugomi, nes to reikalauja Norvegijos buhalterinės apskaitos įstatymas (6 str. 1 d. c p.)."
+            "Saugumo žurnalai ir apsauga nuo piktnaudžiavimo grindžiami mūsų teisėtu interesu turėti saugią paslaugą (6 str. 1 d. f p.).",
+            "Duomenų nenaudojame rinkodarai, neparduodame ir nenaudojame dirbtiniam intelektui mokyti."
+          ]
+        },
+        {
+          "title": "Kas mato duomenis",
+          "body": [
+            "Kiti tos pačios įmonės naudotojai mato jūsų vardą ir tai, ką leidžia jų rolė. Kitų įmonių naudotojai nemato nieko.",
+            "Mūsų tiekėjai tvarko duomenis mūsų vardu, žr. kitą skyrių. Kitais atvejais duomenis teikiame tik tada, kai to reikalauja įstatymas."
           ]
         },
         {
@@ -1045,27 +1052,34 @@
         {
           "title": "Kiek laiko saugome",
           "body": [
-            "Paskyros duomenys saugomi, kol paskyra egzistuoja.",
-            "Sąskaitos ir apskaitos dokumentai saugomi bent 5 metus nuo finansinių metų pabaigos, kaip reikalauja buhalterinės apskaitos įstatymas, net jei paskyra ištrinama."
+            "Paskyros duomenys saugomi, kol paskyra egzistuoja. Jei paprašysite ištrinti, paskyrą ištrinsime per 30 dienų.",
+            "Įmonės MaskinGo išrašytų sąskaitų negalima ištrinti, kol įmonė naudojasi paslauga. Už apskaitos dokumentų saugojimą 5 metus atsako pati įmonė (Norvegijos buhalterinės apskaitos įstatymo 13 §)."
           ]
         },
         {
           "title": "Slapukai",
           "body": [
-            "Naudojame tik būtinus slapukus: kad liktumėte prisijungę ir kad būtų įsiminta kalba bei šviesi ar tamsi tema (vieneriems metams). Analitikos ir reklamos slapukų nenaudojame, todėl sutikimo neprašome."
+            "Naudojame tik būtinus slapukus: kad liktumėte prisijungę ir kad būtų įsiminta kalba bei šviesi ar tamsi tema (vieneriems metams). Analitikos ir reklamos slapukų nenaudojame, todėl sutikimo neprašome (Norvegijos elektroninių ryšių įstatymo 3-15 §)."
+          ]
+        },
+        {
+          "title": "Ar privalote pateikti duomenis?",
+          "body": [
+            "Paskyrai sukurti reikia vardo ir el. pašto adreso. Be jų MaskinGo naudotis negalėsite.",
+            "Automatizuotų sprendimų apie jus nepriimame ir profiliavimo nevykdome."
           ]
         },
         {
           "title": "Jūsų teisės",
           "body": [
-            "Galite prašyti susipažinti su duomenimis, juos ištaisyti, ištrinti, apriboti tvarkymą ir perkelti, taip pat nesutikti su tvarkymu. Rašykite {email}, atsakysime per 30 dienų.",
+            "Galite prašyti susipažinti su duomenimis, juos ištaisyti, ištrinti, apriboti tvarkymą ir perkelti, taip pat nesutikti su tvarkymu, grindžiamu teisėtu interesu. Rašykite {email}, atsakysime per 30 dienų.",
             "Taip pat galite pateikti skundą Norvegijos duomenų apsaugos institucijai (Datatilsynet, datatilsynet.no)."
           ]
         },
         {
           "title": "Pakeitimai",
           "body": [
-            "Jei ši politika iš esmės pasikeis, pranešime naudotojams el. paštu arba programoje."
+            "Jei ši politika iš esmės pasikeis, pranešime naudotojams el. paštu arba programoje prieš pakeitimui įsigaliojant."
           ]
         }
       ]
@@ -1077,7 +1091,8 @@
         {
           "title": "Sutarties šalys",
           "body": [
-            "Paslaugą teikia {company} (org. nr. {orgNumber}), {address}. Sutartis sudaroma su įmone, kuri sukuria savo įmonės paskyrą MaskinGo. Ją sukuriantis asmuo patvirtina, kad gali įpareigoti įmonę."
+            "Paslaugą teikia {company} (org. nr. {orgNumber}), {address}. Sutartis sudaroma su įmone, kuri sukuria savo įmonės paskyrą MaskinGo. Ją sukuriantis asmuo patvirtina, kad gali įpareigoti įmonę.",
+            "MaskinGo skirtas verslui ir nesiūlomas vartotojams."
           ]
         },
         {
@@ -1087,9 +1102,18 @@
           ]
         },
         {
-          "title": "Įmonės duomenys",
+          "title": "Įmonės atsakomybė",
           "body": [
-            "Įmonei priklauso jos įvesti duomenys. Juos tvarkome tik paslaugai teikti. Prieš naudojant paslaugą su tikrais klientų duomenimis, su įmone pasirašome atskirą duomenų tvarkymo sutartį."
+            "Įmonė atsako, kad jos įvedami duomenys būtų teisėti ir teisingi.",
+            "Įmonė informuoja darbuotojus, kad darbo laikas, nuotraukos ir parašai registruojami MaskinGo, ir prieš pradėdama tokį registravimą atlieka tai, ko reikalauja Norvegijos darbo aplinkos įstatymas.",
+            "Paslaugos negalima naudoti neteisėtiems tikslams, kitiems kenkti ar bandyti pasiekti kitų įmonių duomenis."
+          ]
+        },
+        {
+          "title": "Asmens duomenys",
+          "body": [
+            "Įmonei priklauso jos įvesti duomenys. {company} juos tvarko kaip duomenų tvarkytojas. Duomenų tvarkymo sutartis adresu maskingo.no/databehandleravtale yra šių sąlygų dalis.",
+            "Kaip tvarkome pačių naudotojų duomenis, aprašyta privatumo politikoje."
           ]
         },
         {
@@ -1105,33 +1129,133 @@
           ]
         },
         {
+          "title": "Teisės į paslaugą",
+          "body": [
+            "MaskinGo, įskaitant programinę įrangą, dizainą ir pavadinimą, priklauso {company}. Įmonė gauna neišimtinę teisę naudotis paslauga, kol galioja sutartis."
+          ]
+        },
+        {
           "title": "Prieinamumas",
           "body": [
-            "MaskinGo yra naujas ir nuolat tobulinamas. Stengiamės, kad paslauga būtų prieinama ir saugi, bet negalime pažadėti, kad ji visada veiks be klaidų ar pertrūkių."
+            "MaskinGo yra naujas ir nuolat tobulinamas. Stengiamės, kad paslauga būtų prieinama ir saugi, bet negalime pažadėti, kad ji visada veiks be klaidų ar pertrūkių.",
+            "Esant saugumo grėsmei ar piktnaudžiavimui galime laikinai sustabdyti prieigą. Neatsakome už aplinkybes, kurių negalime kontroliuoti, pvz. elektros, ryšio ar subtiekėjų gedimus (force majeure)."
           ]
         },
         {
           "title": "Atsakomybė",
           "body": [
-            "Neatsakome už netiesioginius nuostolius, pvz. negautą pelną. Bendra mūsų atsakomybė ribojama suma, kurią įmonė sumokėjo už paslaugą per paskutinius 12 mėnesių."
+            "Neatsakome už netiesioginius nuostolius, pvz. negautą pelną ar prarastus duomenis. Bendra mūsų atsakomybė ribojama suma, kurią įmonė sumokėjo už paslaugą per paskutinius 12 mėnesių. Riba netaikoma esant didžiam neatsargumui ar tyčiai."
           ]
         },
         {
           "title": "Sutarties pabaiga",
           "body": [
-            "Įmonė gali bet kada nustoti naudotis paslauga, parašiusi {email}. Mes galime nutraukti sutartį įspėję prieš 30 dienų arba iškart, jei paslauga šiurkščiai piktnaudžiaujama. Pasibaigus sutarčiai, ištriname įmonės duomenis, išskyrus tuos, kuriuos privalome saugoti pagal įstatymą."
+            "Įmonė gali bet kada nustoti naudotis paslauga, parašiusi {email}. Mes galime nutraukti sutartį įspėję prieš 30 dienų arba iškart, jei sutartis iš esmės pažeidžiama.",
+            "Pasibaigus sutarčiai, įmonė 90 dienų gali paprašyti išduoti jos duomenis. Po to juos ištriname. Apskaitos dokumentus, kuriuos privalo saugoti, įmonė turi išsisaugoti pati."
           ]
         },
         {
-          "title": "Pakeitimai ir taikoma teisė",
+          "title": "Pakeitimai, taikoma teisė ir ginčai",
           "body": [
-            "Apie esminius sąlygų pakeitimus pranešame bent prieš 30 dienų. Sutarčiai taikoma Norvegijos teisė."
+            "Apie esminius sąlygų pakeitimus pranešame bent prieš 30 dienų. Sutarčiai taikoma Norvegijos teisė.",
+            "Ginčus pirmiausia stengiamės išspręsti derybomis. Nepavykus, juos sprendžia bendrosios kompetencijos teismai pagal {company} buveinės vietą."
+          ]
+        }
+      ]
+    },
+    "dpa": {
+      "title": "Duomenų tvarkymo sutartis",
+      "lead": "Ši sutartis taikoma, kai {company} tvarko asmens duomenis MaskinGo naudojančios įmonės vardu. Ji atitinka BDAR 28 straipsnio reikalavimus.",
+      "sections": [
+        {
+          "title": "Šalys",
+          "body": [
+            "Duomenų valdytoja yra įmonė, sukūrusi savo įmonės paskyrą MaskinGo („įmonė“). Duomenų tvarkytojas yra {company} (org. nr. {orgNumber}), {address}.",
+            "Sutartis yra naudojimo sąlygų dalis ir galioja, kol įmonė naudojasi paslauga, o po to – kol duomenys ištrinami."
+          ]
+        },
+        {
+          "title": "Tikslas ir kas tvarkoma",
+          "body": [
+            "Tikslas: teikti MaskinGo, t. y. užsakymų planavimą, vairuotojo programą, darbo laiko registravimą, klientų registrą ir sąskaitų išrašymą.",
+            "Duomenų subjektai: įmonės darbuotojai ir naudotojai, įmonės klientai ir jų kontaktiniai asmenys, asmenys, kurie gali būti nuotraukose.",
+            "Duomenys: vardai, telefonai, el. pašto adresai, adresai, organizacijų numeriai, užsakymai, darbo laikas, nuotraukos, parašai ir sąskaitos.",
+            "Įmonė neturi įvesti į MaskinGo specialių kategorijų asmens duomenų, pvz. sveikatos duomenų."
+          ]
+        },
+        {
+          "title": "Nurodymai",
+          "body": [
+            "Duomenis tvarkome tik pagal dokumentuotus įmonės nurodymus. Nurodymai yra naudojimo sąlygos, ši sutartis ir įmonės pasirinkimai programoje.",
+            "Jei manome, kad nurodymas pažeidžia duomenų apsaugos teisę, apie tai pranešame įmonei."
+          ]
+        },
+        {
+          "title": "Konfidencialumas",
+          "body": [
+            "Visi mums dirbantys asmenys, turintys prieigą prie duomenų, privalo laikytis konfidencialumo."
+          ]
+        },
+        {
+          "title": "Saugumas",
+          "body": [
+            "Taikome technines ir organizacines priemones pagal 32 straipsnį, be kita ko:",
+            "Šifruotas perdavimas (HTTPS) ir saugojimas ES/EEE.",
+            "Kiekvienos įmonės duomenys atskirti duomenų bazės prieigos taisyklėmis (row level security), kurios automatiškai tikrinamos po kiekvieno pakeitimo.",
+            "Rolės, nustatančios, ką mato kiekvienas naudotojas, ir papildomas prisijungimo žingsnis el. paštu savininkams ir administratoriams.",
+            "Slaptažodžiai saugomi tik kaip maišos, o įkelti failai laikomi privačioje saugykloje be viešų nuorodų."
+          ]
+        },
+        {
+          "title": "Subtvarkytojai",
+          "body": [
+            "Įmonė sutinka, kad naudotume šiuos subtvarkytojus: Supabase (duomenų bazė, prisijungimas ir failai, Stokholmas), Vercel (svetainės veikimas, Stokholmas) ir Resend (el. paštas, ES).",
+            "Jiems taikome tokias pačias pareigas kaip šioje sutartyje. Bent prieš 30 dienų pranešame įmonei, jei pridedame ar keičiame subtvarkytoją. Įmonė gali prieštarauti ir nutraukti sutartį."
+          ]
+        },
+        {
+          "title": "Perdavimas už ES/EEE ribų",
+          "body": [
+            "Duomenys saugomi ES/EEE. Subtvarkytojai yra JAV įmonės ir kai kuriais atvejais gali juos pasiekti iš JAV. Toks perdavimas grindžiamas ES standartinėmis sutarčių sąlygomis arba ES ir JAV duomenų privatumo sistema."
+          ]
+        },
+        {
+          "title": "Pagalba",
+          "body": [
+            "Padedame įmonei atsakyti į duomenų subjektų prašymus, užtikrinti saugumą, atlikti poveikio duomenų apsaugai vertinimus ir konsultuotis su Datatilsynet, kiek tai pagrįsta atsižvelgiant į paslaugą.",
+            "Duomenų subjektų prašymus dėl įmonės duomenų persiunčiame įmonei."
+          ]
+        },
+        {
+          "title": "Pažeidimai",
+          "body": [
+            "Sužinoję apie asmens duomenų saugumo pažeidimą, pranešame įmonei nepagrįstai nedelsdami ir ne vėliau kaip per 48 valandas. Pranešime aprašome, ką žinome apie pažeidimą, jo pasekmes ir taikytas priemones."
+          ]
+        },
+        {
+          "title": "Patikrinimai",
+          "body": [
+            "Teikiame įmonei informaciją, reikalingą parodyti, kad sutarties laikomasi, ir sutinkame su auditu iš anksto pagrįstai įspėjus. Savo audito išlaidas įmonė apmoka pati."
+          ]
+        },
+        {
+          "title": "Ištrynimas ir grąžinimas",
+          "body": [
+            "Pasibaigus sutarčiai, įmonė 90 dienų gali paprašyti išduoti jos duomenis. Po to juos ištriname, taip pat subtvarkytojų sistemose, nebent įstatymas reikalauja juos saugoti.",
+            "Išrašytas sąskaitas įmonė gali pati eksportuoti programoje."
+          ]
+        },
+        {
+          "title": "Taikoma teisė",
+          "body": [
+            "Sutarčiai taikoma Norvegijos teisė. Jei ši sutartis prieštarauja naudojimo sąlygoms, asmens duomenų tvarkymui taikoma ši sutartis."
           ]
         }
       ]
     },
     "signupConsent": "Kurdami paskyrą sutinkate su <terms>naudojimo sąlygomis</terms> ir patvirtinate, kad perskaitėte <privacy>privatumo politiką</privacy>.",
     "footerPrivacy": "Privatumas",
-    "footerTerms": "Sąlygos"
+    "footerTerms": "Sąlygos",
+    "footerDpa": "Duomenų tvarkymas"
   }
 }

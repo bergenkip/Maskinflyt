@@ -4,14 +4,15 @@ import { expect, test } from "@playwright/test";
 const widths = [375, 430, 768, 1280, 1440];
 
 const titles = {
-  nb: { privacy: "Personvernerklæring", terms: "Vilkår for bruk" },
-  en: { privacy: "Privacy policy", terms: "Terms of use" },
-  lt: { privacy: "Privatumo politika", terms: "Naudojimo sąlygos" },
+  nb: { privacy: "Personvernerklæring", terms: "Vilkår for bruk", dpa: "Databehandleravtale" },
+  en: { privacy: "Privacy policy", terms: "Terms of use", dpa: "Data processing agreement" },
+  lt: { privacy: "Privatumo politika", terms: "Naudojimo sąlygos", dpa: "Duomenų tvarkymo sutartis" },
 } as const;
 
 const pages = [
   { kind: "privacy", path: "/personvern" },
   { kind: "terms", path: "/vilkar" },
+  { kind: "dpa", path: "/databehandleravtale" },
 ] as const;
 
 for (const locale of Object.keys(titles) as (keyof typeof titles)[]) {
@@ -39,7 +40,7 @@ for (const locale of Object.keys(titles) as (keyof typeof titles)[]) {
   }
 }
 
-test("footer links to both legal pages", async ({ page, context, baseURL }) => {
+test("footer links to the legal pages", async ({ page, context, baseURL }) => {
   await context.addCookies([{ name: "NEXT_LOCALE", value: "nb", url: baseURL! }]);
   await page.goto("/");
   const footer = page.getByRole("contentinfo");
@@ -47,4 +48,6 @@ test("footer links to both legal pages", async ({ page, context, baseURL }) => {
   await expect(page).toHaveURL(/\/personvern$/);
   await page.getByRole("contentinfo").getByRole("link", { name: "Vilkår" }).click();
   await expect(page).toHaveURL(/\/vilkar$/);
+  await page.getByRole("contentinfo").getByRole("link", { name: "Databehandleravtale" }).click();
+  await expect(page).toHaveURL(/\/databehandleravtale$/);
 });

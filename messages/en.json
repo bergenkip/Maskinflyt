@@ -1010,7 +1010,7 @@
         {
           "title": "Data a company enters",
           "body": [
-            "A company using MaskinGo enters data about its customers, employees and jobs. The company is the controller for that data, and {company} is its processor. We use it only to provide the service to the company.",
+            "A company using MaskinGo enters data about its customers, employees and jobs. The company is the controller for that data, and {company} is its processor under the data processing agreement. We use it only to provide the service to the company.",
             "To see, correct or delete such data, contact the company that entered it."
           ]
         },
@@ -1029,8 +1029,15 @@
           "title": "Purpose and legal basis",
           "body": [
             "We process the data to provide the service under the agreement with you or your company (GDPR Art. 6(1)(b)).",
-            "Security logs and protection against abuse rely on our legitimate interest (Art. 6(1)(f)).",
-            "Invoices and accounting records are kept because the Norwegian Bookkeeping Act requires it (Art. 6(1)(c))."
+            "Security logs and protection against abuse rely on our legitimate interest in a secure service (Art. 6(1)(f)).",
+            "We do not use the data for marketing, do not sell it and do not use it to train artificial intelligence."
+          ]
+        },
+        {
+          "title": "Who sees the data",
+          "body": [
+            "Other users in the same company see your name and what their role gives access to. Users in other companies see none of it.",
+            "Our providers process the data on our behalf, see the next section. Otherwise we disclose data only when the law requires it."
           ]
         },
         {
@@ -1045,27 +1052,34 @@
         {
           "title": "How long we keep data",
           "body": [
-            "Account data is kept for as long as the account exists.",
-            "Invoices and accounting records are kept for at least 5 years after the end of the financial year, as the Bookkeeping Act requires, even if the account is deleted."
+            "Account data is kept for as long as the account exists. If you ask for deletion, we delete the account within 30 days.",
+            "Invoices a company issues in MaskinGo cannot be deleted while the company uses the service. The company itself is responsible for keeping accounting records for 5 years (Norwegian Bookkeeping Act § 13)."
           ]
         },
         {
           "title": "Cookies",
           "body": [
-            "We use only necessary cookies: to keep you signed in, and to remember language and light or dark theme (for one year). We use no analytics or advertising cookies, so we do not ask for consent."
+            "We use only necessary cookies: to keep you signed in, and to remember language and light or dark theme (for one year). We use no analytics or advertising cookies, so we do not ask for consent (Norwegian Electronic Communications Act § 3-15)."
+          ]
+        },
+        {
+          "title": "Do you have to give us data?",
+          "body": [
+            "A name and e-mail address are needed to create an account. Without them you cannot use MaskinGo.",
+            "We make no automated decisions about you and do no profiling."
           ]
         },
         {
           "title": "Your rights",
           "body": [
-            "You can ask for access, correction, deletion, restriction and data portability, and you can object to processing. Write to {email} and we will reply within 30 days.",
+            "You can ask for access, correction, deletion, restriction and data portability, and you can object to processing based on legitimate interest. Write to {email} and we will reply within 30 days.",
             "You can also complain to the Norwegian Data Protection Authority (Datatilsynet, datatilsynet.no)."
           ]
         },
         {
           "title": "Changes",
           "body": [
-            "If this policy changes significantly, we will tell users by e-mail or in the app."
+            "If this policy changes significantly, we will tell users by e-mail or in the app before the change applies."
           ]
         }
       ]
@@ -1077,7 +1091,8 @@
         {
           "title": "The parties",
           "body": [
-            "The service is provided by {company} (org. no. {orgNumber}), {address}. The agreement is made with the company that creates its firm in MaskinGo. The person who creates it confirms that they may bind the company."
+            "The service is provided by {company} (org. no. {orgNumber}), {address}. The agreement is made with the company that creates its firm in MaskinGo. The person who creates it confirms that they may bind the company.",
+            "MaskinGo is made for businesses and is not offered to consumers."
           ]
         },
         {
@@ -1087,9 +1102,18 @@
           ]
         },
         {
-          "title": "The company's data",
+          "title": "The company's responsibility",
           "body": [
-            "The company owns the data it enters. We process it only to provide the service. Before the service is used with real customer data, we sign a separate data processing agreement with the company."
+            "The company is responsible for the data it enters being lawful and correct.",
+            "The company tells its employees that working time, photos and signatures are recorded in MaskinGo, and does what the Norwegian Working Environment Act requires before such recording is used.",
+            "The service must not be used for unlawful purposes, to harm others, or to try to access other companies' data."
+          ]
+        },
+        {
+          "title": "Personal data",
+          "body": [
+            "The company owns the data it enters. {company} processes it as a processor. The data processing agreement at maskingo.no/databehandleravtale is part of these terms.",
+            "How we process data about the users themselves is described in the privacy policy."
           ]
         },
         {
@@ -1105,33 +1129,133 @@
           ]
         },
         {
+          "title": "Rights to the service",
+          "body": [
+            "MaskinGo, including its software, design and name, belongs to {company}. The company gets a non-exclusive right to use the service while the agreement lasts."
+          ]
+        },
+        {
           "title": "Availability",
           "body": [
-            "MaskinGo is new and under active development. We do our best to keep the service available and secure, but cannot promise it will always be free of errors or interruptions."
+            "MaskinGo is new and under active development. We do our best to keep the service available and secure, but cannot promise it will always be free of errors or interruptions.",
+            "We may suspend access temporarily in case of security threats or misuse. We are not liable for events outside our control, such as failures at power, network or subcontractor providers (force majeure)."
           ]
         },
         {
           "title": "Liability",
           "body": [
-            "We are not liable for indirect losses, such as lost profit. Our total liability is limited to what the company has paid for the service in the last 12 months."
+            "We are not liable for indirect losses, such as lost profit or lost data. Our total liability is limited to what the company has paid for the service in the last 12 months. The limit does not apply in case of gross negligence or intent."
           ]
         },
         {
           "title": "Ending the agreement",
           "body": [
-            "The company can stop using the service at any time by writing to {email}. We can end the agreement with 30 days' notice, or immediately in case of serious misuse. When the agreement ends, we delete the company's data, except what the law requires us to keep."
+            "The company can stop using the service at any time by writing to {email}. We can end the agreement with 30 days' notice, or immediately in case of material breach.",
+            "After the agreement ends, the company can ask for its data for 90 days. After that we delete it. The company must itself keep the accounting records it is required to keep."
           ]
         },
         {
-          "title": "Changes and governing law",
+          "title": "Changes, governing law and disputes",
           "body": [
-            "We give at least 30 days' notice of significant changes to these terms. The agreement is governed by Norwegian law."
+            "We give at least 30 days' notice of significant changes to these terms. The agreement is governed by Norwegian law.",
+            "Disputes are first sought resolved by negotiation. Failing that, they are decided by the ordinary courts, with the venue of {company}'s home court."
+          ]
+        }
+      ]
+    },
+    "dpa": {
+      "title": "Data processing agreement",
+      "lead": "This agreement applies when {company} processes personal data on behalf of a company using MaskinGo. It meets the requirements of GDPR Article 28.",
+      "sections": [
+        {
+          "title": "Parties",
+          "body": [
+            "The controller is the company that has created its firm in MaskinGo (“the company”). The processor is {company} (org. no. {orgNumber}), {address}.",
+            "The agreement is part of the terms of use and applies while the company uses the service, and after that until the data is deleted."
+          ]
+        },
+        {
+          "title": "Purpose and what is processed",
+          "body": [
+            "Purpose: to provide MaskinGo, that is job planning, the driver app, time recording, the customer register and invoicing.",
+            "Data subjects: the company's employees and users, the company's customers and their contact persons, and people who may appear in photos.",
+            "Data: names, phone numbers, e-mail addresses, addresses, organisation numbers, jobs, working hours, photos, signatures and invoices.",
+            "The company must not enter special categories of personal data, such as health data, in MaskinGo."
+          ]
+        },
+        {
+          "title": "Instructions",
+          "body": [
+            "We process the data only on the company's documented instructions. The instructions are the terms, this agreement and the choices the company makes in the app.",
+            "If we believe an instruction breaks data protection law, we tell the company."
+          ]
+        },
+        {
+          "title": "Confidentiality",
+          "body": [
+            "Everyone working for us who has access to the data is bound by confidentiality."
+          ]
+        },
+        {
+          "title": "Security",
+          "body": [
+            "We have technical and organisational measures under Article 32, including:",
+            "Encrypted transfer (HTTPS) and storage in the EU/EEA.",
+            "Each company's data is kept separate by access rules in the database (row level security), tested automatically with every change.",
+            "Roles that control what each user sees, and an extra sign-in step by e-mail for owners and admins.",
+            "Passwords are stored only as hashes, and uploaded files are kept in private storage without public links."
+          ]
+        },
+        {
+          "title": "Sub-processors",
+          "body": [
+            "The company approves our use of these sub-processors: Supabase (database, sign-in and files, Stockholm), Vercel (runs the website, Stockholm) and Resend (e-mail, EU).",
+            "We impose the same obligations on them as in this agreement. We notify the company at least 30 days before we add or replace a sub-processor. The company may then object and end the agreement."
+          ]
+        },
+        {
+          "title": "Transfers outside the EU/EEA",
+          "body": [
+            "The data is stored in the EU/EEA. The sub-processors are US companies and may in some cases access it from the US. Such transfers rely on the EU Standard Contractual Clauses or the EU–US Data Privacy Framework."
+          ]
+        },
+        {
+          "title": "Assistance",
+          "body": [
+            "We help the company respond to data subject requests, with security, with data protection impact assessments and with prior consultation with Datatilsynet, as far as is reasonable for the service.",
+            "Requests from data subjects about the company's data are forwarded to the company."
+          ]
+        },
+        {
+          "title": "Breaches",
+          "body": [
+            "If we become aware of a personal data breach, we notify the company without undue delay and at the latest within 48 hours. The notice describes what we know about the breach, its consequences and the measures taken."
+          ]
+        },
+        {
+          "title": "Audits",
+          "body": [
+            "We give the company the information needed to show that this agreement is followed, and accept audits with reasonable notice. The company covers its own audit costs."
+          ]
+        },
+        {
+          "title": "Deletion and return",
+          "body": [
+            "When the agreement ends, the company can ask for its data for 90 days. After that we delete it, also in the sub-processors' systems, unless the law requires it to be kept.",
+            "The company can export issued invoices itself in the app."
+          ]
+        },
+        {
+          "title": "Governing law",
+          "body": [
+            "The agreement is governed by Norwegian law. If this agreement and the terms of use conflict, this agreement applies to the processing of personal data."
           ]
         }
       ]
     },
     "signupConsent": "By creating an account you accept the <terms>terms of use</terms> and confirm that you have read the <privacy>privacy policy</privacy>.",
     "footerPrivacy": "Privacy",
-    "footerTerms": "Terms"
+    "footerTerms": "Terms",
+    "footerDpa": "Data processing agreement"
   }
 }

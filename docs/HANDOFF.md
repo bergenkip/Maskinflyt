@@ -303,4 +303,8 @@ Puslapiai `/personvern` ir `/vilkar` (nb/en/lt), tekstai `messages/*.json` → `
 (`COMPANY`, `LEGAL_UPDATED`). Nuorodos poraštėje (`src/components/site-footer.tsx`) ir po registracijos mygtuku.
 Faktai patikrinti 2026-11-17: Supabase `eu-north-1` (Stokholmas), Vercel funkcijos `arn1`, Resend ES regionas,
 slapukai tik būtini (Supabase sesija, `NEXT_LOCALE`, `theme`), jokios analitikos, GPS nerenkama.
-Prieš tikrus klientus: teisininko peržiūra ir databehandleravtale (sąlygose pažadėta).
+2026-11-17 papildyta (Li prašymas „padaryk kaip teisininkas“): privatumo politika pagal BDAR 13 str. (gavėjai, ar privaloma
+pateikti duomenis, jokių automatizuotų sprendimų, ištrynimas per 30 d., sąskaitas saugo pati įmonė), sąlygos (tik verslui,
+darbuotojų informavimas pagal arbeidsmiljøloven, teisės į paslaugą, sustabdymas, force majeure, 90 d. duomenų išdavimas,
+ginčai), nauja `/databehandleravtale` pagal BDAR 28 str. (subtvarkytojai su 30 d. įspėjimu, pažeidimai per 48 val.).
+Tai ne teisininko patikra: prieš tikrus klientus vis tiek rekomenduojama advokato peržiūra.
