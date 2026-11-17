@@ -16,7 +16,7 @@ export function invoiceEmailLive(): boolean {
   return process.env.INVOICE_EMAIL_LIVE === "1";
 }
 
-const escapeHtml = (value: string) =>
+export const escapeHtml = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 
 // A display name for the From header: no quotes, angle brackets or line breaks.

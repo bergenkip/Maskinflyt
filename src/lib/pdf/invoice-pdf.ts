@@ -66,7 +66,7 @@ const muted = rgb(0.42, 0.45, 0.5);
 const rule = rgb(0.85, 0.87, 0.9);
 
 // Intl's narrow no-break space is not in the font; the plain no-break space is.
-const clean = (text: string) => text.replace(/[  ]/g, " ");
+export const clean = (text: string) => text.replace(/[  ]/g, " ");
 
 const amount = new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 export const formatAmount = (ore: number) => clean(amount.format(ore / 100));
@@ -75,7 +75,7 @@ const quantityFormat = new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 2
 export const formatDate = (iso: string) => iso.slice(0, 10).split("-").reverse().join(".");
 
 let fonts: Promise<[Uint8Array, Uint8Array]> | undefined;
-function loadFonts() {
+export function loadFonts() {
   const dir = path.join(process.cwd(), "src/lib/pdf/fonts");
   fonts ??= Promise.all([readFile(path.join(dir, "Geist-Regular.ttf")), readFile(path.join(dir, "Geist-SemiBold.ttf"))]);
   return fonts;
