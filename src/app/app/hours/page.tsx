@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { ArrowRightIcon, CheckCircleIcon, ClockIcon, SettingsIcon } from "@/components/icons";
-import { defaultHourRules, decimalHours, type HourRules } from "@/lib/hours";
+import { decimalHours, ruleColumns, toHourRules, type HourRules } from "@/lib/hours";
 import { sheetColumns, type SheetRow } from "@/lib/hours-server";
 import { monthPeriod } from "@/lib/invoice-export";
 import { canEditInvoiceSettings } from "@/lib/invoice-settings";
@@ -32,9 +32,9 @@ export default async function HoursPage() {
     getTranslations("HourSettings"),
     getFormatter(),
     supabase.from("hour_sheets").select(sheetColumns).eq("organization_id", organization.id).eq("user_id", userId).order("period_from", { ascending: false }),
-    supabase.from("hour_settings").select("overtime_after, overtime_percent, overtime2_after, overtime2_percent").eq("organization_id", organization.id).maybeSingle(),
+    supabase.from("hour_settings").select(ruleColumns).eq("organization_id", organization.id).maybeSingle(),
   ]);
-  const rules = (settings as HourRules | null) ?? defaultHourRules;
+  const rules = toHourRules(settings as Partial<HourRules> | null);
   const own = (sheets ?? []) as SheetRow[];
   const day = (iso: string) => format.dateTime(new Date(`${iso}T12:00:00Z`), { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
   const number = (value: number) => format.number(value, { maximumFractionDigits: 2 });

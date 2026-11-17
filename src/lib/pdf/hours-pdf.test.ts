@@ -13,6 +13,11 @@ const sheet = {
   period_to: "2026-11-30",
   submitted_at: "2026-11-30T15:04:00Z",
   timezone: "Europe/Oslo",
+  overtime_mode: "daily" as "daily" | "clock",
+  overtime_from: null as string | null,
+  overtime_to: null as string | null,
+  overtime2_from: null as string | null,
+  overtime2_to: null as string | null,
   overtime_after: 450,
   overtime_percent: 50,
   overtime2_after: 600,
@@ -45,6 +50,22 @@ describe("hours sheet PDF and e-mail", () => {
     const long = await hoursPdf({ ...sheet, overtime2_after: null, overtime2_percent: null }, month);
     if (process.env.PDF_OUT) await writeFile(`${process.env.PDF_OUT}/hours-long.pdf`, long);
     expect((await PDFDocument.load(long)).getPageCount()).toBe(2);
+  });
+
+  it("tells the clock windows when overtime is counted by the time of day", async () => {
+    const clock = {
+      ...sheet,
+      overtime_mode: "clock" as const,
+      overtime_after: 480,
+      overtime2_after: null,
+      overtime_from: "15:00",
+      overtime_to: "19:00",
+      overtime2_from: "19:00",
+      overtime2_to: "06:00",
+    };
+    const pdf = await hoursPdf(clock, days);
+    if (process.env.PDF_OUT) await writeFile(`${process.env.PDF_OUT}/hours-clock.pdf`, pdf);
+    expect((await PDFDocument.load(pdf)).getPageCount()).toBe(1);
   });
 
   it("writes the e-mail to the accountant, with the names escaped", () => {

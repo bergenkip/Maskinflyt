@@ -1068,7 +1068,9 @@
       "none": "Ikke sendt: ingen e-post til regnskapsfører er lagret."
     },
     "resend": "Send på nytt",
-    "openPdf": "Åpne PDF"
+    "openPdf": "Åpne PDF",
+    "rulesClock": "Overtid: kl. {from}–{to} +{percent} %",
+    "rulesClock2": "kl. {from}–{to} +{percent} %"
   },
   "HourSettings": {
     "title": "Overtid og regnskapsfører",
@@ -1094,9 +1096,23 @@
       "percent2": "Må gi mer enn første nivå.",
       "email": "E-postadressen er ikke gyldig.",
       "notAllowed": "Bare eieren og administratorer endrer dette.",
-      "unknown": "Noe gikk galt. Prøv igjen."
+      "unknown": "Noe gikk galt. Prøv igjen.",
+      "from": "Velg når den starter.",
+      "to": "Velg når den slutter, ikke samme som start.",
+      "from2": "Velg når den starter.",
+      "to2": "Velg når den slutter, ikke samme som start."
     },
     "readOnly": "Bare eieren og administratorer endrer dette.",
-    "noEmail": "Ingen e-post lagret"
+    "noEmail": "Ingen e-post lagret",
+    "modeTitle": "Hvordan telles overtid?",
+    "modeDaily": "Etter timer per dag",
+    "modeDailyHint": "For eksempel etter 8 timer.",
+    "modeClock": "Etter klokkeslett",
+    "modeClockHint": "For eksempel fra 15:00 til 19:00.",
+    "from": "Fra",
+    "to": "Til",
+    "windowHint": "En slutt før start går over midnatt, som 19:00–06:00.",
+    "clockBreak": "Pausen trekkes fra de vanlige timene først.",
+    "level2ClockHint": "For eksempel fra 19:00 til 06:00 +100 %. Der den overlapper første nivå, gjelder denne. La stå tomt hvis den ikke brukes."
   }
 }

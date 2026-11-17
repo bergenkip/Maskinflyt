@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { defaultHourRules, type HourRules, type SheetDay } from "@/lib/hours";
+import { ruleColumns, toHourRules, type HourRules, type SheetDay } from "@/lib/hours";
 import { dayColumns, sheetColumns, type SheetRow } from "@/lib/hours-server";
 import { getCurrentMembership } from "@/lib/membership";
 import { createClient, getUserId } from "@/lib/supabase/server";
@@ -27,7 +27,7 @@ export default async function HourSheetPage({ params }: PageProps<"/app/hours/[i
     supabase.from("hour_sheet_days").select(dayColumns).eq("sheet_id", id).order("day"),
     supabase
       .from("hour_settings")
-      .select("overtime_after, overtime_percent, overtime2_after, overtime2_percent, accountant_email")
+      .select(`${ruleColumns}, accountant_email`)
       .eq("organization_id", membership.organization.id)
       .maybeSingle(),
     getUserId(),
@@ -39,14 +39,7 @@ export default async function HourSheetPage({ params }: PageProps<"/app/hours/[i
   const rows = (days ?? []) as SheetDay[];
 
   // A confirmed sheet keeps the rules it was confirmed with.
-  const rules: HourRules = submitted
-    ? {
-        overtime_after: sheet.overtime_after ?? 480,
-        overtime_percent: sheet.overtime_percent ?? 50,
-        overtime2_after: sheet.overtime2_after,
-        overtime2_percent: sheet.overtime2_percent,
-      }
-    : ((settings as HourRules | null) ?? defaultHourRules);
+  const rules: HourRules = toHourRules(submitted ? sheet : (settings as Partial<HourRules> | null));
   const accountantEmail = (settings as { accountant_email: string | null } | null)?.accountant_email ?? null;
   return (
     <HourSheetView sheet={sheet} rows={rows} rules={rules} own={own} accountantEmail={accountantEmail} timeZone={membership.organization.timeZone} />

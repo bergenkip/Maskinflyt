@@ -265,6 +265,11 @@ Migracija `20261116120000_hour_sheets`, pgTAP `27_hour_sheets` (30 testų).
 - Skaito: pats darbuotojas; savininkas, admin (su antru žingsniu) ir buhalteris – visus. Kolegos ir kitos įmonės – nieko.
 - Ekranai: meniu „Valandos“ (`/app/hours`), lapas `/app/hours/[id]`, nustatymai `/app/hours/settings`, PDF `/app/hours/[id]/pdf`.
   PDF „Timeliste“ norvegiškai (`src/lib/pdf/hours-pdf.ts`), laiškas iš `timeliste@maskingo.no`, atsakymas eina darbuotojui.
+- **Viršvalandžiai pagal laikrodį** (Li prašymas 2026-11-17, migracija `20261117120000_hour_clock_overtime`, pgTAP `28_hour_clock_overtime`).
+  Įmonė pasirenka `overtime_mode`: `daily` (po N val. per dieną, kaip anksčiau) arba `clock` (langai `overtime_from–overtime_to`
+  ir nebūtinas `overtime2_from–overtime2_to`, pvz. 15:00–19:00 +50 %, 19:00–06:00 +100 %; per vidurnaktį galima).
+  Kiekviena minutė priskiriama langui (kur persidengia – galioja 2 lygis); pertrauka atimama iš įprastų, tada 1 lygio, tada 2.
+  Skaičiuoja `private.split_day` (DB) ir `splitDay` (`src/lib/hours.ts`) vienodai; patvirtintas lapas išsaugo langus.
 - 13b (kitas): buhalterio vaizdas – visų darbuotojų lapai, ir kiek darbų darbuotojas atliko (paspaudus – kurie).
 
 ## Sąskaitų planas (Li sutarta 2026-11-06)
