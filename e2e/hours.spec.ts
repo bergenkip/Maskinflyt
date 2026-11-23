@@ -1,5 +1,21 @@
 import { expect, test } from "@playwright/test";
-import { createCompany, inviteColleague, locales, newCompanyName, newEmail, newPage, resendStub, shootAllWidths, signUp } from "./helpers";
+import {
+  addCustomer,
+  addMachine,
+  addTodaysJob,
+  approveTime,
+  createCompany,
+  driveThrough,
+  inviteColleague,
+  locales,
+  newCompanyName,
+  newEmail,
+  newPage,
+  resendStub,
+  shootAllWidths,
+  signUp,
+  today,
+} from "./helpers";
 
 // These tests need a running Supabase (local `supabase start` in CI).
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
@@ -178,4 +194,81 @@ test("overtime by the time of day: 15–19 +50 % and 19–06 +100 %", async ({ b
   const pdf = await page.request.get(`${page.url()}/pdf`);
   expect(pdf.status()).toBe(200);
   await owner.context.close();
+});
+
+test("the accountant sees every employee's sheets and the finished jobs behind them", async ({ browser, baseURL }) => {
+  test.setTimeout(180_000);
+  const owner = await newPage(browser, baseURL!, "en");
+  const { page } = owner;
+  await signUp(page, newEmail("hours-all"), "Anna", "Berg");
+  await createCompany(page, newCompanyName("hours-all"));
+
+  // Anna drives a job today and the office approves 07:00–11:00.
+  await addMachine(page, { name: "Kranbil 1", rate: "1200", minHours: "", from: "15:00", percent: "50" });
+  await addCustomer(page, "Nordbygg AS");
+  const job = await addTodaysJob(page, { customer: "Nordbygg AS", vehicle: "Kranbil 1", driver: "Anna Berg", address: "Storgata 1, 0155 Oslo", contact: "Per, 912 34 567" });
+  await driveThrough(page);
+  await approveTime(page, job, { start: "07:00", end: "11:00", breaks: "0" });
+
+  // Her sheet for this month, with today written; not confirmed yet.
+  await page.goto("/app/hours");
+  await page.getByRole("button", { name: "Start the sheet" }).click();
+  await page.waitForURL(/\/app\/hours\/[0-9a-f-]{36}$/);
+  const form = page.locator("form").filter({ has: page.getByRole("button", { name: "Save the day" }) });
+  await form.getByLabel("Date").fill(today);
+  await form.getByLabel("Start").fill("07:00");
+  await form.getByLabel("End", { exact: true }).fill("11:00");
+  await form.getByLabel("Break (minutes)").fill("0");
+  await form.getByRole("button", { name: "Save the day" }).click();
+  await expect(page.getByRole("heading", { name: "Days (1)" })).toBeVisible();
+
+  // A driver has no way in; the accountant has.
+  const driver = await inviteColleague(browser, baseURL!, page, "driver", "Sander", "Lie");
+  await driver.page.goto("/app/hours");
+  await expect(driver.page.getByRole("link", { name: /Employees' hours sheets/ })).toHaveCount(0);
+  await driver.page.goto("/app/hours/all");
+  await driver.page.waitForURL((url) => url.pathname === "/app/hours");
+
+  const accountant = await inviteColleague(browser, baseURL!, page, "accountant", "Lise", "Regnskap");
+  const books = accountant.page;
+  await books.goto("/app/hours");
+  await books.getByRole("link", { name: /Employees' hours sheets/ }).click();
+  await books.waitForURL(/\/app\/hours\/all$/);
+  const card = books.getByRole("listitem").filter({ hasText: "Anna Berg" });
+  await expect(card).toContainText("Being filled in");
+  await expect(card).toContainText("4 h");
+  await expect(card).toContainText("1 job");
+  // The month before has none.
+  await books.getByRole("link", { name: "Previous month" }).click();
+  await expect(books.getByText("No hours sheets for this month.")).toBeVisible();
+  await books.getByRole("link", { name: "Next month" }).click();
+  for (const locale of locales) {
+    await accountant.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
+    await books.reload();
+    await shootAllWidths(books, "hours-all", locale);
+  }
+  await accountant.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
+  await books.reload();
+
+  // The sheet lists the job; a press opens it.
+  await books.getByRole("listitem").filter({ hasText: "Anna Berg" }).getByRole("link").click();
+  await books.waitForURL(/\/app\/hours\/[0-9a-f-]{36}$/);
+  const jobs = books.locator('section[aria-labelledby="jobs-title"]');
+  await expect(jobs.getByRole("heading", { name: "Finished jobs in the period (1)" })).toBeVisible();
+  await expect(jobs).toContainText("Nordbygg AS");
+  await expect(jobs).toContainText("4.00 h");
+  await expect(books.getByRole("button", { name: "Save the day" })).toHaveCount(0);
+  for (const locale of locales) {
+    await accountant.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
+    await books.reload();
+    await shootAllWidths(books, "hours-sheet-jobs", locale);
+  }
+  await accountant.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
+  await books.reload();
+  await jobs.getByRole("link", { name: /^Job 1 · / }).click();
+  await books.waitForURL(job);
+
+  await owner.context.close();
+  await driver.context.close();
+  await accountant.context.close();
 });
