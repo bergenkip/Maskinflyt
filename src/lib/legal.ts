@@ -4,7 +4,7 @@ export type Company = { name: string; orgNumber: string; address: string; email:
 
 export const COMPANY: Company = {
   name: "TODO company name",
-  orgNumber: "TODO",
+  orgNumber: "938 848 793",
   address: "TODO address",
   email: "hei@maskingo.no",
 };
