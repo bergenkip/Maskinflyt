@@ -5,7 +5,7 @@ import { exportRows, type ExportDocument, type ExportLine, type Period } from ".
 // The API returns at most 1000 rows at a time (supabase/config.toml max_rows).
 const PAGE = 1000;
 
-async function allPages<T>(page: (from: number, to: number) => PromiseLike<{ data: unknown[] | null; error: unknown }>) {
+export async function allPages<T>(page: (from: number, to: number) => PromiseLike<{ data: unknown[] | null; error: unknown }>) {
   const rows: T[] = [];
   for (let from = 0; ; from += PAGE) {
     const { data, error } = await page(from, from + PAGE - 1);

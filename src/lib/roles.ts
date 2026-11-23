@@ -144,3 +144,10 @@ export function canSeeInvoices(access: Access): boolean {
 export function canChooseMainMachines(access: Access): boolean {
   return plans(access);
 }
+
+// Mirrors the hour_sheets read policy: owners and admins, the accountant and
+// those with the invoicing right read every employee's hours sheets.
+export function canSeeAllHourSheets(access: Access): boolean {
+  const role = roleOf(access);
+  return role === "owner" || role === "admin" || role === "accountant" || has(access, "invoicing");
+}

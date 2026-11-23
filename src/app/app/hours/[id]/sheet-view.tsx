@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { AlertIcon, ArrowRightIcon, CheckCircleIcon, NoteIcon } from "@/components/icons";
+import { AlertIcon, ArrowRightIcon, CheckCircleIcon, NoteIcon, TruckIcon } from "@/components/icons";
+import { approvedMinutes, type DoneJob } from "@/lib/hour-jobs";
 import { decimalHours, hasLevel2, sheetTotals, splitDay, type HourRules, type SheetDay } from "@/lib/hours";
 import type { SheetRow } from "@/lib/hours-server";
 import { deleteSheet, removeDay } from "../actions";
@@ -18,6 +19,7 @@ export async function HourSheetView({
   own,
   accountantEmail,
   timeZone,
+  jobs,
 }: {
   sheet: SheetRow;
   rows: SheetDay[];
@@ -25,8 +27,10 @@ export async function HourSheetView({
   own: boolean;
   accountantEmail: string | null;
   timeZone: string;
+  // The finished jobs in the period, for those who read every sheet; null when they could not be loaded.
+  jobs?: DoneJob[] | null;
 }) {
-  const [t, format] = await Promise.all([getTranslations("Hours"), getFormatter()]);
+  const [t, tAll, format] = await Promise.all([getTranslations("Hours"), getTranslations("HourSheetsAll"), getFormatter()]);
   const submitted = sheet.status === "submitted";
   const number = (value: number) => format.number(value, { maximumFractionDigits: 2 });
   const hours = (minutes: number) => format.number(decimalHours(minutes), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -54,11 +58,12 @@ export async function HourSheetView({
     <div className="grid max-w-2xl gap-8">
       <div className="grid gap-2">
         <Link
-          href="/app/hours"
+          // Someone else's sheet leads back to the employees' sheets of its month.
+          href={own ? "/app/hours" : `/app/hours/all?month=${sheet.period_from.slice(0, 7)}`}
           className={`-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-lg px-2 font-medium text-accent hover:bg-accent-soft ${focusRing}`}
         >
           <ArrowRightIcon className="size-5 rotate-180" />
-          {t("back")}
+          {own ? t("back") : tAll("title")}
         </Link>
         <h1 className="text-3xl font-semibold tracking-tight">{t("period", { from: day(sheet.period_from), to: day(sheet.period_to) })}</h1>
         {sheet.employee_name && !own && <p className="font-medium">{sheet.employee_name}</p>}
@@ -164,6 +169,63 @@ export async function HourSheetView({
           </dl>
         )}
       </section>
+
+      {jobs !== undefined && (
+        <section aria-labelledby="jobs-title" className="grid gap-3">
+          <div className="grid gap-1">
+            <h2 id="jobs-title" className="text-lg font-semibold">
+              {t("jobsTitle", { count: jobs?.length ?? 0 })}
+            </h2>
+            <p className="text-sm text-muted">{t("jobsHint")}</p>
+          </div>
+          {jobs === null ? (
+            <p role="alert" className="flex items-start gap-2 rounded-lg border border-danger/40 bg-danger-soft p-3 font-medium text-danger">
+              <AlertIcon className="mt-0.5 size-5 shrink-0" />
+              {t("submitErrors.unknown")}
+            </p>
+          ) : jobs.length === 0 ? (
+            <p className="rounded-xl border border-dashed border-border p-4 text-muted">{t("noJobs")}</p>
+          ) : (
+            <ul className="divide-y divide-border rounded-xl border border-border bg-surface">
+              {jobs.map((job) => {
+                const approved = approvedMinutes(job);
+                const time = (iso: string) => format.dateTime(new Date(iso), { hour: "2-digit", minute: "2-digit", hour12: false, timeZone });
+                return (
+                  <li key={job.id}>
+                    <Link
+                      href={`/app/jobs/${job.id}`}
+                      className={`group grid grid-cols-[1fr_auto] items-start gap-x-4 gap-y-1 p-4 hover:bg-background ${focusRing}`}
+                    >
+                      <span className="grid min-w-0 gap-0.5">
+                        <span className="flex items-center gap-1.5 font-semibold">
+                          <TruckIcon className="size-4 shrink-0 text-muted" />
+                          <span className="first-letter:uppercase">
+                            {t("job", { number: job.number })} ·{" "}
+                            {format.dateTime(new Date(job.starts_at), { weekday: "short", day: "numeric", month: "short", timeZone })}
+                          </span>
+                        </span>
+                        <span className="text-sm text-muted tabular-nums">
+                          {time(job.starts_at)}–{time(job.ends_at)}
+                        </span>
+                        {job.customers?.name && <span className="text-sm [overflow-wrap:anywhere]">{job.customers.name}</span>}
+                        <span className="text-sm text-muted [overflow-wrap:anywhere]">{job.address}</span>
+                      </span>
+                      <span className="flex items-center gap-1">
+                        {approved === null ? (
+                          <span className="text-sm text-muted">{t("notApproved")}</span>
+                        ) : (
+                          <span className="font-semibold tabular-nums">{t("hoursTotal", { hours: hours(approved) })}</span>
+                        )}
+                        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+      )}
 
       {editable && (
         <section aria-labelledby="confirm-title" className={sectionClass}>

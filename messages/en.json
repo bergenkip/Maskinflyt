@@ -1336,7 +1336,14 @@
     "resend": "Send again",
     "openPdf": "Open the PDF",
     "rulesClock": "Overtime: {from}–{to} +{percent} %",
-    "rulesClock2": "{from}–{to} +{percent} %"
+    "rulesClock2": "{from}–{to} +{percent} %",
+    "allLink": "Employees' hours sheets",
+    "allLinkHint": "Every employee's sheets and the jobs they finished.",
+    "jobsTitle": "Finished jobs in the period ({count})",
+    "jobsHint": "Jobs marked as done where this person was the driver.",
+    "noJobs": "No finished jobs in this period.",
+    "job": "Job {number}",
+    "notApproved": "Time not approved"
   },
   "HourSettings": {
     "title": "Overtime and accountant",
@@ -1380,5 +1387,14 @@
     "windowHint": "An end before the start runs past midnight, like 19:00–06:00.",
     "clockBreak": "The break comes off the normal hours first.",
     "level2ClockHint": "For example from 19:00 to 06:00 +100 %. Where it overlaps the first level, this one counts. Leave empty if not used."
+  },
+  "HourSheetsAll": {
+    "title": "Employees' hours sheets",
+    "lead": "The sheets that cover the month, with the finished jobs in each period.",
+    "back": "Hours",
+    "prev": "Previous month",
+    "next": "Next month",
+    "empty": "No hours sheets for this month.",
+    "jobs": "{count, plural, one {# job} other {# jobs}}"
   }
 }
