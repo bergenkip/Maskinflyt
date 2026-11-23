@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
-import { planPrice, planSeats, plans, type Plan } from "@/lib/billing";
-import { BEDRIFT_EXTRA_PERSON_ORE, VAT_REGISTERED } from "@/lib/pricing";
+import { VAT_REGISTERED, planPrice, planSeats, plans, type Plan } from "@/lib/billing";
+import { BEDRIFT_EXTRA_PERSON_ORE } from "@/lib/pricing";
 import { SITE_NAME, SITE_URL, publicPageMetadata } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {

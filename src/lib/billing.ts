@@ -17,7 +17,12 @@ export function isInterval(value: unknown): value is Interval {
 // People included (the same as private.plan_seats; Bedrift's people past 40 are billed one by one in stage 14b).
 export const planSeats: Record<Plan, number> = { solo: 2, start: 5, pro: 15, bedrift: 40 };
 
-// Price a month in øre, without VAT (MVA).
+// MaskinGo is not in the VAT (MVA) register yet (Li, 2026-11-23: it will be at
+// 50 000 kr turnover). While false, the prices are final and no VAT is added;
+// when true, the screens say "eks. mva" and Stripe adds STRIPE_TAX_RATE_ID.
+export const VAT_REGISTERED = false;
+
+// Price a month in øre, before any VAT (MVA).
 const monthly: Record<Plan, number> = { solo: 29_000, start: 79_000, pro: 179_000, bedrift: 349_000 };
 // A year costs ten months.
 export const YEAR_MONTHS = 10;

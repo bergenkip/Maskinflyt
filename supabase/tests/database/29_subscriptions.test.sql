@@ -2,7 +2,7 @@
 -- subscription and nobody writes it from the app; a plan caps the number of
 -- people. All data is synthetic (.test e-mails).
 begin;
-select plan(13);
+select plan(19);
 
 insert into auth.users (id, email, email_confirmed_at)
 select ('00000000-0000-0000-0000-00000000000' || n)::uuid, 'person' || n || '@fjellkran.test', now() from generate_series(1, 7) n;
@@ -57,6 +57,25 @@ values ('00000000-0000-0000-0000-000000000009', 'person9@fjellkran.test', now(),
 select is((select count(*)::int from public.memberships where user_id = '00000000-0000-0000-0000-000000000009'), 0, 'a full plan does not take a new person at sign-up');
 select is((select accepted_at from public.invitations where token_hash = private.hash_token('f' || repeat('2', 63))), null, '… and the invitation stays open');
 select throws_ok($$ update public.subscriptions set stripe_subscription_id = 'sub_1', plan = null $$, '23514', null, 'a paid subscription always has a plan');
+
+-- Only the server's billing token writes what Stripe says.
+insert into private.billing_writer (token_hash) values (private.hash_token('t' || repeat('9', 47)));
+set local role anon;
+select throws_ok($$ select public.save_subscription('wrong-token-' || repeat('x', 40), 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'bedrift', 'year', 'active', now(), false, 'cus_A1', 'sub_A1') $$,
+  '42501', null, 'a wrong token writes nothing');
+select throws_ok($$ select public.save_subscription(null, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'bedrift', 'year', 'active', now(), false, 'cus_A1', 'sub_A1') $$,
+  '42501', null, '… nor no token');
+select lives_ok($$ select public.save_subscription('t' || repeat('9', 47), 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'pro', 'year', 'active', now() + interval '1 year', false, 'cus_A1', 'sub_A1') $$,
+  'the server saves a paid subscription');
+select lives_ok($$ select public.save_subscription('t' || repeat('9', 47), 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'start', 'month', 'canceled', now(), false, 'cus_A1', 'sub_OLD') $$,
+  'an older, ended subscription arrives late');
+reset role;
+select results_eq($$ select plan, status, stripe_subscription_id from public.subscriptions where organization_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' $$,
+  $$ values ('pro'::text, 'active'::text, 'sub_A1'::text) $$, '… and does not replace the running one');
+set local role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-000000000001');
+select throws_ok($$ select * from private.billing_writer $$, '42501', null, 'members cannot read the token''s hash');
+reset role;
 
 select * from finish();
 rollback;

@@ -1621,7 +1621,9 @@
       "ended": "The subscription has ended.",
       "action": "Choose a plan",
       "fix": "Update the card"
-    }
+    },
+    "plansLeadNoVat": "No VAT (MVA) is added.",
+    "noVat": "No VAT added"
   },
   "Pricing": {
     "metaTitle": "Pricing · MaskinGo",
