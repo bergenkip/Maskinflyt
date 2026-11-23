@@ -254,7 +254,9 @@ test("the accountant sees every employee's sheets and the finished jobs behind t
   await books.reload();
 
   // The sheet lists the job; a press opens it.
-  await books.getByRole("listitem").filter({ hasText: "Anna Berg" }).getByRole("link").click();
+  const sheetLink = books.getByRole("main").getByRole("link").filter({ hasText: "Anna Berg" });
+  await expect(sheetLink, `Anna's sheet on ${books.url()}`).toBeVisible();
+  await sheetLink.click();
   await books.waitForURL(/\/app\/hours\/[0-9a-f-]{36}$/);
   const jobs = books.locator('section[aria-labelledby="jobs-title"]');
   await expect(jobs.getByRole("heading", { name: "Finished jobs in the period (1)" })).toBeVisible();

@@ -44,7 +44,8 @@ test("a forgotten password is replaced through an e-mailed link", async ({ brows
   await expect(other.page.getByRole("heading", { level: 1 })).toHaveText("Choose a new password");
   await expect(other.page.getByText(email)).toBeVisible();
   // The link's tokens do not stay in the address bar.
-  expect(new URL(other.page.url()).hash).toBe("");
+  // (The page removes them right after it has read them, so wait for that.)
+  await expect(other.page).toHaveURL((url) => url.hash === "");
   await other.page.getByLabel("New password").fill("short");
   await other.page.getByRole("button", { name: "Save new password" }).click();
   await expect(other.page.getByText("The password must be at least 10 characters.")).toBeVisible();
