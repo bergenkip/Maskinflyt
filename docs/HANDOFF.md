@@ -345,7 +345,7 @@ Tai ne teisininko patikra: prieš tikrus klientus vis tiek rekomenduojama advoka
 ## 14a etapas: MaskinGo abonementas (2026-11-23)
 Planai (Li sprendimas 2026-11-23), kainos be MVA, metams 2 mėn. nemokamai, 30 d. bandymas be kortelės:
 Solo 1–2 žm. 290 kr, Start iki 5 – 790 kr, Pro iki 15 – 1 790 kr, Bedrift iki 40 – 3 490 kr (+79 kr už žmogų virš 40: 14b).
-MaskinGo dar ne MVA registre (ribą 50 000 kr pasiekus, Vercel'yje įrašyti `STRIPE_TAX_RATE_ID` su 25 %).
+MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), ekranai sako „mva neskaičiuojamas“. Pasiekus 50 000 kr: `true` ir Vercel'yje `STRIPE_TAX_RATE_ID` su 25 %.
 - Migracija `20261123120000_subscriptions.sql`: lentelė `subscriptions` (viena įmonei; nariai tik skaito, rašo tik serveris
   per `save_subscription` ir `save_stripe_customer`, kurie priima tik serverio `BILLING_WRITE_TOKEN`; lentelėje `private.billing_writer` laikoma tik jo maiša), trigeris naujai įmonei duoda 30 d. bandymą, `private.plan_seats`, trigeris `memberships_check_seats`
   (klaida 53400 / `seat_limit`), `public.seat_usage(org)`. Registruojantis per kvietimą, kai planas pilnas, paskyra sukuriama,

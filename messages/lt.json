@@ -1460,6 +1460,8 @@
       "ended": "Abonementas baigėsi.",
       "action": "Pasirinkti planą",
       "fix": "Atnaujinti kortelę"
-    }
+    },
+    "plansLeadNoVat": "PVM (MVA) neskaičiuojamas.",
+    "noVat": "Be PVM priedo"
   }
 }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { AlertIcon, CheckCircleIcon, ClockIcon, UsersIcon, XCircleIcon } from "@/components/icons";
-import { planFits, planPrice, plans, planSeats, type BillingState, type Interval, type Plan } from "@/lib/billing";
+import { planFits, planPrice, plans, planSeats, VAT_REGISTERED, type BillingState, type Interval, type Plan } from "@/lib/billing";
 import { ChoosePlanForm, PortalForm } from "./billing-forms";
 
 export type BillingViewProps = {
@@ -118,7 +118,7 @@ export async function BillingView({ state, taken, seats, interval, manages, conf
             <h2 id="billing-plans" className="text-xl font-semibold">
               {t("plansTitle")}
             </h2>
-            <p className="text-muted">{t("plansLead")}</p>
+            <p className="text-muted">{t(VAT_REGISTERED ? "plansLead" : "plansLeadNoVat")}</p>
           </div>
           <nav aria-label={t("intervalLabel")} className="grid w-full grid-cols-2 gap-1 rounded-lg border border-border bg-surface p-1 sm:w-auto">
             {(["month", "year"] as const).map((value) => (
@@ -165,7 +165,7 @@ export async function BillingView({ state, taken, seats, interval, manages, conf
                     <span className="text-base font-normal text-muted"> / {t(interval === "month" ? "month" : "year")}</span>
                   </p>
                   <p className="text-sm text-muted">
-                    {interval === "year" ? t("yearNote", { price: money(planPrice(plan, "month")) }) : t("exVat")}
+                    {interval === "year" ? t("yearNote", { price: money(planPrice(plan, "month")) }) : t(VAT_REGISTERED ? "exVat" : "noVat")}
                   </p>
                 </div>
                 <div className="mt-auto grid gap-2">

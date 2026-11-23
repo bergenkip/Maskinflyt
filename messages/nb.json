@@ -1460,6 +1460,8 @@
       "ended": "Abonnementet er avsluttet.",
       "action": "Velg plan",
       "fix": "Oppdater kortet"
-    }
+    },
+    "plansLeadNoVat": "Det kommer ikke mva i tillegg.",
+    "noVat": "Ingen mva i tillegg"
   }
 }
