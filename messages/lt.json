@@ -1336,7 +1336,14 @@
     "resend": "Siųsti dar kartą",
     "openPdf": "Atidaryti PDF",
     "rulesClock": "Viršvalandžiai: {from}–{to} +{percent} %",
-    "rulesClock2": "{from}–{to} +{percent} %"
+    "rulesClock2": "{from}–{to} +{percent} %",
+    "allLink": "Darbuotojų valandų lapai",
+    "allLinkHint": "Visų darbuotojų lapai ir jų atlikti darbai.",
+    "jobsTitle": "Atlikti darbai per laikotarpį ({count})",
+    "jobsHint": "Darbai, pažymėti kaip atlikti, kuriuose šis žmogus buvo vairuotojas.",
+    "noJobs": "Per šį laikotarpį atliktų darbų nėra.",
+    "job": "Darbas {number}",
+    "notApproved": "Laikas nepatvirtintas"
   },
   "HourSettings": {
     "title": "Viršvalandžiai ir buhalteris",
@@ -1538,5 +1545,14 @@
         }
       ]
     }
+  },
+  "HourSheetsAll": {
+    "title": "Darbuotojų valandų lapai",
+    "lead": "Mėnesio valandų lapai su kiekvieno laikotarpio atliktais darbais.",
+    "back": "Valandos",
+    "prev": "Ankstesnis mėnuo",
+    "next": "Kitas mėnuo",
+    "empty": "Šio mėnesio valandų lapų nėra.",
+    "jobs": "{count, plural, one {# darbas} few {# darbai} other {# darbų}}"
   }
 }

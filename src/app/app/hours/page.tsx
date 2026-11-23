@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { ArrowRightIcon, CheckCircleIcon, ClockIcon, SettingsIcon } from "@/components/icons";
+import { ArrowRightIcon, CheckCircleIcon, ClockIcon, SettingsIcon, UsersIcon } from "@/components/icons";
 import { decimalHours, ruleColumns, toHourRules, type HourRules } from "@/lib/hours";
 import { sheetColumns, type SheetRow } from "@/lib/hours-server";
 import { monthPeriod } from "@/lib/invoice-export";
 import { canEditInvoiceSettings } from "@/lib/invoice-settings";
 import { getCurrentMembership } from "@/lib/membership";
+import { canSeeAllHourSheets } from "@/lib/roles";
 import { createClient, getUserId } from "@/lib/supabase/server";
 import { NewSheetForm } from "./hours-forms";
 import { rulesText } from "./rules";
@@ -49,6 +50,20 @@ export default async function HoursPage() {
         <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
         <p className="text-muted">{t("lead")}</p>
       </div>
+
+      {canSeeAllHourSheets(membership) && (
+        <Link
+          href="/app/hours/all"
+          className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-4 hover:border-accent/60 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          <UsersIcon className="size-6 shrink-0 text-accent" />
+          <span className="grid min-w-0 flex-1 gap-0.5">
+            <span className="font-semibold">{t("allLink")}</span>
+            <span className="text-sm text-muted">{t("allLinkHint")}</span>
+          </span>
+          <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+        </Link>
+      )}
 
       <div className="grid gap-2 rounded-xl border border-border bg-surface p-4">
         <p className="flex items-start gap-2 font-medium">

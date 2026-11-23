@@ -1,5 +1,7 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
+import { jobSearchRange, type DoneJob } from "./hour-jobs";
+import { allPages } from "./invoice-export-server";
 import { ruleColumns, sheetFileName, toHourRules, type SheetDay } from "./hours";
 import { hoursPdf, type ConfirmedSheet } from "./pdf/hours-pdf";
 
@@ -62,4 +64,26 @@ export async function getSheetPdf(sheetId: string): Promise<{ sheet: ConfirmedSh
   };
   const pdf = await hoursPdf(sheet, (days ?? []) as SheetDay[]);
   return { sheet, pdf, filename: sheetFileName(sheet.employee_name, row.period_from, row.period_to) };
+}
+
+// The finished jobs these people drove on the local days from–to (RLS: the
+// office reads all jobs, the accountant the finished ones). Null when they
+// could not be loaded.
+export async function loadDoneJobs(organizationId: string, users: string[], from: string, to: string): Promise<DoneJob[] | null> {
+  if (users.length === 0) return [];
+  const supabase = await createClient();
+  const range = jobSearchRange(from, to);
+  return allPages<DoneJob>((first, last) =>
+    supabase
+      .from("jobs")
+      .select("id, number, starts_at, ends_at, address, driver_id, customers(name), job_times(worked_minutes, created_at)")
+      .eq("organization_id", organizationId)
+      .eq("status", "done")
+      .in("driver_id", users)
+      .gte("starts_at", range.from)
+      .lt("starts_at", range.to)
+      .order("starts_at")
+      .order("id")
+      .range(first, last),
+  );
 }

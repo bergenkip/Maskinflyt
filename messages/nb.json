@@ -1336,7 +1336,14 @@
     "resend": "Send på nytt",
     "openPdf": "Åpne PDF",
     "rulesClock": "Overtid: kl. {from}–{to} +{percent} %",
-    "rulesClock2": "kl. {from}–{to} +{percent} %"
+    "rulesClock2": "kl. {from}–{to} +{percent} %",
+    "allLink": "Ansattes timelister",
+    "allLinkHint": "Alle ansattes timelister og jobbene de fullførte.",
+    "jobsTitle": "Fullførte jobber i perioden ({count})",
+    "jobsHint": "Jobber merket som utført der denne personen var sjåfør.",
+    "noJobs": "Ingen fullførte jobber i perioden.",
+    "job": "Jobb {number}",
+    "notApproved": "Tid ikke godkjent"
   },
   "HourSettings": {
     "title": "Overtid og regnskapsfører",
@@ -1538,5 +1545,14 @@
         }
       ]
     }
+  },
+  "HourSheetsAll": {
+    "title": "Ansattes timelister",
+    "lead": "Timelistene som dekker måneden, med de fullførte jobbene i hver periode.",
+    "back": "Timer",
+    "prev": "Forrige måned",
+    "next": "Neste måned",
+    "empty": "Ingen timelister denne måneden.",
+    "jobs": "{count, plural, one {# jobb} other {# jobber}}"
   }
 }
