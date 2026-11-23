@@ -245,6 +245,8 @@ test("the accountant sees every employee's sheets and the finished jobs behind t
   await books.getByRole("link", { name: "Previous month" }).click();
   await expect(books.getByText("No hours sheets for this month.")).toBeVisible();
   await books.getByRole("link", { name: "Next month" }).click();
+  // Back on this month before the photos reload the page.
+  await expect(card).toContainText("Being filled in");
   for (const locale of locales) {
     await accountant.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
     await books.reload();
