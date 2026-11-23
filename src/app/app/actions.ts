@@ -86,7 +86,7 @@ export async function saveLanguage(_prev: LanguageState, formData: FormData): Pr
   return { status: "saved" };
 }
 
-export type AcceptState = { error?: "notFound" | "alreadyMember" | "unknown" };
+export type AcceptState = { error?: "notFound" | "alreadyMember" | "seatLimit" | "unknown" };
 
 export async function acceptInvitation(_prev: AcceptState, formData: FormData): Promise<AcceptState> {
   const token = formData.get("token");
@@ -97,6 +97,7 @@ export async function acceptInvitation(_prev: AcceptState, formData: FormData): 
   if (error) {
     if (error.hint === "not_found") return { error: "notFound" };
     if (error.hint === "already_member") return { error: "alreadyMember" };
+    if (error.hint === "seat_limit") return { error: "seatLimit" };
     return { error: "unknown" };
   }
 

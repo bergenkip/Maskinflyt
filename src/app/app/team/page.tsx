@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+import { AlertIcon, UsersIcon } from "@/components/icons";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { getCurrentMembership } from "@/lib/membership";
 import {
   assignableRoles,
   canChooseMainMachines,
   canGrantPermissions,
+  canManageBilling,
   canManage,
   grantablePermissions,
   invitableRoles,
@@ -43,7 +46,7 @@ export default async function TeamPage() {
   const managesPeople = assignableRoles(myRole).length > 0;
   const mayChooseMachines = canChooseMainMachines(membership);
 
-  const [members, invitations, memberships, vehicles] = await Promise.all([
+  const [members, invitations, memberships, vehicles, usage] = await Promise.all([
     supabase.rpc("list_members", { org: organization.id }),
     mayInvite
       ? supabase
@@ -60,7 +63,11 @@ export default async function TeamPage() {
     mayChooseMachines
       ? supabase.from("vehicles").select("id, name, active").eq("organization_id", organization.id).order("name")
       : Promise.resolve({ data: [] as Vehicle[] }),
+    supabase.rpc("seat_usage", { org: organization.id }).single(),
   ]);
+  // How many people the plan includes (null: no limit, as in the trial).
+  const seatInfo = usage.data as { taken: number; seats: number | null } | null;
+  const full = !!seatInfo && seatInfo.seats !== null && seatInfo.taken >= seatInfo.seats;
   const rows = (memberships.data ?? []) as MembershipRow[];
   const mainMachine = new Map(rows.map((row) => [row.id, row.main_vehicle_id ?? ""]));
   // In a fixed order, whatever order they were saved in.
@@ -90,6 +97,22 @@ export default async function TeamPage() {
             <p className="text-muted">{t("inviteLead")}</p>
           </div>
           {!managesPeople && <p className="text-sm text-muted">{t("readOnlyInvite")}</p>}
+          {seatInfo?.seats != null && (
+            <p className={`flex items-start gap-2 ${full ? "font-medium text-danger" : "text-muted"}`}>
+              {full ? <AlertIcon className="mt-0.5 size-5 shrink-0" /> : <UsersIcon className="mt-0.5 size-5 shrink-0" />}
+              <span>
+                {full ? t("seatsFull", { seats: seatInfo.seats }) : t("seatsUsed", { taken: seatInfo.taken, seats: seatInfo.seats })}
+                {full && canManageBilling(membership) && (
+                  <>
+                    {" "}
+                    <Link href="/app/billing" className="font-semibold underline underline-offset-4">
+                      {t("seatsUpgrade")}
+                    </Link>
+                  </>
+                )}
+              </span>
+            </p>
+          )}
           <InviteForm roles={roleOptions(invitableRoles(membership))} />
         </section>
       ) : (

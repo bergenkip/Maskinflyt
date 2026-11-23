@@ -341,3 +341,22 @@ pateikti duomenis, jokių automatizuotų sprendimų, ištrynimas per 30 d., sąs
 darbuotojų informavimas pagal arbeidsmiljøloven, teisės į paslaugą, sustabdymas, force majeure, 90 d. duomenų išdavimas,
 ginčai), nauja `/databehandleravtale` pagal BDAR 28 str. (subtvarkytojai su 30 d. įspėjimu, pažeidimai per 48 val.).
 Tai ne teisininko patikra: prieš tikrus klientus vis tiek rekomenduojama advokato peržiūra.
+
+## 14a etapas: MaskinGo abonementas (2026-11-23)
+Planai (Li sprendimas 2026-11-23), kainos be MVA, metams 2 mėn. nemokamai, 30 d. bandymas be kortelės:
+Solo 1–2 žm. 290 kr, Start iki 5 – 790 kr, Pro iki 15 – 1 790 kr, Bedrift iki 40 – 3 490 kr (+79 kr už žmogų virš 40: 14b).
+MaskinGo dar ne MVA registre (ribą 50 000 kr pasiekus, Vercel'yje įrašyti `STRIPE_TAX_RATE_ID` su 25 %).
+- Migracija `20261123120000_subscriptions.sql`: lentelė `subscriptions` (viena įmonei; nariai tik skaito, rašo tik serveris
+  su `SUPABASE_SECRET_KEY`), trigeris naujai įmonei duoda 30 d. bandymą, `private.plan_seats`, trigeris `memberships_check_seats`
+  (klaida 53400 / `seat_limit`), `public.seat_usage(org)`. Registruojantis per kvietimą, kai planas pilnas, paskyra sukuriama,
+  kvietimas lieka atviras. Bandymo metu ir Bedrift plane ribos nėra.
+- Stripe (`stripe@23.1.0`): `src/lib/billing.ts` (planai, kainos øre, būsena), `src/lib/stripe-server.ts` (kainos randamos pagal
+  `lookup_key` `maskingo_<planas>_<month|year>` arba sukuriamos), veiksmai `src/app/app/billing/actions.ts` (Checkout,
+  plano keitimas su perskaičiavimu, savitarnos portalas; tik savininkas ir administratorius su antru žingsniu),
+  webhook `src/app/api/stripe/webhook/route.ts` (tikrina parašą, pasiima dabartinę prenumeratą iš Stripe).
+- Ekranai: `/app/billing` („Abonementas“, nuoroda Nustatymuose), juosta virš puslapių paskutinę bandymo savaitę ir esant
+  mokėjimo bėdai (tik savininkui ir administratoriui), komandos puslapyje „X iš Y žmonių“, pilnam planui kvietimas neleidžiamas.
+- Aplinkos kintamieji Vercel'yje: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SECRET_KEY`, vėliau `STRIPE_TAX_RATE_ID`.
+  Kol jų nėra, puslapis sako „Mokėjimai dar neįjungti“ ir mygtukų nerodo.
+- Testai: `29_subscriptions.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts` (CI dabar paleidžia ir `e2e/hours.spec.ts`).
+- 14b: tik skaitymo režimas neapmokėjus, Bedrift papildomi žmonės per Stripe kiekį.
