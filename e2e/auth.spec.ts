@@ -180,6 +180,9 @@ for (const locale of locales) {
     await page.goto("/login");
     await shootAllWidths(page, "login", locale);
     await page.goto("/signup");
+    // Sign-up links to the terms and the privacy policy.
+    await expect(page.locator('form a[href="/vilkar"]')).toBeVisible();
+    await expect(page.locator('form a[href="/personvern"]')).toBeVisible();
     await shootAllWidths(page, "signup", locale);
 
     const email = newEmail(`shots-${locale}`);

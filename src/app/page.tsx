@@ -3,7 +3,9 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { COMPANY } from "@/lib/legal";
 import { SITE_NAME, SITE_URL, publicPageMetadata } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,7 +34,7 @@ const featureIcons: Record<(typeof features)[number], ReactNode> = {
 };
 
 // The company's own inbox (Resend → Inboxes, see docs/HANDOFF.md).
-const CONTACT_EMAIL = "hei@maskingo.no";
+const CONTACT_EMAIL = COMPANY.email;
 
 const primaryButton =
   "flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
@@ -58,7 +60,6 @@ function Icon({ children, className }: { children: ReactNode; className: string 
 
 export default function Home() {
   const t = useTranslations("Home");
-  const tFooter = useTranslations("Footer");
   const tNav = useTranslations("Nav");
   const tMeta = useTranslations("Metadata");
   const locale = useLocale();
@@ -192,17 +193,7 @@ export default function Home() {
           </section>
         </main>
 
-        <footer className="border-t border-border pb-[env(safe-area-inset-bottom)]">
-          <div className="mx-auto flex max-w-5xl flex-col gap-1 px-4 py-6 text-sm text-muted sm:flex-row sm:justify-between sm:px-6">
-            <p>{tFooter("text")}</p>
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="-my-3 flex min-h-11 items-center self-start underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:self-auto"
-            >
-              {CONTACT_EMAIL}
-            </a>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

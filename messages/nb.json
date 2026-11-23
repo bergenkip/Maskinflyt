@@ -420,7 +420,8 @@
     "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den for å fullføre, på hvilken som helst enhet. Du er allerede medlem av firmaet."
   },
   "Footer": {
-    "text": "MaskinGo · Laget for norske entreprenører"
+    "text": "MaskinGo · Laget for norske entreprenører",
+    "linksLabel": "Lenker"
   },
   "Mfa": {
     "verifyTitle": "Bekreft at det er deg",
@@ -992,6 +993,271 @@
     "invoice": "Faktura {number}",
     "creditNote": "Kreditnota {number} for faktura {invoice}",
     "more": "{count} til ligger i filene."
+  },
+  "Legal": {
+    "updated": "Sist oppdatert {date}",
+    "draftNote": "Dette er et utkast som skal gjennomgås av en jurist før MaskinGo tas i bruk med ekte kundedata.",
+    "privacy": {
+      "title": "Personvernerklæring",
+      "lead": "Her forklarer vi hvilke personopplysninger MaskinGo behandler, hvorfor, og hvilke rettigheter du har.",
+      "sections": [
+        {
+          "title": "Hvem er ansvarlig",
+          "body": [
+            "{company} (org.nr. {orgNumber}), {address}, er behandlingsansvarlig for opplysninger om brukerkontoer og besøkende på maskingo.no.",
+            "Spørsmål om personvern sendes til {email}."
+          ]
+        },
+        {
+          "title": "Opplysninger bedriften legger inn",
+          "body": [
+            "En bedrift som bruker MaskinGo legger inn opplysninger om sine kunder, ansatte og oppdrag. For disse er bedriften behandlingsansvarlig, og {company} er databehandler etter databehandleravtalen. Vi bruker dem bare for å levere tjenesten til bedriften.",
+            "Vil du se, rette eller slette slike opplysninger, kontakter du bedriften som har lagt dem inn."
+          ]
+        },
+        {
+          "title": "Hvilke opplysninger vi behandler",
+          "body": [
+            "Konto: navn, e-postadresse, språkvalg, rolle og hvilken bedrift du tilhører. Passordet lagres bare som en kryptografisk hash.",
+            "Bedrift: navn, organisasjonsnummer og fakturaopplysninger.",
+            "Innlogging: for eiere og administratorer lagrer vi tidspunkt og nettlesertype ved det ekstra innloggingssteget på e-post.",
+            "Oppdrag: tider fra trykkene På vei, Ankommet og Ferdig, og bilder og signaturer som lastes opp. Vi samler ikke inn posisjon (GPS).",
+            "Fakturaer: innholdet i fakturaer og hvem de er sendt til på e-post.",
+            "Drift: leverandørene våre logger IP-adresse og tidspunkt for å holde tjenesten sikker og i gang."
+          ]
+        },
+        {
+          "title": "Formål og rettslig grunnlag",
+          "body": [
+            "Vi behandler opplysningene for å levere tjenesten etter avtalen med deg eller bedriften din (personvernforordningen art. 6 nr. 1 b).",
+            "Sikkerhetslogger og beskyttelse mot misbruk bygger på vår berettigede interesse i en sikker tjeneste (art. 6 nr. 1 f).",
+            "Vi bruker ikke opplysningene til markedsføring, selger dem ikke og bruker dem ikke til å trene kunstig intelligens."
+          ]
+        },
+        {
+          "title": "Hvem som ser opplysningene",
+          "body": [
+            "Andre brukere i samme bedrift ser navnet ditt og det rollen deres gir tilgang til. Brukere i andre bedrifter ser ingenting av dette.",
+            "Leverandørene våre behandler opplysningene på våre vegne, se neste punkt. Vi utleverer ellers bare opplysninger når loven krever det."
+          ]
+        },
+        {
+          "title": "Leverandører",
+          "body": [
+            "Supabase: database, innlogging og filer. Lagret i Stockholm, Sverige.",
+            "Vercel: drift av nettsiden. Serverfunksjonene kjører i Stockholm, Sverige.",
+            "Resend: sending av e-post, i EUs region.",
+            "Alle tre er amerikanske selskaper. Opplysningene lagres i EU/EØS, men leverandøren kan i enkelte tilfeller få tilgang fra USA. Slik overføring bygger på EUs standardkontraktsbestemmelser eller EU–US Data Privacy Framework."
+          ]
+        },
+        {
+          "title": "Hvor lenge vi lagrer",
+          "body": [
+            "Kontoopplysninger lagres så lenge kontoen finnes. Ber du om sletting, sletter vi kontoen innen 30 dager.",
+            "Fakturaer som en bedrift utsteder i MaskinGo kan ikke slettes mens bedriften bruker tjenesten. Bedriften er selv ansvarlig for å oppbevare regnskapsbilag i 5 år (bokføringsloven § 13)."
+          ]
+        },
+        {
+          "title": "Informasjonskapsler",
+          "body": [
+            "Vi bruker bare nødvendige informasjonskapsler: for å holde deg innlogget, og for å huske språk og lyst eller mørkt tema (i ett år). Vi bruker ikke analyse- eller reklamekapsler, og derfor ber vi ikke om samtykke (ekomloven § 3-15)."
+          ]
+        },
+        {
+          "title": "Må du gi opplysninger?",
+          "body": [
+            "Navn og e-postadresse er nødvendig for å opprette en konto. Uten dem kan du ikke bruke MaskinGo.",
+            "Vi tar ikke automatiserte avgjørelser om deg og driver ikke profilering."
+          ]
+        },
+        {
+          "title": "Dine rettigheter",
+          "body": [
+            "Du kan be om innsyn, retting, sletting, begrensning og dataportabilitet, og du kan protestere mot behandling som bygger på berettiget interesse. Skriv til {email}, så svarer vi innen 30 dager.",
+            "Du kan også klage til Datatilsynet (datatilsynet.no)."
+          ]
+        },
+        {
+          "title": "Endringer",
+          "body": [
+            "Ved vesentlige endringer i denne erklæringen varsler vi brukerne på e-post eller i appen før endringen gjelder."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Vilkår for bruk",
+      "lead": "Disse vilkårene gjelder når en bedrift og dens brukere tar i bruk MaskinGo.",
+      "sections": [
+        {
+          "title": "Avtalepartene",
+          "body": [
+            "Tjenesten leveres av {company} (org.nr. {orgNumber}), {address}. Avtalen inngås med bedriften som oppretter firmaet i MaskinGo. Den som oppretter firmaet bekrefter at hen kan binde bedriften.",
+            "MaskinGo er laget for næringsdrivende og tilbys ikke til forbrukere."
+          ]
+        },
+        {
+          "title": "Kontoer og tilgang",
+          "body": [
+            "Hver bruker har sin egen konto og holder passordet hemmelig. Bedriftens eiere og administratorer bestemmer hvem som får tilgang og hvilken rolle de får, og er ansvarlige for å fjerne tilgang når noen slutter."
+          ]
+        },
+        {
+          "title": "Bedriftens ansvar",
+          "body": [
+            "Bedriften er ansvarlig for at opplysningene den legger inn er lovlige og riktige.",
+            "Bedriften informerer sine ansatte om at arbeidstid, bilder og signaturer registreres i MaskinGo, og gjennomfører det arbeidsmiljøloven krever før slike registreringer tas i bruk.",
+            "Tjenesten skal ikke brukes til ulovlige formål, til å skade andre eller til å forsøke å få tilgang til andre bedrifters data."
+          ]
+        },
+        {
+          "title": "Personopplysninger",
+          "body": [
+            "Bedriften eier opplysningene den legger inn. {company} behandler dem som databehandler. Databehandleravtalen på maskingo.no/databehandleravtale er en del av disse vilkårene.",
+            "Hvordan vi behandler opplysninger om brukerne selv, står i personvernerklæringen."
+          ]
+        },
+        {
+          "title": "Fakturaer",
+          "body": [
+            "MaskinGo lager fakturaer ut fra opplysningene bedriften legger inn. En faktura utstedes og sendes bare når en person trykker på knappen. Bedriften er selv ansvarlig for innholdet, merverdiavgift og bokføring."
+          ]
+        },
+        {
+          "title": "Pris",
+          "body": [
+            "Pris og betalingsvilkår avtales skriftlig med hver bedrift. Uten en slik avtale er bruken gratis."
+          ]
+        },
+        {
+          "title": "Rettigheter til tjenesten",
+          "body": [
+            "MaskinGo med programvare, design og navn tilhører {company}. Bedriften får en ikke-eksklusiv rett til å bruke tjenesten så lenge avtalen gjelder."
+          ]
+        },
+        {
+          "title": "Tilgjengelighet",
+          "body": [
+            "MaskinGo er nytt og utvikles fortløpende. Vi gjør vårt beste for at tjenesten er tilgjengelig og sikker, men kan ikke love at den alltid er uten feil eller avbrudd.",
+            "Vi kan stenge tilgangen midlertidig ved sikkerhetstrusler eller misbruk. Vi er ikke ansvarlige for forhold utenfor vår kontroll, som feil hos strømleverandører, nett eller underleverandører (force majeure)."
+          ]
+        },
+        {
+          "title": "Ansvar",
+          "body": [
+            "Vi er ikke ansvarlige for indirekte tap, som tapt fortjeneste eller tapte data. Vårt samlede ansvar er begrenset til det bedriften har betalt for tjenesten de siste 12 månedene. Begrensningen gjelder ikke ved grov uaktsomhet eller forsett."
+          ]
+        },
+        {
+          "title": "Avslutning",
+          "body": [
+            "Bedriften kan avslutte bruken når som helst ved å skrive til {email}. Vi kan avslutte avtalen med 30 dagers varsel, eller straks ved vesentlig mislighold.",
+            "Etter avslutning kan bedriften i 90 dager be om å få utlevert sine data. Deretter sletter vi dem. Bedriften må selv ta vare på regnskapsbilag den er pliktig å oppbevare."
+          ]
+        },
+        {
+          "title": "Endringer, lovvalg og tvister",
+          "body": [
+            "Vi varsler om vesentlige endringer i vilkårene minst 30 dager i forveien. Avtalen følger norsk rett.",
+            "Tvister søkes løst ved forhandlinger. Lykkes ikke det, avgjøres de av de alminnelige domstolene med {company}s hjemting som verneting."
+          ]
+        }
+      ]
+    },
+    "dpa": {
+      "title": "Databehandleravtale",
+      "lead": "Denne avtalen gjelder når {company} behandler personopplysninger på vegne av en bedrift som bruker MaskinGo. Den oppfyller kravene i personvernforordningen artikkel 28.",
+      "sections": [
+        {
+          "title": "Parter",
+          "body": [
+            "Behandlingsansvarlig er bedriften som har opprettet firmaet i MaskinGo («bedriften»). Databehandler er {company} (org.nr. {orgNumber}), {address}.",
+            "Avtalen er en del av vilkårene for bruk og gjelder så lenge bedriften bruker tjenesten, og deretter til opplysningene er slettet."
+          ]
+        },
+        {
+          "title": "Formål og hva som behandles",
+          "body": [
+            "Formål: å levere MaskinGo, det vil si planlegging av oppdrag, sjåførapp, timeregistrering, kunderegister og fakturering.",
+            "Registrerte: bedriftens ansatte og brukere, bedriftens kunder og deres kontaktpersoner, og personer som kan være med på bilder.",
+            "Opplysninger: navn, telefon, e-post, adresser, organisasjonsnummer, oppdrag, arbeidstider, bilder, signaturer og fakturaer.",
+            "Bedriften skal ikke legge inn særlige kategorier av personopplysninger, som helseopplysninger, i MaskinGo."
+          ]
+        },
+        {
+          "title": "Instrukser",
+          "body": [
+            "Vi behandler opplysningene bare etter bedriftens dokumenterte instrukser. Instruksene er vilkårene, denne avtalen og valgene bedriften gjør i appen.",
+            "Mener vi at en instruks strider mot personvernreglene, sier vi fra til bedriften."
+          ]
+        },
+        {
+          "title": "Taushetsplikt",
+          "body": [
+            "Alle som arbeider for oss og har tilgang til opplysningene, har taushetsplikt."
+          ]
+        },
+        {
+          "title": "Sikkerhet",
+          "body": [
+            "Vi har tekniske og organisatoriske tiltak etter artikkel 32, blant annet:",
+            "Kryptert overføring (HTTPS) og lagring i EU/EØS.",
+            "Hver bedrifts data holdes adskilt med tilgangsregler i databasen (row level security), som testes automatisk ved hver endring.",
+            "Roller som styrer hva hver bruker ser, og et ekstra innloggingssteg på e-post for eiere og administratorer.",
+            "Passord lagres bare som hash, og opplastede filer ligger i private lagre uten offentlige lenker."
+          ]
+        },
+        {
+          "title": "Underdatabehandlere",
+          "body": [
+            "Bedriften godkjenner at vi bruker disse underdatabehandlerne: Supabase (database, innlogging og filer, Stockholm), Vercel (drift av nettsiden, Stockholm) og Resend (e-post, EU).",
+            "Vi pålegger dem de samme pliktene som i denne avtalen. Vi varsler bedriften minst 30 dager før vi tar i bruk en ny eller bytter en underdatabehandler. Bedriften kan da protestere og si opp avtalen."
+          ]
+        },
+        {
+          "title": "Overføring utenfor EU/EØS",
+          "body": [
+            "Opplysningene lagres i EU/EØS. Underdatabehandlerne er amerikanske selskaper og kan i enkelte tilfeller få tilgang fra USA. Slik overføring bygger på EUs standardkontraktsbestemmelser eller EU–US Data Privacy Framework."
+          ]
+        },
+        {
+          "title": "Bistand",
+          "body": [
+            "Vi hjelper bedriften med å svare på krav fra de registrerte, med sikkerhet, med vurderinger av personvernkonsekvenser og med forhåndsdrøftinger med Datatilsynet, så langt det er rimelig ut fra tjenesten.",
+            "Henvendelser fra registrerte som gjelder bedriftens opplysninger, sender vi videre til bedriften."
+          ]
+        },
+        {
+          "title": "Avvik",
+          "body": [
+            "Blir vi kjent med et brudd på personopplysningssikkerheten, varsler vi bedriften uten ugrunnet opphold og senest innen 48 timer. Varselet beskriver det vi vet om bruddet, følgene og tiltakene."
+          ]
+        },
+        {
+          "title": "Kontroll",
+          "body": [
+            "Vi gir bedriften den informasjonen som trengs for å vise at avtalen følges, og godtar revisjon med rimelig varsel. Bedriften dekker egne kostnader ved revisjon."
+          ]
+        },
+        {
+          "title": "Sletting og tilbakelevering",
+          "body": [
+            "Når avtalen opphører, kan bedriften i 90 dager be om å få utlevert sine opplysninger. Deretter sletter vi dem, også i underdatabehandlernes systemer, med mindre loven krever at de lagres.",
+            "Utstedte fakturaer kan bedriften selv eksportere i appen."
+          ]
+        },
+        {
+          "title": "Lovvalg",
+          "body": [
+            "Avtalen følger norsk rett. Ved motstrid mellom denne avtalen og vilkårene for bruk gjelder denne avtalen for behandling av personopplysninger."
+          ]
+        }
+      ]
+    },
+    "signupConsent": "Ved å opprette konto godtar du <terms>vilkårene</terms> og bekrefter at du har lest <privacy>personvernerklæringen</privacy>.",
+    "footerPrivacy": "Personvern",
+    "footerTerms": "Vilkår",
+    "footerDpa": "Databehandleravtale"
   },
   "Hours": {
     "title": "Timer",
