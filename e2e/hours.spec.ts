@@ -47,6 +47,7 @@ test("a driver fills in an hours sheet, confirms it, and the accountant gets the
     await owner.page.goto("/app/hours/settings");
     await shootAllWidths(owner.page, "hour-settings", locale);
   }
+  await owner.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
 
   // The driver starts a sheet for November 2026.
   const driver = await inviteColleague(browser, baseURL!, owner.page, "driver", "Sander", "Lie");
@@ -198,7 +199,8 @@ test("overtime by the time of day: 15–19 +50 % and 19–06 +100 %", async ({ b
 });
 
 test("the accountant sees every employee's sheets and the finished jobs behind them", async ({ browser, baseURL }) => {
-  test.setTimeout(300_000);
+  // Three people, a finished job and photos of two pages in three languages.
+  test.setTimeout(420_000);
   const owner = await newPage(browser, baseURL!, "en");
   const { page } = owner;
   await signUp(page, newEmail("hours-all"), "Anna", "Berg");

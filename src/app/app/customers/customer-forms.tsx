@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { counted, type Counted } from "@/lib/form-round";
 import { useActionState, useState } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
 import { customerKinds, isCustomerKind, MAX_NOTE_LENGTH, type CustomerFormValues, type CustomerKind } from "@/lib/customers";
@@ -23,7 +24,7 @@ type Props = { customer?: { id: string; values: CustomerFormValues } };
 export function CustomerForm({ customer }: Props) {
   const t = useTranslations("Customers");
   const tAuth = useTranslations("Auth");
-  const [state, action] = useActionState<CustomerFormState, FormData>(customer ? updateCustomer : addCustomer, {});
+  const [state, action] = useActionState<Counted<CustomerFormState>, FormData>(counted(customer ? updateCustomer : addCustomer), {});
   const values = state.values ?? customer?.values;
   // Controlled, so the organization number appears and disappears with the kind.
   const [kind, setKind] = useState<CustomerKind>(values && isCustomerKind(values.kind) ? values.kind : "company");
@@ -44,7 +45,7 @@ export function CustomerForm({ customer }: Props) {
         <div className="grid gap-2 sm:grid-cols-2">
           {customerKinds.map((value) => (
             <label
-              key={value}
+              key={`${value}-${state.round ?? 0}`}
               className="relative flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-border bg-surface px-3 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-1 has-[:focus-visible]:outline-accent"
             >
               {/* The real radio covers the whole option (border included), so all of it is the 44px tap target. */}
