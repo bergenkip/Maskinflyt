@@ -331,6 +331,15 @@ Kalba nustatoma slapuku tuo pačiu adresu, todėl `hreflang` nėra: Google mato 
 Atskiri adresai kalboms (pvz. `/en`) būtų atskiras etapas.
 Testai: `src/lib/site.test.ts`, `e2e/seo.spec.ts`.
 
+## Šakų puslapiai SEO (2026-11-23)
+`/kranbil`, `/maskinentreprenor`, `/transport`: vienas šablonas `src/app/(industry)/industry-page.tsx`, sąrašas
+`src/lib/industries.ts`, tekstai `messages/*.json` → `Industry.<slug>` (problema, 4 privalumai, 4 klausimai, registracija).
+Pradžios puslapyje skyrius „Laget for din bransje“ su nuorodomis (`src/components/industry-link.tsx`). Puslapiai sitemap'e
+(prioritetas 0.8), JSON-LD: `BreadcrumbList` + `FAQPage`. Tekstuose tik tai, ką programa jau daro (pvz. sąskaita tik iš
+valandų, EHF dar nėra). Norvegiškus tekstus prieš pilotą turi peržiūrėti gimtakalbis.
+Dar nepadaryta iš plano: `/timeforing`, `/faktura`, `/priser` (reikia kainų).
+Testai: `e2e/industry.spec.ts` (3 puslapiai × 5 pločiai × 3 kalbos), `e2e/seo.spec.ts`.
+
 ## Privatumo politika ir naudojimo sąlygos (2026-11-17, juodraštis)
 Puslapiai `/personvern` ir `/vilkar` (nb/en/lt), tekstai `messages/*.json` → `Legal`, įmonės duomenys `src/lib/legal.ts`
 (`COMPANY`, `LEGAL_UPDATED`). Nuorodos poraštėje (`src/components/site-footer.tsx`) ir po registracijos mygtuku.

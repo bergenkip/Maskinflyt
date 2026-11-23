@@ -18,6 +18,9 @@ test("sitemap lists only the public pages on maskingo.no", async ({ request }) =
   const locs = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   expect(locs).toEqual([
     "https://maskingo.no",
+    "https://maskingo.no/kranbil",
+    "https://maskingo.no/maskinentreprenor",
+    "https://maskingo.no/transport",
     "https://maskingo.no/signup",
     "https://maskingo.no/login",
     "https://maskingo.no/personvern",

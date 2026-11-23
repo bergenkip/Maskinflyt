@@ -1396,6 +1396,164 @@
     "clockBreak": "The break comes off the normal hours first.",
     "level2ClockHint": "For example from 19:00 to 06:00 +100 %. Where it overlaps the first level, this one counts. Leave empty if not used."
   },
+  "Industry": {
+    "pointsTitle": "What MaskinGo does for you",
+    "problemTitle": "Sound familiar?",
+    "faqTitle": "Questions and answers",
+    "otherTitle": "Other trades",
+    "homeTitle": "Made for your trade",
+    "readMore": "See everything MaskinGo does",
+    "kranbil": {
+      "navName": "Crane trucks",
+      "metaTitle": "Job system for crane trucks · MaskinGo",
+      "metaDescription": "Plan crane truck jobs, let the operator log time, photos and signature on the phone, and create the invoice from approved hours.",
+      "summary": "A calendar per crane truck, time and signature from the operator, and minimum time on the invoice.",
+      "badge": "For crane truck companies",
+      "title": "Crane truck jobs from booking to invoice",
+      "lead": "MaskinGo keeps the job, the operator, the hours and the invoice in one place, so the office no longer has to phone around and type in timesheets.",
+      "problems": [
+        "Jobs come in by phone and text, and the overview lives in one person's head.",
+        "Hours and minimum time have to be collected from notes and messages before invoicing.",
+        "The customer asks how the job was done, and the photos are on someone's private phone."
+      ],
+      "points": [
+        {
+          "title": "A calendar per crane truck",
+          "body": "See which crane trucks and operators are free, day by day or week by week. Lifting capacity in tm and payload are stored on each truck."
+        },
+        {
+          "title": "The operator taps on the phone",
+          "body": "On the way, Arrived and Done. The job's time is recorded from the taps, and the office can correct it before the hours are approved."
+        },
+        {
+          "title": "Photos and the customer's signature",
+          "body": "The operator takes photos of the job and lets the customer sign with a finger. Everything is saved on the job."
+        },
+        {
+          "title": "Minimum time and customer prices",
+          "body": "Each crane truck has its hourly rate and minimum time, and a customer can have its own price. The invoice draft works it out for you."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does the operator have to install an app?",
+          "a": "No. MaskinGo opens in the phone's browser and can be added to the home screen. The operator only sees their own jobs."
+        },
+        {
+          "q": "Can we have minimum time on the crane truck?",
+          "a": "Yes. You set the minimum billed hours per machine, for example 2. A shorter job is then invoiced as 2 hours."
+        },
+        {
+          "q": "Is the invoice sent automatically?",
+          "a": "No. The invoice is created as a draft from approved hours and is sent as a PDF by email only when someone in the office taps Send."
+        },
+        {
+          "q": "Can the accountant get the figures?",
+          "a": "Yes. You download the invoices and credit notes for a period as one CSV file and all PDFs in one ZIP file. Sending as EHF comes later."
+        }
+      ]
+    },
+    "maskinentreprenor": {
+      "navName": "Machine contractors",
+      "metaTitle": "Software for machine contractors · MaskinGo",
+      "metaDescription": "Jobs, machines and operators in one calendar, time logging from the phone and invoices from approved hours. Made for Norwegian machine contractors.",
+      "summary": "Machines and operators in one calendar, timesheets for payroll and invoices from approved hours.",
+      "badge": "For machine contractors",
+      "title": "One program for jobs, machines, hours and invoices",
+      "lead": "For contractors with excavators, wheel loaders or other construction machines: see who is where, get the hours in from the phone and invoice without typing them in again.",
+      "problems": [
+        "Operators write their hours on paper or in texts, and they come in late.",
+        "It is hard to see which machines and operators are free next week.",
+        "Hours for payroll and hours for invoicing are kept in two places and do not always match."
+      ],
+      "points": [
+        {
+          "title": "Jobs and machines in the calendar",
+          "body": "Each job has a customer, address, machine and operator. The calendar shows day and week, also per machine."
+        },
+        {
+          "title": "Time logging from the phone",
+          "body": "The operator taps On the way, Arrived and Done on the job. The office sees the hours and can correct them before approval."
+        },
+        {
+          "title": "Timesheet for payroll",
+          "body": "Each employee fills in and confirms the timesheet for the period. Overtime is split by your rules, and the accountant gets it as a PDF."
+        },
+        {
+          "title": "Invoices from approved hours",
+          "body": "Sequential invoice numbers, a PDF and email to the customer when you tap Send. A mistake is corrected with a credit note."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does MaskinGo suit a small company?",
+          "a": "Yes. MaskinGo is made for small and medium contractors. You can start on your own and invite operators and the accountant when you are ready."
+        },
+        {
+          "q": "Who sees what?",
+          "a": "Administrator, dispatcher, driver and accountant each have their own role. An operator only sees their own jobs, and no company sees another company's data."
+        },
+        {
+          "q": "How is overtime calculated?",
+          "a": "You choose after how many hours per day overtime starts and the extra percentage. You can also have a higher level, for example evenings and nights at +100 %."
+        },
+        {
+          "q": "Where is the data stored?",
+          "a": "On servers in the EU/EEA, in Stockholm. Read more in the privacy policy."
+        }
+      ]
+    },
+    "transport": {
+      "navName": "Transport",
+      "metaTitle": "Order system for transport and trucks · MaskinGo",
+      "metaDescription": "Assign truck and driver, get times, photos and the customer's signature from the driver's phone and create the invoice the same day.",
+      "summary": "Dispatching trucks and drivers, a digital work sheet and invoices the same day.",
+      "badge": "For transport companies",
+      "title": "Transport jobs without phone queues and paper slips",
+      "lead": "MaskinGo gives the dispatcher an overview of trucks and drivers, and the driver gets the job on the phone with customer and address.",
+      "problems": [
+        "The dispatcher spends the day phoning drivers to hand out jobs.",
+        "Paper work sheets get lost or arrive weeks later.",
+        "The invoice waits because the hours have to be collected first."
+      ],
+      "points": [
+        {
+          "title": "Dispatching in the calendar",
+          "body": "Assign truck and driver to the job and see who is free, day by day or per truck."
+        },
+        {
+          "title": "The job on the driver's phone",
+          "body": "The driver only sees their own jobs with customer and address, and taps On the way, Arrived and Done."
+        },
+        {
+          "title": "Digital work sheet",
+          "body": "Times, photos and the customer's signature are saved on the job, so the office has the paperwork the same day."
+        },
+        {
+          "title": "Invoice the same day",
+          "body": "When the hours are approved, the invoice draft is created with the customer's prices. It is sent as a PDF by email when you tap Send."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can we invoice per trip or per tonne?",
+          "a": "Not yet. Today the invoice is made from hours and the hourly rate per truck or machine. Write to us how you invoice, and we will take it into our plans."
+        },
+        {
+          "q": "Does it work for drivers who do not speak Norwegian?",
+          "a": "Yes. Each user chooses their own language: Norwegian, English or Lithuanian. Customer names and addresses are shown as they were entered."
+        },
+        {
+          "q": "Is the invoice sent automatically?",
+          "a": "No. Nothing is sent until someone in the office taps Send."
+        },
+        {
+          "q": "Can we send EHF invoices?",
+          "a": "Not yet. Today the invoice is sent as a PDF by email. EHF is planned as a separate step."
+        }
+      ]
+    }
+  },
   "HourSheetsAll": {
     "title": "Employees' hours sheets",
     "lead": "The sheets that cover the month, with the finished jobs in each period.",
