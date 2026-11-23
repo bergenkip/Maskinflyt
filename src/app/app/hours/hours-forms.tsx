@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { counted, type Counted } from "@/lib/form-round";
 import { useActionState, useState } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
 import { MAX_HOUR_NOTE_LENGTH, type OvertimeMode } from "@/lib/hours";
@@ -142,7 +143,7 @@ const radioOption =
 export function HourSettingsForm({ initial }: { initial: HourSettingsValues }) {
   const t = useTranslations("HourSettings");
   const tAuth = useTranslations("Auth");
-  const [state, action] = useActionState<HourSettingsState, FormData>(saveHourSettings, {});
+  const [state, action] = useActionState<Counted<HourSettingsState>, FormData>(counted(saveHourSettings), {});
   const values = state.values ?? initial;
   const [mode, setMode] = useState<OvertimeMode>(values.mode);
   const error = (field: HourSettingsField) => (state.errors?.includes(field) ? t(`errors.${field}`) : undefined);
@@ -157,7 +158,7 @@ export function HourSettingsForm({ initial }: { initial: HourSettingsValues }) {
         <legend className="mb-3 font-semibold">{t("modeTitle")}</legend>
         <div className="grid gap-2 sm:grid-cols-2">
           {(["daily", "clock"] as const).map((value) => (
-            <label key={value} className={radioOption}>
+            <label key={`${value}-${state.round ?? 0}`} className={radioOption}>
               {/* The real radio covers the whole option (border included), so all of it is the tap target. */}
               <input
                 type="radio"
