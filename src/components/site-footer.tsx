@@ -15,6 +15,9 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p>{t("text")}</p>
         <nav aria-label={t("linksLabel")} className="-my-3 flex flex-wrap gap-x-5">
+          <Link href="/priser" className={linkClass}>
+            {t("pricing")}
+          </Link>
           <Link href="/personvern" className={linkClass}>
             {tLegal("footerPrivacy")}
           </Link>
