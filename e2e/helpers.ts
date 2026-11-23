@@ -200,7 +200,13 @@ export async function inviteColleague(
   const colleague = await newPage(browser, baseURL, "en");
   await colleague.page.goto(new URL((await link.textContent())!.trim()).pathname);
   await fillSignUp(colleague.page, newEmail(role), firstName, lastName);
-  await colleague.page.waitForURL((url) => url.pathname === "/app");
+  // Owners, admins and accountants confirm with the e-mailed link first (see needsMfa).
+  if (role === "admin" || role === "accountant") {
+    await colleague.page.waitForURL((url) => url.pathname === "/mfa");
+    await passSecondStep(colleague.page);
+  } else {
+    await colleague.page.waitForURL((url) => url.pathname === "/app");
+  }
   return colleague;
 }
 

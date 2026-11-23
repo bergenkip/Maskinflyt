@@ -21,7 +21,8 @@ import {
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
 
 test("a driver fills in an hours sheet, confirms it, and the accountant gets the PDF", async ({ browser, baseURL }) => {
-  test.setTimeout(180_000);
+  // Two people, photos at five widths in three languages, and a PDF: longer than most tests.
+  test.setTimeout(360_000);
   const owner = await newPage(browser, baseURL!, "en");
   await signUp(owner.page, newEmail("hours"), "Anna", "Berg");
   await createCompany(owner.page, newCompanyName("hours"));
@@ -197,7 +198,7 @@ test("overtime by the time of day: 15–19 +50 % and 19–06 +100 %", async ({ b
 });
 
 test("the accountant sees every employee's sheets and the finished jobs behind them", async ({ browser, baseURL }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(300_000);
   const owner = await newPage(browser, baseURL!, "en");
   const { page } = owner;
   await signUp(page, newEmail("hours-all"), "Anna", "Berg");

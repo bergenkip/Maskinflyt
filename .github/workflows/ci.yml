@@ -89,6 +89,9 @@ jobs:
       - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts e2e/calendar.spec.ts e2e/driver.spec.ts e2e/job-time.spec.ts e2e/job-files.spec.ts e2e/invoice.spec.ts e2e/invoices.spec.ts e2e/accountant.spec.ts e2e/permissions.spec.ts e2e/invoice-settings.spec.ts e2e/invoice-issue.spec.ts e2e/hours.spec.ts e2e/billing.spec.ts
         env:
           CI: true
+      - name: Show what the page looked like when a test failed
+        if: failure()
+        run: find test-results -name error-context.md -print -exec cat {} \; || true
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
