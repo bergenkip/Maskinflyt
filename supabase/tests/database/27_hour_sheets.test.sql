@@ -33,21 +33,21 @@ set local role authenticated;
 
 -- Rules: the owner, with the second step only.
 select pg_temp.as_user('11111111-1111-1111-1111-111111111111');
-select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 450, 50) $$,
+select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', overtime_percent => 50, overtime_after => 450) $$,
   '42501', null, 'the owner needs the second step to change the rules');
 select pg_temp.as_user('11111111-1111-1111-1111-111111111111', 'aal2');
-select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 450, 50, 450, 100) $$,
+select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', overtime_percent => 50, overtime_after => 450, overtime2_after => 450, overtime2_percent => 100) $$,
   '22023', null, 'the second level starts later');
-select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 450, 50, 600, 40) $$,
+select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', overtime_percent => 50, overtime_after => 450, overtime2_after => 600, overtime2_percent => 40) $$,
   '22023', null, 'the second level pays more');
-select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 450, 50, null, null, 'not-an-address') $$,
+select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', overtime_percent => 50, overtime_after => 450, accountant_email => 'not-an-address') $$,
   '22023', null, 'the accountant''s e-mail is checked');
-select lives_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 450, 50, 600, 100, ' Lonn@Regnskap.TEST ') $$,
+select lives_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', overtime_percent => 50, overtime_after => 450, overtime2_after => 600, overtime2_percent => 100, accountant_email => ' Lonn@Regnskap.TEST ') $$,
   'the owner saves overtime from 7.5 h (+50 %) and from 10 h (+100 %)');
 select is((select accountant_email from public.hour_settings), 'lonn@regnskap.test', 'the address is kept in lower case');
 
 select pg_temp.as_user('33333333-3333-3333-3333-333333333333');
-select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 480, 50) $$,
+select throws_ok($$ select public.save_hour_settings('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', overtime_percent => 50, overtime_after => 480) $$,
   '42501', null, 'a dispatcher does not change the rules');
 select is((select overtime_after from public.hour_settings), 450, 'every member reads the rules');
 select pg_temp.as_user('55555555-5555-5555-5555-555555555555', 'aal2');

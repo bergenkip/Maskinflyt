@@ -1068,7 +1068,9 @@
       "none": "Neišsiųsta: buhalterio el. paštas neįrašytas."
     },
     "resend": "Siųsti dar kartą",
-    "openPdf": "Atidaryti PDF"
+    "openPdf": "Atidaryti PDF",
+    "rulesClock": "Viršvalandžiai: {from}–{to} +{percent} %",
+    "rulesClock2": "{from}–{to} +{percent} %"
   },
   "HourSettings": {
     "title": "Viršvalandžiai ir buhalteris",
@@ -1094,9 +1096,23 @@
       "percent2": "Turi būti didesnis nei pirmas lygis.",
       "email": "El. pašto adresas neteisingas.",
       "notAllowed": "Keisti gali tik savininkas ir administratoriai.",
-      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
+      "from": "Pasirinkite, kada prasideda.",
+      "to": "Pasirinkite, kada baigiasi (ne tas pats kaip pradžia).",
+      "from2": "Pasirinkite, kada prasideda.",
+      "to2": "Pasirinkite, kada baigiasi (ne tas pats kaip pradžia)."
     },
     "readOnly": "Keisti gali tik savininkas ir administratoriai.",
-    "noEmail": "El. paštas neįrašytas"
+    "noEmail": "El. paštas neįrašytas",
+    "modeTitle": "Kaip skaičiuojami viršvalandžiai?",
+    "modeDaily": "Pagal valandas per dieną",
+    "modeDailyHint": "Pavyzdžiui, po 8 valandų.",
+    "modeClock": "Pagal laikrodį",
+    "modeClockHint": "Pavyzdžiui, nuo 15:00 iki 19:00.",
+    "from": "Nuo",
+    "to": "Iki",
+    "windowHint": "Pabaiga anksčiau už pradžią reiškia per vidurnaktį, pvz. 19:00–06:00.",
+    "clockBreak": "Pertrauka pirmiausia atimama iš įprastų valandų.",
+    "level2ClockHint": "Pavyzdžiui, nuo 19:00 iki 06:00 +100 %. Kur persidengia su pirmu lygiu, galioja šis. Palikite tuščią, jei nenaudojama."
   }
 }

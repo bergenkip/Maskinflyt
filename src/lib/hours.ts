@@ -2,15 +2,62 @@
 // the screens, the PDF and the tests; the database counts the same way
 // (public.save_hour_sheet_day and public.submit_hour_sheet) and decides.
 
+export type OvertimeMode = "daily" | "clock";
+
+// daily: overtime after a number of minutes worked in a day (and a later, higher level).
+// clock: the minutes inside a time window ("15:00"–"19:00"; past midnight when the
+// end is not after the start), and an optional second window that pays more.
 export type HourRules = {
+  overtime_mode: OvertimeMode;
   overtime_after: number;
   overtime_percent: number;
   overtime2_after: number | null;
   overtime2_percent: number | null;
+  overtime_from: string | null;
+  overtime_to: string | null;
+  overtime2_from: string | null;
+  overtime2_to: string | null;
 };
 
+// The columns of the rules, the same in hour_settings and in a confirmed hour_sheets row.
+export const ruleColumns =
+  "overtime_mode, overtime_after, overtime_percent, overtime2_after, overtime2_percent, overtime_from, overtime_to, overtime2_from, overtime2_to";
+
 // Used until the company saves its own (the same as public.submit_hour_sheet).
-export const defaultHourRules: HourRules = { overtime_after: 480, overtime_percent: 50, overtime2_after: null, overtime2_percent: null };
+export const defaultHourRules: HourRules = {
+  overtime_mode: "daily",
+  overtime_after: 480,
+  overtime_percent: 50,
+  overtime2_after: null,
+  overtime2_percent: null,
+  overtime_from: null,
+  overtime_to: null,
+  overtime2_from: null,
+  overtime2_to: null,
+};
+
+const hhmm = (time: unknown) => (typeof time === "string" && time.length >= 5 ? time.slice(0, 5) : null);
+
+// A row from the database ("15:00:00", nulls) as rules; the defaults where it is empty.
+export function toHourRules(row: Partial<Record<keyof HourRules, unknown>> | null | undefined): HourRules {
+  if (!row) return defaultHourRules;
+  const num = (value: unknown) => (typeof value === "number" ? value : null);
+  return {
+    overtime_mode: row.overtime_mode === "clock" ? "clock" : "daily",
+    overtime_after: num(row.overtime_after) ?? 480,
+    overtime_percent: num(row.overtime_percent) ?? 50,
+    overtime2_after: num(row.overtime2_after),
+    overtime2_percent: num(row.overtime2_percent),
+    overtime_from: hhmm(row.overtime_from),
+    overtime_to: hhmm(row.overtime_to),
+    overtime2_from: hhmm(row.overtime2_from),
+    overtime2_to: hhmm(row.overtime2_to),
+  };
+}
+
+// Whether the rules have a second level.
+export const hasLevel2 = (rules: HourRules) =>
+  rules.overtime2_percent !== null && (rules.overtime_mode === "clock" ? rules.overtime2_from !== null : rules.overtime2_after !== null);
 
 export const MAX_SHEET_DAYS = 62;
 export const MAX_HOUR_NOTE_LENGTH = 200;
@@ -35,8 +82,38 @@ export function dayMinutes(starts: string, ends: string, breakMinutes: number) {
   return (span <= 0 ? span + 24 * 60 : span) - breakMinutes;
 }
 
-// One day's minutes: normal, at the first overtime level, at the second.
-export function splitDay(worked: number, rules: HourRules) {
+const inWindow = (minute: number, from: string | null, to: string | null) => {
+  if (!from || !to) return false;
+  const start = minutesOf(from);
+  const end = minutesOf(to);
+  return start < end ? minute >= start && minute < end : minute >= start || minute < end;
+};
+
+type DayTimes = Pick<SheetDay, "starts" | "ends" | "break_minutes" | "worked_minutes">;
+
+// One day's minutes: normal, at the first overtime level, at the second (the
+// same as private.split_day). By the clock, each minute goes to the window it
+// is in (the second wins where they overlap), and the break comes off the
+// normal minutes first, then the first level, then the second.
+export function splitDay(day: DayTimes, rules: HourRules) {
+  const worked = day.worked_minutes;
+  if (rules.overtime_mode === "clock") {
+    const start = minutesOf(day.starts);
+    let end = minutesOf(day.ends);
+    if (end <= start) end += 24 * 60;
+    const count = [0, 0, 0];
+    for (let m = start; m < end; m++) {
+      const clock = m % (24 * 60);
+      count[inWindow(clock, rules.overtime2_from, rules.overtime2_to) ? 2 : inWindow(clock, rules.overtime_from, rules.overtime_to) ? 1 : 0]++;
+    }
+    let rest = day.break_minutes;
+    for (const level of [0, 1, 2]) {
+      const take = level === 2 ? rest : Math.min(rest, count[level]);
+      count[level] -= take;
+      rest -= take;
+    }
+    return { normal: count[0], overtime: count[1], overtime2: count[2] };
+  }
   const normal = Math.min(worked, rules.overtime_after);
   const upTo2 = rules.overtime2_after === null ? worked : Math.min(worked, rules.overtime2_after);
   return {
@@ -46,10 +123,10 @@ export function splitDay(worked: number, rules: HourRules) {
   };
 }
 
-export function sheetTotals(days: Pick<SheetDay, "worked_minutes">[], rules: HourRules) {
+export function sheetTotals(days: DayTimes[], rules: HourRules) {
   return days.reduce(
     (sum, day) => {
-      const split = splitDay(day.worked_minutes, rules);
+      const split = splitDay(day, rules);
       return {
         worked: sum.worked + day.worked_minutes,
         normal: sum.normal + split.normal,

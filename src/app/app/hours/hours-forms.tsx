@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useActionState, useState } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
-import { MAX_HOUR_NOTE_LENGTH } from "@/lib/hours";
+import { MAX_HOUR_NOTE_LENGTH, type OvertimeMode } from "@/lib/hours";
 import {
   createSheet,
   resendSheet,
@@ -11,6 +11,7 @@ import {
   saveHourSettings,
   submitSheet,
   type DayState,
+  type HourSettingsField,
   type HourSettingsState,
   type HourSettingsValues,
   type NewSheetState,
@@ -135,33 +136,89 @@ export function ResendSheetForm({ sheet }: { sheet: string }) {
   );
 }
 
+const radioOption =
+  "relative flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-border bg-surface p-3 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-1 has-[:focus-visible]:outline-accent";
+
 export function HourSettingsForm({ initial }: { initial: HourSettingsValues }) {
   const t = useTranslations("HourSettings");
   const tAuth = useTranslations("Auth");
   const [state, action] = useActionState<HourSettingsState, FormData>(saveHourSettings, {});
   const values = state.values ?? initial;
-  const error = (field: keyof HourSettingsValues) => (state.errors?.includes(field) ? t(`errors.${field}`) : undefined);
+  const [mode, setMode] = useState<OvertimeMode>(values.mode);
+  const error = (field: HourSettingsField) => (state.errors?.includes(field) ? t(`errors.${field}`) : undefined);
+  const clock = mode === "clock";
   return (
     <form action={action} noValidate className="grid gap-6">
       <div aria-live="polite">
         {state.error && <FormAlert kind="error">{t(`errors.${state.error}`)}</FormAlert>}
         {state.savedAt && <FormAlert kind="success">{t("saved")}</FormAlert>}
       </div>
-      <fieldset className="grid gap-4">
+      <fieldset className="grid gap-2">
+        <legend className="mb-3 font-semibold">{t("modeTitle")}</legend>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {(["daily", "clock"] as const).map((value) => (
+            <label key={value} className={radioOption}>
+              {/* The real radio covers the whole option (border included), so all of it is the tap target. */}
+              <input
+                type="radio"
+                name="mode"
+                value={value}
+                checked={mode === value}
+                onChange={() => setMode(value)}
+                className="peer absolute -inset-px m-0 cursor-pointer appearance-none rounded-lg opacity-0"
+              />
+              {/* The chosen option shows a filled dot as well as the colour. */}
+              <span
+                aria-hidden="true"
+                className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-2 border-muted peer-checked:border-accent peer-checked:[&>span]:block"
+              >
+                <span className="hidden size-2.5 rounded-full bg-accent" />
+              </span>
+              <span className="grid gap-0.5">
+                <span className="font-medium">{value === "clock" ? t("modeClock") : t("modeDaily")}</span>
+                <span className="text-sm text-muted">{value === "clock" ? t("modeClockHint") : t("modeDailyHint")}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      {/* The key gives each way its own fields, so the browser keeps no value from the other. */}
+      <fieldset key={`level1-${mode}`} className="grid gap-4">
         <legend className="mb-3 font-semibold">{t("level1Title")}</legend>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field name="after" id="hours-after" inputMode="decimal" label={t("after")} hint={t("afterHint")} required defaultValue={values.after} error={error("after")} />
-          <Field name="percent" id="hours-percent" inputMode="numeric" label={t("percent")} required defaultValue={values.percent} error={error("percent")} />
-        </div>
+        {clock ? (
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Field name="from" id="hours-from" type="time" label={t("from")} required defaultValue={values.from} error={error("from")} />
+            <Field name="to" id="hours-to" type="time" label={t("to")} required defaultValue={values.to} error={error("to")} />
+            <Field name="percent" id="hours-percent" inputMode="numeric" label={t("percent")} required defaultValue={values.percent} error={error("percent")} />
+          </div>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field name="after" id="hours-after" inputMode="decimal" label={t("after")} hint={t("afterHint")} required defaultValue={values.after} error={error("after")} />
+            <Field name="percent" id="hours-percent" inputMode="numeric" label={t("percent")} required defaultValue={values.percent} error={error("percent")} />
+          </div>
+        )}
       </fieldset>
-      <fieldset className="grid gap-4">
+      <fieldset key={`level2-${mode}`} className="grid gap-4">
         <legend className="mb-1 font-semibold">{t("level2Title")}</legend>
-        <p className="text-sm text-muted">{t("level2Hint")}</p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field name="after2" id="hours-after2" inputMode="decimal" label={t("after2")} defaultValue={values.after2} error={error("after2")} />
-          <Field name="percent2" id="hours-percent2" inputMode="numeric" label={t("percent2")} defaultValue={values.percent2} error={error("percent2")} />
-        </div>
+        <p className="text-sm text-muted">{clock ? t("level2ClockHint") : t("level2Hint")}</p>
+        {clock ? (
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Field name="from2" id="hours-from2" type="time" label={t("from")} defaultValue={values.from2} error={error("from2")} />
+            <Field name="to2" id="hours-to2" type="time" label={t("to")} defaultValue={values.to2} error={error("to2")} />
+            <Field name="percent2" id="hours-percent2" inputMode="numeric" label={t("percent2")} defaultValue={values.percent2} error={error("percent2")} />
+          </div>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field name="after2" id="hours-after2" inputMode="decimal" label={t("after2")} defaultValue={values.after2} error={error("after2")} />
+            <Field name="percent2" id="hours-percent2" inputMode="numeric" label={t("percent2")} defaultValue={values.percent2} error={error("percent2")} />
+          </div>
+        )}
       </fieldset>
+      {clock && (
+        <p className="-mt-2 text-sm text-muted">
+          {t("windowHint")} {t("clockBreak")}
+        </p>
+      )}
       <p className="text-sm text-muted">{t("law")}</p>
       <Field
         name="email"

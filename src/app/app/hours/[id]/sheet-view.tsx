@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { AlertIcon, ArrowRightIcon, CheckCircleIcon, NoteIcon } from "@/components/icons";
-import { decimalHours, sheetTotals, splitDay, type HourRules, type SheetDay } from "@/lib/hours";
+import { decimalHours, hasLevel2, sheetTotals, splitDay, type HourRules, type SheetDay } from "@/lib/hours";
 import type { SheetRow } from "@/lib/hours-server";
 import { deleteSheet, removeDay } from "../actions";
 import { DayForm, ResendSheetForm, SubmitSheetForm } from "../hours-forms";
@@ -36,7 +36,7 @@ export async function HourSheetView({
   const levels = [
     { key: "normal" as const, label: t("normal") },
     { key: "overtime" as const, label: t("overtime", { percent: rules.overtime_percent }) },
-    ...(rules.overtime2_after !== null && rules.overtime2_percent !== null
+    ...(hasLevel2(rules) && rules.overtime2_percent !== null
       ? [{ key: "overtime2" as const, label: t("overtime", { percent: rules.overtime2_percent }) }]
       : []),
   ];
@@ -112,7 +112,7 @@ export async function HourSheetView({
         ) : (
           <ul className="divide-y divide-border rounded-xl border border-border bg-surface">
             {rows.map((row) => {
-              const split = splitDay(row.worked_minutes, rules);
+              const split = splitDay(row, rules);
               return (
                 <li key={row.day} className="grid grid-cols-[1fr_auto] items-start gap-x-4 gap-y-1 p-4">
                   <span className="grid min-w-0 gap-0.5">

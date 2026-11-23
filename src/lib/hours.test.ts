@@ -1,7 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { dayMinutes, decimalHours, defaultHourRules, parseHours, sheetFileName, sheetTotals, splitDay, validateDay } from "./hours";
+import { dayMinutes, decimalHours, defaultHourRules, hasLevel2, parseHours, sheetFileName, sheetTotals, splitDay, toHourRules, validateDay, type HourRules } from "./hours";
 
-const rules = { overtime_after: 450, overtime_percent: 50, overtime2_after: 600, overtime2_percent: 100 };
+const rules: HourRules = { ...defaultHourRules, overtime_after: 450, overtime_percent: 50, overtime2_after: 600, overtime2_percent: 100 };
+const clock: HourRules = {
+  ...defaultHourRules,
+  overtime_mode: "clock",
+  overtime_percent: 50,
+  overtime2_percent: 100,
+  overtime_from: "15:00",
+  overtime_to: "19:00",
+  overtime2_from: "19:00",
+  overtime2_to: "06:00",
+};
+// A day as the form saves it.
+const day = (starts: string, ends: string, breakMinutes = 0) => ({
+  starts,
+  ends,
+  break_minutes: breakMinutes,
+  worked_minutes: dayMinutes(starts, ends, breakMinutes),
+});
+const worked = (minutes: number) => ({ starts: "00:00", ends: "00:00", break_minutes: 0, worked_minutes: minutes });
 
 const form = (values: Record<string, string>) => {
   const data = new FormData();
@@ -18,16 +36,45 @@ describe("hours sheet", () => {
   });
 
   it("splits a day as the database does", () => {
-    expect(splitDay(450, rules)).toEqual({ normal: 450, overtime: 0, overtime2: 0 });
-    expect(splitDay(690, rules)).toEqual({ normal: 450, overtime: 150, overtime2: 90 });
-    expect(splitDay(500, rules)).toEqual({ normal: 450, overtime: 50, overtime2: 0 });
+    expect(splitDay(worked(450), rules)).toEqual({ normal: 450, overtime: 0, overtime2: 0 });
+    expect(splitDay(worked(690), rules)).toEqual({ normal: 450, overtime: 150, overtime2: 90 });
+    expect(splitDay(worked(500), rules)).toEqual({ normal: 450, overtime: 50, overtime2: 0 });
     // One level only: everything over it is the first level.
-    expect(splitDay(690, defaultHourRules)).toEqual({ normal: 480, overtime: 210, overtime2: 0 });
-    expect(sheetTotals([{ worked_minutes: 450 }, { worked_minutes: 690 }, { worked_minutes: 360 }], rules)).toEqual({
+    expect(splitDay(worked(690), defaultHourRules)).toEqual({ normal: 480, overtime: 210, overtime2: 0 });
+    expect(sheetTotals([worked(450), worked(690), worked(360)], rules)).toEqual({
       worked: 1500,
       normal: 1260,
       overtime: 150,
       overtime2: 90,
+    });
+  });
+
+  it("splits a day by the clock as the database does", () => {
+    // The same cases as supabase/tests/database/28_hour_clock_overtime.test.sql.
+    expect(splitDay(day("07:00", "21:00", 30), clock)).toEqual({ normal: 450, overtime: 240, overtime2: 120 });
+    expect(splitDay(day("22:00", "06:00", 30), clock)).toEqual({ normal: 0, overtime: 0, overtime2: 450 });
+    expect(splitDay(day("05:00", "16:00", 60), clock)).toEqual({ normal: 480, overtime: 60, overtime2: 60 });
+    const overlap = { ...clock, overtime_to: "06:00" };
+    expect(splitDay(day("14:00", "20:00"), overlap)).toEqual({ normal: 60, overtime: 240, overtime2: 60 });
+    const oneWindow = { ...clock, overtime_to: "06:00", overtime2_from: null, overtime2_to: null, overtime2_percent: null };
+    expect(splitDay(day("14:00", "20:00"), oneWindow)).toEqual({ normal: 60, overtime: 300, overtime2: 0 });
+    expect(hasLevel2(clock)).toBe(true);
+    expect(hasLevel2(oneWindow)).toBe(false);
+    // Every minute worked lands in exactly one level.
+    for (const [starts, ends, pause] of [["06:30", "23:45", 45], ["18:10", "07:20", 0], ["00:00", "23:59", 90]] as const) {
+      const d = day(starts, ends, pause);
+      const split = splitDay(d, clock);
+      expect(split.normal + split.overtime + split.overtime2).toBe(d.worked_minutes);
+    }
+  });
+
+  it("reads the rules from a database row", () => {
+    expect(toHourRules(null)).toEqual(defaultHourRules);
+    expect(toHourRules({ overtime_mode: "clock", overtime_percent: 50, overtime_from: "15:00:00", overtime_to: "19:00:00" })).toEqual({
+      ...defaultHourRules,
+      overtime_mode: "clock",
+      overtime_from: "15:00",
+      overtime_to: "19:00",
     });
   });
 

@@ -1,23 +1,19 @@
 import "server-only";
 import fontkit from "@pdf-lib/fontkit";
 import { PDFDocument, rgb, type PDFFont, type PDFPage } from "pdf-lib";
-import { decimalHours, type SheetDay } from "../hours";
+import { decimalHours, hasLevel2, type HourRules, type SheetDay } from "../hours";
 import { clean, formatDate, loadFonts, wrap } from "./invoice-pdf";
 
 // The PDF of a confirmed hours sheet, made from the sheet kept in the
 // database, for the accountant. In Norwegian, like the invoices.
 
-export type ConfirmedSheet = {
+export type ConfirmedSheet = HourRules & {
   company: string;
   employee_name: string;
   period_from: string;
   period_to: string;
   submitted_at: string;
   timezone: string;
-  overtime_after: number;
-  overtime_percent: number;
-  overtime2_after: number | null;
-  overtime2_percent: number | null;
   worked_minutes: number;
   normal_minutes: number;
   overtime_minutes: number;
@@ -78,10 +74,14 @@ export async function hoursPdf(sheet: ConfirmedSheet, days: SheetDay[]): Promise
   y = Math.min(y - 17 * companyLines.length, fy) - 14;
 
   const level1 = `Overtid ${sheet.overtime_percent} %`;
-  const level2 = sheet.overtime2_percent === null ? null : `Overtid ${sheet.overtime2_percent} %`;
+  const level2 = hasLevel2(sheet) ? `Overtid ${sheet.overtime2_percent} %` : null;
   const rules =
-    `Overtid ${sheet.overtime_percent} % etter ${hoursText(sheet.overtime_after)} timer per dag` +
-    (sheet.overtime2_after === null ? "." : `, ${sheet.overtime2_percent} % etter ${hoursText(sheet.overtime2_after)} timer.`);
+    sheet.overtime_mode === "clock"
+      ? `Overtid ${sheet.overtime_percent} % kl. ${sheet.overtime_from}–${sheet.overtime_to}` +
+        (level2 ? `, ${sheet.overtime2_percent} % kl. ${sheet.overtime2_from}–${sheet.overtime2_to}` : "") +
+        ". Pausen er trukket fra de vanlige timene først."
+      : `Overtid ${sheet.overtime_percent} % etter ${hoursText(sheet.overtime_after)} timer per dag` +
+        (level2 ? `, ${sheet.overtime2_percent} % etter ${hoursText(sheet.overtime2_after!)} timer.` : ".");
   for (const part of wrap(rules, regular, 9, width)) {
     text(part, MARGIN, y, { color: muted, size: 9 });
     y -= 12;
