@@ -1380,5 +1380,163 @@
     "windowHint": "Pabaiga anksčiau už pradžią reiškia per vidurnaktį, pvz. 19:00–06:00.",
     "clockBreak": "Pertrauka pirmiausia atimama iš įprastų valandų.",
     "level2ClockHint": "Pavyzdžiui, nuo 19:00 iki 06:00 +100 %. Kur persidengia su pirmu lygiu, galioja šis. Palikite tuščią, jei nenaudojama."
+  },
+  "Industry": {
+    "pointsTitle": "Ką MaskinGo daro už jus",
+    "problemTitle": "Ar tai pažįstama?",
+    "faqTitle": "Klausimai ir atsakymai",
+    "otherTitle": "Kitos sritys",
+    "homeTitle": "Sukurta jūsų sričiai",
+    "readMore": "Viskas, ką daro MaskinGo",
+    "kranbil": {
+      "navName": "Kranai",
+      "metaTitle": "Užsakymų sistema kranams · MaskinGo",
+      "metaDescription": "Planuokite krano užsakymus, leiskite operatoriui telefone registruoti laiką, nuotraukas ir parašą, o sąskaitą kurkite iš patvirtintų valandų.",
+      "summary": "Kalendorius kiekvienam kranui, laikas ir parašas iš operatoriaus, minimalus laikas sąskaitoje.",
+      "badge": "Kranų įmonėms",
+      "title": "Krano užsakymai nuo užsakymo iki sąskaitos",
+      "lead": "MaskinGo sujungia užsakymą, krano operatorių, valandas ir sąskaitą vienoje vietoje, todėl biurui nebereikia skambinėti ir perrašinėti darbo laiko lapų.",
+      "problems": [
+        "Užsakymai ateina telefonu ir SMS, o visa apžvalga yra vieno žmogaus galvoje.",
+        "Valandas ir minimalų laiką prieš išrašant sąskaitą reikia surinkti iš raštelių ir žinučių.",
+        "Klientas klausia, kaip darbas atliktas, o nuotraukos yra kažkieno asmeniniame telefone."
+      ],
+      "points": [
+        {
+          "title": "Kalendorius kiekvienam kranui",
+          "body": "Matykite, kurie kranai ir operatoriai laisvi, kiekvieną dieną ar savaitę. Kėlimo galia tm ir naudingoji apkrova įrašytos prie kiekvienos mašinos."
+        },
+        {
+          "title": "Operatorius spaudžia telefone",
+          "body": "Važiuoju, Atvykau ir Baigiau. Užsakymo laikas registruojamas pagal paspaudimus, o biuras gali jį pataisyti prieš patvirtinant valandas."
+        },
+        {
+          "title": "Nuotraukos ir kliento parašas",
+          "body": "Operatorius nufotografuoja darbą ir leidžia klientui pasirašyti pirštu. Viskas išsaugoma prie užsakymo."
+        },
+        {
+          "title": "Minimalus laikas ir kliento kainos",
+          "body": "Kiekvienas kranas turi savo valandinį įkainį ir minimalų laiką, o klientas gali turėti savo kainą. Sąskaitos juodraštis viską apskaičiuoja."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar operatoriui reikia įsidiegti programėlę?",
+          "a": "Ne. MaskinGo atidaroma telefono naršyklėje ir gali būti pridėta prie pradžios ekrano. Operatorius mato tik savo užsakymus."
+        },
+        {
+          "q": "Ar galime nustatyti minimalų krano laiką?",
+          "a": "Taip. Kiekvienai mašinai nustatote minimalų apmokamų valandų skaičių, pvz. 2. Trumpesnis užsakymas tada apmokestinamas kaip 2 valandos."
+        },
+        {
+          "q": "Ar sąskaita išsiunčiama automatiškai?",
+          "a": "Ne. Sąskaita sukuriama kaip juodraštis iš patvirtintų valandų ir išsiunčiama PDF el. paštu tik tada, kai kas nors biure paspaudžia Siųsti."
+        },
+        {
+          "q": "Ar buhalteris gali gauti duomenis?",
+          "a": "Taip. Laikotarpio sąskaitas ir kreditines sąskaitas atsisiunčiate kaip vieną CSV failą, o visus PDF viename ZIP faile. Siuntimas EHF formatu bus vėliau."
+        }
+      ]
+    },
+    "maskinentreprenor": {
+      "navName": "Technikos rangovai",
+      "metaTitle": "Programa technikos rangovams · MaskinGo",
+      "metaDescription": "Užsakymai, technika ir operatoriai viename kalendoriuje, darbo laikas iš telefono ir sąskaitos iš patvirtintų valandų. Norvegijos technikos rangovams.",
+      "summary": "Technika ir operatoriai viename kalendoriuje, valandų lapas atlyginimui ir sąskaitos iš patvirtintų valandų.",
+      "badge": "Technikos rangovams",
+      "title": "Viena programa užsakymams, technikai, valandoms ir sąskaitoms",
+      "lead": "Tiems, kurie dirba su ekskavatoriais, krautuvais ar kita statybine technika: matykite, kas kur dirba, gaukite valandas iš telefono ir išrašykite sąskaitą jų neperrašinėdami.",
+      "problems": [
+        "Operatoriai valandas rašo ant popieriaus arba SMS, ir jos ateina vėlai.",
+        "Sunku pamatyti, kuri technika ir kurie operatoriai laisvi kitą savaitę.",
+        "Valandos atlyginimui ir valandos sąskaitai vedamos dviejose vietose ir ne visada sutampa."
+      ],
+      "points": [
+        {
+          "title": "Užsakymai ir technika kalendoriuje",
+          "body": "Kiekvienas užsakymas turi klientą, adresą, mašiną ir operatorių. Kalendorius rodo dieną ir savaitę, taip pat pagal mašinas."
+        },
+        {
+          "title": "Darbo laikas iš telefono",
+          "body": "Operatorius užsakyme spaudžia Važiuoju, Atvykau ir Baigiau. Biuras mato valandas ir gali jas pataisyti prieš patvirtindamas."
+        },
+        {
+          "title": "Valandų lapas atlyginimui",
+          "body": "Kiekvienas darbuotojas pildo ir patvirtina laikotarpio valandų lapą. Viršvalandžiai skaičiuojami pagal jūsų taisykles, o buhalteris gauna PDF."
+        },
+        {
+          "title": "Sąskaitos iš patvirtintų valandų",
+          "body": "Nuoseklūs sąskaitų numeriai, PDF ir el. laiškas klientui, kai paspaudžiate Siųsti. Klaida taisoma kreditine sąskaita."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar MaskinGo tinka mažai įmonei?",
+          "a": "Taip. MaskinGo sukurta mažiems ir vidutiniams rangovams. Galite pradėti vieni ir pakviesti operatorius bei buhalterį, kai būsite pasiruošę."
+        },
+        {
+          "q": "Kas ką mato?",
+          "a": "Administratorius, dispečeris, vairuotojas ir buhalteris turi savo roles. Operatorius mato tik savo užsakymus, o jokia įmonė nemato kitos įmonės duomenų."
+        },
+        {
+          "q": "Kaip skaičiuojami viršvalandžiai?",
+          "a": "Pasirenkate, nuo kelių valandų per dieną prasideda viršvalandžiai, ir priedą procentais. Galite turėti ir aukštesnį lygį, pvz. vakarui ir nakčiai +100 %."
+        },
+        {
+          "q": "Kur saugomi duomenys?",
+          "a": "Serveriuose ES/EEE, Stokholme. Daugiau skaitykite privatumo politikoje."
+        }
+      ]
+    },
+    "transport": {
+      "navName": "Transportas",
+      "metaTitle": "Užsakymų sistema transportui ir sunkvežimiams · MaskinGo",
+      "metaDescription": "Priskirkite sunkvežimį ir vairuotoją, gaukite laiką, nuotraukas ir kliento parašą iš vairuotojo telefono ir išrašykite sąskaitą tą pačią dieną.",
+      "summary": "Sunkvežimių ir vairuotojų paskirstymas, skaitmeninis darbo lapas ir sąskaita tą pačią dieną.",
+      "badge": "Transporto įmonėms",
+      "title": "Transporto užsakymai be skambučių eilės ir popierinių lapelių",
+      "lead": "MaskinGo dispečeriui parodo visus sunkvežimius ir vairuotojus, o vairuotojas gauna užsakymą telefone su klientu ir adresu.",
+      "problems": [
+        "Dispečeris visą dieną skambina vairuotojams, kad paskirstytų užsakymus.",
+        "Popieriniai darbo lapai pasimeta arba ateina po kelių savaičių.",
+        "Sąskaita laukia, nes pirmiausia reikia surinkti valandas."
+      ],
+      "points": [
+        {
+          "title": "Paskirstymas kalendoriuje",
+          "body": "Priskirkite užsakymui sunkvežimį ir vairuotoją ir matykite, kas laisvas, kiekvieną dieną ar pagal sunkvežimį."
+        },
+        {
+          "title": "Užsakymas vairuotojo telefone",
+          "body": "Vairuotojas mato tik savo užsakymus su klientu ir adresu ir spaudžia Važiuoju, Atvykau ir Baigiau."
+        },
+        {
+          "title": "Skaitmeninis darbo lapas",
+          "body": "Laikas, nuotraukos ir kliento parašas išsaugomi prie užsakymo, todėl biuras dokumentus turi tą pačią dieną."
+        },
+        {
+          "title": "Sąskaita tą pačią dieną",
+          "body": "Kai valandos patvirtintos, sukuriamas sąskaitos juodraštis su kliento kainomis. Jis išsiunčiamas PDF el. paštu, kai paspaudžiate Siųsti."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar galime išrašyti sąskaitą už reisą ar toną?",
+          "a": "Kol kas ne. Šiandien sąskaita sudaroma iš valandų ir valandinio sunkvežimio ar mašinos įkainio. Parašykite mums, kaip išrašote sąskaitas, ir įtrauksime tai į planus."
+        },
+        {
+          "q": "Ar tinka vairuotojams, kurie nekalba norvegiškai?",
+          "a": "Taip. Kiekvienas naudotojas pats renkasi kalbą: norvegų, anglų arba lietuvių. Klientų pavadinimai ir adresai rodomi taip, kaip įvesti."
+        },
+        {
+          "q": "Ar sąskaita išsiunčiama automatiškai?",
+          "a": "Ne. Niekas neišsiunčiama, kol kas nors biure nepaspaudžia Siųsti."
+        },
+        {
+          "q": "Ar galime siųsti EHF sąskaitas?",
+          "a": "Kol kas ne. Šiandien sąskaita siunčiama PDF el. paštu. EHF numatytas kaip atskiras etapas."
+        }
+      ]
+    }
   }
 }

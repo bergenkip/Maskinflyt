@@ -1380,5 +1380,163 @@
     "windowHint": "En slutt før start går over midnatt, som 19:00–06:00.",
     "clockBreak": "Pausen trekkes fra de vanlige timene først.",
     "level2ClockHint": "For eksempel fra 19:00 til 06:00 +100 %. Der den overlapper første nivå, gjelder denne. La stå tomt hvis den ikke brukes."
+  },
+  "Industry": {
+    "pointsTitle": "Dette gjør MaskinGo for deg",
+    "problemTitle": "Kjenner du deg igjen?",
+    "faqTitle": "Spørsmål og svar",
+    "otherTitle": "Andre bransjer",
+    "homeTitle": "Laget for din bransje",
+    "readMore": "Se alt MaskinGo gjør",
+    "kranbil": {
+      "navName": "Kranbil",
+      "metaTitle": "Oppdragssystem for kranbil · MaskinGo",
+      "metaDescription": "Planlegg kranbiloppdrag, la kranføreren registrere tid, bilder og signatur på mobilen, og lag fakturaen fra godkjente timer.",
+      "summary": "Kalender per kranbil, tid og signatur fra kranføreren og minstetid på fakturaen.",
+      "badge": "For kranbilfirmaer",
+      "title": "Kranbiloppdrag fra bestilling til faktura",
+      "lead": "MaskinGo samler oppdraget, kranføreren, timene og fakturaen på ett sted, så kontoret slipper å ringe rundt og taste inn timelister.",
+      "problems": [
+        "Oppdrag kommer på telefon og SMS, og oversikten ligger i hodet til én person.",
+        "Timer og minstetid må hentes fra lapper og meldinger før det kan faktureres.",
+        "Kunden spør hvordan jobben ble gjort, og bildene ligger på en privat telefon."
+      ],
+      "points": [
+        {
+          "title": "Kalender per kranbil",
+          "body": "Se hvilke kranbiler og kranførere som er ledige, dag for dag eller uke for uke. Løftekapasitet i tm og nyttelast står på hver bil."
+        },
+        {
+          "title": "Kranføreren trykker på mobilen",
+          "body": "På vei, Ankommet og Ferdig. Tiden på oppdraget registreres fra trykkene, og kontoret kan rette før timene godkjennes."
+        },
+        {
+          "title": "Bilder og kundens signatur",
+          "body": "Kranføreren tar bilder av jobben og lar kunden signere med fingeren. Alt lagres på oppdraget."
+        },
+        {
+          "title": "Minstetid og kundens priser",
+          "body": "Hver kranbil har sin timepris og minstetid, og en kunde kan ha egen pris. Fakturautkastet regner det ut for deg."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Må kranføreren installere en app?",
+          "a": "Nei. MaskinGo åpnes i nettleseren på mobilen og kan legges på hjemskjermen. Kranføreren ser bare sine egne oppdrag."
+        },
+        {
+          "q": "Kan vi ha minstetid på kranbilen?",
+          "a": "Ja. Du setter minste fakturerte timer per maskin, for eksempel 2. Et kortere oppdrag faktureres da som 2 timer."
+        },
+        {
+          "q": "Sendes fakturaen automatisk?",
+          "a": "Nei. Fakturaen lages som et utkast fra godkjente timer og sendes som PDF på e-post først når noen på kontoret trykker Send."
+        },
+        {
+          "q": "Kan regnskapsføreren få tallene?",
+          "a": "Ja. Du laster ned fakturaer og kreditnotaer for en periode som én CSV-fil og alle PDF-ene i én ZIP-fil. Sending som EHF kommer senere."
+        }
+      ]
+    },
+    "maskinentreprenor": {
+      "navName": "Maskinentreprenør",
+      "metaTitle": "Program for maskinentreprenør · MaskinGo",
+      "metaDescription": "Oppdrag, maskiner og førere i én kalender, timeføring fra mobilen og faktura fra godkjente timer. Laget for norske maskinentreprenører.",
+      "summary": "Maskiner og førere i én kalender, timeliste til lønn og faktura fra godkjente timer.",
+      "badge": "For maskinentreprenører",
+      "title": "Ett program for oppdrag, maskiner, timer og faktura",
+      "lead": "For deg som driver med gravemaskin, hjullaster eller andre anleggsmaskiner: se hvem som er hvor, få timene inn fra mobilen og fakturer uten å taste dem inn på nytt.",
+      "problems": [
+        "Maskinførerne skriver timer på papir eller i SMS, og de kommer inn sent.",
+        "Det er vanskelig å se hvilke maskiner og førere som er ledige neste uke.",
+        "Timer til lønn og timer til faktura føres to steder og stemmer ikke alltid."
+      ],
+      "points": [
+        {
+          "title": "Oppdrag og maskiner i kalenderen",
+          "body": "Hvert oppdrag har kunde, adresse, maskin og fører. Kalenderen viser dag og uke, også per maskin."
+        },
+        {
+          "title": "Timeføring fra mobilen",
+          "body": "Føreren trykker På vei, Ankommet og Ferdig på oppdraget. Kontoret ser timene og kan rette dem før de godkjennes."
+        },
+        {
+          "title": "Timeliste til lønn",
+          "body": "Hver ansatt fører og bekrefter timelisten for perioden. Overtid deles etter reglene dine, og regnskapsføreren får den som PDF."
+        },
+        {
+          "title": "Faktura fra godkjente timer",
+          "body": "Fortløpende fakturanummer, PDF og e-post til kunden når du trykker Send. En feil rettes med kreditnota."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Passer MaskinGo for et lite firma?",
+          "a": "Ja. MaskinGo er laget for små og mellomstore entreprenører. Du kan starte alene og invitere førere og regnskapsfører når du er klar."
+        },
+        {
+          "q": "Hvem ser hva?",
+          "a": "Administrator, disponent, sjåfør og regnskapsfører har hver sin rolle. En fører ser bare sine egne oppdrag, og ingen bedrift ser en annen bedrifts data."
+        },
+        {
+          "q": "Hvordan regnes overtid?",
+          "a": "Du velger fra hvor mange timer per dag overtid starter og tillegget i prosent. Du kan også ha et høyere nivå, for eksempel kveld og natt med +100 %."
+        },
+        {
+          "q": "Hvor lagres dataene?",
+          "a": "På servere i EU/EØS, i Stockholm. Les mer i personvernerklæringen."
+        }
+      ]
+    },
+    "transport": {
+      "navName": "Transport",
+      "metaTitle": "Ordresystem for transport og lastebil · MaskinGo",
+      "metaDescription": "Sett opp bil og sjåfør, få tider, bilder og kundens signatur fra sjåførens mobil og lag fakturaen samme dag. For norske transportfirmaer.",
+      "summary": "Disponering av biler og sjåfører, digital arbeidsseddel og faktura samme dag.",
+      "badge": "For transportfirmaer",
+      "title": "Transportoppdrag uten telefonkø og papirlapper",
+      "lead": "MaskinGo gir disponenten oversikt over biler og sjåfører, og sjåføren får oppdraget på mobilen med kunde og adresse.",
+      "problems": [
+        "Disponenten bruker dagen på å ringe sjåfører for å fordele oppdrag.",
+        "Arbeidssedler på papir blir borte eller kommer inn uker senere.",
+        "Fakturaen blir liggende fordi timene må samles inn først."
+      ],
+      "points": [
+        {
+          "title": "Disponering i kalenderen",
+          "body": "Sett opp bil og sjåfør på oppdraget og se hvem som er ledig, dag for dag eller per bil."
+        },
+        {
+          "title": "Oppdraget på sjåførens mobil",
+          "body": "Sjåføren ser bare sine oppdrag med kunde og adresse, og trykker På vei, Ankommet og Ferdig."
+        },
+        {
+          "title": "Digital arbeidsseddel",
+          "body": "Tider, bilder og kundens signatur lagres på oppdraget, så kontoret har dokumentasjonen samme dag."
+        },
+        {
+          "title": "Faktura samme dag",
+          "body": "Når timene er godkjent, lages fakturautkastet med kundens priser. Det sendes som PDF på e-post når du trykker Send."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Kan vi fakturere per tur eller per tonn?",
+          "a": "Ikke ennå. I dag lages fakturaen fra timer og timepris per bil eller maskin. Skriv til oss hvordan dere fakturerer, så tar vi det med i planene."
+        },
+        {
+          "q": "Fungerer det for sjåfører som ikke snakker norsk?",
+          "a": "Ja. Hver bruker velger språk selv: norsk, engelsk eller litauisk. Kundenavn og adresser vises slik de er skrevet inn."
+        },
+        {
+          "q": "Sendes fakturaen automatisk?",
+          "a": "Nei. Ingenting sendes før noen på kontoret trykker Send."
+        },
+        {
+          "q": "Kan vi sende EHF-faktura?",
+          "a": "Ikke ennå. Fakturaen sendes i dag som PDF på e-post. EHF er planlagt som et eget steg."
+        }
+      ]
+    }
   }
 }

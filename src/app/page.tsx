@@ -3,8 +3,10 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { IndustryLink } from "@/components/industry-link";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { industries } from "@/lib/industries";
 import { COMPANY } from "@/lib/legal";
 import { SITE_NAME, SITE_URL, publicPageMetadata } from "@/lib/site";
 
@@ -62,6 +64,7 @@ export default function Home() {
   const t = useTranslations("Home");
   const tNav = useTranslations("Nav");
   const tMeta = useTranslations("Metadata");
+  const tIndustry = useTranslations("Industry");
   const locale = useLocale();
 
   // Tells search engines what MaskinGo is (schema.org). Only facts that are
@@ -170,6 +173,19 @@ export default function Home() {
               ))}
             </ul>
           </section>
+
+          <nav aria-labelledby="industries-title" className="mt-14 sm:mt-20">
+            <h2 id="industries-title" className="text-sm font-semibold tracking-wide text-muted uppercase">
+              {tIndustry("homeTitle")}
+            </h2>
+            <ul className="mt-4 grid gap-4 md:grid-cols-3">
+              {industries.map((industry) => (
+                <li key={industry}>
+                  <IndustryLink industry={industry} />
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <section
             aria-labelledby="contact-title"

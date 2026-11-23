@@ -21,7 +21,17 @@ export function ogLocale(locale: string): string {
 
 // Pages that people find through search. Everything else (the app itself,
 // password and invitation links) is marked noindex.
-export const publicPaths = ["/", "/signup", "/login", "/personvern", "/vilkar", "/databehandleravtale"] as const;
+export const publicPaths = [
+  "/",
+  "/kranbil",
+  "/maskinentreprenor",
+  "/transport",
+  "/signup",
+  "/login",
+  "/personvern",
+  "/vilkar",
+  "/databehandleravtale",
+] as const;
 
 // For the pages in publicPaths: a canonical link to maskingo.no (one address
 // per page, also when opened on *.vercel.app) and permission to be indexed.
