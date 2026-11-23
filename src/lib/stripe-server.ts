@@ -19,18 +19,20 @@ export function getStripe(): Stripe | null {
 }
 
 export function billingConfigured(): boolean {
-  return !!process.env.STRIPE_SECRET_KEY && !!process.env.SUPABASE_SECRET_KEY;
+  return !!process.env.STRIPE_SECRET_KEY && !!process.env.BILLING_WRITE_TOKEN;
 }
 
-// Writes public.subscriptions, which members can only read. The secret key
-// passes RLS, so it is used here and nowhere else.
-function createBillingWriter() {
-  const secret = process.env.SUPABASE_SECRET_KEY;
-  if (!secret) throw new Error("SUPABASE_SECRET_KEY is not set");
-  const { url } = requireSupabaseEnv();
-  return createSupabaseClient(url, secret, {
+// public.subscriptions is read-only for members. What Stripe says is written
+// through two database functions that accept only the server's billing token
+// (BILLING_WRITE_TOKEN), so the app never holds Supabase's all-powerful secret key.
+function billingWriter() {
+  const token = process.env.BILLING_WRITE_TOKEN;
+  if (!token) throw new Error("BILLING_WRITE_TOKEN is not set");
+  const { url, key } = requireSupabaseEnv();
+  const client = createSupabaseClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
   });
+  return { client, token };
 }
 
 // The page the person comes back to, built from the request so previews link to themselves.
@@ -62,10 +64,8 @@ export async function ensurePrice(stripe: Stripe, plan: Plan, interval: Interval
 }
 
 export async function saveCustomer(organizationId: string, customerId: string): Promise<void> {
-  const { error } = await createBillingWriter()
-    .from("subscriptions")
-    .update({ stripe_customer_id: customerId, updated_at: new Date().toISOString() })
-    .eq("organization_id", organizationId);
+  const { client, token } = billingWriter();
+  const { error } = await client.rpc("save_stripe_customer", { token, org: organizationId, customer: customerId });
   if (error) throw new Error(`Could not save the Stripe customer: ${error.message}`);
 }
 
@@ -73,21 +73,19 @@ export async function saveCustomer(organizationId: string, customerId: string): 
 export async function syncSubscription(sub: StripeSubscriptionLike): Promise<boolean> {
   const row = rowFromStripe(sub);
   if (!row) return false;
-  const writer = createBillingWriter();
-  // A company's newer subscription wins over an older, ended one.
-  const { data: current } = await writer
-    .from("subscriptions")
-    .select("stripe_subscription_id, status")
-    .eq("organization_id", row.organization_id)
-    .maybeSingle();
-  const ended = (status: string) => status === "canceled" || status === "incomplete_expired";
-  if (current?.stripe_subscription_id && current.stripe_subscription_id !== row.stripe_subscription_id
-      && !ended(current.status) && ended(row.status)) {
-    return true;
-  }
-  const { error } = await writer
-    .from("subscriptions")
-    .upsert({ ...row, updated_at: new Date().toISOString() }, { onConflict: "organization_id" });
+  const { client, token } = billingWriter();
+  const { error } = await client.rpc("save_subscription", {
+    token,
+    org: row.organization_id,
+    new_plan: row.plan,
+    new_interval: row.billing_interval,
+    new_status: row.status,
+    period_end: row.current_period_end,
+    cancelling: row.cancel_at_period_end,
+    customer: row.stripe_customer_id,
+    subscription: row.stripe_subscription_id,
+    trial_end: row.trial_ends_at ?? null,
+  });
   if (error) throw new Error(`Could not save the subscription: ${error.message}`);
   return true;
 }

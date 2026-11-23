@@ -173,3 +173,103 @@ begin
   return new;
 end;
 $$;
+
+-- What Stripe says is written through two functions, not with Supabase's
+-- all-powerful secret key. The server proves itself with its own billing
+-- token (BILLING_WRITE_TOKEN in Vercel); only the token's hash is kept here,
+-- set by hand after deploying. Until it is set, nothing can be written.
+create table private.billing_writer (
+  id boolean primary key default true check (id),
+  token_hash text not null check (token_hash ~ '^[0-9a-f]{64}$')
+);
+
+create function private.check_billing_token(token text)
+returns void
+language plpgsql
+stable
+security definer
+set search_path = ''
+as $$
+begin
+  if token is null or char_length(token) < 40
+     or not exists (select 1 from private.billing_writer w where w.token_hash = private.hash_token(token)) then
+    raise exception 'Not allowed' using errcode = '42501', hint = 'not_allowed';
+  end if;
+end;
+$$;
+
+-- The company's Stripe customer, saved before the payment page opens.
+create function public.save_stripe_customer(token text, org uuid, customer text)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  perform private.check_billing_token(token);
+  if customer is null or customer !~ '^cus_[A-Za-z0-9]{1,250}$' then
+    raise exception 'Not a Stripe customer' using errcode = '22023', hint = 'invalid';
+  end if;
+  update public.subscriptions s
+  set stripe_customer_id = customer, updated_at = now()
+  where s.organization_id = org;
+end;
+$$;
+
+-- A Stripe subscription as the app reads it (src/lib/billing.ts rowFromStripe).
+-- A company's newer, running subscription is not overwritten by an older, ended one.
+create function public.save_subscription(
+  token text,
+  org uuid,
+  new_plan text,
+  new_interval text,
+  new_status text,
+  period_end timestamptz,
+  cancelling boolean,
+  customer text,
+  subscription text,
+  trial_end timestamptz default null
+)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  current public.subscriptions;
+  ended text[] := array['canceled', 'incomplete_expired'];
+begin
+  perform private.check_billing_token(token);
+  if subscription is null or subscription !~ '^sub_[A-Za-z0-9]{1,250}$'
+     or customer is null or customer !~ '^cus_[A-Za-z0-9]{1,250}$' then
+    raise exception 'Not a Stripe subscription' using errcode = '22023', hint = 'invalid';
+  end if;
+  select * into current from public.subscriptions s where s.organization_id = org for update;
+  if current.organization_id is null then
+    raise exception 'No such company' using errcode = 'P0002', hint = 'not_found';
+  end if;
+  if current.stripe_subscription_id is not null and current.stripe_subscription_id <> subscription
+     and not current.status = any (ended) and new_status = any (ended) then
+    return;
+  end if;
+  update public.subscriptions s
+  set plan = new_plan,
+      billing_interval = new_interval,
+      status = new_status,
+      current_period_end = period_end,
+      cancel_at_period_end = coalesce(cancelling, false),
+      stripe_customer_id = customer,
+      stripe_subscription_id = subscription,
+      trial_ends_at = coalesce(trial_end, s.trial_ends_at),
+      updated_at = now()
+  where s.organization_id = org;
+end;
+$$;
+
+revoke all on table private.billing_writer from public, anon, authenticated;
+revoke all on function private.check_billing_token(text) from public;
+revoke all on function public.save_stripe_customer(text, uuid, text) from public;
+revoke all on function public.save_subscription(text, uuid, text, text, text, timestamptz, boolean, text, text, timestamptz) from public;
+-- The webhook has no signed-in person, so it calls as anon; the token is the key.
+grant execute on function public.save_stripe_customer(text, uuid, text) to anon, authenticated;
+grant execute on function public.save_subscription(text, uuid, text, text, text, timestamptz, boolean, text, text, timestamptz) to anon, authenticated;
