@@ -42,6 +42,7 @@ export async function submitJobRequest(_prev: RequestState, formData: FormData):
     if (error?.hint === "not_found") return { values, error: "closed" };
     if (error?.hint === "too_many") return { values, error: "tooMany" };
     if (error?.hint === "invalid_date") return { values, fieldErrors: { wantedDate: "dateInvalid" } };
+    if (error?.hint === "slot_taken") return { values, fieldErrors: { wantedStart: "slotTaken" } };
     return { values, error: "unknown" };
   }
 
@@ -59,6 +60,7 @@ export async function submitJobRequest(_prev: RequestState, formData: FormData):
         email: fields.request_email,
         place: fields.request_place,
         wantedDate: fields.request_wanted_date,
+        wantedStart: fields.request_wanted_start,
         service: fields.request_service,
         description: fields.request_description,
       },

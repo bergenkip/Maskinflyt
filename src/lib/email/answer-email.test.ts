@@ -45,4 +45,13 @@ describe("answer e-mail", () => {
     expect(email.text).not.toContain("Spørsmål");
     expect(email.replyTo).toBeUndefined();
   });
+
+  it("names a picked time in the company's time zone instead of the day", () => {
+    const email = answerEmail(
+      { ...answer, wantedStart: "2026-12-01T10:00:00Z", timeZone: "Europe/Oslo" },
+      { to: "kari@nordmann.test", testMode: false },
+    );
+    expect(email.text).toMatch(/Ønsket tid: 1\. desember 2026.*11[:.]00/);
+    expect(email.text).not.toContain("Ønsket dato");
+  });
 });

@@ -31,14 +31,21 @@ export default async function NewJobPage({ searchParams }: PageProps<"/app/jobs/
     typeof request === "string" && /^[0-9a-f-]{36}$/i.test(request)
       ? supabase
           .from("job_requests")
-          .select("name, customer_id, place, wanted_date, description")
+          .select("name, customer_id, place, wanted_date, wanted_start, description")
           .eq("id", request)
           .eq("status", "accepted")
           .maybeSingle()
       : null,
   ]);
   const accepted = fromRequest?.data as
-    | { name: string; customer_id: string | null; place: string; wanted_date: string | null; description: string }
+    | {
+        name: string;
+        customer_id: string | null;
+        place: string;
+        wanted_date: string | null;
+        wanted_start: string | null;
+        description: string;
+      }
     | null
     | undefined;
   // From a customer's page or a request: that customer is already chosen.
@@ -50,10 +57,13 @@ export default async function NewJobPage({ searchParams }: PageProps<"/app/jobs/
     typeof value === "string" && list.some((item) => item.id === value) ? value : "";
   const driverId = pick(driver, options.drivers);
   const vehicleId = pick(vehicle, options.vehicles) || (driverId ? (options.suggestions[driverId]?.vehicleId ?? "") : "");
-  const wantedDate = accepted?.wanted_date ?? date;
+  // A time the customer picked gives the day and the start, read in the company's time zone.
+  const picked = accepted?.wanted_start ? toLocalParts(new Date(accepted.wanted_start), organization.timeZone) : null;
+  const wantedDate = picked?.date ?? accepted?.wanted_date ?? date;
   const startDate =
     typeof wantedDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(wantedDate) && !Number.isNaN(Date.parse(wantedDate)) ? wantedDate : "";
-  const startTime = typeof start === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(start) ? start : "";
+  const wantedStart = picked?.time ?? start;
+  const startTime = typeof wantedStart === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(wantedStart) ? wantedStart : "";
 
   return (
     <div className="grid max-w-3xl gap-8">

@@ -56,6 +56,9 @@ export async function answerJobRequest(_prev: AnswerState, formData: FormData): 
     return { error: "unknown" };
   }
   const answered = data as Answered;
+  // The time the customer picked, if any (stage 15c); read with the office's own rights.
+  const { data: picked } = await supabase.from("job_requests").select("wanted_start").eq("id", request).maybeSingle();
+  const wantedStart = (picked as { wanted_start: string | null } | null)?.wanted_start ?? null;
 
   let email: AnswerState["email"] = "none";
   const to = answered.email ? normalizeEmail(answered.email) : null;
@@ -71,6 +74,8 @@ export async function answerJobRequest(_prev: AnswerState, formData: FormData): 
           name: answered.name,
           place: answered.place,
           wantedDate: answered.wanted_date,
+          wantedStart,
+          timeZone: membership.organization.timeZone,
           message: message || null,
           companyEmail: answered.page_email,
           companyPhone: answered.page_phone,

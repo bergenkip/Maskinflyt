@@ -29,7 +29,7 @@ export default async function JobRequestsPage() {
     getFormatter(),
     supabase
       .from("job_requests")
-      .select("id, status, name, phone, email, place, wanted_date, service, description, created_at, answer, customer_id, handled_at")
+      .select("id, status, name, phone, email, place, wanted_date, wanted_start, service, description, created_at, answer, customer_id, handled_at")
       .eq("organization_id", organization.id)
       .order("created_at", { ascending: false })
       .limit(200),
@@ -43,6 +43,16 @@ export default async function JobRequestsPage() {
   // A wanted day is a calendar date, not an instant: read at noon UTC so it never shifts.
   const day = (date: string) =>
     format.dateTime(new Date(`${date}T12:00:00Z`), { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  // A picked time is an instant: show its day and clock time in the company's time zone.
+  const wantedLine = (request: JobRequestRow) =>
+    request.wanted_start
+      ? t("wantedAt", {
+          date: format.dateTime(new Date(request.wanted_start), { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone }),
+          time: format.dateTime(new Date(request.wanted_start), { hour: "2-digit", minute: "2-digit", timeZone }),
+        })
+      : request.wanted_date
+        ? t("wantedOn", { date: day(request.wanted_date) })
+        : null;
   const newCount = requests.filter((request) => request.status === "new").length;
 
   return (
@@ -86,7 +96,7 @@ export default async function JobRequestsPage() {
                 <RequestCard
                   request={request}
                   received={received(request.created_at)}
-                  wanted={request.wanted_date ? day(request.wanted_date) : null}
+                  wanted={wantedLine(request)}
                   answered={request.handled_at ? received(request.handled_at) : null}
                 />
               </li>

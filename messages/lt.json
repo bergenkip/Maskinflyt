@@ -186,7 +186,10 @@
     "tipPhotosText": "Technikos ir darbų nuotraukos padaro puslapį patikimesnį.",
     "tipPhotosAction": "Pridėti nuotraukų",
     "requestsLabel": "Naujos užklausos",
-    "requestsDetail": "Iš jūsų įmonės puslapio"
+    "requestsDetail": "Iš jūsų įmonės puslapio",
+    "tipTimesTitle": "Atidarykite laisvus laikus",
+    "tipTimesText": "Leiskite klientams pasirinkti laisvą laiką jūsų puslapyje arba pasirinkite tik užklausas.",
+    "tipTimesAction": "Atidaryti laikus"
   },
   "Roles": {
     "owner": "Savininkas",
@@ -1943,8 +1946,13 @@
       "serviceInvalid": "Pasirinkite paslaugą iš sąrašo.",
       "closed": "Ši įmonė dabar čia nepriima užklausų. Naudokite kontaktus aukščiau.",
       "tooMany": "Per trumpą laiką išsiųsta daug užklausų. Bandykite po valandos arba paskambinkite įmonei.",
-      "unknown": "Užklausa neišsiųsta. Bandykite dar kartą."
-    }
+      "unknown": "Užklausa neišsiųsta. Bandykite dar kartą.",
+      "slotTaken": "Šį laiką ką tik kažkas užėmė. Pasirinkite kitą."
+    },
+    "times": "Pasirinkite laiką (nebūtina)",
+    "timesHint": "Laisvi artimiausių dviejų savaičių laikai. Laiką patvirtina įmonė.",
+    "timeNone": "Be konkretaus laiko",
+    "noTimes": "Artimiausias dvi savaites laisvų laikų nėra. Vietoj to nurodykite pageidaujamą dieną."
   },
   "JobRequests": {
     "title": "Užklausos",
@@ -1985,7 +1993,8 @@
       "answerTooLong": "Žinutė gali būti ne ilgesnė nei 1000 simbolių.",
       "alreadyAnswered": "Į šią užklausą jau kažkas atsakė.",
       "unknown": "Atsakymo išsaugoti nepavyko. Bandykite dar kartą."
-    }
+    },
+    "wantedAt": "Pageidaujama: {date} {time}"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} priėmė jūsų užklausą",
@@ -2000,6 +2009,49 @@
     "questions": "Turite klausimų? Atsakykite į šį laišką.",
     "closing": "Pagarbiai",
     "footer": "Išsiųsta per MaskinGo įmonės {company} vardu.",
-    "test": "TEST: Šis laiškas išsiųstas iš MaskinGo bandomosios paskyros ir nėra tikras atsakymas. Gavėjas: {to}"
+    "test": "TEST: Šis laiškas išsiųstas iš MaskinGo bandomosios paskyros ir nėra tikras atsakymas. Gavėjas: {to}",
+    "time": "Pageidaujamas laikas"
+  },
+  "CompanyHours": {
+    "title": "Laisvi laikai",
+    "lead": "Atidarykite laikus, kuriuos klientai gali pasirinkti jūsų įmonės puslapyje. Pasirinktas laikas yra pageidavimas: jūs jį priimate arba atmetate.",
+    "pageFirst": "Pirma sukurkite įmonės puslapį, tada atidarykite laikus.",
+    "modeLegend": "Kaip klientai užsako iš jūsų puslapio",
+    "modeOn": "Rodyti laisvus laikus",
+    "modeOnHint": "Klientai mato laisvus artimiausių dviejų savaičių laikus ir pasirenka vieną.",
+    "modeOff": "Tik užklausos",
+    "modeOffHint": "Klientai aprašo darbą ir nurodo pageidaujamą dieną.",
+    "length": "Vieno užsakymo trukmė",
+    "lengthHours": "{hours, plural, one {# valanda} few {# valandos} other {# valandų}}",
+    "lengthDay": "Visa diena (8 valandos)",
+    "lengthHint": "Laisvi laikai siūlomi tokios trukmės žingsniais.",
+    "weekLegend": "Darbo laikas",
+    "weekHint": "Laikas laisvas, kai jį dengia mažiau užsakymų, nei turite naudojamos technikos.",
+    "openOn": "Dirbama: {day}",
+    "opens": "Nuo",
+    "closes": "Iki",
+    "save": "Išsaugoti",
+    "savedOn": "Išsaugota. Klientai mato laisvus laikus.",
+    "savedOff": "Išsaugota. Klientai siunčia tik užklausas.",
+    "daysOffTitle": "Poilsio dienos",
+    "daysOffLead": "Šventės ir kitos nedarbo dienos. Tomis dienomis laisvi laikai nerodomi.",
+    "noDaysOff": "Poilsio dienų dar nėra.",
+    "dayOff": "Diena",
+    "dayOffNote": "Pastaba (nebūtina)",
+    "dayOffNotePlaceholder": "pvz. Kalėdos",
+    "addDay": "Pridėti poilsio dieną",
+    "adding": "Pridedama…",
+    "removeDay": "Pašalinti {day}",
+    "errors": {
+      "timesInvalid": "Pabaigos laikas turi būti vėlesnis nei pradžios.",
+      "noOpenDay": "Kad būtų rodomi laisvi laikai, atidarykite bent vieną dieną.",
+      "lengthInvalid": "Pasirinkite trukmę iš sąrašo.",
+      "noPage": "Pirma sukurkite įmonės puslapį.",
+      "notAllowed": "Įmonės puslapį gali keisti tik savininkai ir administratoriai.",
+      "readOnly": "Prenumerata neaktyvi, todėl dabar nieko keisti negalima.",
+      "dateInvalid": "Pasirinkite dieną nuo šiandien iki dvejų metų į priekį.",
+      "noteTooLong": "Pastaba gali būti ne ilgesnė nei 100 simbolių.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
   }
 }

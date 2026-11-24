@@ -7,6 +7,7 @@ import { isIndexable, ogLocale, SITE_NAME } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { getPagePhotos } from "@/lib/company-photos-server";
+import type { FreeSlot } from "@/lib/company-hours";
 import { CompanyView, type PublicCompany } from "./company-view";
 
 // Published pages for everyone; an unpublished one only for the company's own members, as a preview.
@@ -40,6 +41,13 @@ export default async function CompanyPublicPage({ params }: PageProps<"/firma/[s
   const { slug } = await params;
   const company = await loadCompany(slug);
   if (!company) notFound();
-  const photos = await getPagePhotos(company.slug);
-  return <CompanyView company={company} photos={photos} />;
+  const supabase = await createClient();
+  const [photos, booking] = await Promise.all([
+    getPagePhotos(company.slug),
+    supabase.rpc("company_page_booking", { page_slug: company.slug }).maybeSingle(),
+  ]);
+  // With free times switched on, the request form offers them; otherwise a wished-for day.
+  const freeTimes = (booking.data as { free_times: boolean } | null)?.free_times === true;
+  const slots = freeTimes ? await supabase.rpc("company_free_slots", { page_slug: company.slug }) : null;
+  return <CompanyView company={company} photos={photos} slots={slots && !slots.error ? ((slots.data ?? []) as FreeSlot[]) : null} />;
 }

@@ -100,7 +100,7 @@ export default async function DashboardPage() {
         : null,
       showJobs ? supabase.from("jobs").select("id", { count: "exact", head: true }).eq("organization_id", organization.id) : null,
       // Recommendations (owners and admins): the public page and its photos.
-      isAdmin ? supabase.from("company_pages").select("slug, published").eq("organization_id", organization.id).maybeSingle() : null,
+      isAdmin ? supabase.from("company_pages").select("slug, published, free_times").eq("organization_id", organization.id).maybeSingle() : null,
       isAdmin
         ? supabase.from("company_photos").select("id", { count: "exact", head: true }).eq("organization_id", organization.id)
         : null,
@@ -126,12 +126,14 @@ export default async function DashboardPage() {
   const firstName = profile.data?.first_name?.trim();
   const memberCount = members.count ?? 0;
   const number = (value: number | null) => (value === null ? "–" : format.number(value));
-  const page = companyPage?.data as { slug: string; published: boolean } | null | undefined;
+  const page = companyPage?.data as { slug: string; published: boolean; free_times: boolean | null } | null | undefined;
+  // Free times shown, or requests only: either way the company has decided.
+  const timesDecided = page?.free_times != null;
   const pagePublished = page?.published === true;
   const hasPhotos = (companyPhotos?.count ?? 0) > 0;
   // Shown until everything is done; a query that failed hides the section rather than guessing.
   const showRecommendations =
-    isAdmin && !companyPage?.error && !companyPhotos?.error && !(pagePublished && hasPhotos);
+    isAdmin && !companyPage?.error && !companyPhotos?.error && !(pagePublished && hasPhotos && timesDecided);
 
   return (
     <div className="grid gap-5 sm:gap-6">
@@ -281,6 +283,15 @@ export default async function DashboardPage() {
               done={hasPhotos}
               href="/app/public-page#page-photos"
               action={t("tipPhotosAction")}
+              status={t}
+            />
+            <Tip
+              icon={<ClockIcon className="size-6" />}
+              title={t("tipTimesTitle")}
+              text={t("tipTimesText")}
+              done={timesDecided}
+              href="/app/public-page#page-times"
+              action={t("tipTimesAction")}
               status={t}
             />
           </ul>

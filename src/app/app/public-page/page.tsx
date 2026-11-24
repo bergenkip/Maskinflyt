@@ -12,6 +12,9 @@ import { createClient } from "@/lib/supabase/server";
 import { getOwnCompanyPhotos } from "@/lib/company-photos-server";
 import { CompanyPageForm } from "./page-form";
 import { CompanyPhotosForm } from "./photos-form";
+import { DaysOffForm, HoursForm } from "./hours-form";
+import { weekFromRows } from "@/lib/company-hours";
+import { toLocalParts } from "@/lib/jobs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("CompanyPage");
@@ -30,6 +33,8 @@ type PageRow = {
   phone: string | null;
   email: string | null;
   website: string | null;
+  free_times: boolean | null;
+  slot_minutes: number;
 };
 
 // The company's public page (stage 15a): owners and admins write it and choose when it is shown.
@@ -39,15 +44,28 @@ export default async function CompanyPageSettings() {
   if (!canManageBilling(membership)) redirect("/app/settings");
   const { organization } = membership;
 
-  const [t, tPhotos] = await Promise.all([getTranslations("CompanyPage"), getTranslations("CompanyPhotos")]);
+  const [t, tPhotos, tHours] = await Promise.all([
+    getTranslations("CompanyPage"),
+    getTranslations("CompanyPhotos"),
+    getTranslations("CompanyHours"),
+  ]);
+  const today = toLocalParts(new Date(), organization.timeZone).date;
   const supabase = await createClient();
-  const [{ data }, photos] = await Promise.all([
+  const [{ data }, photos, hours, daysOff] = await Promise.all([
     supabase
       .from("company_pages")
-      .select("slug, published, description, services, city, area, phone, email, website")
+      .select("slug, published, description, services, city, area, phone, email, website, free_times, slot_minutes")
       .eq("organization_id", organization.id)
       .maybeSingle(),
     getOwnCompanyPhotos(organization.id),
+    supabase.from("company_hours").select("weekday, opens, closes").eq("organization_id", organization.id),
+    supabase
+      .from("company_days_off")
+      .select("day, note")
+      .eq("organization_id", organization.id)
+      .gte("day", today)
+      .order("day")
+      .limit(60),
   ]);
   const page = data as PageRow | null;
   const host = (await headers()).get("x-forwarded-host") ?? "maskingo.no";
@@ -118,6 +136,37 @@ export default async function CompanyPageSettings() {
           <p className="text-sm text-muted">{tPhotos("lead")}</p>
         </div>
         <CompanyPhotosForm photos={photos} />
+      </section>
+
+      <section aria-labelledby="page-times" className={sectionClass}>
+        <div className="grid gap-1">
+          <h2 id="page-times" className="text-lg font-semibold">
+            {tHours("title")}
+          </h2>
+          <p className="text-sm text-muted">{tHours("lead")}</p>
+        </div>
+        {!page ? (
+          <p className="font-medium text-muted">{tHours("pageFirst")}</p>
+        ) : hours.error || daysOff.error ? (
+          <p className="text-danger">{tHours("errors.unknown")}</p>
+        ) : (
+          <>
+            <HoursForm
+              initial={{
+                freeTimes: page.free_times === true,
+                bookingMinutes: String(page.slot_minutes),
+                week: weekFromRows((hours.data ?? []) as { weekday: number; opens: string; closes: string }[]),
+              }}
+            />
+            <div className="grid gap-3 border-t border-border pt-5">
+              <div className="grid gap-1">
+                <h3 className="font-semibold">{tHours("daysOffTitle")}</h3>
+                <p className="text-sm text-muted">{tHours("daysOffLead")}</p>
+              </div>
+              <DaysOffForm days={(daysOff.data ?? []) as { day: string; note: string | null }[]} minDate={today} />
+            </div>
+          </>
+        )}
       </section>
     </div>
   );

@@ -20,12 +20,21 @@ export type RequestForEmail = {
   email: string | null;
   place: string;
   wantedDate: string | null;
+  // A picked free time (ISO instant), shown in Norwegian time.
+  wantedStart?: string | null;
   service: Service | null;
   description: string;
 };
 
 const oneLine = (value: string) => value.replace(/[\r\n]+/g, " ").trim();
 const norwegianDate = (iso: string) => iso.split("-").reverse().join(".");
+const norwegianTime = (instant: string) => {
+  const parts = new Intl.DateTimeFormat("nb-NO", {
+    day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Oslo",
+  }).formatToParts(new Date(instant));
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  return `${part("day")}.${part("month")}.${part("year")} kl. ${part("hour")}:${part("minute")}`;
+};
 
 export function requestEmail(request: RequestForEmail, options: { to: string; testMode: boolean }) {
   const name = oneLine(request.name);
@@ -34,7 +43,11 @@ export function requestEmail(request: RequestForEmail, options: { to: string; te
     ...(request.phone ? [["Telefon", formatPhone(request.phone)] as [string, string]] : []),
     ...(request.email ? [["E-post", request.email] as [string, string]] : []),
     ["Sted", request.place],
-    ...(request.wantedDate ? [["Ønsket dato", norwegianDate(request.wantedDate)] as [string, string]] : []),
+    ...(request.wantedStart
+      ? [["Ønsket tid", norwegianTime(request.wantedStart)] as [string, string]]
+      : request.wantedDate
+        ? [["Ønsket dato", norwegianDate(request.wantedDate)] as [string, string]]
+        : []),
     // In Norwegian whatever language the customer wrote in (the Services list in nb.json).
     ...(request.service ? [["Tjeneste", nb.Services[request.service]] as [string, string]] : []),
   ];

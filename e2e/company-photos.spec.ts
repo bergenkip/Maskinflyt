@@ -77,8 +77,15 @@ test("the owner adds a logo and photos; visitors see them only on the published 
     await shootAllWidths(page, "company-photos-settings", locale);
   }
 
-  // Published with photos: nothing left to recommend on the overview.
+  // Published with photos and a choice about free times: nothing left to recommend on the overview.
   await page.context().addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
+  await page.goto("/app");
+  await expect(page.getByRole("region", { name: "Recommendations" }).getByRole("heading", { name: "Open your free times" })).toBeVisible();
+  await page.goto("/app/public-page");
+  const times = page.getByRole("region", { name: "Free times" });
+  await times.getByRole("radio", { name: "Requests only" }).check();
+  await times.getByRole("button", { name: "Save" }).click();
+  await expect(times.getByText("Saved. Customers send requests only.")).toBeVisible();
   await page.goto("/app");
   await expect(page.getByRole("heading", { name: "Get started" })).toBeVisible();
   await expect(page.getByRole("region", { name: "Recommendations" })).toHaveCount(0);

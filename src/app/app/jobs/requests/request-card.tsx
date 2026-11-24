@@ -25,6 +25,7 @@ export type JobRequestRow = {
   email: string | null;
   place: string;
   wanted_date: string | null;
+  wanted_start: string | null;
   service: string | null;
   description: string;
   created_at: string;
@@ -83,7 +84,7 @@ export async function RequestCard({
           <div className="flex items-start gap-2">
             <dt className="sr-only">{t("wantedDate")}</dt>
             <CalendarIcon className="mt-0.5 size-4 shrink-0 text-muted" />
-            <dd>{t("wantedOn", { date: wanted })}</dd>
+            <dd>{wanted}</dd>
           </div>
         )}
         {request.service && isService(request.service) && (

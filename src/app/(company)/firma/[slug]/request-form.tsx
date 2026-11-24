@@ -1,16 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useTranslations } from "next-intl";
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useFormatter, useTranslations } from "next-intl";
+import { useActionState, useEffect, useState } from "react";
 import { Field, FieldError, FormAlert, SubmitButton } from "@/components/form";
 import { CheckCircleIcon } from "@/components/icons";
 import type { Service } from "@/lib/company-page";
-import {
-  MAX_REQUEST_DESCRIPTION_LENGTH,
-  MAX_REQUEST_NAME_LENGTH,
-  MAX_REQUEST_PLACE_LENGTH,
-} from "@/lib/job-requests";
+import { groupSlots, type FreeSlot } from "@/lib/company-hours";
+import { MAX_REQUEST_DESCRIPTION_LENGTH, MAX_REQUEST_NAME_LENGTH, MAX_REQUEST_PLACE_LENGTH } from "@/lib/job-requests";
 import { submitJobRequest, type RequestState } from "./request-actions";
 
 const control =
@@ -22,18 +20,26 @@ export function RequestForm({
   slug,
   company,
   services,
+  slots,
   minDate,
   maxDate,
 }: {
   slug: string;
   company: string;
   services: { value: Service; label: string }[];
+  slots: FreeSlot[] | null;
   minDate: string;
   maxDate: string;
 }) {
   const t = useTranslations("JobRequestForm");
   const [state, action] = useActionState<RequestState, FormData>(submitJobRequest, {});
   const values = state.values;
+  const router = useRouter();
+  // A time someone else just took: load the free times again.
+  const slotTaken = state.fieldErrors?.wantedStart === "slotTaken";
+  useEffect(() => {
+    if (slotTaken) router.refresh();
+  }, [slotTaken, state, router]);
   const error = (field: keyof NonNullable<RequestState["fieldErrors"]>) => {
     const code = state.fieldErrors?.[field];
     return code ? t(`errors.${code}`) : undefined;
@@ -51,6 +57,7 @@ export function RequestForm({
     );
   }
 
+  const showSlots = slots !== null && slots.length > 0;
   const serviceError = error("service");
   const dateError = error("wantedDate");
   const descriptionError = error("description");
@@ -133,27 +140,31 @@ export function RequestForm({
             {serviceError && <FieldError id="request-service-error">{serviceError}</FieldError>}
           </div>
         )}
-        <div className="grid min-w-0 content-start gap-1.5">
-          <label htmlFor="request-date" className="font-medium">
-            {t("date")}
-          </label>
-          <input
-            id="request-date"
-            name="wantedDate"
-            type="date"
-            min={minDate}
-            max={maxDate}
-            defaultValue={values?.wantedDate}
-            aria-invalid={dateError ? true : undefined}
-            aria-describedby={`request-date-hint${dateError ? " request-date-error" : ""}`}
-            className={`${control} [&::-webkit-date-and-time-value]:text-left`}
-          />
-          <p id="request-date-hint" className="text-sm text-muted">
-            {t("dateHint")}
-          </p>
-          {dateError && <FieldError id="request-date-error">{dateError}</FieldError>}
-        </div>
+        {!showSlots && (
+          <div className="grid min-w-0 content-start gap-1.5">
+            <label htmlFor="request-date" className="font-medium">
+              {t("date")}
+            </label>
+            <input
+              id="request-date"
+              name="wantedDate"
+              type="date"
+              min={minDate}
+              max={maxDate}
+              defaultValue={values?.wantedDate}
+              aria-invalid={dateError ? true : undefined}
+              aria-describedby={`request-date-hint${dateError ? " request-date-error" : ""}`}
+              className={`${control} [&::-webkit-date-and-time-value]:text-left`}
+            />
+            <p id="request-date-hint" className="text-sm text-muted">
+              {t("dateHint")}
+            </p>
+            {dateError && <FieldError id="request-date-error">{dateError}</FieldError>}
+          </div>
+        )}
       </div>
+      {slots !== null && slots.length === 0 && <p className="-mt-2 text-sm text-muted">{t("noTimes")}</p>}
+      {showSlots && <SlotPicker slots={slots} initial={values?.wantedStart ?? ""} error={error("wantedStart")} />}
 
       <div className="grid gap-1.5">
         <label htmlFor="request-description" className="font-medium">
@@ -196,5 +207,59 @@ export function RequestForm({
         <SubmitButton pendingLabel={t("sending")}>{t("send")}</SubmitButton>
       </div>
     </form>
+  );
+}
+
+// The free times: first the day, then a time on it. "No particular time" sends none.
+function SlotPicker({ slots, initial, error }: { slots: FreeSlot[]; initial: string; error?: string }) {
+  const t = useTranslations("JobRequestForm");
+  const format = useFormatter();
+  const days = groupSlots(slots);
+  const initialDay = slots.find((slot) => slot.starts_at === initial)?.day ?? "";
+  const [day, setDay] = useState(initialDay);
+  const chosen = days.find((d) => d.day === day);
+  const dayLabel = (iso: string) =>
+    format.dateTime(new Date(`${iso}T12:00:00Z`), {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      timeZone: "UTC",
+    });
+
+  return (
+    <fieldset className="grid gap-3" aria-describedby={`request-times-hint${error ? " request-times-error" : ""}`}>
+      <legend className="mb-1.5 font-medium">{t("times")}</legend>
+      <p id="request-times-hint" className="-mt-1 text-sm text-muted">
+        {t("timesHint")}
+      </p>
+      <select aria-label={t("date")} value={day} onChange={(event) => setDay(event.target.value)} className={`${control} sm:max-w-xs`}>
+        <option value="">{t("timeNone")}</option>
+        {days.map((d) => (
+          <option key={d.day} value={d.day}>
+            {dayLabel(d.day)}
+          </option>
+        ))}
+      </select>
+      {chosen && (
+        <div role="radiogroup" aria-label={dayLabel(chosen.day)} className="flex flex-wrap gap-2">
+          {chosen.slots.map((slot, index) => (
+            <label
+              key={slot.starts_at}
+              className="relative flex min-h-11 min-w-20 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold tabular-nums has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-on-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
+            >
+              <input
+                type="radio"
+                name="wantedStart"
+                value={slot.starts_at}
+                defaultChecked={initial ? slot.starts_at === initial : index === 0}
+                className="absolute -inset-px m-0 cursor-pointer appearance-none rounded-lg opacity-0"
+              />
+              {slot.start_time}
+            </label>
+          ))}
+        </div>
+      )}
+      {error && <FieldError id="request-times-error">{error}</FieldError>}
+    </fieldset>
   );
 }
