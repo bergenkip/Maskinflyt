@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { IndustryLink } from "@/components/industry-link";
+import { TrialOffer } from "@/components/trial-offer";
 import { ProductShowcase } from "@/components/product-showcase";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { industries } from "@/lib/industries";
-import { COMPANY } from "@/lib/legal";
 import { SITE_NAME, SITE_URL, publicPageMetadata } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -37,7 +37,6 @@ const featureIcons: Record<(typeof features)[number], ReactNode> = {
 };
 
 // The company's own inbox (Resend → Inboxes, see docs/HANDOFF.md).
-const CONTACT_EMAIL = COMPANY.email;
 
 const primaryButton =
   "flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
@@ -190,26 +189,7 @@ export default function Home() {
             </ul>
           </nav>
 
-          <section
-            aria-labelledby="contact-title"
-            className="mt-14 rounded-xl border border-border bg-surface p-5 sm:mt-20 sm:p-8"
-          >
-            <h2 id="contact-title" className="text-2xl font-semibold tracking-tight [overflow-wrap:anywhere] hyphens-auto">
-              {t("contactTitle")}
-            </h2>
-            <p className="mt-3 max-w-2xl leading-relaxed text-muted">{t("contactBody")}</p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Link href="/signup" className={primaryButton}>
-                {tNav("signup")}
-              </Link>
-              <a href={`mailto:${CONTACT_EMAIL}`} className={`${secondaryButton} gap-2`}>
-                <Icon className="size-5 shrink-0 text-accent">
-                  <path d="M4 6h16v12H4zM4 7l8 6 8-6" />
-                </Icon>
-                {CONTACT_EMAIL}
-              </a>
-            </div>
-          </section>
+          <TrialOffer />
         </main>
 
         <SiteFooter />

@@ -56,7 +56,8 @@
       }
     },
     "contactTitle": "Vil du prøve MaskinGo?",
-    "contactBody": "MaskinGo er nytt og utvikles sammen med de første brukerne. Opprett en konto, eller skriv til oss:",
+    "contactBody": "Passer for både små og store firma, også når du jobber alene. Alle planer har alle funksjoner, og prisen avhenger bare av hvor mange dere er. Spørsmål? Skriv til oss.",
+    "seePrices": "Se alle priser",
     "showcase": {
       "calendarAlt": "MaskinGo-kalenderen for én dag: maskinene i rader og oppdragene med kunde og sjåfør på en tidslinje fra 06 til 19.",
       "driverAlt": "Sjåførens telefon i MaskinGo: dagens oppdrag med adresse, maskin og knappen «Jeg er ferdig».",
@@ -589,7 +590,7 @@
     "viewLabel": "Vis oppdrag som",
     "viewList": "Liste",
     "viewCalendar": "Kalender",
-    "timeSpan": "{start}–~{end}",
+    "timeSpan": "{start} – ~{end}",
     "statusLocked": "Fakturaen er merket som sendt: statusen blir «Ferdig». Angre merkingen i fakturadelen for å endre den."
   },
   "Calendar": {
