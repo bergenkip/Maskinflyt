@@ -19,6 +19,9 @@ export function SiteFooter() {
           aria-label={t("linksLabel")}
           className="-my-3 flex flex-wrap gap-x-5"
         >
+          <Link href="/finn" className={linkClass}>
+            {t("directory")}
+          </Link>
           <Link href="/timeforing" className={linkClass}>
             {tIndustry("timeforing.navName")}
           </Link>

@@ -179,7 +179,7 @@
     "tipsTitle": "Anbefalinger",
     "tipsLead": "Slik får du flere oppdrag.",
     "tipPageTitle": "Lag firmasiden",
-    "tipPageText": "En side du kan sende til kunder: hva dere gjør, hvor dere jobber og hvordan de når dere.",
+    "tipPageText": "En side du kan sende til kunder: hva dere gjør, hvor dere jobber og hvordan de når dere. Når den er publisert, vises den også i MaskinGo-katalogen, der kunder søker etter firmaer.",
     "tipPageAction": "Lag siden",
     "tipPageFinish": "Fullfør og publiser",
     "tipPageOpen": "Åpne siden",
@@ -456,7 +456,8 @@
   "Footer": {
     "text": "MaskinGo · Laget for norske entreprenører",
     "linksLabel": "Lenker",
-    "pricing": "Priser"
+    "pricing": "Priser",
+    "directory": "Finn et firma"
   },
   "Mfa": {
     "verifyTitle": "Bekreft at det er deg",
@@ -1862,7 +1863,9 @@
       "notAllowed": "Bare eier og administrator kan endre firmaets side.",
       "readOnly": "Abonnementet er ikke aktivt, så siden kan ikke endres nå.",
       "unknown": "Noe gikk galt. Prøv igjen."
-    }
+    },
+    "inCatalog": "Vises i MaskinGo-katalogen",
+    "seeInCatalog": "Se den i katalogen"
   },
   "CompanyPhotos": {
     "title": "Logo og bilder",
@@ -1908,7 +1911,8 @@
     "contact": "Kontakt",
     "logoAlt": "Logoen til {name}",
     "photos": "Bilder",
-    "photoAlt": "Bilde {number} fra {name}"
+    "photoAlt": "Bilde {number} fra {name}",
+    "moreCompanies": "Finn flere firmaer"
   },
   "JobRequestForm": {
     "open": "Send forespørsel",
@@ -2054,5 +2058,35 @@
       "noteTooLong": "Merknaden kan ha høyst 100 tegn.",
       "unknown": "Noe gikk galt. Prøv igjen."
     }
+  },
+  "Directory": {
+    "metaTitle": "Finn maskinentreprenør, kranbil og transport · MaskinGo",
+    "metaDescription": "Maskinentreprenører, kranbiler og transportfirmaer i Norge. Finn etter tjeneste og sted, og send en forespørsel rett til firmaet.",
+    "metaTitleService": "{service}: finn et firma nær deg · MaskinGo",
+    "metaDescriptionService": "Firmaer som tilbyr {service}. Se hvor de jobber, og send en forespørsel rett til firmaet.",
+    "title": "Finn et firma",
+    "titlePlace": "Firmaer i {place}",
+    "titleServicePlace": "{service} i {place}",
+    "lead": "Maskinentreprenører, kranbiler og transportfirmaer med egen side på MaskinGo. Send en forespørsel rett til firmaet.",
+    "leadService": "Firmaer som tilbyr {service}. Åpne en side for å se mer og sende en forespørsel.",
+    "allCompanies": "Alle firmaer",
+    "searchLabel": "Søk i katalogen",
+    "service": "Tjeneste",
+    "allServices": "Alle tjenester",
+    "place": "Sted",
+    "placePlaceholder": "f.eks. Bergen",
+    "search": "Søk",
+    "resultsTitle": "Firmaer",
+    "results": "{count, plural, =0 {Ingen firmaer} one {# firma} other {# firmaer}}",
+    "clear": "Vis alle firmaer",
+    "empty": "Ingen firmaer passer ennå. Prøv et annet sted eller alle tjenester.",
+    "emptyAll": "Ingen firmaer er med ennå.",
+    "error": "Katalogen kunne ikke lastes. Prøv igjen om litt.",
+    "freeTimes": "Bestill ledig tid på nett",
+    "logoAlt": "Logoen til {name}",
+    "byService": "Finn etter tjeneste",
+    "byPlace": "Steder",
+    "ctaTitle": "Driver du et maskinfirma?",
+    "ctaText": "Publiser firmasiden i MaskinGo, så vises den her uten ekstra kostnad. Kundene finner deg og sender forespørsler som du godtar eller avslår."
   }
 }

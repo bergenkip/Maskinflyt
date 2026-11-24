@@ -504,3 +504,15 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
   poilsio dienos). Apžvalgoje rekomendacija „Atidarykite laisvus laikus“, kol savininkas nepasirinko.
 - Užklausos kortelė, abu laiškai ir užsakymo forma rodo ar užpildo pasirinktą laiką.
 - Testai: `35_company_hours.test.sql`, `company-hours.test.ts`, laiškų testai, `e2e/free-times.spec.ts`.
+
+### 15d: nemokamas katalogas /finn (2026-11-24)
+- Migracija `20261124230000_company_directory.sql`: `company_directory(wanted_service, wanted_place)` (paskelbti
+  puslapiai, įmonė ne tik skaitymo režime; vieta ieškoma mieste ir srityje, nepaisant raidžių dydžio, `%` ir `_`
+  reiškia save; aprašymas sutrumpintas iki 300 ženklų; logotipas) ir `company_directory_places()` (miestai su įmonių
+  skaičiumi). Abi viešos, lentelės lankytojai vis tiek nemato.
+- Ekranai: `/finn` (visos įmonės, paieška pagal paslaugą ir vietą) ir `/finn/<paslauga>` (pvz. `/finn/kranbil`,
+  adresai `src/lib/directory.ts`). Paieškos forma veda į paslaugos adresą; vietos paieška `?sted=` neindeksuojama.
+  Kortelės: logotipas, miestas, paslaugos, „Bestill ledig tid på nett“, jei rodomi laisvi laikai. JSON-LD `ItemList`.
+- Nuorodos: poraštėje „Finn et firma“, įmonės puslapio apačioje „Finn flere firmaer“, `/app/public-page` rodo
+  „Vises i MaskinGo-katalogen“, rekomendacijos tekstas mini katalogą. Sitemap'e paslaugų puslapiai, kuriuose yra įmonių.
+- Testai: `36_company_directory.test.sql`, `src/lib/directory.test.ts`, `e2e/directory.spec.ts`.

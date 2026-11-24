@@ -179,7 +179,7 @@
     "tipsTitle": "Recommendations",
     "tipsLead": "Ways to get more jobs.",
     "tipPageTitle": "Create the company page",
-    "tipPageText": "A page you can send to customers: what you do, where you work and how to reach you.",
+    "tipPageText": "A page you can send to customers: what you do, where you work and how to reach you. Once published, it is also shown in the MaskinGo catalog, where customers look for companies.",
     "tipPageAction": "Create the page",
     "tipPageFinish": "Finish and publish",
     "tipPageOpen": "Open the page",
@@ -456,7 +456,8 @@
   "Footer": {
     "text": "MaskinGo · Built for Norwegian contractors",
     "linksLabel": "Links",
-    "pricing": "Pricing"
+    "pricing": "Pricing",
+    "directory": "Find a company"
   },
   "Mfa": {
     "verifyTitle": "Confirm it is you",
@@ -1862,7 +1863,9 @@
       "notAllowed": "Only owners and admins can change the company page.",
       "readOnly": "The subscription is not active, so the page cannot be changed now.",
       "unknown": "Something went wrong. Try again."
-    }
+    },
+    "inCatalog": "Shown in the MaskinGo catalog",
+    "seeInCatalog": "See it in the catalog"
   },
   "CompanyPhotos": {
     "title": "Logo and photos",
@@ -1908,7 +1911,8 @@
     "contact": "Contact",
     "logoAlt": "{name} logo",
     "photos": "Photos",
-    "photoAlt": "Photo {number} from {name}"
+    "photoAlt": "Photo {number} from {name}",
+    "moreCompanies": "Find more companies"
   },
   "JobRequestForm": {
     "open": "Send a request",
@@ -2054,5 +2058,35 @@
       "noteTooLong": "The note can be up to 100 characters.",
       "unknown": "Something went wrong. Try again."
     }
+  },
+  "Directory": {
+    "metaTitle": "Find a machine contractor, crane truck or transport · MaskinGo",
+    "metaDescription": "Machine contractors, crane trucks and transport companies in Norway. Find one by service and place, and send a request straight to the company.",
+    "metaTitleService": "{service}: find a company near you · MaskinGo",
+    "metaDescriptionService": "Companies that offer {service}. See where they work and send a request straight to the company.",
+    "title": "Find a company",
+    "titlePlace": "Companies in {place}",
+    "titleServicePlace": "{service} in {place}",
+    "lead": "Machine contractors, crane trucks and transport companies with their own page on MaskinGo. Send a request straight to the company.",
+    "leadService": "Companies that offer {service}. Open a page to see more and send a request.",
+    "allCompanies": "All companies",
+    "searchLabel": "Search the catalog",
+    "service": "Service",
+    "allServices": "All services",
+    "place": "Place",
+    "placePlaceholder": "e.g. Bergen",
+    "search": "Search",
+    "resultsTitle": "Companies",
+    "results": "{count, plural, =0 {No companies} one {# company} other {# companies}}",
+    "clear": "Show all companies",
+    "empty": "No companies match yet. Try another place or all services.",
+    "emptyAll": "No companies are listed yet.",
+    "error": "The catalog could not be loaded. Try again in a moment.",
+    "freeTimes": "Book a free time online",
+    "logoAlt": "Logo of {name}",
+    "byService": "Find by service",
+    "byPlace": "Places",
+    "ctaTitle": "Do you run a machine company?",
+    "ctaText": "Publish your company page in MaskinGo and it is shown here, at no extra cost. Customers find you and send requests you accept or decline."
   }
 }
