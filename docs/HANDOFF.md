@@ -419,4 +419,4 @@ Užsakymai sukuriami nuo šiandienos datos, todėl ekranuose visada matyti „š
 Šakų nuotraukos (Li sukūrė su ChatGPT 2026-11-24): `public/photos/` (kranbil-fjord, gravemaskin, tippbil), sąrašas
 `src/lib/industry-photos.ts`. Rodomos šakų kortelėse (`src/components/industry-link.tsx`): pradžios puslapyje ir šakų puslapių
 apačioje. Generatoriaus išgalvoti smulkūs užrašai užlieti. Antra kranų nuotrauka nenaudota: joje matyti Volvo logotipas.
-Dar laukia: didelė nuotrauka šakų puslapių viršuje (po PR #41, kuris keičia tą patį šabloną).
+Šakų puslapiuose (kranbil, maskinentreprenor, transport) po mygtukais rodoma ta pati šakos nuotrauka (`industryPhotos`), alt tekstas `Industry.<šaka>.photoAlt`. Temų puslapiuose (timeforing, faktura) nuotraukos nėra. Telefono rėmas pradžios puslapyje šviesus, kaip kompiuterio lango.

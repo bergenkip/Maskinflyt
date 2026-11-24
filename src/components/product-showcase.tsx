@@ -32,8 +32,8 @@ export function ProductShowcase() {
           />
         </div>
 
-        {/* The driver's phone in front of the window's right edge. */}
-        <div className="absolute top-[7%] right-0 w-[22%] rounded-[1rem] bg-slate-900 p-[1.2%] shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10 sm:rounded-[2rem] sm:p-2 dark:ring-white/20">
+        {/* The driver's phone in front of the window's right edge, framed like the window. */}
+        <div className="absolute top-[7%] right-0 w-[22%] rounded-[1rem] border border-border bg-surface p-[1.2%] shadow-2xl shadow-slate-900/20 sm:rounded-[2rem] sm:p-2">
           <Image
             src={`/screens/driver-${locale}.webp`}
             alt={t("driverAlt")}
