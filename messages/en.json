@@ -205,7 +205,10 @@
     "nameLead": "Shown to your colleagues in the team list.",
     "billingTitle": "Subscription",
     "billingLead": "Plan, payment and receipts for the company.",
-    "billingLink": "Open the subscription"
+    "billingLink": "Open the subscription",
+    "pageTitle": "Company page",
+    "pageLead": "A public page where customers see what you do, where you work and how to reach you.",
+    "pageLink": "Open the company page"
   },
   "Team": {
     "title": "Team",
@@ -1788,5 +1791,67 @@
         "a": "By card through Stripe, monthly or yearly. Receipts and cancellation are in the app."
       }
     ]
+  },
+  "Services": {
+    "crane_truck": "Crane truck",
+    "mobile_crane": "Mobile crane",
+    "excavation": "Excavation and groundwork",
+    "transport": "Transport",
+    "machine_transport": "Machine transport",
+    "snow_clearing": "Snow clearing and gritting",
+    "demolition": "Demolition",
+    "landscaping": "Landscaping"
+  },
+  "CompanyPage": {
+    "title": "Company page",
+    "back": "Settings",
+    "lead": "What customers see on maskingo.no. Nothing is shown until you turn on “Show publicly”.",
+    "formTitle": "Content",
+    "slug": "Address",
+    "slugHint": "Lower-case letters, digits and dashes: {address}",
+    "description": "About the company",
+    "descriptionHint": "What you do and for whom, in your own words. Up to 2000 characters.",
+    "services": "Services",
+    "city": "Town or city",
+    "area": "Area you work in (optional)",
+    "areaHint": "For example “Bergen and surroundings” or “all of Vestland”.",
+    "phone": "Phone",
+    "email": "E-mail",
+    "website": "Website (optional)",
+    "published": "Show publicly",
+    "publishedHint": "Everyone can see the page and find it on Google. It needs a description, a town, at least one service and a phone or e-mail.",
+    "save": "Save",
+    "savedPublished": "Saved. The page is public.",
+    "savedHidden": "Saved. The page is hidden from others.",
+    "statusPublished": "The page is public",
+    "statusHidden": "The page is hidden: only you can see it",
+    "open": "Open the page",
+    "preview": "Preview the page",
+    "errors": {
+      "slugInvalid": "Use 3–60 lower-case letters, digits and dashes, for example fjellkran-as.",
+      "slugTaken": "This address is taken. Choose another.",
+      "descriptionRequired": "Write a few words about the company before showing the page.",
+      "descriptionTooLong": "The description can be up to 2000 characters.",
+      "servicesRequired": "Choose at least one service before showing the page.",
+      "cityRequired": "Write the town or city before showing the page.",
+      "cityTooLong": "The town can be up to 100 characters.",
+      "areaTooLong": "The area can be up to 200 characters.",
+      "phoneInvalid": "Enter a valid phone number.",
+      "emailInvalid": "Enter a valid e-mail address.",
+      "contactRequired": "Enter a phone or e-mail so customers can reach you.",
+      "websiteInvalid": "Enter a web address starting with https://, for example https://fjellkran.no.",
+      "notAllowed": "Only owners and admins can change the company page.",
+      "readOnly": "The subscription is not active, so the page cannot be changed now.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
+  "PublicPage": {
+    "madeWith": "Page made with MaskinGo",
+    "metaTitle": "{name} – {city}",
+    "previewNotice": "Preview: the page is not public yet. Only your company sees it.",
+    "orgNumber": "Org. no. {number}",
+    "services": "Services",
+    "area": "Area",
+    "contact": "Contact"
   }
 }

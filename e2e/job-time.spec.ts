@@ -91,13 +91,16 @@ for (const locale of locales) {
 
     await page.goto(job);
     const section = page.locator('section[aria-labelledby="time-title"]');
-    await section.locator('input[name="start"]').fill("06:30");
-    await section.locator('input[name="end"]').fill("17:45");
-    await section.locator('input[name="breaks"]').fill("45");
-    await section.locator('button[type="submit"]').click();
+    // When the driver's taps fell in different minutes, an "approve as pressed" form
+    // (with the same field names, hidden) comes first: correct the time in the visible form.
+    const correct = section.locator("form").filter({ has: page.locator('input[name="start"][type="time"]') });
+    await correct.locator('input[name="start"]').fill("06:30");
+    await correct.locator('input[name="end"]').fill("17:45");
+    await correct.locator('input[name="breaks"]').fill("45");
+    await correct.locator('button[type="submit"]').click();
     await expect(section.locator("summary")).toHaveCount(1);
     await section.locator("summary").click();
-    await section.locator('input[name="end"]').fill("17:15");
+    await section.locator('input[name="end"]:not([type="hidden"])').fill("17:15");
     await section.locator('textarea[name="reason"]').fill("Kunden bekreftet at kranen var ferdig rigget ned kl. 17:15, ikke 17:45.");
     await section.locator('button[type="submit"]').click();
     await expect(section.locator("summary")).toHaveCount(2);

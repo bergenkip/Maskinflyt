@@ -205,7 +205,10 @@
     "nameLead": "Vises for kollegene dine i teamlisten.",
     "billingTitle": "Abonnement",
     "billingLead": "Plan, betaling og kvitteringer for firmaet.",
-    "billingLink": "Åpne abonnementet"
+    "billingLink": "Åpne abonnementet",
+    "pageTitle": "Firmaets side",
+    "pageLead": "En offentlig side der kundene ser hva dere gjør, hvor dere jobber og hvordan de når dere.",
+    "pageLink": "Åpne firmaets side"
   },
   "Team": {
     "title": "Team",
@@ -1788,5 +1791,67 @@
         "a": "Med kort gjennom Stripe, månedlig eller årlig. Kvitteringer og oppsigelse finner du i appen."
       }
     ]
+  },
+  "Services": {
+    "crane_truck": "Kranbil",
+    "mobile_crane": "Mobilkran",
+    "excavation": "Graving og grunnarbeid",
+    "transport": "Transport",
+    "machine_transport": "Maskintransport",
+    "snow_clearing": "Brøyting og strøing",
+    "demolition": "Riving",
+    "landscaping": "Anleggsgartner"
+  },
+  "CompanyPage": {
+    "title": "Firmaets side",
+    "back": "Innstillinger",
+    "lead": "Det kundene ser på maskingo.no. Ingenting vises før du slår på «Vis offentlig».",
+    "formTitle": "Innhold",
+    "slug": "Adresse",
+    "slugHint": "Små bokstaver, tall og bindestrek: {address}",
+    "description": "Om firmaet",
+    "descriptionHint": "Hva dere gjør og for hvem, med egne ord. Inntil 2000 tegn.",
+    "services": "Tjenester",
+    "city": "By eller sted",
+    "area": "Område dere jobber i (valgfritt)",
+    "areaHint": "For eksempel «Bergen og omegn» eller «hele Vestland».",
+    "phone": "Telefon",
+    "email": "E-post",
+    "website": "Nettside (valgfritt)",
+    "published": "Vis offentlig",
+    "publishedHint": "Siden vises for alle og kan finnes i Google. Den trenger beskrivelse, sted, minst én tjeneste og telefon eller e-post.",
+    "save": "Lagre",
+    "savedPublished": "Lagret. Siden er offentlig.",
+    "savedHidden": "Lagret. Siden er skjult for andre.",
+    "statusPublished": "Siden er offentlig",
+    "statusHidden": "Siden er skjult: bare dere kan se den",
+    "open": "Åpne siden",
+    "preview": "Forhåndsvis siden",
+    "errors": {
+      "slugInvalid": "Bruk 3–60 små bokstaver, tall og bindestrek, for eksempel fjellkran-as.",
+      "slugTaken": "Denne adressen er tatt. Velg en annen.",
+      "descriptionRequired": "Skriv noen ord om firmaet før siden vises.",
+      "descriptionTooLong": "Beskrivelsen kan være inntil 2000 tegn.",
+      "servicesRequired": "Velg minst én tjeneste før siden vises.",
+      "cityRequired": "Skriv byen eller stedet før siden vises.",
+      "cityTooLong": "Stedet kan være inntil 100 tegn.",
+      "areaTooLong": "Området kan være inntil 200 tegn.",
+      "phoneInvalid": "Skriv et gyldig telefonnummer.",
+      "emailInvalid": "Skriv en gyldig e-postadresse.",
+      "contactRequired": "Skriv telefon eller e-post, så kundene kan nå dere.",
+      "websiteInvalid": "Skriv en nettadresse som begynner med https://, for eksempel https://fjellkran.no.",
+      "notAllowed": "Bare eier og administrator kan endre firmaets side.",
+      "readOnly": "Abonnementet er ikke aktivt, så siden kan ikke endres nå.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    }
+  },
+  "PublicPage": {
+    "madeWith": "Siden er laget med MaskinGo",
+    "metaTitle": "{name} – {city}",
+    "previewNotice": "Forhåndsvisning: siden er ikke offentlig ennå. Bare dere ser den.",
+    "orgNumber": "Org.nr. {number}",
+    "services": "Tjenester",
+    "area": "Område",
+    "contact": "Kontakt"
   }
 }

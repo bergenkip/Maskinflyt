@@ -16,7 +16,10 @@ test("sitemap lists only the public pages on maskingo.no", async ({ request }) =
   const res = await request.get("/sitemap.xml");
   expect(res.status()).toBe(200);
   const locs = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-  expect(locs).toEqual([
+  // MaskinGo's own pages first, then the companies' published pages (stage 15a), if any.
+  const companies = locs.filter((loc) => loc.startsWith("https://maskingo.no/firma/"));
+  expect(locs.slice(locs.length - companies.length)).toEqual(companies);
+  expect(locs.slice(0, locs.length - companies.length)).toEqual([
     "https://maskingo.no",
     "https://maskingo.no/kranbil",
     "https://maskingo.no/maskinentreprenor",

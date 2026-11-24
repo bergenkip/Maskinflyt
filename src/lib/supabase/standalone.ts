@@ -21,3 +21,9 @@ export function createLinkSessionClient(accessToken: string) {
     global: { headers: { Authorization: `Bearer ${accessToken}` } },
   });
 }
+
+// A visitor without a session, for public lists such as the sitemap's company pages.
+export function createVisitorClient() {
+  const { url, key } = requireSupabaseEnv();
+  return createSupabaseClient(url, key, { auth: noStorage });
+}
