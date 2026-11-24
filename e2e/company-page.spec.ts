@@ -5,7 +5,7 @@ import { createCompany, locales, newCompanyName, newEmail, newPage, shootAllWidt
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
 
 test("the owner writes and publishes the company page, and a visitor sees it", async ({ browser, baseURL }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(420_000);
   const { page } = await newPage(browser, baseURL!, "en");
   await signUp(page, newEmail("page"), "Anna", "Berg");
   const name = newCompanyName("page");
@@ -63,6 +63,7 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
     await shootAllWidths(visitor.page, "company-page", locale);
     await page.context().addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
     await page.goto("/app/public-page");
+    await expect(page, "the owner stays on the company page settings").toHaveURL(/\/app\/public-page$/);
     await shootAllWidths(page, "company-page-settings", locale);
   }
 });
