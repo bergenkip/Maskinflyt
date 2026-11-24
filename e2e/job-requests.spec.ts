@@ -47,7 +47,9 @@ test("a visitor sends a request; the company is told and reads it", async ({ bro
     await shootAllWidths(visitor.page, "job-request-form", locale);
   }
   await visitor.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
-  await visitor.page.goto(`/firma/${slug}#request`);
+  // A full load (a link with only "#request" would not reload the page in the new language).
+  await visitor.page.goto(`/firma/${slug}`);
+  await expect(visitor.page.locator("html")).toHaveAttribute("lang", "en");
 
   // Only the company's own services are offered.
   const service = form.getByLabel("Service");
