@@ -10,7 +10,7 @@ const request = {
   email: "kari@nordmann.test",
   place: "Strandgaten 1, Bergen",
   wantedDate: "2026-12-01",
-  service: "Kranbil",
+  service: "crane_truck" as const,
   description: "Løfte <takstein>\nHelst før lunsj.",
 };
 

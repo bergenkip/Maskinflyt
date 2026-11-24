@@ -1,7 +1,6 @@
 "use server";
 
-import { getLocale, getTranslations } from "next-intl/server";
-import { isService } from "@/lib/company-page";
+import { getLocale } from "next-intl/server";
 import { normalizeEmail } from "@/lib/customers";
 import { invoiceEmailLive, TEST_INBOX } from "@/lib/email/invoice-email";
 import { emailConfigured, sendEmail } from "@/lib/email/resend";
@@ -52,7 +51,6 @@ export async function submitJobRequest(_prev: RequestState, formData: FormData):
   const testMode = !invoiceEmailLive();
   // In test mode (local development and CI) only .test addresses, and only to the test inbox.
   if (to && emailConfigured() && (!testMode || to.endsWith(".test"))) {
-    const tServices = await getTranslations({ locale: "nb", namespace: "Services" });
     const email = requestEmail(
       {
         company,
@@ -61,7 +59,7 @@ export async function submitJobRequest(_prev: RequestState, formData: FormData):
         email: fields.request_email,
         place: fields.request_place,
         wantedDate: fields.request_wanted_date,
-        service: fields.request_service && isService(fields.request_service) ? tServices(fields.request_service) : null,
+        service: fields.request_service,
         description: fields.request_description,
       },
       { to, testMode },

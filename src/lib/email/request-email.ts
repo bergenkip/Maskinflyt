@@ -1,4 +1,6 @@
 import "server-only";
+import nb from "../../../messages/nb.json";
+import type { Service } from "../company-page";
 import { formatPhone } from "../customers";
 import { SITE_URL } from "../site";
 import { escapeHtml, senderName } from "./invoice-email";
@@ -18,8 +20,7 @@ export type RequestForEmail = {
   email: string | null;
   place: string;
   wantedDate: string | null;
-  // Already in Norwegian (the Services list).
-  service: string | null;
+  service: Service | null;
   description: string;
 };
 
@@ -34,7 +35,8 @@ export function requestEmail(request: RequestForEmail, options: { to: string; te
     ...(request.email ? [["E-post", request.email] as [string, string]] : []),
     ["Sted", request.place],
     ...(request.wantedDate ? [["Ønsket dato", norwegianDate(request.wantedDate)] as [string, string]] : []),
-    ...(request.service ? [["Tjeneste", request.service] as [string, string]] : []),
+    // In Norwegian whatever language the customer wrote in (the Services list in nb.json).
+    ...(request.service ? [["Tjeneste", nb.Services[request.service]] as [string, string]] : []),
   ];
   const test = options.testMode
     ? `TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke en ekte forespørsel. Mottaker: ${options.to}`
