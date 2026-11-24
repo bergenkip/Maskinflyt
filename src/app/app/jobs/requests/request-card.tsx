@@ -34,6 +34,8 @@ export type JobRequestRow = {
   handled_at: string | null;
   // Sent while signed in to a customer account (stage 16a): the e-mail is confirmed.
   user_id: string | null;
+  // The job planned from it (stage 16b); PostgREST gives one row or a list.
+  jobs?: { id: string; number: number } | { id: string; number: number }[] | null;
 };
 
 const looks: Record<JobRequestStatus, { icon: typeof CircleIcon; tone: string }> = {
@@ -61,6 +63,7 @@ export async function RequestCard({
 }) {
   const [t, tServices] = await Promise.all([getTranslations("JobRequests"), getTranslations("Services")]);
   const { icon: StatusIcon, tone } = looks[request.status];
+  const job = Array.isArray(request.jobs) ? request.jobs[0] : request.jobs;
   return (
     <article aria-labelledby={`request-${request.id}`} className="grid gap-3 rounded-xl border border-border bg-surface p-4 sm:p-5">
       <header className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
@@ -136,11 +139,19 @@ export async function RequestCard({
           )}
           {request.status === "accepted" && (
             <div className="grid gap-2 sm:flex sm:flex-wrap">
-              <Link href={`/app/jobs/new?request=${request.id}`} className={contactClass}>
-                <CalendarIcon className="size-5 shrink-0" />
-                {t("plan")}
-                <ArrowRightIcon className="size-5 shrink-0" />
-              </Link>
+              {job ? (
+                <Link href={`/app/jobs/${job.id}`} className={contactClass}>
+                  <CalendarIcon className="size-5 shrink-0" />
+                  {t("plannedJob", { number: job.number })}
+                  <ArrowRightIcon className="size-5 shrink-0" />
+                </Link>
+              ) : (
+                <Link href={`/app/jobs/new?request=${request.id}`} className={contactClass}>
+                  <CalendarIcon className="size-5 shrink-0" />
+                  {t("plan")}
+                  <ArrowRightIcon className="size-5 shrink-0" />
+                </Link>
+              )}
               {request.customer_id && (
                 <Link href={`/app/customers/${request.customer_id}`} className={contactClass}>
                   <UserIcon className="size-5 shrink-0" />

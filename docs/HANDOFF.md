@@ -528,4 +528,15 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
   užklausą; neprisijungusiam kvietimas susikurti paskyrą. Biuras kortelėje mato „Kundekonto, e-post bekreftet“.
   Patvirtina vis tiek įmonė.
 - Testai: `37_customer_accounts.test.sql`, `src/lib/customer-account.test.ts`, `e2e/customer-account.spec.ts`.
-- 16b (vėliau): klientas mato suplanuotą darbą ir gauna pranešimą.
+
+### 16b: klientas mato suplanuotą darbą (2026-11-24)
+- Migracija `20261125110000_planned_requests.sql`: `jobs.request_id` (tik tos pačios įmonės ir tik priimta užklausa,
+  vieną kartą; nustatomas tik kuriant darbą, vėliau nekeičiamas; ištrynus užklausą darbas lieka).
+  `my_job_requests()` dabar grąžina ir darbo būseną (`planned`, `done`, `cancelled`), pradžią, pabaigą ir įmonės laiko
+  juostą. Technika, vairuotojas, kainos ir pastabos klientui nerodomos.
+- Biuras: darbo forma iš užklausos turi varnelę „Send det planlagte tidspunktet til kunden“ (pažymėta, jei užklausoje yra
+  el. paštas). Laiškas `src/lib/email/planned-email.ts` siunčiamas tik išsaugojus darbą su varnele, vieną kartą darbui.
+  Užklausos kortelė rodo „Planlagt: jobb N“ vietoj „Planlegg jobben“.
+- `/kunde`: būsena „Planlagt / Utført / Avlyst“, suplanuotas laikas įmonės laiko juosta, pastaba, kad pabaiga apytikslė.
+- Dar nėra: laiškas klientui, kai darbo laikas vėliau pakeičiamas ar darbas atšaukiamas (`/kunde` visada rodo dabartinį).
+- Testai: `38_planned_requests.test.sql`, `planned-email.test.ts`, `e2e/customer-account.spec.ts`.

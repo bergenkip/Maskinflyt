@@ -26,12 +26,14 @@ for (const locale of locales) {
       );
       expect(overflow, "page must not scroll sideways").toBeLessThanOrEqual(0);
 
-      const select = await page.getByRole("combobox").boundingBox();
-      expect(select?.height ?? 0, "tap target at least 44px").toBeGreaterThanOrEqual(44);
-      const fontSize = await page
-        .getByRole("combobox")
-        .evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
-      expect(fontSize, "16px+ so iPhone Safari does not zoom").toBeGreaterThanOrEqual(16);
+      // The language menu and the catalog search (service, place) on the page.
+      await expect(page.getByRole("search")).toBeVisible();
+      for (const field of [...(await page.getByRole("combobox").all()), page.getByRole("searchbox")]) {
+        const box = await field.boundingBox();
+        expect(box?.height ?? 0, "tap target at least 44px").toBeGreaterThanOrEqual(44);
+        const fontSize = await field.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+        expect(fontSize, "16px+ so iPhone Safari does not zoom").toBeGreaterThanOrEqual(16);
+      }
 
       // The start page leads to sign-up and shows how to reach us.
       const main = page.getByRole("main");

@@ -62,7 +62,9 @@
       "calendarAlt": "The MaskinGo calendar for one day: machines in rows and jobs with customer and driver on a timeline from 06 to 19.",
       "driverAlt": "The driver's phone in MaskinGo: today's job with address, machine and the “I'm finished” button.",
       "caption": "Real MaskinGo screens with made-up data: the office calendar and the driver's phone."
-    }
+    },
+    "findTitle": "Looking for a machine contractor, crane truck or transport?",
+    "findLead": "Search the companies on MaskinGo by service and place, and send a request straight to the company. Free for customers."
   },
   "Nav": {
     "home": "MaskinGo home",
@@ -80,7 +82,8 @@
     "myJobs": "My jobs",
     "invoices": "Invoices",
     "invoicesWaiting": "{count, plural, one {# job waits} other {# jobs wait}}",
-    "hours": "Hours"
+    "hours": "Hours",
+    "directory": "Find a company"
   },
   "Auth": {
     "loginTitle": "Sign in to MaskinGo",
@@ -578,7 +581,8 @@
       "unknown": "Something went wrong. Try again.",
       "durationInvalid": "Enter how long the job is expected to take: from 15 minutes to 24 hours, for example 4 hours 30 min.",
       "timeNoteTooLong": "At most 200 characters.",
-      "locked": "The invoice is marked as sent, so the customer, machine, time and status stay as they are."
+      "locked": "The invoice is marked as sent, so the customer, machine, time and status stay as they are.",
+      "alreadyPlanned": "This request is already planned as another job."
     },
     "newCustomerOption": "+ New customer",
     "newCustomerTitle": "New customer",
@@ -602,7 +606,13 @@
     "statusLocked": "The invoice is marked as sent: the status stays “Done”. Take the mark back in the invoice section to change it.",
     "requestsLink": "Requests from the company page",
     "requestsNew": "{count} new",
-    "fromRequest": "From the request of {name}. Choose the time and save the job."
+    "fromRequest": "From the request of {name}. Choose the time and save the job.",
+    "notifyCustomer": "Send the planned time to the customer",
+    "notifyCustomerHint": "By e-mail to {email}, once the job is saved.",
+    "alreadyPlanned": "This request is already planned as job {number}.",
+    "openPlanned": "Open job {number}",
+    "plannedEmailSent": "The customer got the planned time by e-mail.",
+    "plannedEmailFailed": "The e-mail to the customer could not be sent. Call or write to the customer with the time."
   },
   "Calendar": {
     "title": "Calendar",
@@ -2008,7 +2018,8 @@
       "unknown": "The answer could not be saved. Try again."
     },
     "wantedAt": "Preferred: {date} at {time}",
-    "fromAccount": "Customer account, e-mail confirmed"
+    "fromAccount": "Customer account, e-mail confirmed",
+    "plannedJob": "Planned: job {number}"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} has accepted your request",
@@ -2114,7 +2125,10 @@
     "statuses": {
       "new": "Waiting for an answer",
       "accepted": "Accepted",
-      "declined": "Declined"
+      "declined": "Declined",
+      "planned": "Planned",
+      "done": "Done",
+      "cancelled": "Cancelled"
     },
     "answerFrom": "Answer from {company}",
     "sendAgain": "Send again",
@@ -2135,6 +2149,27 @@
       "phoneInvalid": "Enter a valid phone number.",
       "placeTooLong": "The place can be at most 200 characters.",
       "unknown": "Something went wrong. Try again."
-    }
+    },
+    "plannedTime": "Planned time",
+    "doneTime": "Time of the job",
+    "cancelledTime": "Cancelled time",
+    "plannedHint": "The end time is an estimate. The company contacts you if anything changes.",
+    "cancelledHint": "The job was cancelled. Contact {company} if you have questions.",
+    "acceptedHint": "{company} will plan the time and let you know."
+  },
+  "JobPlannedEmail": {
+    "subject": "{company} has planned your job",
+    "greeting": "Hi {name},",
+    "intro": "{company} has planned your job.",
+    "time": "Time",
+    "place": "Place",
+    "estimate": "The end time is an estimate.",
+    "follow": "Follow your requests on your customer page:",
+    "followLink": "My requests",
+    "questionsPhone": "Questions or need another time? Reply to this e-mail or call {phone}.",
+    "questions": "Questions or need another time? Reply to this e-mail.",
+    "closing": "Best regards",
+    "footer": "Sent with MaskinGo on behalf of {company}.",
+    "test": "TEST: This e-mail was sent from a test account in MaskinGo and is not a real booking. Recipient: {to}"
   }
 }

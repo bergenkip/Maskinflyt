@@ -62,7 +62,9 @@
       "calendarAlt": "MaskinGo dienos kalendorius: technika eilutėmis, užsakymai su klientu ir vairuotoju laiko juostoje nuo 06 iki 19 val.",
       "driverAlt": "Vairuotojo telefonas MaskinGo programoje: šiandienos užsakymas su adresu, technika ir mygtuku „Baigiau“.",
       "caption": "Tikri MaskinGo ekranai su išgalvotais duomenimis: biuro kalendorius ir vairuotojo telefonas."
-    }
+    },
+    "findTitle": "Ieškote technikos rangovo, krano ar transporto?",
+    "findLead": "Ieškokite MaskinGo įmonių pagal paslaugą ir vietą ir siųskite užklausą tiesiai įmonei. Klientams nemokamai."
   },
   "Nav": {
     "home": "MaskinGo pradžia",
@@ -80,7 +82,8 @@
     "myJobs": "Mano darbai",
     "invoices": "Sąskaitos",
     "invoicesWaiting": "{count, plural, one {laukia # darbas} few {laukia # darbai} other {laukia # darbų}}",
-    "hours": "Valandos"
+    "hours": "Valandos",
+    "directory": "Rasti įmonę"
   },
   "Auth": {
     "loginTitle": "Prisijunkite prie MaskinGo",
@@ -578,7 +581,8 @@
       "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
       "durationInvalid": "Įrašykite, kiek apytiksliai truks darbas: nuo 15 minučių iki 24 valandų, pvz. 4 val. 30 min.",
       "timeNoteTooLong": "Ne daugiau kaip 200 simbolių.",
-      "locked": "Sąskaita pažymėta kaip išsiųsta, todėl klientas, technika, laikas ir būsena nebekeičiami."
+      "locked": "Sąskaita pažymėta kaip išsiųsta, todėl klientas, technika, laikas ir būsena nebekeičiami.",
+      "alreadyPlanned": "Ši užklausa jau suplanuota kaip kitas darbas."
     },
     "newCustomerOption": "+ Naujas klientas",
     "newCustomerTitle": "Naujas klientas",
@@ -602,7 +606,13 @@
     "statusLocked": "Sąskaita pažymėta kaip išsiųsta: būsena lieka „Atlikta“. Norėdami ją keisti, atšaukite žymą sąskaitos skiltyje.",
     "requestsLink": "Užklausos iš įmonės puslapio",
     "requestsNew": "{count, plural, one {# nauja} few {# naujos} other {# naujų}}",
-    "fromRequest": "Pagal {name} užklausą. Pasirinkite laiką ir išsaugokite užsakymą."
+    "fromRequest": "Pagal {name} užklausą. Pasirinkite laiką ir išsaugokite užsakymą.",
+    "notifyCustomer": "Išsiųsti suplanuotą laiką klientui",
+    "notifyCustomerHint": "El. paštu adresu {email}, kai darbas bus išsaugotas.",
+    "alreadyPlanned": "Ši užklausa jau suplanuota kaip darbas {number}.",
+    "openPlanned": "Atidaryti darbą {number}",
+    "plannedEmailSent": "Klientas gavo suplanuotą laiką el. paštu.",
+    "plannedEmailFailed": "Laiško klientui išsiųsti nepavyko. Paskambinkite arba parašykite klientui apie laiką."
   },
   "Calendar": {
     "title": "Kalendorius",
@@ -2008,7 +2018,8 @@
       "unknown": "Atsakymo išsaugoti nepavyko. Bandykite dar kartą."
     },
     "wantedAt": "Pageidaujama: {date} {time}",
-    "fromAccount": "Kliento paskyra, el. paštas patvirtintas"
+    "fromAccount": "Kliento paskyra, el. paštas patvirtintas",
+    "plannedJob": "Suplanuota: darbas {number}"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} priėmė jūsų užklausą",
@@ -2114,7 +2125,10 @@
     "statuses": {
       "new": "Laukia atsakymo",
       "accepted": "Priimta",
-      "declined": "Atmesta"
+      "declined": "Atmesta",
+      "planned": "Suplanuota",
+      "done": "Atlikta",
+      "cancelled": "Atšaukta"
     },
     "answerFrom": "{company} atsakymas",
     "sendAgain": "Siųsti dar kartą",
@@ -2135,6 +2149,27 @@
       "phoneInvalid": "Įveskite teisingą telefono numerį.",
       "placeTooLong": "Vieta gali būti ne ilgesnė nei 200 ženklų.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
-    }
+    },
+    "plannedTime": "Suplanuotas laikas",
+    "doneTime": "Darbo laikas",
+    "cancelledTime": "Atšauktas laikas",
+    "plannedHint": "Pabaigos laikas yra apytikslis. Įmonė susisieks, jei kas nors pasikeistų.",
+    "cancelledHint": "Darbas atšauktas. Jei turite klausimų, susisiekite su {company}.",
+    "acceptedHint": "{company} suplanuos laiką ir jums praneš."
+  },
+  "JobPlannedEmail": {
+    "subject": "{company} suplanavo jūsų darbą",
+    "greeting": "Sveiki, {name},",
+    "intro": "{company} suplanavo jūsų darbą.",
+    "time": "Laikas",
+    "place": "Vieta",
+    "estimate": "Pabaigos laikas yra apytikslis.",
+    "follow": "Savo užklausas galite sekti kliento puslapyje:",
+    "followLink": "Mano užklausos",
+    "questionsPhone": "Turite klausimų ar reikia kito laiko? Atsakykite į šį laišką arba skambinkite {phone}.",
+    "questions": "Turite klausimų ar reikia kito laiko? Atsakykite į šį laišką.",
+    "closing": "Pagarbiai",
+    "footer": "Išsiųsta per MaskinGo įmonės {company} vardu.",
+    "test": "TEST: Šis laiškas išsiųstas iš MaskinGo bandomosios paskyros ir nėra tikras užsakymas. Gavėjas: {to}"
   }
 }

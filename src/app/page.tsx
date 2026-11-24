@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { DirectorySearch } from "@/components/directory-search";
 import { IndustryLink } from "@/components/industry-link";
 import { TrialOffer } from "@/components/trial-offer";
 import { ProductShowcase } from "@/components/product-showcase";
@@ -132,6 +133,20 @@ export default function Home() {
               {tNav("login")}
             </Link>
           </div>
+
+          {/* For customers: the free catalog of companies (stage 15d), searchable at once. */}
+          <section
+            aria-labelledby="find-title"
+            className="mt-8 grid gap-4 rounded-xl border border-accent/40 bg-accent-soft p-4 sm:mt-10 sm:p-6"
+          >
+            <div className="grid gap-1">
+              <h2 id="find-title" className="text-xl font-semibold [overflow-wrap:anywhere]">
+                {t("findTitle")}
+              </h2>
+              <p className="text-muted">{t("findLead")}</p>
+            </div>
+            <DirectorySearch id="home-find" />
+          </section>
 
           <ProductShowcase />
 

@@ -3,7 +3,7 @@
 import { useFormatter, useTranslations } from "next-intl";
 import { useActionState, useRef, useState, type ReactNode, type Ref } from "react";
 import { Field, FormAlert, SubmitButton } from "@/components/form";
-import { AlertIcon, ClockIcon } from "@/components/icons";
+import { AlertIcon, CheckIcon, ClockIcon } from "@/components/icons";
 import { durationMinuteSteps, MAX_DESCRIPTION_LENGTH, NEW_CUSTOMER, type JobFormValues, type JobStatus } from "@/lib/jobs";
 import {
   addJob,
@@ -33,9 +33,11 @@ type Props = {
   initial?: Partial<JobFormValues>;
   // Editing: the job's id and its stored values as text.
   job?: { id: string; values: JobFormValues };
+  // A new job planned from a customer's request (stage 16b), and where the customer can be told.
+  request?: { id: string; email: string | null };
 };
 
-export function JobForm({ customers, vehicles, drivers, suggestions, timeZone, initial, job }: Props) {
+export function JobForm({ customers, vehicles, drivers, suggestions, timeZone, initial, job, request }: Props) {
   const t = useTranslations("Jobs");
   const tAuth = useTranslations("Auth");
   const tCustomers = useTranslations("Customers");
@@ -82,6 +84,7 @@ export function JobForm({ customers, vehicles, drivers, suggestions, timeZone, i
       {state.error && <FormAlert kind="error">{t(`errors.${state.error}`)}</FormAlert>}
       {state.savedAt && <FormAlert kind="success">{t("saved")}</FormAlert>}
       {job && <input type="hidden" name="id" value={job.id} />}
+      {request && <input type="hidden" name="request" value={request.id} />}
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
@@ -336,6 +339,29 @@ export function JobForm({ customers, vehicles, drivers, suggestions, timeZone, i
             </button>
           </div>
         </div>
+      )}
+
+      {request?.email && (
+        <label className="relative flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-border bg-surface px-3 py-2.5 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent">
+          <input
+            type="checkbox"
+            name="notifyCustomer"
+            value="1"
+            defaultChecked
+            className="peer absolute -inset-px m-0 cursor-pointer appearance-none rounded-lg opacity-0"
+          />
+          <span
+            aria-hidden="true"
+            className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md border-2 border-muted bg-surface text-transparent peer-checked:border-accent peer-checked:bg-accent peer-checked:text-on-accent"
+          >
+            <CheckIcon className="size-4" />
+          </span>
+          <span className="grid min-w-0 gap-0.5">
+            <span className="font-medium">{t("notifyCustomer")}</span>
+            {/* The address is data and is shown exactly as written. */}
+            <span className="text-sm text-muted [overflow-wrap:anywhere]">{t("notifyCustomerHint", { email: request.email })}</span>
+          </span>
+        </label>
       )}
 
       <div>

@@ -1,9 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { createCompany, fillSignUp, locales, newCompanyName, newEmail, newPage, shootAllWidths, signUp } from "./helpers";
+import { createCompany, fillSignUp, locales, newCompanyName, newEmail, newPage, resendStub, shootAllWidths, signUp } from "./helpers";
 
 // Stage 16a: a customer signs up as a customer (no company), sends a request
 // with their details filled in, follows it on /kunde and orders again. The
-// company still accepts it by hand. Needs Supabase (the e2e-auth CI job).
+// company still accepts it and plans the job by hand; the customer then sees
+// the planned time and gets it by e-mail (16b). Needs Supabase (the e2e-auth CI job).
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
 
 test("a customer account orders, follows the answer and orders again", async ({ browser, baseURL }) => {
@@ -78,11 +79,43 @@ test("a customer account orders, follows the answer and orders again", async ({ 
   await kari.getByRole("button", { name: "Accept and plan the job" }).click();
   await page.waitForURL("**/app/jobs/new?**");
 
-  // The customer sees the answer.
+  // Accepted, not planned yet: the customer is told the company will set the time.
   await customer.page.reload();
   await expect(mine.getByText("Accepted", { exact: true })).toBeVisible();
   await expect(mine.getByText(`Answer from ${name}`)).toBeVisible();
   await expect(mine.getByText("Vi kommer tirsdag.")).toBeVisible();
+  await expect(mine.getByText(`${name} will plan the time and let you know.`)).toBeVisible();
+
+  // The office plans the job; the customer is told the time by e-mail (stage 16b).
+  const day = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
+  await page.locator('input[name="date"]').fill(day);
+  await page.locator('input[name="startTime"]').fill("08:00");
+  await page.locator('input[name="durationHours"]').fill("4");
+  await expect(page.getByRole("checkbox", { name: "Send the planned time to the customer" })).toBeChecked();
+  await expect(page.getByText(`By e-mail to ${email}, once the job is saved.`)).toBeVisible();
+  await shootAllWidths(page, "job-from-request", "en");
+  await page.getByRole("button", { name: "Add job" }).click();
+  await page.waitForURL(/\/app\/jobs\/[0-9a-f-]{36}\?added=1/);
+  await expect(page.getByText("The customer got the planned time by e-mail.")).toBeVisible();
+  const sent = (await (await page.request.get(`${resendStub}/emails`)).json()) as { subject: string; text: string; to: string[] }[];
+  const planned = sent.find((one) => one.text.includes(`Recipient: ${email}`) && one.subject === `TEST: ${name} has planned your job`);
+  expect(planned).toBeDefined();
+  expect(planned!.to).toEqual(["delivered@resend.dev"]);
+  expect(planned!.text).toMatch(/Time: .*8:00.AM.*12:00.PM/);
+  expect(planned!.text).toContain("Place: Strandgaten 1, Bergen");
+  expect(planned!.text).toContain("https://maskingo.no/kunde");
+
+  // The request now leads to its job, and is planned only once.
+  await page.goto("/app/jobs/requests");
+  await expect(kari.getByRole("link", { name: /Planned: job \d+/ })).toBeVisible();
+  await expect(kari.getByRole("link", { name: "Plan the job" })).toHaveCount(0);
+
+  // The customer sees the planned time.
+  await customer.page.reload();
+  await expect(mine.getByText("Planned", { exact: true })).toBeVisible();
+  await expect(mine.getByText("Planned time")).toBeVisible();
+  await expect(mine.getByText(/8:00.AM.*12:00.PM/)).toBeVisible();
+  await expect(mine.getByText("The end time is an estimate.", { exact: false })).toBeVisible();
   for (const locale of locales) {
     await customer.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
     await customer.page.goto("/kunde");
