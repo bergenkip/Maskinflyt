@@ -1420,6 +1420,7 @@
       "badge": "For kranbilfirmaer",
       "title": "Kranbiloppdrag fra bestilling til faktura",
       "lead": "MaskinGo samler oppdraget, kranføreren, timene og fakturaen på ett sted, så kontoret slipper å ringe rundt og taste inn timelister.",
+      "photoAlt": "Kranbil ved fjorden løfter en pall med byggevarer opp til et stillas, mens en mann i refleksklær følger med",
       "problems": [
         "Oppdrag kommer på telefon og SMS, og oversikten ligger i hodet til én person.",
         "Timer og minstetid må hentes fra lapper og meldinger før det kan faktureres.",
@@ -1470,6 +1471,7 @@
       "badge": "For maskinentreprenører",
       "title": "Ett program for oppdrag, maskiner, timer og faktura",
       "lead": "For deg som driver med gravemaskin, hjullaster eller andre anleggsmaskiner: se hvem som er hvor, få timene inn fra mobilen og fakturer uten å taste dem inn på nytt.",
+      "photoAlt": "Gul gravemaskin graver grøft langs en grusvei i skogen, med en hjullaster i bakgrunnen",
       "problems": [
         "Maskinførerne skriver timer på papir eller i SMS, og de kommer inn sent.",
         "Det er vanskelig å se hvilke maskiner og førere som er ledige neste uke.",
@@ -1520,6 +1522,7 @@
       "badge": "For transportfirmaer",
       "title": "Transportoppdrag uten telefonkø og papirlapper",
       "lead": "MaskinGo gir disponenten oversikt over biler og sjåfører, og sjåføren får oppdraget på mobilen med kunde og adresse.",
+      "photoAlt": "Tippbil tømmer et lass med pukk ved en vei langs fjorden",
       "problems": [
         "Disponenten bruker dagen på å ringe sjåfører for å fordele oppdrag.",
         "Arbeidssedler på papir blir borte eller kommer inn uker senere.",
