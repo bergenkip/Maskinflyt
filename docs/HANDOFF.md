@@ -347,7 +347,7 @@ todėl puslapis ir programa visada rodo tuos pačius skaičius. `VAT_REGISTERED 
 (MaskinGo dar ne MVA registre; pasiekus 50 000 kr per 12 mėn. įjungti, tada puslapis rašys „eks. mva.“) ir Bedrift
 papildomo žmogaus kaina 79 kr (dar neapmokestinama, 14b etapas). Puslapis `src/app/(marketing)/priser/page.tsx`,
 tekstai `Pricing`, nuoroda poraštėje. Sąlygų skyrius „Pris“ ir privatumo politika papildyti (Stripe kaip tiekėjas).
-Testai: `src/lib/pricing.test.ts`, `e2e/pricing.spec.ts`.
+Testai: `src/lib/pricing.test.ts`, `e2e/pricing.spec.ts`. Bedrift papildomo žmogaus kaina nuo 14b yra `BEDRIFT_EXTRA_PERSON_ORE` faile `src/lib/billing.ts`.
 
 ## Privatumo politika ir naudojimo sąlygos (2026-11-17)
 Puslapiai `/personvern` ir `/vilkar` (nb/en/lt), tekstai `messages/*.json` → `Legal`, įmonės duomenys `src/lib/legal.ts`
@@ -362,7 +362,7 @@ Tai ne teisininko patikra: prieš tikrus klientus vis tiek rekomenduojama advoka
 
 ## 14a etapas: MaskinGo abonementas (2026-11-23)
 Planai (Li sprendimas 2026-11-23), kainos be MVA, metams 2 mėn. nemokamai, 30 d. bandymas be kortelės:
-Solo 1–2 žm. 290 kr, Start iki 5 – 790 kr, Pro iki 15 – 1 790 kr, Bedrift iki 40 – 3 490 kr (+79 kr už žmogų virš 40: 14b).
+Solo 1–2 žm. 290 kr, Start iki 5 – 790 kr, Pro iki 15 – 1 790 kr, Bedrift 3 490 kr už 40 žmonių (+79 kr už kiekvieną žmogų virš 40, žr. 14b).
 MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), ekranai sako „mva neskaičiuojamas“. Pasiekus 50 000 kr: `true` ir Vercel'yje `STRIPE_TAX_RATE_ID` su 25 %.
 - Migracija `20261123120000_subscriptions.sql`: lentelė `subscriptions` (viena įmonei; nariai tik skaito, rašo tik serveris
   per `save_subscription` ir `save_stripe_customer`, kurie priima tik serverio `BILLING_WRITE_TOKEN`; lentelėje `private.billing_writer` laikoma tik jo maiša), trigeris naujai įmonei duoda 30 d. bandymą, `private.plan_seats`, trigeris `memberships_check_seats`
@@ -377,7 +377,23 @@ MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), e
 - Aplinkos kintamieji Vercel'yje: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `BILLING_WRITE_TOKEN` (jo sha256 įrašytas į `private.billing_writer`), vėliau `STRIPE_TAX_RATE_ID`.
   Kol jų nėra, puslapis sako „Mokėjimai dar neįjungti“ ir mygtukų nerodo.
 - Testai: `29_subscriptions.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts` (CI dabar paleidžia ir `e2e/hours.spec.ts`).
-- 14b: tik skaitymo režimas neapmokėjus, Bedrift papildomi žmonės per Stripe kiekį.
+- Produkcijoje patikrinta 2026-11-24: Li bandomasis mokėjimas sandbox kortele, Start planas įrašytas, webhook 2/2 sėkmingi.
+
+## 14b etapas: tik skaitymas ir Bedrift papildomi žmonės (2026-11-24)
+- Tik skaitymas (migracija `20261124090000_read_only_company.sql`): `private.is_read_only(org)` tiesa, kai bandymas baigėsi
+  be plano arba Stripe abonementas baigtas (`canceled`, `unpaid`, `incomplete_expired`, `paused`). `past_due` (Stripe dar
+  bando nuskaičiuoti) dar leidžia rašyti. Trigeris `private.guard_read_only` ant visų įmonės lentelių stabdo kiekvieną
+  rašymą (ir per RLS, ir per security definer funkcijas), klaida 42501 / `read_only`. Leidžiama: rinktis planą,
+  šalinti žmones, atšaukti kvietimus; duomenų bazės pasekmės (FK cascade, `pg_trigger_depth() > 1`) praleidžiamos.
+  Nuotraukų įkėlimas į `job-files` taip pat draudžiamas. Ekrane tą pačią taisyklę kartoja `isReadOnly` (`billing.ts`):
+  juosta visiems nariams (savininkui ir administratoriui su nuoroda į Abonementą). Kitų formų klaida rodoma kaip
+  „neturite teisės“, o priežastį paaiškina juosta; komandos ir kvietimo priėmimo formos sako tiksliai.
+- Bedrift virš 40: antra Stripe eilutė su kaina `maskingo_bedrift_extra_<month|year>` (79 kr / 790 kr), kiekis = žmonės − 40.
+  Atnaujinama `syncExtraPeople` (`stripe-server.ts`): priėmus kvietimą, pašalinus žmogų ir atidarius Abonemento puslapį
+  (pagauna registraciją per kvietimą). Plano keitimas (`itemChanges`) prideda arba pašalina šią eilutę. Stripe klaida
+  nestabdo prisijungimo; ji užrašoma į logą ir pataisoma kito pakeitimo metu.
+- Stripe nustatymas, kurį tikrina Li: Billing → Revenue recovery → po visų nepavykusių bandymų „Cancel the subscription“.
+- Testai: `30_read_only.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts`.
 
 2026-11-24: Li sprendimu nuimta geltona „juodraščio“ pastaba nuo `/personvern`, `/vilkar` ir `/databehandleravtale`.
 Tekstus rašė Claude, ne advokatas; atsakomybė už juos tenka įmonei.

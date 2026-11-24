@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { inviteUrl } from "@/lib/invitations";
 import { getCurrentMembership } from "@/lib/membership";
 import { isPermission, isRole } from "@/lib/roles";
+import { syncExtraPeople } from "@/lib/stripe-server";
 import { createClient } from "@/lib/supabase/server";
 
 // Every action re-checks rights in the database (SECURITY DEFINER functions);
@@ -13,7 +14,7 @@ import { createClient } from "@/lib/supabase/server";
 export type InviteState = {
   values?: { role: string };
   fieldErrors?: { role?: "roleInvalid" };
-  error?: "notAllowed" | "seatLimit" | "unknown";
+  error?: "notAllowed" | "seatLimit" | "readOnly" | "unknown";
   // The personal link, shown once: only a hash of its token is stored.
   link?: string;
   linkRole?: string;
@@ -41,6 +42,7 @@ export async function inviteMember(_prev: InviteState, formData: FormData): Prom
   if (error || typeof token !== "string") {
     if (error?.hint === "mfa_required") redirect("/mfa");
     if (error?.hint === "invalid_role") return { values, fieldErrors: { role: "roleInvalid" } };
+    if (error?.hint === "read_only") return { values, error: "readOnly" };
     if (error?.code === "42501") return { values, error: "notAllowed" };
     return { values, error: "unknown" };
   }
@@ -49,12 +51,13 @@ export async function inviteMember(_prev: InviteState, formData: FormData): Prom
   return { values, link: await inviteUrl(token), linkRole: role };
 }
 
-export type TeamActionState = { error?: "notAllowed" | "lastOwner" | "unknown"; done?: boolean };
+export type TeamActionState = { error?: "notAllowed" | "lastOwner" | "readOnly" | "unknown"; done?: boolean };
 
 function mapTeamError(error: { code?: string; hint?: string }): TeamActionState {
   // The session has no authenticator code yet (for example it expired): ask for it.
   if (error.hint === "mfa_required") redirect("/mfa");
   if (error.hint === "last_owner") return { error: "lastOwner" };
+  if (error.hint === "read_only") return { error: "readOnly" };
   if (error.code === "42501" || error.hint === "not_found" || error.hint === "not_allowed") {
     return { error: "notAllowed" };
   }
@@ -82,6 +85,9 @@ export async function removeMember(_prev: TeamActionState, formData: FormData): 
   const supabase = await createClient();
   const { error } = await supabase.rpc("remove_member", { membership_id: membershipId });
   if (error) return mapTeamError(error);
+  // Bedrift bills each person past 40.
+  const membership = await getCurrentMembership();
+  if (membership) await syncExtraPeople(membership.organization.id);
 
   revalidatePath("/app/team");
   return { done: true };

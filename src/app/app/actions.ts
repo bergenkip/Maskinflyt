@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { LOCALE_COOKIE, isLocale } from "@/i18n/locale";
 import { isOrgCountry, isValidOrgNumber, normalizeOrgNumber, type OrgCountry } from "@/lib/org-number";
 import { cleanName, isInviteToken, isValidName } from "@/app/(auth)/validation";
+import { syncExtraPeople } from "@/lib/stripe-server";
 import { createClient } from "@/lib/supabase/server";
 
 export async function signOut() {
@@ -86,20 +87,23 @@ export async function saveLanguage(_prev: LanguageState, formData: FormData): Pr
   return { status: "saved" };
 }
 
-export type AcceptState = { error?: "notFound" | "alreadyMember" | "seatLimit" | "unknown" };
+export type AcceptState = { error?: "notFound" | "alreadyMember" | "seatLimit" | "readOnly" | "unknown" };
 
 export async function acceptInvitation(_prev: AcceptState, formData: FormData): Promise<AcceptState> {
   const token = formData.get("token");
   if (!isInviteToken(token)) return { error: "notFound" };
 
   const supabase = await createClient();
-  const { error } = await supabase.rpc("accept_invitation", { token });
+  const { data: organizationId, error } = await supabase.rpc("accept_invitation", { token });
   if (error) {
     if (error.hint === "not_found") return { error: "notFound" };
     if (error.hint === "already_member") return { error: "alreadyMember" };
     if (error.hint === "seat_limit") return { error: "seatLimit" };
+    if (error.hint === "read_only") return { error: "readOnly" };
     return { error: "unknown" };
   }
+  // Bedrift bills each person past 40.
+  if (typeof organizationId === "string") await syncExtraPeople(organizationId);
 
   // The new company's default language may now apply, as after creating a company.
   revalidatePath("/", "layout");

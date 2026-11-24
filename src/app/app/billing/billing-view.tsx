@@ -2,7 +2,18 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { AlertIcon, CheckCircleIcon, ClockIcon, UsersIcon, XCircleIcon } from "@/components/icons";
-import { planFits, planPrice, plans, planSeats, VAT_REGISTERED, type BillingState, type Interval, type Plan } from "@/lib/billing";
+import {
+  extraPeople,
+  extraPersonPrice,
+  planFits,
+  planPrice,
+  plans,
+  planSeats,
+  VAT_REGISTERED,
+  type BillingState,
+  type Interval,
+  type Plan,
+} from "@/lib/billing";
 import { ChoosePlanForm, PortalForm } from "./billing-forms";
 
 export type BillingViewProps = {
@@ -27,6 +38,7 @@ export async function BillingView({ state, taken, seats, interval, manages, conf
   const money = (ore: number) => format.number(ore / 100, { style: "currency", currency: "NOK", maximumFractionDigits: 0 });
   const date = (iso: string | null) => (iso ? format.dateTime(new Date(iso), { day: "numeric", month: "long", year: "numeric" }) : "");
   const paying = state.kind === "active" ? state : null;
+  const extra = paying ? extraPeople(paying.plan, taken) : 0;
 
   let status: { tone: "ok" | "info" | "warn" | "danger"; icon: ReactNode; title: string; lead: string };
   switch (state.kind) {
@@ -94,6 +106,7 @@ export async function BillingView({ state, taken, seats, interval, manages, conf
           <UsersIcon className="size-5 shrink-0 text-muted" />
           {seats === null ? t("people", { taken }) : t("peopleOf", { taken, seats })}
         </p>
+        {extra > 0 && <p className="-mt-2 pl-7 text-muted">{t("extraPeople", { count: extra })}</p>}
         {manages && configured && hasCustomer && (
           <div className="grid gap-2 border-t border-border pt-4">
             <p className="text-muted">{t("portalLead")}</p>
@@ -167,6 +180,14 @@ export async function BillingView({ state, taken, seats, interval, manages, conf
                   <p className="text-sm text-muted">
                     {interval === "year" ? t("yearNote", { price: money(planPrice(plan, "month")) }) : t(VAT_REGISTERED ? "exVat" : "noVat")}
                   </p>
+                  {plan === "bedrift" && (
+                    <p className="text-sm text-muted">
+                      {t("extraPerson", {
+                        count: planSeats.bedrift,
+                        price: `${money(extraPersonPrice(interval))} / ${t(interval === "month" ? "month" : "year")}`,
+                      })}
+                    </p>
+                  )}
                 </div>
                 <div className="mt-auto grid gap-2">
                   {!fits && (

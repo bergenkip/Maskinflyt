@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   billingState,
+  extraLookupKey,
+  extraPeople,
+  extraPersonPrice,
   fromLookupKey,
+  isExtraLookupKey,
+  isReadOnly,
   lookupKey,
   needsAttention,
   planFits,
@@ -113,5 +118,54 @@ describe("rowFromStripe", () => {
     expect(rowFromStripe({ ...sub, metadata: {} })).toBeNull();
     expect(rowFromStripe({ ...sub, metadata: { organization_id: "x' or 1=1" } })).toBeNull();
     expect(rowFromStripe({ ...sub, items: { data: [{ current_period_end: 1, price: { lookup_key: "other" } }] } })).toBeNull();
+  });
+
+  it("finds the plan's line when Bedrift's extra-person line comes first", () => {
+    const bedrift = {
+      ...sub,
+      items: {
+        data: [
+          { current_period_end: 1_769_169_600, price: { lookup_key: "maskingo_bedrift_extra_year" } },
+          { current_period_end: 1_769_169_600, price: { lookup_key: "maskingo_bedrift_year" } },
+        ],
+      },
+    };
+    expect(rowFromStripe(bedrift)).toMatchObject({ plan: "bedrift", billing_interval: "year" });
+  });
+});
+
+describe("Bedrift's extra people", () => {
+  it("bills each person past 40, at 79 kr a month or ten months a year", () => {
+    expect(extraPersonPrice("month")).toBe(7_900);
+    expect(extraPersonPrice("year")).toBe(79_000);
+    expect(extraPeople("bedrift", 40)).toBe(0);
+    expect(extraPeople("bedrift", 43)).toBe(3);
+    expect(extraPeople("pro", 43)).toBe(0);
+    expect(extraPeople(null, 43)).toBe(0);
+  });
+
+  it("has its own Stripe price, which is not mistaken for a plan", () => {
+    expect(extraLookupKey("month")).toBe("maskingo_bedrift_extra_month");
+    expect(isExtraLookupKey("maskingo_bedrift_extra_year")).toBe(true);
+    expect(isExtraLookupKey("maskingo_bedrift_year")).toBe(false);
+    expect(fromLookupKey("maskingo_bedrift_extra_month")).toBeNull();
+  });
+});
+
+describe("isReadOnly (the same rule as private.is_read_only)", () => {
+  const ended = "2026-11-22T12:00:00Z";
+  it("lets a company write while trying, paying or while Stripe retries a payment", () => {
+    expect(isReadOnly(base, now)).toBe(false);
+    expect(isReadOnly({ ...base, status: "active", plan: "pro" }, now)).toBe(false);
+    expect(isReadOnly({ ...base, status: "past_due", plan: "pro" }, now)).toBe(false);
+    expect(isReadOnly({ ...base, trial_ends_at: ended, plan: "pro", stripe_subscription_id: "sub_1" }, now)).toBe(false);
+    expect(isReadOnly(null, now)).toBe(false);
+  });
+
+  it("only reads when the trial is over without a plan, or the subscription ended", () => {
+    expect(isReadOnly({ ...base, trial_ends_at: ended }, now)).toBe(true);
+    expect(isReadOnly({ ...base, status: "canceled", plan: "pro" }, now)).toBe(true);
+    expect(isReadOnly({ ...base, status: "unpaid", plan: "pro" }, now)).toBe(true);
+    expect(isReadOnly({ ...base, status: "incomplete", trial_ends_at: ended }, now)).toBe(true);
   });
 });
