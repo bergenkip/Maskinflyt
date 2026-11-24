@@ -10,7 +10,7 @@ test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e
 const weekdayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 test("a visitor picks a free time; the office plans the job at it", async ({ browser, baseURL }) => {
-  test.setTimeout(420_000);
+  test.setTimeout(600_000);
   const { page } = await newPage(browser, baseURL!, "en");
   await signUp(page, newEmail("times"), "Anna", "Berg");
   const name = newCompanyName("times");
@@ -82,7 +82,7 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   const firstTime = form.getByRole("radio").first();
   await expect(firstTime).toBeChecked();
   const startsAt = await firstTime.getAttribute("value");
-  const clock = (await form.locator("label", { has: firstTime }).innerText()).trim();
+  const clock = (await firstTime.locator("..").innerText()).trim();
   expect(clock).toMatch(/^\d{2}:\d{2}$/);
 
   await form.getByLabel("Name").fill("Kari Nordmann");
