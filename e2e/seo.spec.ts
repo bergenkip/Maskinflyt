@@ -21,6 +21,8 @@ test("sitemap lists only the public pages on maskingo.no", async ({ request }) =
     "https://maskingo.no/kranbil",
     "https://maskingo.no/maskinentreprenor",
     "https://maskingo.no/transport",
+    "https://maskingo.no/timeforing",
+    "https://maskingo.no/faktura",
     "https://maskingo.no/priser",
     "https://maskingo.no/signup",
     "https://maskingo.no/login",

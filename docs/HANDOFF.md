@@ -337,7 +337,8 @@ Testai: `src/lib/site.test.ts`, `e2e/seo.spec.ts`.
 Pradžios puslapyje skyrius „Laget for din bransje“ su nuorodomis (`src/components/industry-link.tsx`). Puslapiai sitemap'e
 (prioritetas 0.8), JSON-LD: `BreadcrumbList` + `FAQPage`. Tekstuose tik tai, ką programa jau daro (pvz. sąskaita tik iš
 valandų, EHF dar nėra). Norvegiškus tekstus prieš pilotą turi peržiūrėti gimtakalbis.
-Dar nepadaryta iš plano: `/timeforing`, `/faktura`, `/priser` (reikia kainų).
+2026-11-24: tuo pačiu šablonu pridėti temų puslapiai `/timeforing` ir `/faktura` (`topics` faile `src/lib/industries.ts`),
+nuorodos poraštėje. Transporto DUK pataisytas: tona ar reisas galimi kaip savos sąskaitos eilutės.
 Testai: `e2e/industry.spec.ts` (3 puslapiai × 5 pločiai × 3 kalbos), `e2e/seo.spec.ts`.
 
 ## Kainų puslapis /priser (2026-11-23)
