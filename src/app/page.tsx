@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { IndustryLink } from "@/components/industry-link";
+import { ProductShowcase } from "@/components/product-showcase";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { industries } from "@/lib/industries";
@@ -132,6 +133,8 @@ export default function Home() {
               {tNav("login")}
             </Link>
           </div>
+
+          <ProductShowcase />
 
           <section aria-labelledby="steps-title" className="mt-14 sm:mt-20">
             <h2 id="steps-title" className="text-sm font-semibold tracking-wide text-muted uppercase">

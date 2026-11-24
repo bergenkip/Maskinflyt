@@ -377,6 +377,8 @@ MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), e
 - Aplinkos kintamieji Vercel'yje: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `BILLING_WRITE_TOKEN` (jo sha256 įrašytas į `private.billing_writer`), vėliau `STRIPE_TAX_RATE_ID`.
   Kol jų nėra, puslapis sako „Mokėjimai dar neįjungti“ ir mygtukų nerodo.
 - Testai: `29_subscriptions.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts` (CI dabar paleidžia ir `e2e/hours.spec.ts`).
+- 14b: tik skaitymo režimas neapmokėjus, Bedrift papildomi žmonės per Stripe kiekį.
+
 - Produkcijoje patikrinta 2026-11-24: Li bandomasis mokėjimas sandbox kortele, Start planas įrašytas, webhook 2/2 sėkmingi.
 
 ## 14b etapas: tik skaitymas ir Bedrift papildomi žmonės (2026-11-24)
@@ -397,6 +399,27 @@ MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), e
 
 2026-11-24: Li sprendimu nuimta geltona „juodraščio“ pastaba nuo `/personvern`, `/vilkar` ir `/databehandleravtale`.
 Tekstus rašė Claude, ne advokatas; atsakomybė už juos tenka įmonei.
+
+## Programos ekranai pradžios puslapyje (2026-11-24)
+Po mygtukais „Sukurti paskyrą / Prisijungti“ rodomas kompiuterio langas su dienos kalendoriumi ir priekyje vairuotojo telefonas
+(`src/components/product-showcase.tsx`). Tai tikri programos ekranai su išgalvota įmone „Fjordkran AS“ (adresai `.test`),
+po vieną rinkinį kiekvienai kalbai: `public/screens/calendar-<nb|en|lt>.webp`, `driver-<nb|en|lt>.webp`.
+Tekstai `Home.showcase` (alt tekstai ir parašas). Testas `e2e/home.spec.ts` tikrina, kad paveikslėliai užsikrauna,
+yra puslapio kalba, turi alt tekstą ir neištempti.
+
+Kaip atnaujinti ekranus (pvz. pasikeitus dizainui), su vietiniu Supabase (`supabase start`) ir `npm run build`:
+```
+supabase db reset
+export SERVICE_ROLE_KEY=<iš supabase status>
+npx playwright test -c scripts/demo-screens seed
+for l in nb en lt; do DEMO_LOCALE=$l npx playwright test -c scripts/demo-screens shoot; done
+node scripts/demo-screens/convert.mjs
+```
+Užsakymai sukuriami nuo šiandienos datos, todėl ekranuose visada matyti „šiandien“.
+Šakų nuotraukos (Li sukūrė su ChatGPT 2026-11-24): `public/photos/` (kranbil-fjord, gravemaskin, tippbil), sąrašas
+`src/lib/industry-photos.ts`. Rodomos šakų kortelėse (`src/components/industry-link.tsx`): pradžios puslapyje ir šakų puslapių
+apačioje. Generatoriaus išgalvoti smulkūs užrašai užlieti. Antra kranų nuotrauka nenaudota: joje matyti Volvo logotipas.
+Dar laukia: didelė nuotrauka šakų puslapių viršuje (po PR #41, kuris keičia tą patį šabloną).
 
 ## 15a etapas: viešas įmonės puslapis (2026-11-24)
 Li pasirinko 2026-11-24. Visas planas: 15a puslapis, 15b užklausų forma (įmonė priima arba atmeta, jokio automatinio
