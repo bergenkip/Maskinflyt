@@ -24,7 +24,7 @@ for (const locale of Object.keys(titles) as (keyof typeof titles)[]) {
         await page.goto(path);
 
         await expect(page.getByRole("heading", { level: 1 })).toHaveText(titles[locale][kind]);
-        await expect(page.getByRole("note")).toBeVisible();
+        await expect(page.getByRole("note")).toHaveCount(0);
         expect(await page.getByRole("heading", { level: 2 }).count()).toBeGreaterThanOrEqual(8);
         // Every placeholder is filled in.
         await expect(page.getByRole("main")).not.toContainText("{");

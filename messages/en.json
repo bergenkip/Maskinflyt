@@ -1010,7 +1010,6 @@
   },
   "Legal": {
     "updated": "Last updated {date}",
-    "draftNote": "This is a draft that a lawyer will review before MaskinGo is used with real customer data.",
     "privacy": {
       "title": "Privacy policy",
       "lead": "This page explains which personal data MaskinGo processes, why, and what rights you have.",
@@ -1545,7 +1544,7 @@
       "faq": [
         {
           "q": "Can we invoice per trip or per tonne?",
-          "a": "Not yet. Today the invoice is made from hours and the hourly rate per truck or machine. Write to us how you invoice, and we will take it into our plans."
+          "a": "Yes, as your own lines on the invoice with quantity, unit and price. The hours come from approved working time."
         },
         {
           "q": "Does it work for drivers who do not speak Norwegian?",
@@ -1558,6 +1557,106 @@
         {
           "q": "Can we send EHF invoices?",
           "a": "Not yet. Today the invoice is sent as a PDF by email. EHF is planned as a separate step."
+        }
+      ]
+    },
+    "timeforing": {
+      "navName": "Time tracking",
+      "metaTitle": "Time tracking for drivers and operators · MaskinGo",
+      "metaDescription": "Time tracking on the phone for drivers and machine operators: time from taps on the job, a payroll timesheet with overtime and a PDF for the accountant.",
+      "summary": "Time from the job, a payroll timesheet with overtime and a PDF for the accountant.",
+      "badge": "For drivers, operators and the office",
+      "title": "Time tracking you don't type in twice",
+      "lead": "The driver records time on the phone while the job is going on. The office approves the hours for the invoice, and each employee confirms their own payroll timesheet.",
+      "problems": [
+        "Paper timesheets come in late, and some are always missing.",
+        "The office types the same hours in for payroll and for invoicing.",
+        "Overtime is worked out by hand and ends up different from person to person."
+      ],
+      "points": [
+        {
+          "title": "Time from taps on the job",
+          "body": "The driver taps On the way, Arrived and Finished, and adds breaks. The job's time is recorded from the taps."
+        },
+        {
+          "title": "The office approves",
+          "body": "The office sees the hours per job and can correct them with a reason before approving."
+        },
+        {
+          "title": "Payroll timesheet with overtime",
+          "body": "Each employee fills in the days in the period and confirms. Overtime is split by hours per day or time of day, by your rules."
+        },
+        {
+          "title": "PDF for the accountant",
+          "body": "When the timesheet is confirmed, it is locked and sent as a PDF to the accountant's email."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can a confirmed timesheet be changed?",
+          "a": "No. It is locked when confirmed. A wrong period can be deleted before confirming."
+        },
+        {
+          "q": "How is overtime set up?",
+          "a": "You choose after how many hours per day overtime starts and the extra percentage. You can also have a higher level or a time window, for example 19–06 +100 %."
+        },
+        {
+          "q": "Does the accountant see every employee?",
+          "a": "Yes. The accountant sees every employee's timesheets per month, with the finished jobs in each period."
+        },
+        {
+          "q": "Is location (GPS) recorded?",
+          "a": "No. MaskinGo does not collect location. The time comes from the taps and what the employee enters."
+        }
+      ]
+    },
+    "faktura": {
+      "navName": "Invoicing",
+      "metaTitle": "Invoicing from hours for machine contractors · MaskinGo",
+      "metaDescription": "Create invoice drafts from approved hours with the customer's prices and minimum time, add your own lines and send a PDF by email when you tap Send.",
+      "summary": "Invoice drafts from approved hours, your own lines and a PDF by email.",
+      "badge": "For the office and the accountant",
+      "title": "From approved hours to an invoice the same day",
+      "lead": "When the working time is approved, the invoice draft is ready with the customer's prices. You add what is missing and send it when you are happy.",
+      "problems": [
+        "Hours have to be collected from notes and messages before the invoice can be made.",
+        "Minimum time and the customer's agreed price are easy to forget.",
+        "Days or weeks pass from the job being done to the invoice being sent."
+      ],
+      "points": [
+        {
+          "title": "Draft from approved time",
+          "body": "The working time goes into the draft with the machine's hourly rate, the customer's own price and minimum time. A higher evening rate is included."
+        },
+        {
+          "title": "Your own lines",
+          "body": "Add lines with quantity, unit and price, for example ferry, gravel, km or trips, with the right VAT rate."
+        },
+        {
+          "title": "Number and PDF",
+          "body": "Sequential invoice numbers without gaps and a PDF with what the law requires. A sent invoice cannot be changed; mistakes are corrected with a credit note."
+        },
+        {
+          "title": "For the accountant",
+          "body": "Download the invoices and credit notes for a period as one CSV file and all PDFs in one ZIP file."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Is the invoice sent automatically?",
+          "a": "No. The invoice is sent as a PDF by email only when someone in the office taps Send."
+        },
+        {
+          "q": "Can we invoice per tonne or per trip?",
+          "a": "Yes, as your own lines with quantity and unit. The hours come from approved working time."
+        },
+        {
+          "q": "Can we send EHF?",
+          "a": "Not yet. Today the invoice is sent as a PDF by email. EHF is planned as a separate step."
+        },
+        {
+          "q": "How long are invoices kept?",
+          "a": "Invoices and PDFs are stored privately for at least 5 years, as the bookkeeping rules require."
         }
       ]
     }

@@ -1010,7 +1010,6 @@
   },
   "Legal": {
     "updated": "Sist oppdatert {date}",
-    "draftNote": "Dette er et utkast som skal gjennomgås av en jurist før MaskinGo tas i bruk med ekte kundedata.",
     "privacy": {
       "title": "Personvernerklæring",
       "lead": "Her forklarer vi hvilke personopplysninger MaskinGo behandler, hvorfor, og hvilke rettigheter du har.",
@@ -1545,7 +1544,7 @@
       "faq": [
         {
           "q": "Kan vi fakturere per tur eller per tonn?",
-          "a": "Ikke ennå. I dag lages fakturaen fra timer og timepris per bil eller maskin. Skriv til oss hvordan dere fakturerer, så tar vi det med i planene."
+          "a": "Ja, som egne linjer på fakturaen med antall, enhet og pris. Timene kommer fra godkjent arbeidstid."
         },
         {
           "q": "Fungerer det for sjåfører som ikke snakker norsk?",
@@ -1558,6 +1557,106 @@
         {
           "q": "Kan vi sende EHF-faktura?",
           "a": "Ikke ennå. Fakturaen sendes i dag som PDF på e-post. EHF er planlagt som et eget steg."
+        }
+      ]
+    },
+    "timeforing": {
+      "navName": "Timeføring",
+      "metaTitle": "Timeføring for sjåfører og maskinførere · MaskinGo",
+      "metaDescription": "Timeføring på mobilen for sjåfører og maskinførere: tid fra trykk på oppdraget, timeliste til lønn med overtid og PDF til regnskapsfører.",
+      "summary": "Tid fra oppdraget, timeliste til lønn med overtid og PDF til regnskapsfører.",
+      "badge": "For sjåfører, maskinførere og kontoret",
+      "title": "Timeføring som ikke må tastes inn to ganger",
+      "lead": "Sjåføren registrerer tiden på mobilen mens jobben pågår. Kontoret godkjenner timene til fakturaen, og hver ansatt bekrefter sin timeliste til lønn.",
+      "problems": [
+        "Timelister på papir kommer inn sent, og noen mangler alltid.",
+        "Kontoret taster inn de samme timene til lønn og til faktura.",
+        "Overtid regnes for hånd og blir ulikt fra person til person."
+      ],
+      "points": [
+        {
+          "title": "Tid fra trykkene på oppdraget",
+          "body": "Sjåføren trykker På vei, Ankommet og Ferdig, og legger inn pauser. Tiden på oppdraget registreres fra trykkene."
+        },
+        {
+          "title": "Kontoret godkjenner",
+          "body": "Kontoret ser timene per oppdrag og kan rette dem med en begrunnelse før de godkjennes."
+        },
+        {
+          "title": "Timeliste til lønn med overtid",
+          "body": "Hver ansatt fører dagene i perioden og bekrefter. Overtid deles etter timer per dag eller klokkeslett, etter reglene dine."
+        },
+        {
+          "title": "PDF til regnskapsfører",
+          "body": "Når timelisten er bekreftet, låses den og sendes som PDF til regnskapsførerens e-post."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Kan en bekreftet timeliste endres?",
+          "a": "Nei. Den låses når den bekreftes. Feil periode kan slettes før bekreftelse."
+        },
+        {
+          "q": "Hvordan settes overtid opp?",
+          "a": "Du velger fra hvor mange timer per dag overtid starter og tillegget i prosent. Du kan også ha et høyere nivå eller et tidsrom, for eksempel kl. 19–06 +100 %."
+        },
+        {
+          "q": "Ser regnskapsføreren alle ansatte?",
+          "a": "Ja. Regnskapsføreren ser alle ansattes timelister per måned, med de fullførte jobbene i hver periode."
+        },
+        {
+          "q": "Registreres posisjon (GPS)?",
+          "a": "Nei. MaskinGo samler ikke inn posisjon. Tiden kommer fra trykkene og det den ansatte fører selv."
+        }
+      ]
+    },
+    "faktura": {
+      "navName": "Faktura",
+      "metaTitle": "Faktura fra timer for maskinentreprenør · MaskinGo",
+      "metaDescription": "Lag fakturautkast fra godkjente timer med kundens priser og minstetid, legg til egne linjer og send PDF på e-post når du selv trykker Send.",
+      "summary": "Fakturautkast fra godkjente timer, egne linjer og PDF på e-post.",
+      "badge": "For kontoret og regnskapsføreren",
+      "title": "Fra godkjente timer til faktura samme dag",
+      "lead": "Når arbeidstiden er godkjent, ligger fakturautkastet klart med kundens priser. Du legger til det som mangler og sender når du er fornøyd.",
+      "problems": [
+        "Timer må samles fra lapper og meldinger før fakturaen kan lages.",
+        "Minstetid og kundens avtalte pris glemmes lett.",
+        "Det går dager eller uker fra jobben er gjort til fakturaen er sendt."
+      ],
+      "points": [
+        {
+          "title": "Utkast fra godkjent tid",
+          "body": "Arbeidstiden kommer med i utkastet med maskinens timepris, kundens egen pris og minstetid. Høyere sats for kveld regnes med."
+        },
+        {
+          "title": "Egne linjer",
+          "body": "Legg til linjer med antall, enhet og pris, for eksempel ferje, pukk, km eller turer, med riktig mva-sats."
+        },
+        {
+          "title": "Nummer og PDF",
+          "body": "Fortløpende fakturanummer uten hull og en PDF med det loven krever. En sendt faktura kan ikke endres; feil rettes med kreditnota."
+        },
+        {
+          "title": "Til regnskapsfører",
+          "body": "Last ned fakturaer og kreditnotaer for en periode som én CSV-fil og alle PDF-ene i én ZIP-fil."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Sendes fakturaen automatisk?",
+          "a": "Nei. Fakturaen sendes som PDF på e-post først når noen på kontoret trykker Send."
+        },
+        {
+          "q": "Kan vi fakturere per tonn eller tur?",
+          "a": "Ja, som egne linjer med antall og enhet. Timene kommer fra godkjent arbeidstid."
+        },
+        {
+          "q": "Kan vi sende EHF?",
+          "a": "Ikke ennå. Fakturaen sendes i dag som PDF på e-post. EHF er planlagt som et eget steg."
+        },
+        {
+          "q": "Hvor lenge lagres fakturaene?",
+          "a": "Fakturaer og PDF-er lagres privat i minst 5 år, slik bokføringsreglene krever."
         }
       ]
     }

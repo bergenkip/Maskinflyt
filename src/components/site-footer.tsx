@@ -9,12 +9,22 @@ const linkClass =
 export function SiteFooter() {
   const t = useTranslations("Footer");
   const tLegal = useTranslations("Legal");
+  const tIndustry = useTranslations("Industry");
 
   return (
     <footer className="border-t border-border pb-[env(safe-area-inset-bottom)]">
       <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p>{t("text")}</p>
-        <nav aria-label={t("linksLabel")} className="-my-3 flex flex-wrap gap-x-5">
+        <nav
+          aria-label={t("linksLabel")}
+          className="-my-3 flex flex-wrap gap-x-5"
+        >
+          <Link href="/timeforing" className={linkClass}>
+            {tIndustry("timeforing.navName")}
+          </Link>
+          <Link href="/faktura" className={linkClass}>
+            {tIndustry("faktura.navName")}
+          </Link>
           <Link href="/priser" className={linkClass}>
             {t("pricing")}
           </Link>

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { pagePath } from "@/lib/company-page";
-import { industries } from "@/lib/industries";
+import { industries, topics } from "@/lib/industries";
 import { SITE_URL, publicPaths } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { createVisitorClient } from "@/lib/supabase/standalone";
@@ -29,7 +29,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const own: MetadataRoute.Sitemap = publicPaths.map((path) => ({
     url: `${SITE_URL}${path === "/" ? "" : path}`,
     changeFrequency: "monthly",
-    priority: path === "/" ? 1 : industries.some((industry) => path === `/${industry}`) ? 0.8 : 0.5,
+    priority:
+      path === "/"
+        ? 1
+        : [...industries, ...topics].some((page) => path === `/${page}`)
+          ? 0.8
+          : 0.5,
   }));
   return [...own, ...(await companyPages())];
 }

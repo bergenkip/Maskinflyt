@@ -337,7 +337,8 @@ Testai: `src/lib/site.test.ts`, `e2e/seo.spec.ts`.
 Pradžios puslapyje skyrius „Laget for din bransje“ su nuorodomis (`src/components/industry-link.tsx`). Puslapiai sitemap'e
 (prioritetas 0.8), JSON-LD: `BreadcrumbList` + `FAQPage`. Tekstuose tik tai, ką programa jau daro (pvz. sąskaita tik iš
 valandų, EHF dar nėra). Norvegiškus tekstus prieš pilotą turi peržiūrėti gimtakalbis.
-Dar nepadaryta iš plano: `/timeforing`, `/faktura`, `/priser` (reikia kainų).
+2026-11-24: tuo pačiu šablonu pridėti temų puslapiai `/timeforing` ir `/faktura` (`topics` faile `src/lib/industries.ts`),
+nuorodos poraštėje. Transporto DUK pataisytas: tona ar reisas galimi kaip savos sąskaitos eilutės.
 Testai: `e2e/industry.spec.ts` (3 puslapiai × 5 pločiai × 3 kalbos), `e2e/seo.spec.ts`.
 
 ## Kainų puslapis /priser (2026-11-23)
@@ -348,7 +349,7 @@ papildomo žmogaus kaina 79 kr (dar neapmokestinama, 14b etapas). Puslapis `src/
 tekstai `Pricing`, nuoroda poraštėje. Sąlygų skyrius „Pris“ ir privatumo politika papildyti (Stripe kaip tiekėjas).
 Testai: `src/lib/pricing.test.ts`, `e2e/pricing.spec.ts`. Bedrift papildomo žmogaus kaina nuo 14b yra `BEDRIFT_EXTRA_PERSON_ORE` faile `src/lib/billing.ts`.
 
-## Privatumo politika ir naudojimo sąlygos (2026-11-17, juodraštis)
+## Privatumo politika ir naudojimo sąlygos (2026-11-17)
 Puslapiai `/personvern` ir `/vilkar` (nb/en/lt), tekstai `messages/*.json` → `Legal`, įmonės duomenys `src/lib/legal.ts`
 (`COMPANY`, `LEGAL_UPDATED`). Nuorodos poraštėje (`src/components/site-footer.tsx`) ir po registracijos mygtuku.
 Faktai patikrinti 2026-11-17: Supabase `eu-north-1` (Stokholmas), Vercel funkcijos `arn1`, Resend ES regionas,
@@ -393,6 +394,9 @@ MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), e
   nestabdo prisijungimo; ji užrašoma į logą ir pataisoma kito pakeitimo metu.
 - Stripe nustatymas, kurį tikrina Li: Billing → Revenue recovery → po visų nepavykusių bandymų „Cancel the subscription“.
 - Testai: `30_read_only.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts`.
+
+2026-11-24: Li sprendimu nuimta geltona „juodraščio“ pastaba nuo `/personvern`, `/vilkar` ir `/databehandleravtale`.
+Tekstus rašė Claude, ne advokatas; atsakomybė už juos tenka įmonei.
 
 ## 15a etapas: viešas įmonės puslapis (2026-11-24)
 Li pasirinko 2026-11-24. Visas planas: 15a puslapis, 15b užklausų forma (įmonė priima arba atmeta, jokio automatinio
