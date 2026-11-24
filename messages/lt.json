@@ -1012,7 +1012,6 @@
   },
   "Legal": {
     "updated": "Atnaujinta {date}",
-    "draftNote": "Tai juodraštis, kurį peržiūrės teisininkas, prieš naudojant MaskinGo su tikrais klientų duomenimis.",
     "privacy": {
       "title": "Privatumo politika",
       "lead": "Čia paaiškiname, kokius asmens duomenis tvarko MaskinGo, kodėl ir kokias teises turite.",
@@ -1547,7 +1546,7 @@
       "faq": [
         {
           "q": "Ar galime išrašyti sąskaitą už reisą ar toną?",
-          "a": "Kol kas ne. Šiandien sąskaita sudaroma iš valandų ir valandinio sunkvežimio ar mašinos įkainio. Parašykite mums, kaip išrašote sąskaitas, ir įtrauksime tai į planus."
+          "a": "Taip, kaip savas sąskaitos eilutes su kiekiu, vienetu ir kaina. Valandos imamos iš patvirtinto darbo laiko."
         },
         {
           "q": "Ar tinka vairuotojams, kurie nekalba norvegiškai?",
@@ -1560,6 +1559,106 @@
         {
           "q": "Ar galime siųsti EHF sąskaitas?",
           "a": "Kol kas ne. Šiandien sąskaita siunčiama PDF el. paštu. EHF numatytas kaip atskiras etapas."
+        }
+      ]
+    },
+    "timeforing": {
+      "navName": "Darbo laikas",
+      "metaTitle": "Darbo laiko apskaita vairuotojams ir operatoriams · MaskinGo",
+      "metaDescription": "Darbo laikas telefone vairuotojams ir technikos operatoriams: laikas iš paspaudimų užsakyme, valandų lapas atlyginimui su viršvalandžiais ir PDF buhalteriui.",
+      "summary": "Laikas iš užsakymo, valandų lapas atlyginimui su viršvalandžiais ir PDF buhalteriui.",
+      "badge": "Vairuotojams, operatoriams ir biurui",
+      "title": "Darbo laikas, kurio nereikia vesti du kartus",
+      "lead": "Vairuotojas registruoja laiką telefone darbo metu. Biuras patvirtina valandas sąskaitai, o kiekvienas darbuotojas patvirtina savo valandų lapą atlyginimui.",
+      "problems": [
+        "Popieriniai valandų lapai ateina vėlai, ir kai kurių visada trūksta.",
+        "Biuras tas pačias valandas įveda ir atlyginimui, ir sąskaitai.",
+        "Viršvalandžiai skaičiuojami ranka ir kiekvienam skirtingai."
+      ],
+      "points": [
+        {
+          "title": "Laikas iš paspaudimų užsakyme",
+          "body": "Vairuotojas spaudžia Važiuoju, Atvykau ir Baigiau bei įveda pertraukas. Užsakymo laikas registruojamas pagal paspaudimus."
+        },
+        {
+          "title": "Biuras patvirtina",
+          "body": "Biuras mato valandas pagal užsakymus ir gali jas pataisyti nurodęs priežastį prieš patvirtindamas."
+        },
+        {
+          "title": "Valandų lapas atlyginimui su viršvalandžiais",
+          "body": "Kiekvienas darbuotojas užpildo laikotarpio dienas ir patvirtina. Viršvalandžiai skaičiuojami pagal valandas per dieną ar paros laiką, pagal jūsų taisykles."
+        },
+        {
+          "title": "PDF buhalteriui",
+          "body": "Patvirtintas valandų lapas užrakinamas ir išsiunčiamas PDF formatu buhalterio el. paštu."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar galima pakeisti patvirtintą valandų lapą?",
+          "a": "Ne. Patvirtintas jis užrakinamas. Netinkamą laikotarpį galima ištrinti prieš patvirtinant."
+        },
+        {
+          "q": "Kaip nustatomi viršvalandžiai?",
+          "a": "Pasirenkate, nuo kelių valandų per dieną prasideda viršvalandžiai, ir priedą procentais. Galite turėti ir aukštesnį lygį ar laiko intervalą, pvz. 19–06 val. +100 %."
+        },
+        {
+          "q": "Ar buhalteris mato visus darbuotojus?",
+          "a": "Taip. Buhalteris mato visų darbuotojų valandų lapus pagal mėnesį su kiekvieno laikotarpio atliktais darbais."
+        },
+        {
+          "q": "Ar registruojama vieta (GPS)?",
+          "a": "Ne. MaskinGo vietos nerenka. Laikas gaunamas iš paspaudimų ir to, ką įveda pats darbuotojas."
+        }
+      ]
+    },
+    "faktura": {
+      "navName": "Sąskaitos",
+      "metaTitle": "Sąskaitos iš valandų technikos rangovams · MaskinGo",
+      "metaDescription": "Kurkite sąskaitų juodraščius iš patvirtintų valandų su kliento kainomis ir minimaliu laiku, pridėkite eilutes ir siųskite PDF el. paštu paspaudę Siųsti.",
+      "summary": "Sąskaitų juodraščiai iš patvirtintų valandų, savos eilutės ir PDF el. paštu.",
+      "badge": "Biurui ir buhalteriui",
+      "title": "Nuo patvirtintų valandų iki sąskaitos tą pačią dieną",
+      "lead": "Kai darbo laikas patvirtintas, sąskaitos juodraštis jau paruoštas su kliento kainomis. Pridedate tai, ko trūksta, ir išsiunčiate, kai viskas gerai.",
+      "problems": [
+        "Prieš kuriant sąskaitą valandas reikia surinkti iš raštelių ir žinučių.",
+        "Minimalų laiką ir sutartą kliento kainą lengva pamiršti.",
+        "Nuo atlikto darbo iki išsiųstos sąskaitos praeina dienos ar savaitės."
+      ],
+      "points": [
+        {
+          "title": "Juodraštis iš patvirtinto laiko",
+          "body": "Darbo laikas patenka į juodraštį su mašinos valandiniu įkainiu, kliento kaina ir minimaliu laiku. Įskaičiuojamas ir didesnis vakaro tarifas."
+        },
+        {
+          "title": "Savos eilutės",
+          "body": "Pridėkite eilutes su kiekiu, vienetu ir kaina, pvz. keltas, skalda, km ar reisai, su tinkamu PVM tarifu."
+        },
+        {
+          "title": "Numeris ir PDF",
+          "body": "Nuoseklūs sąskaitų numeriai be spragų ir PDF su tuo, ko reikalauja įstatymas. Išsiųstos sąskaitos keisti negalima; klaidos taisomos kreditine sąskaita."
+        },
+        {
+          "title": "Buhalteriui",
+          "body": "Laikotarpio sąskaitas ir kreditines sąskaitas atsisiųskite kaip vieną CSV failą, o visus PDF viename ZIP faile."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar sąskaita išsiunčiama automatiškai?",
+          "a": "Ne. Sąskaita PDF el. paštu išsiunčiama tik tada, kai kas nors biure paspaudžia Siųsti."
+        },
+        {
+          "q": "Ar galime išrašyti sąskaitą už toną ar reisą?",
+          "a": "Taip, kaip savas eilutes su kiekiu ir vienetu. Valandos imamos iš patvirtinto darbo laiko."
+        },
+        {
+          "q": "Ar galime siųsti EHF?",
+          "a": "Kol kas ne. Šiandien sąskaita siunčiama PDF el. paštu. EHF numatytas kaip atskiras etapas."
+        },
+        {
+          "q": "Kiek laiko saugomos sąskaitos?",
+          "a": "Sąskaitos ir PDF saugomi privačiai ne trumpiau kaip 5 metus, kaip reikalauja apskaitos taisyklės."
         }
       ]
     }
