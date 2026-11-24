@@ -469,3 +469,10 @@ išjungti laikus (tada tik užklausos su pageidaujama data, kaip dabar). Klientu
   kortelė „Naujos užklausos“ apžvalgoje, kai jų yra.
 - 15b-2 (toliau): priimti (klientas ir užsakymo juodraštis) arba atmesti, laiškas klientui jo kalba (`locale`).
 - Testai: `33_job_requests.test.sql`, `src/lib/job-requests.test.ts`, `src/lib/email/request-email.test.ts`, `e2e/job-requests.spec.ts`.
+
+### Vėlesnis etapas 16: kliento paskyra (Li idėja 2026-11-24)
+Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
+- „Mano užsakymai“: savo užklausos ir užsakymai, jų būsena ir datos.
+- Dažniausiai užsakomos įmonės viršuje; greitas užsakymas (kontaktai ir adresai užpildomi, ankstesnį galima pakartoti).
+- Įmonės puslapyje rekomendacija klientui užsiregistruoti: užsakymai realiu laiku, greičiau ir greitesnis patvirtinimas.
+  Patvirtina vis tiek įmonė (jokio automatinio patvirtinimo), tik greičiau, nes duomenys jau patikrinti.

@@ -60,7 +60,9 @@ test("a visitor sends a request; the company is told and reads it", async ({ bro
   await form.getByLabel("E-mail").fill("kari@nordmann.test");
   await form.getByLabel("Where is the job?").fill("Strandgaten 1, Bergen");
   await service.selectOption("crane_truck");
-  await form.getByLabel("Preferred date (optional)").fill("2030-06-14");
+  // A month ahead: the form takes today up to two years ahead.
+  const wanted = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  await form.getByLabel("Preferred date (optional)").fill(wanted);
   await form.getByLabel("What do you need help with?").fill("Løfte takstein til 3. etasje.\nHelst før lunsj.");
   await form.getByRole("button", { name: "Send request" }).click();
   await expect(form.getByText("Your request has been sent")).toBeVisible();
@@ -77,7 +79,7 @@ test("a visitor sends a request; the company is told and reads it", async ({ bro
   expect(email!.subject).toBe("TEST: Ny forespørsel fra Kari Nordmann");
   expect(email!.reply_to).toEqual(["kari@nordmann.test"]);
   expect(email!.text).toContain("Telefon: +47 912 34 568");
-  expect(email!.text).toContain("Ønsket dato: 14.06.2030");
+  expect(email!.text).toContain(`Ønsket dato: ${wanted.split("-").reverse().join(".")}`);
   expect(email!.text).toContain("Tjeneste: Kranbil");
 
   // The office: a card on the overview, a mark on the jobs, and the request itself.
@@ -91,7 +93,7 @@ test("a visitor sends a request; the company is told and reads it", async ({ bro
   await expect(request.getByText("New", { exact: true })).toBeVisible();
   await expect(request.getByText("Strandgaten 1, Bergen")).toBeVisible();
   await expect(request.getByText("Crane truck")).toBeVisible();
-  await expect(request.getByText(/^Preferred: .*2030$/)).toBeVisible();
+  await expect(request.getByText(new RegExp(`^Preferred: .*${wanted.slice(0, 4)}$`))).toBeVisible();
   await expect(request.getByRole("link", { name: "+47 912 34 568" })).toHaveAttribute("href", "tel:+4791234568");
   await expect(request.getByRole("link", { name: "kari@nordmann.test" })).toHaveAttribute("href", "mailto:kari@nordmann.test");
 
