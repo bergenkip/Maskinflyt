@@ -45,7 +45,7 @@ for (const locale of locales) {
       }
 
       // The app screens are in the page's language, loaded and not stretched.
-      const screens = main.locator("figure img");
+      const screens = main.locator("figure img:visible");
       await expect(screens).toHaveCount(2);
       for (const img of await screens.all()) {
         await expect(img).toHaveAttribute("alt", /.{20,}/);
@@ -73,6 +73,28 @@ for (const locale of locales) {
     });
   }
 }
+
+test("dark look shows the dark app screens", async ({ page, context, baseURL }) => {
+  await context.addCookies([
+    { name: "NEXT_LOCALE", value: "lt", url: baseURL! },
+    { name: "theme", value: "dark", url: baseURL! },
+  ]);
+  await page.goto("/");
+  const screens = page.getByRole("main").locator("figure img:visible");
+  await expect(screens).toHaveCount(2);
+  for (const img of await screens.all()) {
+    await expect(img).toHaveAttribute("src", /-lt-dark\.webp/);
+    await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+  }
+  await page.screenshot({ path: "test-results/screenshots/home-lt-dark-375.png", fullPage: true });
+
+  // The sun/moon button switches back to the light screens without a reload.
+  await page.getByRole("button", { name: "Įjungti šviesų režimą" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  for (const img of await screens.all()) {
+    await expect(img).toHaveAttribute("src", /-lt\.webp/);
+  }
+});
 
 test("browser language is used before anything is chosen", async ({ browser }) => {
   const context = await browser.newContext({ locale: "lt-LT" });

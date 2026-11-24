@@ -21,6 +21,8 @@ export function ProductShowcase() {
             <span className="size-1.5 rounded-full bg-border sm:size-2.5" />
             <span className="size-1.5 rounded-full bg-border sm:size-2.5" />
           </div>
+          {/* Light and dark shots of the same screen; CSS shows the one that
+              matches the page, so the sun/moon button switches them at once. */}
           <Image
             src={`/screens/calendar-${locale}.webp`}
             alt={t("calendarAlt")}
@@ -28,7 +30,15 @@ export function ProductShowcase() {
             height={1104}
             sizes="(min-width: 1024px) 820px, 80vw"
             priority
-            className="h-auto w-full"
+            className="h-auto w-full dark:hidden"
+          />
+          <Image
+            src={`/screens/calendar-${locale}-dark.webp`}
+            alt={t("calendarAlt")}
+            width={2048}
+            height={1104}
+            sizes="(min-width: 1024px) 820px, 80vw"
+            className="hidden h-auto w-full dark:block"
           />
         </div>
 
@@ -40,7 +50,15 @@ export function ProductShowcase() {
             width={780}
             height={1688}
             sizes="(min-width: 1024px) 230px, 22vw"
-            className="h-auto w-full rounded-[0.75rem] sm:rounded-[1.5rem]"
+            className="h-auto w-full rounded-[0.75rem] sm:rounded-[1.5rem] dark:hidden"
+          />
+          <Image
+            src={`/screens/driver-${locale}-dark.webp`}
+            alt={t("driverAlt")}
+            width={780}
+            height={1688}
+            sizes="(min-width: 1024px) 230px, 22vw"
+            className="hidden h-auto w-full rounded-[0.75rem] sm:rounded-[1.5rem] dark:block"
           />
         </div>
       </div>

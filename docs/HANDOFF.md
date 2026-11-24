@@ -413,6 +413,7 @@ supabase db reset
 export SERVICE_ROLE_KEY=<iš supabase status>
 npx playwright test -c scripts/demo-screens seed
 for l in nb en lt; do DEMO_LOCALE=$l npx playwright test -c scripts/demo-screens shoot; done
+for l in nb en lt; do DEMO_THEME=dark DEMO_LOCALE=$l npx playwright test -c scripts/demo-screens shoot; done   # tamsūs (`*-dark.webp`, rodomi tamsiame režime)
 node scripts/demo-screens/convert.mjs
 ```
 Užsakymai sukuriami nuo šiandienos datos, todėl ekranuose visada matyti „šiandien“.
