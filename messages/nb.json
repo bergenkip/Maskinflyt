@@ -129,7 +129,9 @@
     "confirmTitle": "Bekreft e-post",
     "confirmChecking": "Bekrefter e-posten din …",
     "confirmFailed": "Lenken er ugyldig eller allerede brukt. Hvis du har bekreftet e-posten tidligere, logg inn med e-post og passord.",
-    "emailConfirmed": "E-posten din er bekreftet. Du kan logge inn nå."
+    "emailConfirmed": "E-posten din er bekreftet. Du kan logge inn nå.",
+    "customerSignupTitle": "Opprett kundekonto",
+    "customerSignupLead": "For å bestille fra firmaer på MaskinGo. Opplysningene dine fylles ut for deg, og du følger alle forespørsler på ett sted."
   },
   "Onboarding": {
     "title": "Opprett firmaet ditt",
@@ -1957,7 +1959,13 @@
     "times": "Velg en tid (valgfritt)",
     "timesHint": "Ledige tider de neste to ukene. Firmaet bekrefter tiden.",
     "timeNone": "Ingen bestemt tid",
-    "noTimes": "Ingen ledige tider de neste to ukene. Skriv en ønsket dag i stedet."
+    "noTimes": "Ingen ledige tider de neste to ukene. Skriv en ønsket dag i stedet.",
+    "signedInAs": "Logget inn som {name}. Opplysningene dine er fylt ut, og forespørselen lagres under forespørslene dine.",
+    "seeMyRequests": "Se forespørslene dine",
+    "inviteTitle": "Bestill raskere med kundekonto",
+    "inviteText": "Opplysningene dine fylles ut, du følger alle forespørsler på ett sted, og firmaet ser at e-posten din er bekreftet. Firmaet bekrefter fortsatt jobben.",
+    "inviteSignup": "Opprett kundekonto",
+    "inviteLogin": "Logg inn"
   },
   "JobRequests": {
     "title": "Forespørsler",
@@ -1999,7 +2007,8 @@
       "alreadyAnswered": "Noen har allerede svart på denne forespørselen.",
       "unknown": "Svaret ble ikke lagret. Prøv igjen."
     },
-    "wantedAt": "Ønsket: {date} kl. {time}"
+    "wantedAt": "Ønsket: {date} kl. {time}",
+    "fromAccount": "Kundekonto, e-post bekreftet"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} har godtatt forespørselen din",
@@ -2088,5 +2097,44 @@
     "byPlace": "Steder",
     "ctaTitle": "Driver du et maskinfirma?",
     "ctaText": "Publiser firmasiden i MaskinGo, så vises den her uten ekstra kostnad. Kundene finner deg og sender forespørsler som du godtar eller avslår."
+  },
+  "CustomerAccount": {
+    "title": "Mine forespørsler",
+    "greeting": "Hei, {name}",
+    "lead": "Her følger du forespørslene dine og bestiller igjen fra firmaene du bruker.",
+    "findCompany": "Finn et firma",
+    "companiesTitle": "Firmaene dine",
+    "requestsCount": "{count, plural, one {# forespørsel} other {# forespørsler}}",
+    "orderAgain": "Send ny forespørsel",
+    "requestsTitle": "Forespørslene dine",
+    "noRequests": "Ingen forespørsler ennå. Finn et firma og send en forespørsel mens du er logget inn, så vises den her.",
+    "sent": "Sendt {date}",
+    "wantedOn": "Ønsket: {date}",
+    "wantedAt": "Ønsket: {date} kl. {time}",
+    "statuses": {
+      "new": "Venter på svar",
+      "accepted": "Godtatt",
+      "declined": "Avslått"
+    },
+    "answerFrom": "Svar fra {company}",
+    "sendAgain": "Send igjen",
+    "detailsTitle": "Opplysningene dine",
+    "detailsLead": "Fylles ut når du sender en forespørsel. Du kan endre dem i skjemaet hver gang.",
+    "name": "Navn:",
+    "email": "E-post:",
+    "phone": "Telefon",
+    "place": "Vanlig arbeidssted",
+    "placeHint": "For eksempel adressen din. Valgfritt.",
+    "save": "Lagre",
+    "saving": "Lagrer…",
+    "saved": "Lagret.",
+    "create": "Begynn å bestille som kunde",
+    "startTitle": "Bestill som kunde",
+    "startLead": "Med kundekonto følger du forespørslene dine til firmaer og bestiller raskt igjen. Legg gjerne til telefon og vanlig sted.",
+    "errors": {
+      "phoneInvalid": "Skriv inn et gyldig telefonnummer.",
+      "placeTooLong": "Stedet kan være høyst 200 tegn.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    }
   }
 }

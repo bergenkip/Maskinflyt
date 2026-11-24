@@ -14,7 +14,7 @@ import { formatPhone } from "@/lib/customers";
 import { addDays } from "@/lib/calendar";
 import { isService, pagePath } from "@/lib/company-page";
 import { toLocalParts } from "@/lib/jobs";
-import { MAX_REQUEST_DAYS_AHEAD } from "@/lib/job-requests";
+import { MAX_REQUEST_DAYS_AHEAD, type JobRequestValues } from "@/lib/job-requests";
 import { formatOrgNumber } from "@/lib/org-number";
 import { SITE_URL } from "@/lib/site";
 import { RequestForm } from "./request-form";
@@ -46,11 +46,14 @@ export async function CompanyView({
   company,
   photos = [],
   slots = null,
+  customer = null,
 }: {
   company: PublicCompany;
   photos?: CompanyPhoto[];
   // Free times to pick from, or null when the company takes requests only.
   slots?: FreeSlot[] | null;
+  // A signed-in customer (stage 16a): the form is filled in from their account.
+  customer?: { name: string; prefill: Partial<JobRequestValues> } | null;
 }) {
   const [t, tServices, tRequest] = await Promise.all([
     getTranslations("PublicPage"),
@@ -279,6 +282,7 @@ export async function CompanyView({
               label: tServices(service),
             }))}
             slots={slots}
+            customer={customer}
             minDate={today}
             maxDate={addDays(today, MAX_REQUEST_DAYS_AHEAD)}
           />

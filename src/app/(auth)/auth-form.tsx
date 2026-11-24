@@ -20,13 +20,15 @@ type Props = {
   intro?: ReactNode;
   // Link to the other form (sign in / sign up), kept on the same invitation.
   switchHref?: string;
+  // Signing up as a customer who orders from companies (stage 16a), not as a company.
+  customer?: boolean;
 };
 
 // Opens in a new tab, so a half-filled sign-up form is not lost.
 const legalLink =
   "font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
-export function AuthForm({ mode, action, initialError, notice, invite, next, intro, switchHref }: Props) {
+export function AuthForm({ mode, action, initialError, notice, invite, next, intro, switchHref, customer }: Props) {
   const t = useTranslations("Auth");
   const tNav = useTranslations("Nav");
   const tLegal = useTranslations("Legal");
@@ -49,9 +51,9 @@ export function AuthForm({ mode, action, initialError, notice, invite, next, int
       {intro ?? (
         <div className="grid gap-2">
           <h1 className="text-2xl font-semibold tracking-tight text-balance">
-            {isSignUp ? t("signupTitle") : t("loginTitle")}
+            {isSignUp ? (customer ? t("customerSignupTitle") : t("signupTitle")) : t("loginTitle")}
           </h1>
-          {isSignUp && <p className="text-muted">{t("signupLead")}</p>}
+          {isSignUp && <p className="text-muted">{customer ? t("customerSignupLead") : t("signupLead")}</p>}
         </div>
       )}
 
@@ -60,6 +62,7 @@ export function AuthForm({ mode, action, initialError, notice, invite, next, int
         {notice && !state.error && <FormAlert kind="success">{notice}</FormAlert>}
         {invite && <input type="hidden" name="invite" value={invite} />}
         {next && <input type="hidden" name="next" value={next} />}
+        {customer && <input type="hidden" name="accountType" value="customer" />}
         {isSignUp && (
           <>
             <Field

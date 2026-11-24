@@ -59,6 +59,8 @@ export async function signUp(_prev: AuthFormState, formData: FormData): Promise<
   // when the account is created (see the accept_invite_at_signup migration).
   const inviteInput = formData.get("invite");
   const invite = isInviteToken(inviteInput) ? inviteInput : undefined;
+  // A customer who orders from companies (stage 16a); never together with a company invitation.
+  const customer = !invite && formData.get("accountType") === "customer";
 
   const origin = (await headers()).get("origin");
   // The implicit flow puts the confirmation link's tokens in the URL fragment,
@@ -71,7 +73,13 @@ export async function signUp(_prev: AuthFormState, formData: FormData): Promise<
       // Names are copied into the profile by a database trigger. email_locale is
       // the language of this page, used by the confirmation e-mail template
       // until the person or their company sets one (email_locale migration).
-      data: { first_name: firstName, last_name: lastName, invite_token: invite, email_locale: await getLocale() },
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        invite_token: invite,
+        email_locale: await getLocale(),
+        ...(customer ? { account_type: "customer" } : {}),
+      },
       emailRedirectTo: origin ? `${origin}/confirm` : undefined,
     },
   });
@@ -92,7 +100,7 @@ export async function signUp(_prev: AuthFormState, formData: FormData): Promise<
 
   // A new company's default language may apply.
   if (invite) revalidatePath("/", "layout");
-  redirect("/app");
+  redirect(customer ? "/kunde" : "/app");
 }
 
 // On /confirm: the confirmation link's tokens, taken from the URL fragment,

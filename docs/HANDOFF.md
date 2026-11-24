@@ -516,3 +516,16 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
 - Nuorodos: poraštėje „Finn et firma“, įmonės puslapio apačioje „Finn flere firmaer“, `/app/public-page` rodo
   „Vises i MaskinGo-katalogen“, rekomendacijos tekstas mini katalogą. Sitemap'e paslaugų puslapiai, kuriuose yra įmonių.
 - Testai: `36_company_directory.test.sql`, `src/lib/directory.test.ts`, `e2e/directory.spec.ts`.
+
+### 16a: kliento paskyra (2026-11-24, Li prašymu)
+- Migracija `20261125090000_customer_accounts.sql`: lentelė `customer_accounts` (telefonas ir įprasta vieta; vardas
+  iš profilio, el. paštas iš prisijungimo), sukuriama registruojantis su `account_type: customer` arba
+  `save_customer_account`. `job_requests.user_id` nustato trigeris iš paties prisijungimo (negalima priskirti kitam).
+  `my_job_requests()` ir `my_companies()` (dažniausios įmonės pirmos) rodo tik savo duomenis.
+- Ekranai: `/signup?konto=kunde` (kliento registracija, be įmonės), `/kunde` (užklausos, būsenos, įmonės atsakymas,
+  „Siųsti dar kartą“, dažniausios įmonės, savo duomenys). Klientas be įmonės iš `/app` nukreipiamas į `/kunde`.
+- Įmonės puslapyje: prisijungusiam klientui forma užpildyta („Logget inn som …“), `?gjenta=<id>` užpildo ir ankstesnę
+  užklausą; neprisijungusiam kvietimas susikurti paskyrą. Biuras kortelėje mato „Kundekonto, e-post bekreftet“.
+  Patvirtina vis tiek įmonė.
+- Testai: `37_customer_accounts.test.sql`, `src/lib/customer-account.test.ts`, `e2e/customer-account.spec.ts`.
+- 16b (vėliau): klientas mato suplanuotą darbą ir gauna pranešimą.

@@ -95,7 +95,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts e2e/calendar.spec.ts e2e/driver.spec.ts e2e/job-time.spec.ts e2e/job-files.spec.ts e2e/invoice.spec.ts e2e/invoices.spec.ts e2e/accountant.spec.ts e2e/permissions.spec.ts e2e/invoice-settings.spec.ts e2e/invoice-issue.spec.ts e2e/hours.spec.ts e2e/billing.spec.ts e2e/company-page.spec.ts e2e/company-photos.spec.ts e2e/job-requests.spec.ts e2e/free-times.spec.ts e2e/directory.spec.ts --shard=${{ matrix.shard }}/3
+      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts e2e/calendar.spec.ts e2e/driver.spec.ts e2e/job-time.spec.ts e2e/job-files.spec.ts e2e/invoice.spec.ts e2e/invoices.spec.ts e2e/accountant.spec.ts e2e/permissions.spec.ts e2e/invoice-settings.spec.ts e2e/invoice-issue.spec.ts e2e/hours.spec.ts e2e/billing.spec.ts e2e/company-page.spec.ts e2e/company-photos.spec.ts e2e/job-requests.spec.ts e2e/free-times.spec.ts e2e/directory.spec.ts e2e/customer-account.spec.ts --shard=${{ matrix.shard }}/3
         env:
           CI: true
       - name: Show what the page looked like when a test failed

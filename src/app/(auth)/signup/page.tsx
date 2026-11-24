@@ -17,10 +17,12 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function SignupPage() {
+// /signup?konto=kunde: a customer account for ordering from companies (stage 16a).
+export default async function SignupPage({ searchParams }: PageProps<"/signup">) {
   if (!getSupabaseEnv()) {
     const t = await getTranslations("Auth");
     return <FormAlert kind="error">{t("notConfigured")}</FormAlert>;
   }
-  return <AuthForm mode="signUp" action={signUp} />;
+  const customer = (await searchParams).konto === "kunde";
+  return <AuthForm mode="signUp" action={signUp} customer={customer} switchHref={customer ? "/login?next=/kunde" : undefined} />;
 }

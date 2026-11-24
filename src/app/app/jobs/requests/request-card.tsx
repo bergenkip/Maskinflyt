@@ -32,6 +32,8 @@ export type JobRequestRow = {
   answer: string | null;
   customer_id: string | null;
   handled_at: string | null;
+  // Sent while signed in to a customer account (stage 16a): the e-mail is confirmed.
+  user_id: string | null;
 };
 
 const looks: Record<JobRequestStatus, { icon: typeof CircleIcon; tone: string }> = {
@@ -67,6 +69,12 @@ export async function RequestCard({
             {request.name}
           </h3>
           <p className="text-sm text-muted">{t("received", { time: received })}</p>
+          {request.user_id && (
+            <p className="flex items-center gap-1 text-sm font-medium text-accent">
+              <UserIcon className="size-4 shrink-0" />
+              {t("fromAccount")}
+            </p>
+          )}
         </div>
         <span className={`flex shrink-0 items-center gap-1 text-sm font-medium ${tone}`}>
           <StatusIcon className="size-4" />
