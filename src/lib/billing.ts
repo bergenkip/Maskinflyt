@@ -14,7 +14,7 @@ export function isInterval(value: unknown): value is Interval {
   return typeof value === "string" && (intervals as readonly string[]).includes(value);
 }
 
-// People included (the same as private.plan_seats; Bedrift's people past 40 are billed one by one in stage 14b).
+// People included (the same as private.plan_seats). Bedrift has no limit: each person past 40 is billed.
 export const planSeats: Record<Plan, number> = { solo: 2, start: 5, pro: 15, bedrift: 40 };
 
 // MaskinGo is not in the VAT (MVA) register yet (Li, 2026-11-23: it will be at
@@ -34,6 +34,25 @@ export function planPrice(plan: Plan, interval: Interval): number {
 
 // The Stripe price's lookup key, so the app finds (or makes) the same price every time.
 export const lookupKey = (plan: Plan, interval: Interval) => `maskingo_${plan}_${interval}`;
+
+// Bedrift: each person past the 40 included, in øre a month (Li, 2026-11-23); a year costs ten months.
+export const BEDRIFT_EXTRA_PERSON_ORE = 7_900;
+
+export function extraPersonPrice(interval: Interval): number {
+  return interval === "year" ? BEDRIFT_EXTRA_PERSON_ORE * YEAR_MONTHS : BEDRIFT_EXTRA_PERSON_ORE;
+}
+
+// The Stripe price for one extra Bedrift person (a second line on the subscription, its quantity the people past 40).
+export const extraLookupKey = (interval: Interval) => `maskingo_bedrift_extra_${interval}`;
+
+export function isExtraLookupKey(key: string | null | undefined): boolean {
+  return key === extraLookupKey("month") || key === extraLookupKey("year");
+}
+
+// How many people to bill on top of the plan.
+export function extraPeople(plan: Plan | null, people: number): number {
+  return plan === "bedrift" ? Math.max(0, people - planSeats.bedrift) : 0;
+}
 
 export function fromLookupKey(key: string | null | undefined): { plan: Plan; interval: Interval } | null {
   const match = /^maskingo_([a-z]+)_([a-z]+)$/.exec(key ?? "");
@@ -82,6 +101,19 @@ export function billingState(row: SubscriptionRow | null, now = new Date()): Bil
   return { kind: "ended", plan: row.plan };
 }
 
+// Whether the company can only read (the same rule as private.is_read_only in the
+// database, which is what actually stops the writes; this only explains it on screen).
+export function isReadOnly(row: SubscriptionRow | null, now = new Date()): boolean {
+  if (!row) return false;
+  if (row.status === "active" || row.status === "past_due") return false;
+  if (row.status === "trialing" && row.stripe_subscription_id) return false;
+  if (row.status === "trialing" || row.status === "incomplete") {
+    const ends = row.trial_ends_at ? Date.parse(row.trial_ends_at) : NaN;
+    return Number.isNaN(ends) || ends <= now.getTime();
+  }
+  return true;
+}
+
 // Whether to remind the company: the last week of the trial, or any trouble.
 export function needsAttention(state: BillingState): boolean {
   return (state.kind === "trial" && state.daysLeft <= 7) || state.kind === "trialEnded" || state.kind === "pastDue" || state.kind === "ended";
@@ -103,9 +135,10 @@ const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 // The row for public.subscriptions from a Stripe subscription; null when it is not one of ours.
 export function rowFromStripe(sub: StripeSubscriptionLike): ({ organization_id: string } & Omit<SubscriptionRow, "trial_ends_at"> & { trial_ends_at?: string }) | null {
   const organization = sub.metadata.organization_id;
-  const item = sub.items.data[0];
+  // The plan's line; a Bedrift subscription may also have a line for the extra people.
+  const item = sub.items.data.find((line) => fromLookupKey(line.price.lookup_key));
   const price = fromLookupKey(item?.price.lookup_key);
-  if (!organization || !uuid.test(organization) || !price) return null;
+  if (!organization || !uuid.test(organization) || !item || !price) return null;
   const at = (seconds: number | null | undefined) => (seconds ? new Date(seconds * 1000).toISOString() : null);
   return {
     organization_id: organization,
