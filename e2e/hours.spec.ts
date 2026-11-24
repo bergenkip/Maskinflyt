@@ -21,7 +21,8 @@ import {
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
 
 test("a driver fills in an hours sheet, confirms it, and the accountant gets the PDF", async ({ browser, baseURL }) => {
-  test.setTimeout(180_000);
+  // Two people, photos at five widths in three languages, and a PDF: longer than most tests.
+  test.setTimeout(360_000);
   const owner = await newPage(browser, baseURL!, "en");
   await signUp(owner.page, newEmail("hours"), "Anna", "Berg");
   await createCompany(owner.page, newCompanyName("hours"));
@@ -46,6 +47,7 @@ test("a driver fills in an hours sheet, confirms it, and the accountant gets the
     await owner.page.goto("/app/hours/settings");
     await shootAllWidths(owner.page, "hour-settings", locale);
   }
+  await owner.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
 
   // The driver starts a sheet for November 2026.
   const driver = await inviteColleague(browser, baseURL!, owner.page, "driver", "Sander", "Lie");
@@ -197,7 +199,8 @@ test("overtime by the time of day: 15–19 +50 % and 19–06 +100 %", async ({ b
 });
 
 test("the accountant sees every employee's sheets and the finished jobs behind them", async ({ browser, baseURL }) => {
-  test.setTimeout(180_000);
+  // Three people, a finished job and photos of two pages in three languages.
+  test.setTimeout(420_000);
   const owner = await newPage(browser, baseURL!, "en");
   const { page } = owner;
   await signUp(page, newEmail("hours-all"), "Anna", "Berg");
@@ -242,6 +245,8 @@ test("the accountant sees every employee's sheets and the finished jobs behind t
   await books.getByRole("link", { name: "Previous month" }).click();
   await expect(books.getByText("No hours sheets for this month.")).toBeVisible();
   await books.getByRole("link", { name: "Next month" }).click();
+  // Back on this month before the photos reload the page.
+  await expect(card).toContainText("Being filled in");
   for (const locale of locales) {
     await accountant.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
     await books.reload();
@@ -251,7 +256,9 @@ test("the accountant sees every employee's sheets and the finished jobs behind t
   await books.reload();
 
   // The sheet lists the job; a press opens it.
-  await books.getByRole("listitem").filter({ hasText: "Anna Berg" }).getByRole("link").click();
+  const sheetLink = books.getByRole("main").getByRole("link").filter({ hasText: "Anna Berg" });
+  await expect(sheetLink, `Anna's sheet on ${books.url()}`).toBeVisible();
+  await sheetLink.click();
   await books.waitForURL(/\/app\/hours\/[0-9a-f-]{36}$/);
   const jobs = books.locator('section[aria-labelledby="jobs-title"]');
   await expect(jobs.getByRole("heading", { name: "Finished jobs in the period (1)" })).toBeVisible();

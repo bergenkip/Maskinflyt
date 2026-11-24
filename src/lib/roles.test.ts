@@ -6,6 +6,7 @@ import {
   canGrantPermissions,
   canEditVehicles,
   canManage,
+  canManageBilling,
   canSeeCustomers,
   canSeeInvoices,
   canSeeJobs,
@@ -139,5 +140,12 @@ describe("secondStepDone", () => {
       expect(canGrantPermissions("owner", "admin")).toBe(false);
       expect(canGrantPermissions("dispatcher", "driver")).toBe(false);
     });
+  });
+
+  it("only owners and admins choose the plan and pay", () => {
+    expect(canManageBilling("owner")).toBe(true);
+    expect(canManageBilling("admin")).toBe(true);
+    expect(canManageBilling("accountant")).toBe(false);
+    expect(canManageBilling({ role: "driver", permissions: ["invoicing", "invite"] })).toBe(false);
   });
 });

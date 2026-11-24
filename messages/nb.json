@@ -197,7 +197,10 @@
     "saved": "Lagret.",
     "error": "Kunne ikke lagre. Prøv igjen.",
     "nameTitle": "Navnet ditt",
-    "nameLead": "Vises for kollegene dine i teamlisten."
+    "nameLead": "Vises for kollegene dine i teamlisten.",
+    "billingTitle": "Abonnement",
+    "billingLead": "Plan, betaling og kvitteringer for firmaet.",
+    "billingLink": "Åpne abonnementet"
   },
   "Team": {
     "title": "Team",
@@ -228,7 +231,8 @@
       "roleInvalid": "Velg en rolle.",
       "notAllowed": "Du har ikke tilgang til å gjøre dette.",
       "lastOwner": "Firmaet må ha minst én eier.",
-      "unknown": "Noe gikk galt. Prøv igjen."
+      "unknown": "Noe gikk galt. Prøv igjen.",
+      "seatLimit": "Planen er full. Velg en større plan før du inviterer flere."
     },
     "linkCreated": "Lenke laget for en ny {role}. Kopier den nå: av sikkerhetshensyn vises den bare én gang.",
     "invitationFor": "Invitasjon som {role}",
@@ -243,7 +247,10 @@
     "permissionsShown": "Også: {list}",
     "savePermissions": "Lagre rettigheter",
     "permissionsSaved": "Rettighetene er lagret. De gjelder fra personens neste side.",
-    "readOnlyInvite": "Du kan invitere sjåfører og disponenter. Bare eiere og administratorer endrer roller og rettigheter."
+    "readOnlyInvite": "Du kan invitere sjåfører og disponenter. Bare eiere og administratorer endrer roller og rettigheter.",
+    "seatsUsed": "{taken} av {seats} personer i planen.",
+    "seatsFull": "Planen er full ({seats} personer). Ingen flere kan bli med.",
+    "seatsUpgrade": "Velg en større plan"
   },
   "Customers": {
     "title": "Kunder",
@@ -415,7 +422,8 @@
     "acceptErrors": {
       "notFound": "Denne invitasjonslenken er ikke lenger gyldig. Be om en ny.",
       "alreadyMember": "Du hører allerede til et firma.",
-      "unknown": "Kunne ikke bli med. Prøv igjen."
+      "unknown": "Kunne ikke bli med. Prøv igjen.",
+      "seatLimit": "Firmaets plan er full. Be den som inviterte deg om å velge en større plan."
     },
     "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den for å fullføre, på hvilken som helst enhet. Du er allerede medlem av firmaet."
   },
@@ -1554,5 +1562,64 @@
     "next": "Neste måned",
     "empty": "Ingen timelister denne måneden.",
     "jobs": "{count, plural, one {# jobb} other {# jobber}}"
+  },
+  "Billing": {
+    "title": "Abonnement",
+    "lead": "Firmaets MaskinGo-plan. Alle planer har alle funksjoner; de skiller seg bare i hvor mange personer firmaet har.",
+    "status": {
+      "trial": "Gratis prøveperiode: {days, plural, one {# dag} other {# dager}} igjen",
+      "trialLead": "Gratis til {date}. Du trenger ikke kort mens du prøver.",
+      "trialEnded": "Den gratis prøveperioden er over",
+      "trialEndedLead": "Velg en plan for å fortsette med MaskinGo.",
+      "active": "{plan}-planen",
+      "activeRenews": "Fornyes {date}.",
+      "activeEnding": "Slutter {date}. Du kan slå den på igjen under «Kort, kvitteringer og oppsigelse».",
+      "pastDue": "Betalingen feilet",
+      "pastDueLead": "Stripe fikk ikke trukket betalingen. Oppdater kortet under «Kort, kvitteringer og oppsigelse».",
+      "ended": "Abonnementet er avsluttet",
+      "endedLead": "Velg en plan for å starte igjen."
+    },
+    "people": "{taken, plural, one {# person} other {# personer}} i firmaet",
+    "peopleOf": "{taken} av {seats} personer i planen",
+    "portal": "Kort, kvitteringer og oppsigelse",
+    "portalLead": "Åpner Stripes sikre side, der du bytter kort, laster ned kvitteringer eller sier opp.",
+    "notConfigured": "Betaling er ikke slått på ennå. Du kan fortsette å bruke prøveperioden.",
+    "askOwner": "Bare eieren og administratorer velger plan.",
+    "plansTitle": "Planer",
+    "plansLead": "Priser eks. mva.",
+    "intervalLabel": "Betal månedlig eller årlig",
+    "monthly": "Månedlig",
+    "yearly": "Årlig: 2 måneder gratis",
+    "month": "mnd.",
+    "year": "år",
+    "exVat": "Eks. mva.",
+    "yearNote": "Det samme som {price} i måneden i 10 måneder",
+    "seatsSolo": "1–2 personer",
+    "seats": "Opptil {count} personer",
+    "current": "Din plan",
+    "choose": "Velg {plan}",
+    "change": "Bytt til {plan}",
+    "tooSmall": "Dere er {taken} personer; denne planen har plass til {seats}.",
+    "trialNote": "Velger du plan i prøveperioden, trekker Stripe første betaling når prøveperioden er over.",
+    "vatNote": "Ved bytte av plan gjøres det opp for dagene som er igjen av perioden.",
+    "pending": "Vent …",
+    "changed": "Planen er byttet.",
+    "paid": "Takk! Planen er valgt.",
+    "errors": {
+      "notAllowed": "Bare eieren og administratorer velger plan.",
+      "notConfigured": "Betaling er ikke slått på ennå.",
+      "tooSmall": "Firmaet har flere personer enn denne planen har plass til.",
+      "unknown": "Noe gikk galt hos Stripe. Prøv igjen."
+    },
+    "banner": {
+      "trial": "{days, plural, one {# dag} other {# dager}} igjen av den gratis prøveperioden.",
+      "trialEnded": "Den gratis prøveperioden er over.",
+      "pastDue": "Siste betaling feilet.",
+      "ended": "Abonnementet er avsluttet.",
+      "action": "Velg plan",
+      "fix": "Oppdater kortet"
+    },
+    "plansLeadNoVat": "Det kommer ikke mva i tillegg.",
+    "noVat": "Ingen mva i tillegg"
   }
 }

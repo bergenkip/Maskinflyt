@@ -13,7 +13,7 @@ import { createClient } from "@/lib/supabase/server";
 export type InviteState = {
   values?: { role: string };
   fieldErrors?: { role?: "roleInvalid" };
-  error?: "notAllowed" | "unknown";
+  error?: "notAllowed" | "seatLimit" | "unknown";
   // The personal link, shown once: only a hash of its token is stored.
   link?: string;
   linkRole?: string;
@@ -28,6 +28,11 @@ export async function inviteMember(_prev: InviteState, formData: FormData): Prom
   if (!membership) redirect("/app/onboarding");
 
   const supabase = await createClient();
+  // A full plan takes nobody more, so no link is made (the database checks again when it is used).
+  const { data: usage } = await supabase.rpc("seat_usage", { org: membership.organization.id }).single();
+  const seats = usage as { taken: number; seats: number | null } | null;
+  if (seats && seats.seats !== null && seats.taken >= seats.seats) return { values, error: "seatLimit" };
+
   const { data: token, error } = await supabase.rpc("create_invitation", {
     org: membership.organization.id,
     invitee_role: role,

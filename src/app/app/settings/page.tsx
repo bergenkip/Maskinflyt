@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { ArrowRightIcon } from "@/components/icons";
+import { getCurrentMembership } from "@/lib/membership";
+import { canManageBilling } from "@/lib/roles";
 import { createClient, getUserId } from "@/lib/supabase/server";
 import { LanguageForm } from "./language-form";
 import { NameForm } from "./name-form";
@@ -21,6 +25,7 @@ export default async function SettingsPage() {
     .select("first_name, last_name")
     .eq("id", userId ?? "")
     .maybeSingle();
+  const membership = await getCurrentMembership();
 
   return (
     <div className="grid max-w-xl gap-8">
@@ -43,6 +48,23 @@ export default async function SettingsPage() {
         </div>
         <LanguageForm current={locale} />
       </section>
+      {membership && canManageBilling(membership) && (
+        <section aria-labelledby="billing-title" className={sectionClass}>
+          <div className="grid gap-1">
+            <h2 id="billing-title" className="text-lg font-semibold">
+              {t("billingTitle")}
+            </h2>
+            <p className="text-muted">{t("billingLead")}</p>
+          </div>
+          <Link
+            href="/app/billing"
+            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+          >
+            {t("billingLink")}
+            <ArrowRightIcon className="size-5" />
+          </Link>
+        </section>
+      )}
     </div>
   );
 }

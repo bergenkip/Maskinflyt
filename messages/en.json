@@ -197,7 +197,10 @@
     "saved": "Saved.",
     "error": "Could not save. Try again.",
     "nameTitle": "Your name",
-    "nameLead": "Shown to your colleagues in the team list."
+    "nameLead": "Shown to your colleagues in the team list.",
+    "billingTitle": "Subscription",
+    "billingLead": "Plan, payment and receipts for the company.",
+    "billingLink": "Open the subscription"
   },
   "Team": {
     "title": "Team",
@@ -228,7 +231,8 @@
       "roleInvalid": "Choose a role.",
       "notAllowed": "You are not allowed to do this.",
       "lastOwner": "The company must keep at least one owner.",
-      "unknown": "Something went wrong. Try again."
+      "unknown": "Something went wrong. Try again.",
+      "seatLimit": "Your plan is full. Choose a bigger plan before you invite more people."
     },
     "linkCreated": "Link created for a new {role}. Copy it now: for security it is shown only once.",
     "invitationFor": "Invitation as {role}",
@@ -243,7 +247,10 @@
     "permissionsShown": "Also: {list}",
     "savePermissions": "Save rights",
     "permissionsSaved": "Rights saved. They apply from the person's next page.",
-    "readOnlyInvite": "You can invite drivers and dispatchers. Only owners and administrators change roles and rights."
+    "readOnlyInvite": "You can invite drivers and dispatchers. Only owners and administrators change roles and rights.",
+    "seatsUsed": "{taken} of {seats} people in your plan.",
+    "seatsFull": "Your plan is full ({seats} people). Nobody more can join.",
+    "seatsUpgrade": "Choose a bigger plan"
   },
   "Customers": {
     "title": "Customers",
@@ -415,7 +422,8 @@
     "acceptErrors": {
       "notFound": "This invitation link is no longer valid. Ask for a new one.",
       "alreadyMember": "You already belong to a company.",
-      "unknown": "Could not join. Try again."
+      "unknown": "Could not join. Try again.",
+      "seatLimit": "The company's plan is full. Ask the person who invited you to choose a bigger plan."
     },
     "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it to finish, on any device. You are already a member of the company."
   },
@@ -1554,5 +1562,64 @@
     "next": "Next month",
     "empty": "No hours sheets for this month.",
     "jobs": "{count, plural, one {# job} other {# jobs}}"
+  },
+  "Billing": {
+    "title": "Subscription",
+    "lead": "Your company's MaskinGo plan. Every plan has every feature; they differ only in how many people the company has.",
+    "status": {
+      "trial": "Free trial: {days, plural, one {# day} other {# days}} left",
+      "trialLead": "Free until {date}. No card is needed while you try.",
+      "trialEnded": "The free trial has ended",
+      "trialEndedLead": "Choose a plan to keep using MaskinGo.",
+      "active": "{plan} plan",
+      "activeRenews": "Renews on {date}.",
+      "activeEnding": "Ends on {date}. You can turn it back on with “Card, receipts and cancelling”.",
+      "pastDue": "The payment failed",
+      "pastDueLead": "Stripe could not take the payment. Update the card with “Card, receipts and cancelling”.",
+      "ended": "The subscription has ended",
+      "endedLead": "Choose a plan to start again."
+    },
+    "people": "{taken, plural, one {# person} other {# people}} in the company",
+    "peopleOf": "{taken} of {seats} people in the plan",
+    "portal": "Card, receipts and cancelling",
+    "portalLead": "Opens Stripe's secure page, where you change the card, download receipts or cancel.",
+    "notConfigured": "Payments are not switched on yet. You can keep using the free trial.",
+    "askOwner": "Only the owner and admins choose the plan.",
+    "plansTitle": "Plans",
+    "plansLead": "Prices without VAT (MVA).",
+    "intervalLabel": "Pay monthly or yearly",
+    "monthly": "Monthly",
+    "yearly": "Yearly: 2 months free",
+    "month": "month",
+    "year": "year",
+    "exVat": "Without VAT (MVA)",
+    "yearNote": "The same as {price} a month for 10 months",
+    "seatsSolo": "1–2 people",
+    "seats": "Up to {count} people",
+    "current": "Your plan",
+    "choose": "Choose {plan}",
+    "change": "Switch to {plan}",
+    "tooSmall": "You have {taken} people; this plan includes {seats}.",
+    "trialNote": "If you choose a plan during the free trial, Stripe takes the first payment when the trial ends.",
+    "vatNote": "A change of plan is settled for the days left in the period.",
+    "pending": "Wait …",
+    "changed": "The plan is changed.",
+    "paid": "Thank you! Your plan is chosen.",
+    "errors": {
+      "notAllowed": "Only the owner and admins choose the plan.",
+      "notConfigured": "Payments are not switched on yet.",
+      "tooSmall": "The company has more people than this plan includes.",
+      "unknown": "Something went wrong with Stripe. Try again."
+    },
+    "banner": {
+      "trial": "{days, plural, one {# day} other {# days}} left of the free trial.",
+      "trialEnded": "The free trial has ended.",
+      "pastDue": "The last payment failed.",
+      "ended": "The subscription has ended.",
+      "action": "Choose a plan",
+      "fix": "Update the card"
+    },
+    "plansLeadNoVat": "No VAT (MVA) is added.",
+    "noVat": "No VAT added"
   }
 }

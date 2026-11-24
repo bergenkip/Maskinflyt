@@ -197,7 +197,10 @@
     "saved": "Išsaugota.",
     "error": "Nepavyko išsaugoti. Bandykite dar kartą.",
     "nameTitle": "Jūsų vardas",
-    "nameLead": "Rodomas kolegoms komandos sąraše."
+    "nameLead": "Rodomas kolegoms komandos sąraše.",
+    "billingTitle": "Abonementas",
+    "billingLead": "Įmonės planas, mokėjimai ir kvitai.",
+    "billingLink": "Atidaryti abonementą"
   },
   "Team": {
     "title": "Komanda",
@@ -228,7 +231,8 @@
       "roleInvalid": "Pasirinkite rolę.",
       "notAllowed": "Jūs neturite teisės to daryti.",
       "lastOwner": "Įmonėje turi likti bent vienas savininkas.",
-      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
+      "seatLimit": "Planas pilnas. Prieš kviesdami daugiau žmonių, pasirinkite didesnį planą."
     },
     "linkCreated": "Nuoroda sukurta (rolė: {role}). Nukopijuokite ją dabar: saugumo sumetimais ji rodoma tik vieną kartą.",
     "invitationFor": "Kvietimas, rolė: {role}",
@@ -243,7 +247,10 @@
     "permissionsShown": "Taip pat: {list}",
     "savePermissions": "Išsaugoti teises",
     "permissionsSaved": "Teisės išsaugotos. Jos galioja nuo kito žmogaus atidaryto puslapio.",
-    "readOnlyInvite": "Galite kviesti vairuotojus ir dispečerius. Roles ir teises keičia tik savininkai ir administratoriai."
+    "readOnlyInvite": "Galite kviesti vairuotojus ir dispečerius. Roles ir teises keičia tik savininkai ir administratoriai.",
+    "seatsUsed": "Plane {taken} iš {seats} žmonių.",
+    "seatsFull": "Planas pilnas ({seats} žmonių). Daugiau niekas negali prisijungti.",
+    "seatsUpgrade": "Pasirinkti didesnį planą"
   },
   "Customers": {
     "title": "Klientai",
@@ -415,7 +422,8 @@
     "acceptErrors": {
       "notFound": "Ši kvietimo nuoroda nebegalioja. Paprašykite naujos.",
       "alreadyMember": "Jūs jau priklausote įmonei.",
-      "unknown": "Prisijungti nepavyko. Bandykite dar kartą."
+      "unknown": "Prisijungti nepavyko. Bandykite dar kartą.",
+      "seatLimit": "Įmonės planas pilnas. Paprašykite pakvietusio žmogaus pasirinkti didesnį planą."
     },
     "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją bet kuriame įrenginyje, kad baigtumėte. Jūs jau esate įmonės narys."
   },
@@ -1554,5 +1562,64 @@
     "next": "Kitas mėnuo",
     "empty": "Šio mėnesio valandų lapų nėra.",
     "jobs": "{count, plural, one {# darbas} few {# darbai} other {# darbų}}"
+  },
+  "Billing": {
+    "title": "Abonementas",
+    "lead": "Įmonės MaskinGo planas. Visuose planuose yra visos funkcijos; jie skiriasi tik žmonių skaičiumi įmonėje.",
+    "status": {
+      "trial": "Nemokamas bandymas: liko {days, plural, one {# diena} few {# dienos} other {# dienų}}",
+      "trialLead": "Bandant kortelės nereikia. Nemokamai iki {date}",
+      "trialEnded": "Nemokamas bandymas baigėsi",
+      "trialEndedLead": "Pasirinkite planą, kad galėtumėte toliau naudotis MaskinGo.",
+      "active": "Planas {plan}",
+      "activeRenews": "Atsinaujina {date}",
+      "activeEnding": "Vėl įjungti galite per „Kortelė, kvitai ir atšaukimas“. Baigiasi {date}",
+      "pastDue": "Mokėjimas nepavyko",
+      "pastDueLead": "Stripe nepavyko nuskaičiuoti mokėjimo. Atnaujinkite kortelę per „Kortelė, kvitai ir atšaukimas“.",
+      "ended": "Abonementas baigėsi",
+      "endedLead": "Pasirinkite planą, kad pradėtumėte iš naujo."
+    },
+    "people": "Įmonėje {taken, plural, one {# žmogus} few {# žmonės} other {# žmonių}}",
+    "peopleOf": "Plane {taken} iš {seats} žmonių",
+    "portal": "Kortelė, kvitai ir atšaukimas",
+    "portalLead": "Atidaro saugų Stripe puslapį: ten pakeisite kortelę, atsisiųsite kvitus arba atšauksite.",
+    "notConfigured": "Mokėjimai dar neįjungti. Galite toliau naudotis bandymu.",
+    "askOwner": "Planą renkasi tik savininkas ir administratoriai.",
+    "plansTitle": "Planai",
+    "plansLead": "Kainos be PVM (MVA).",
+    "intervalLabel": "Mokėti kas mėnesį ar kas metus",
+    "monthly": "Kas mėnesį",
+    "yearly": "Kas metus: 2 mėn. nemokamai",
+    "month": "mėn.",
+    "year": "metai",
+    "exVat": "Be PVM (MVA)",
+    "yearNote": "Tiek pat, kiek {price} per mėnesį 10 mėnesių",
+    "seatsSolo": "1–2 žmonės",
+    "seats": "Iki {count} žmonių",
+    "current": "Jūsų planas",
+    "choose": "Rinktis {plan}",
+    "change": "Pereiti į {plan}",
+    "tooSmall": "Jūsų yra {taken}, o šiame plane telpa {seats}.",
+    "trialNote": "Pasirinkus planą bandymo metu, Stripe pirmą mokėjimą nuskaičiuos, kai bandymas baigsis.",
+    "vatNote": "Pakeitus planą, perskaičiuojama už likusias laikotarpio dienas.",
+    "pending": "Palaukite …",
+    "changed": "Planas pakeistas.",
+    "paid": "Ačiū! Planas pasirinktas.",
+    "errors": {
+      "notAllowed": "Planą renkasi tik savininkas ir administratoriai.",
+      "notConfigured": "Mokėjimai dar neįjungti.",
+      "tooSmall": "Įmonėje daugiau žmonių, nei telpa šiame plane.",
+      "unknown": "Stripe nepavyko. Bandykite dar kartą."
+    },
+    "banner": {
+      "trial": "Nemokamo bandymo liko {days, plural, one {# diena} few {# dienos} other {# dienų}}.",
+      "trialEnded": "Nemokamas bandymas baigėsi.",
+      "pastDue": "Paskutinis mokėjimas nepavyko.",
+      "ended": "Abonementas baigėsi.",
+      "action": "Pasirinkti planą",
+      "fix": "Atnaujinti kortelę"
+    },
+    "plansLeadNoVat": "PVM (MVA) neskaičiuojamas.",
+    "noVat": "Be PVM priedo"
   }
 }

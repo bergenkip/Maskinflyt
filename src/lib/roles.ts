@@ -151,3 +151,9 @@ export function canSeeAllHourSheets(access: Access): boolean {
   const role = roleOf(access);
   return role === "owner" || role === "admin" || role === "accountant" || has(access, "invoicing");
 }
+
+// The company's MaskinGo plan and payment: owners and admins (stage 14a).
+export function canManageBilling(access: Access): boolean {
+  const role = roleOf(access);
+  return role === "owner" || role === "admin";
+}
