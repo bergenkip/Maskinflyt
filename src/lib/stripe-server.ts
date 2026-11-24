@@ -2,8 +2,22 @@ import "server-only";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 import Stripe from "stripe";
-import { lookupKey, planPrice, rowFromStripe, type Interval, type Plan, type StripeSubscriptionLike } from "./billing";
+import {
+  extraLookupKey,
+  extraPeople,
+  extraPersonPrice,
+  fromLookupKey,
+  isExtraLookupKey,
+  lookupKey,
+  planPrice,
+  rowFromStripe,
+  type Interval,
+  type Plan,
+  type StripeSubscriptionLike,
+  type SubscriptionRow,
+} from "./billing";
 import { requireSupabaseEnv } from "./supabase/env";
+import { createClient } from "./supabase/server";
 
 // Stage 14a: everything that talks to Stripe, or writes what Stripe says. The
 // keys live only in Vercel's environment variables, never in the code.
@@ -61,6 +75,90 @@ export async function ensurePrice(stripe: Stripe, plan: Plan, interval: Interval
     metadata: { plan, interval },
   });
   return created.id;
+}
+
+// The Stripe price for one Bedrift person past the 40 included.
+export async function ensureExtraPrice(stripe: Stripe, interval: Interval): Promise<string> {
+  const key = extraLookupKey(interval);
+  const found = await stripe.prices.list({ lookup_keys: [key], active: true, limit: 1 });
+  const price = found.data[0];
+  if (price) return price.id;
+  const created = await stripe.prices.create({
+    lookup_key: key,
+    currency: "nok",
+    unit_amount: extraPersonPrice(interval),
+    recurring: { interval },
+    tax_behavior: "exclusive",
+    product_data: { name: "MaskinGo Bedrift: extra person", metadata: { plan: "bedrift", extra: "person" } },
+    metadata: { plan: "bedrift", interval, extra: "person" },
+  });
+  return created.id;
+}
+
+// A new line on a subscription carries the VAT rate too, once one is set.
+export function taxRates(): { tax_rates?: string[] } {
+  const taxRate = process.env.STRIPE_TAX_RATE_ID;
+  return taxRate ? { tax_rates: [taxRate] } : {};
+}
+
+export const subscriptionEnded = (status: string) => status === "canceled" || status === "incomplete_expired";
+
+// What to change on a running subscription so it is on this plan, with one
+// extra-person line for Bedrift's people past 40 (none for the other plans).
+// Empty when nothing needs to change; null when it is not one of ours.
+export async function itemChanges(
+  stripe: Stripe,
+  current: Stripe.Subscription,
+  plan: Plan,
+  interval: Interval,
+  people: number,
+): Promise<Stripe.SubscriptionUpdateParams.Item[] | null> {
+  const base = current.items.data.find((item) => fromLookupKey(item.price.lookup_key));
+  if (!base) return null;
+  const extra = current.items.data.find((item) => isExtraLookupKey(item.price.lookup_key));
+  const wanted = extraPeople(plan, people);
+  const changes: Stripe.SubscriptionUpdateParams.Item[] = [];
+
+  const price = await ensurePrice(stripe, plan, interval);
+  if (base.price.id !== price) changes.push({ id: base.id, price });
+  if (wanted === 0) {
+    if (extra) changes.push({ id: extra.id, deleted: true });
+  } else {
+    const extraPrice = await ensureExtraPrice(stripe, interval);
+    if (!extra) changes.push({ price: extraPrice, quantity: wanted, ...taxRates() });
+    else if (extra.price.id !== extraPrice || extra.quantity !== wanted) changes.push({ id: extra.id, price: extraPrice, quantity: wanted });
+  }
+  return changes;
+}
+
+// After someone joins or leaves a Bedrift company: bill the people past 40
+// (Stripe settles the part of the period). Never stops the join or the removal:
+// a failure is logged and fixed the next time the people or the billing page change.
+export async function syncExtraPeople(organizationId: string): Promise<void> {
+  const stripe = getStripe();
+  if (!stripe || !billingConfigured()) return;
+  try {
+    const supabase = await createClient();
+    const [{ data: row }, { data: usage }] = await Promise.all([
+      supabase
+        .from("subscriptions")
+        .select("plan, billing_interval, status, stripe_subscription_id")
+        .eq("organization_id", organizationId)
+        .maybeSingle(),
+      supabase.rpc("seat_usage", { org: organizationId }).single(),
+    ]);
+    const sub = row as Pick<SubscriptionRow, "plan" | "billing_interval" | "status" | "stripe_subscription_id"> | null;
+    const taken = (usage as { taken: number } | null)?.taken;
+    if (!sub?.stripe_subscription_id || sub.plan !== "bedrift" || subscriptionEnded(sub.status) || taken === undefined) return;
+
+    const current = await stripe.subscriptions.retrieve(sub.stripe_subscription_id);
+    const changes = await itemChanges(stripe, current, "bedrift", sub.billing_interval ?? "month", taken);
+    if (!changes || changes.length === 0) return;
+    const updated = await stripe.subscriptions.update(current.id, { items: changes, proration_behavior: "create_prorations" });
+    await syncSubscription(updated);
+  } catch (error) {
+    console.error("Billing: could not update Bedrift's extra people", error instanceof Error ? error.message : error);
+  }
 }
 
 export async function saveCustomer(organizationId: string, customerId: string): Promise<void> {

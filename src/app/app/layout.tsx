@@ -6,7 +6,7 @@ import { SignOutIcon } from "@/components/icons";
 import { BillingBanner } from "@/components/billing-banner";
 import { InvoiceBell } from "@/components/invoice-bell";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { billingState, type SubscriptionRow } from "@/lib/billing";
+import { billingState, isReadOnly, type SubscriptionRow } from "@/lib/billing";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
 import { canManageBilling, canSeeCustomers, canSeeInvoices, canSeeJobs, canSeeVehicles, needsMfa } from "@/lib/roles";
@@ -27,8 +27,9 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
   const manages = !!membership && canManageBilling(membership);
   const [waiting, subscription] = await Promise.all([
     invoicing ? supabase.rpc("invoices_waiting").then(({ data }) => (data as number | null) ?? 0) : 0,
-    // Owners and admins see when the trial is about to end or a payment failed.
-    manages
+    // Owners and admins see when the trial is about to end or a payment failed;
+    // everyone sees when the company can only read.
+    membership
       ? supabase
           .from("subscriptions")
           .select("plan, billing_interval, status, trial_ends_at, current_period_end, cancel_at_period_end, stripe_customer_id, stripe_subscription_id")
@@ -85,7 +86,9 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
           </div>
         </div>
       </header>
-      {subscription !== undefined && <BillingBanner state={billingState(subscription)} />}
+      {subscription !== undefined && (
+        <BillingBanner state={billingState(subscription)} readOnly={isReadOnly(subscription)} manages={manages} />
+      )}
       {/* The header reaches the screen edges; the content keeps clear of the notch in landscape. */}
       <div className="flex flex-1 flex-col pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-6 xl:pb-10">

@@ -2,8 +2,7 @@ import { describe, expect, it } from "vitest";
 import en from "../../messages/en.json";
 import lt from "../../messages/lt.json";
 import nb from "../../messages/nb.json";
-import { TRIAL_DAYS, YEAR_MONTHS, planPrice, planSeats } from "./billing";
-import { BEDRIFT_EXTRA_PERSON_ORE } from "./pricing";
+import { BEDRIFT_EXTRA_PERSON_ORE, TRIAL_DAYS, YEAR_MONTHS, planPrice, planSeats } from "./billing";
 
 describe("price page facts", () => {
   it("match the plans Li agreed on 2026-11-23", () => {

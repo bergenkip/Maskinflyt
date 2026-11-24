@@ -3,16 +3,26 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
-import { isInterval, isPlan, planFits, type SubscriptionRow } from "@/lib/billing";
+import { extraPeople, isInterval, isPlan, planFits, type SubscriptionRow } from "@/lib/billing";
 import { getCurrentMembership } from "@/lib/membership";
 import { hasSecondStep } from "@/lib/mfa";
 import { canManageBilling } from "@/lib/roles";
-import { appOrigin, billingConfigured, ensurePrice, getStripe, saveCustomer, syncSubscription } from "@/lib/stripe-server";
+import {
+  appOrigin,
+  billingConfigured,
+  ensureExtraPrice,
+  ensurePrice,
+  getStripe,
+  itemChanges,
+  saveCustomer,
+  subscriptionEnded,
+  syncSubscription,
+  taxRates,
+} from "@/lib/stripe-server";
 import { createClient } from "@/lib/supabase/server";
 
 export type BillingActionState = { error?: "notAllowed" | "notConfigured" | "tooSmall" | "unknown"; done?: boolean };
 
-const ended = (status: string) => status === "canceled" || status === "incomplete_expired";
 // Stripe wants a trial to end at least two days ahead.
 const MIN_TRIAL_MS = 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000;
 
@@ -55,21 +65,25 @@ export async function choosePlan(_prev: BillingActionState, formData: FormData):
 
   let checkoutUrl: string | null = null;
   try {
-    const price = await ensurePrice(stripe, plan, interval);
-
-    if (row?.stripe_subscription_id && !ended(row.status)) {
+    if (row?.stripe_subscription_id && !subscriptionEnded(row.status)) {
+      // The plan's line changes; Bedrift also gets (or loses) the line for people past 40.
       const current = await stripe.subscriptions.retrieve(row.stripe_subscription_id);
-      const item = current.items.data[0];
-      if (!item) return { error: "unknown" };
-      const updated = await stripe.subscriptions.update(current.id, {
-        items: [{ id: item.id, price }],
-        proration_behavior: "create_prorations",
-        metadata: { organization_id: org.id },
-      });
-      await syncSubscription(updated);
+      const changes = await itemChanges(stripe, current, plan, interval, taken);
+      if (!changes) return { error: "unknown" };
+      if (changes.length > 0) {
+        const updated = await stripe.subscriptions.update(current.id, {
+          items: changes,
+          proration_behavior: "create_prorations",
+          metadata: { organization_id: org.id },
+        });
+        await syncSubscription(updated);
+      }
       revalidatePath("/app", "layout");
       return { done: true };
     }
+
+    const price = await ensurePrice(stripe, plan, interval);
+    const extra = extraPeople(plan, taken);
 
     let customer = row?.stripe_customer_id ?? null;
     if (!customer) {
@@ -84,14 +98,17 @@ export async function choosePlan(_prev: BillingActionState, formData: FormData):
 
     const trialEnds = row?.status === "trialing" && row.trial_ends_at ? Date.parse(row.trial_ends_at) : NaN;
     const keepTrial = !Number.isNaN(trialEnds) && trialEnds - Date.now() > MIN_TRIAL_MS;
-    const taxRate = process.env.STRIPE_TAX_RATE_ID;
     const origin = await appOrigin();
     const locale = await getLocale();
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       customer,
       client_reference_id: org.id,
-      line_items: [{ price, quantity: 1, ...(taxRate ? { tax_rates: [taxRate] } : {}) }],
+      line_items: [
+        { price, quantity: 1, ...taxRates() },
+        // Bedrift: the people past 40.
+        ...(extra > 0 ? [{ price: await ensureExtraPrice(stripe, interval), quantity: extra, ...taxRates() }] : []),
+      ],
       subscription_data: {
         metadata: { organization_id: org.id },
         ...(keepTrial ? { trial_end: Math.floor(trialEnds / 1000) } : {}),

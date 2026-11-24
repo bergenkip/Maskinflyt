@@ -232,7 +232,8 @@
       "notAllowed": "Jūs neturite teisės to daryti.",
       "lastOwner": "Įmonėje turi likti bent vienas savininkas.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą.",
-      "seatLimit": "Planas pilnas. Prieš kviesdami daugiau žmonių, pasirinkite didesnį planą."
+      "seatLimit": "Planas pilnas. Prieš kviesdami daugiau žmonių, pasirinkite didesnį planą.",
+      "readOnly": "Abonementas neaktyvus, todėl dabar nieko keisti negalima. Pasirinkite planą skiltyje „Abonementas“."
     },
     "linkCreated": "Nuoroda sukurta (rolė: {role}). Nukopijuokite ją dabar: saugumo sumetimais ji rodoma tik vieną kartą.",
     "invitationFor": "Kvietimas, rolė: {role}",
@@ -423,7 +424,8 @@
       "notFound": "Ši kvietimo nuoroda nebegalioja. Paprašykite naujos.",
       "alreadyMember": "Jūs jau priklausote įmonei.",
       "unknown": "Prisijungti nepavyko. Bandykite dar kartą.",
-      "seatLimit": "Įmonės planas pilnas. Paprašykite pakvietusio žmogaus pasirinkti didesnį planą."
+      "seatLimit": "Įmonės planas pilnas. Paprašykite pakvietusio žmogaus pasirinkti didesnį planą.",
+      "readOnly": "Įmonės abonementas neaktyvus, todėl nauji žmonės dabar prisijungti negali. Paprašykite savininko pasirinkti planą."
     },
     "sentBody": "Paskyra sukurta. Išsiuntėme patvirtinimo nuorodą į jūsų el. paštą. Atidarykite ją bet kuriame įrenginyje, kad baigtumėte. Jūs jau esate įmonės narys."
   },
@@ -1616,14 +1618,16 @@
     },
     "banner": {
       "trial": "Nemokamo bandymo liko {days, plural, one {# diena} few {# dienos} other {# dienų}}.",
-      "trialEnded": "Nemokamas bandymas baigėsi.",
       "pastDue": "Paskutinis mokėjimas nepavyko.",
-      "ended": "Abonementas baigėsi.",
       "action": "Pasirinkti planą",
-      "fix": "Atnaujinti kortelę"
+      "fix": "Atnaujinti kortelę",
+      "readOnly": "Abonementas neaktyvus, todėl duomenis galima tik peržiūrėti.",
+      "readOnlyMember": "Įmonės abonementas neaktyvus, todėl duomenis galima tik peržiūrėti. Kreipkitės į įmonės savininką."
     },
     "plansLeadNoVat": "PVM (MVA) neskaičiuojamas.",
-    "noVat": "Be PVM priedo"
+    "noVat": "Be PVM priedo",
+    "extraPerson": "Daugiau nei {count} žmonių: + {price} už kiekvieną papildomą žmogų",
+    "extraPeople": "Papildomai apmokestinama: {count, plural, one {# žmogus} few {# žmonės} other {# žmonių}} virš 40."
   },
   "Pricing": {
     "metaTitle": "Kainos · MaskinGo",

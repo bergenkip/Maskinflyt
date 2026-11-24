@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { billingState, type SubscriptionRow } from "@/lib/billing";
 import { getCurrentMembership } from "@/lib/membership";
 import { canManageBilling } from "@/lib/roles";
-import { billingConfigured, getStripe, syncSubscription } from "@/lib/stripe-server";
+import { billingConfigured, getStripe, syncExtraPeople, syncSubscription } from "@/lib/stripe-server";
 import { createClient } from "@/lib/supabase/server";
 import { BillingView } from "./billing-view";
 
@@ -40,6 +40,8 @@ export default async function BillingPage({ searchParams }: PageProps<"/app/bill
 
   const session = typeof params.session === "string" ? params.session : null;
   const paid = manages && session ? await syncCheckout(session, org) : false;
+  // Bedrift: bill the people past 40 as they are now (someone may have joined at sign-up).
+  if (manages) await syncExtraPeople(org);
 
   const supabase = await createClient();
   const [{ data: row }, { data: usage }] = await Promise.all([
