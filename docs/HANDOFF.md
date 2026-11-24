@@ -377,3 +377,21 @@ MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), e
   Kol jų nėra, puslapis sako „Mokėjimai dar neįjungti“ ir mygtukų nerodo.
 - Testai: `29_subscriptions.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts` (CI dabar paleidžia ir `e2e/hours.spec.ts`).
 - 14b: tik skaitymo režimas neapmokėjus, Bedrift papildomi žmonės per Stripe kiekį.
+
+## Programos ekranai pradžios puslapyje (2026-11-24)
+Po mygtukais „Sukurti paskyrą / Prisijungti“ rodomas kompiuterio langas su dienos kalendoriumi ir priekyje vairuotojo telefonas
+(`src/components/product-showcase.tsx`). Tai tikri programos ekranai su išgalvota įmone „Fjordkran AS“ (adresai `.test`),
+po vieną rinkinį kiekvienai kalbai: `public/screens/calendar-<nb|en|lt>.webp`, `driver-<nb|en|lt>.webp`.
+Tekstai `Home.showcase` (alt tekstai ir parašas). Testas `e2e/home.spec.ts` tikrina, kad paveikslėliai užsikrauna,
+yra puslapio kalba, turi alt tekstą ir neištempti.
+
+Kaip atnaujinti ekranus (pvz. pasikeitus dizainui), su vietiniu Supabase (`supabase start`) ir `npm run build`:
+```
+supabase db reset
+export SERVICE_ROLE_KEY=<iš supabase status>
+npx playwright test -c scripts/demo-screens seed
+for l in nb en lt; do DEMO_LOCALE=$l npx playwright test -c scripts/demo-screens shoot; done
+node scripts/demo-screens/convert.mjs
+```
+Užsakymai sukuriami nuo šiandienos datos, todėl ekranuose visada matyti „šiandien“.
+Dar laukia: Li ChatGPT nuotraukos pradžios ir šakų puslapiams (užklausos pokalbyje 2026-11-24).

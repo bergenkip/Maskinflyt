@@ -56,7 +56,12 @@
       }
     },
     "contactTitle": "Vil du prøve MaskinGo?",
-    "contactBody": "MaskinGo er nytt og utvikles sammen med de første brukerne. Opprett en konto, eller skriv til oss:"
+    "contactBody": "MaskinGo er nytt og utvikles sammen med de første brukerne. Opprett en konto, eller skriv til oss:",
+    "showcase": {
+      "calendarAlt": "MaskinGo-kalenderen for én dag: maskinene i rader og oppdragene med kunde og sjåfør på en tidslinje fra 06 til 19.",
+      "driverAlt": "Sjåførens telefon i MaskinGo: dagens oppdrag med adresse, maskin og knappen «Jeg er ferdig».",
+      "caption": "Ekte skjermbilder fra MaskinGo med oppdiktede data: kontorets kalender og sjåførens telefon."
+    }
   },
   "Nav": {
     "home": "MaskinGo forside",

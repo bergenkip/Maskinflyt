@@ -44,6 +44,20 @@ for (const locale of locales) {
         expect(box?.height ?? 0, "button at least 44px tall").toBeGreaterThanOrEqual(44);
       }
 
+      // The app screens are in the page's language, loaded and not stretched.
+      const screens = main.locator("figure img");
+      await expect(screens).toHaveCount(2);
+      for (const img of await screens.all()) {
+        await expect(img).toHaveAttribute("alt", /.{20,}/);
+        await expect(img).toHaveAttribute("src", new RegExp(`-${locale}\\.webp`));
+        await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+        const ratio = await img.evaluate((el: HTMLImageElement) => {
+          const r = el.getBoundingClientRect();
+          return r.width / r.height / (el.naturalWidth / el.naturalHeight);
+        });
+        expect(Math.abs(ratio - 1), "image keeps its proportions").toBeLessThan(0.02);
+      }
+
       await page.screenshot({
         path: `test-results/screenshots/home-${locale}-${width}.png`,
         fullPage: true,

@@ -56,7 +56,12 @@
       }
     },
     "contactTitle": "Norite išbandyti MaskinGo?",
-    "contactBody": "MaskinGo yra naujas ir kuriamas kartu su pirmaisiais naudotojais. Susikurkite paskyrą arba parašykite mums:"
+    "contactBody": "MaskinGo yra naujas ir kuriamas kartu su pirmaisiais naudotojais. Susikurkite paskyrą arba parašykite mums:",
+    "showcase": {
+      "calendarAlt": "MaskinGo dienos kalendorius: technika eilutėmis, užsakymai su klientu ir vairuotoju laiko juostoje nuo 06 iki 19 val.",
+      "driverAlt": "Vairuotojo telefonas MaskinGo programoje: šiandienos užsakymas su adresu, technika ir mygtuku „Baigiau“.",
+      "caption": "Tikri MaskinGo ekranai su išgalvotais duomenimis: biuro kalendorius ir vairuotojo telefonas."
+    }
   },
   "Nav": {
     "home": "MaskinGo pradžia",
