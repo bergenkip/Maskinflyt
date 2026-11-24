@@ -35,6 +35,12 @@ describe("request e-mail", () => {
     expect(email.html).not.toContain("<takstein>");
   });
 
+  it("gives a picked time in Norwegian time", () => {
+    const email = requestEmail({ ...request, wantedDate: null, wantedStart: "2026-12-01T10:00:00.000Z" }, { to: "post@fjellkran.test", testMode: false });
+    expect(email.text).toContain("Ønsket tid: 01.12.2026 kl. 11:00");
+    expect(email.text).not.toContain("Ønsket dato");
+  });
+
   it("leaves out what was not given, and says plainly when it is a test", () => {
     const email = requestEmail({ ...request, email: null, wantedDate: null, service: null }, { to: "post@fjellkran.test", testMode: true });
     expect(email.subject.startsWith("TEST: ")).toBe(true);

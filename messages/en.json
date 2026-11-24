@@ -186,7 +186,10 @@
     "tipPhotosText": "Photos of your machines and jobs make the page more trustworthy.",
     "tipPhotosAction": "Add photos",
     "requestsLabel": "New requests",
-    "requestsDetail": "From your company page"
+    "requestsDetail": "From your company page",
+    "tipTimesTitle": "Open your free times",
+    "tipTimesText": "Let customers pick a free time on your page, or choose requests only.",
+    "tipTimesAction": "Open times"
   },
   "Roles": {
     "owner": "Owner",
@@ -1943,8 +1946,13 @@
       "serviceInvalid": "Choose a service from the list.",
       "closed": "This company does not take requests here right now. Use the contact details above.",
       "tooMany": "Many requests have been sent in a short time. Try again in an hour, or call the company.",
-      "unknown": "The request was not sent. Try again."
-    }
+      "unknown": "The request was not sent. Try again.",
+      "slotTaken": "That time was just taken. Choose another."
+    },
+    "times": "Pick a time (optional)",
+    "timesHint": "Free times for the next two weeks. The company confirms the time.",
+    "timeNone": "No particular time",
+    "noTimes": "No free times in the next two weeks. Write a wished-for day instead."
   },
   "JobRequests": {
     "title": "Requests",
@@ -1985,7 +1993,8 @@
       "answerTooLong": "The message can be at most 1,000 characters.",
       "alreadyAnswered": "Someone has already answered this request.",
       "unknown": "The answer could not be saved. Try again."
-    }
+    },
+    "wantedAt": "Preferred: {date} at {time}"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} has accepted your request",
@@ -2000,6 +2009,49 @@
     "questions": "Questions? Reply to this e-mail.",
     "closing": "Best regards",
     "footer": "Sent with MaskinGo on behalf of {company}.",
-    "test": "TEST: This e-mail was sent from a test account in MaskinGo and is not a real answer. Recipient: {to}"
+    "test": "TEST: This e-mail was sent from a test account in MaskinGo and is not a real answer. Recipient: {to}",
+    "time": "Preferred time"
+  },
+  "CompanyHours": {
+    "title": "Free times",
+    "lead": "Open the times customers can pick on your company page. A picked time is a wish: you accept or decline it.",
+    "pageFirst": "Create the company page first, then open your times.",
+    "modeLegend": "How customers order from your page",
+    "modeOn": "Show free times",
+    "modeOnHint": "Customers see your free times for the next two weeks and pick one.",
+    "modeOff": "Requests only",
+    "modeOffHint": "Customers describe the job and write a wished-for day.",
+    "length": "Length of one booking",
+    "lengthHours": "{hours, plural, one {# hour} other {# hours}}",
+    "lengthDay": "Full day (8 hours)",
+    "lengthHint": "Free times are offered in steps of this length.",
+    "weekLegend": "Working hours",
+    "weekHint": "A time is free when fewer jobs overlap it than you have machines in use.",
+    "openOn": "Open on {day}",
+    "opens": "From",
+    "closes": "To",
+    "save": "Save",
+    "savedOn": "Saved. Customers see your free times.",
+    "savedOff": "Saved. Customers send requests only.",
+    "daysOffTitle": "Days off",
+    "daysOffLead": "Holidays and other closed days. No free times are shown on them.",
+    "noDaysOff": "No days off yet.",
+    "dayOff": "Day",
+    "dayOffNote": "Note (optional)",
+    "dayOffNotePlaceholder": "e.g. Christmas",
+    "addDay": "Add day off",
+    "adding": "Adding…",
+    "removeDay": "Remove {day}",
+    "errors": {
+      "timesInvalid": "The closing time must be after the opening time.",
+      "noOpenDay": "Open at least one day to show free times.",
+      "lengthInvalid": "Choose a length from the list.",
+      "noPage": "Create the company page first.",
+      "notAllowed": "Only owners and admins can change the company page.",
+      "readOnly": "The subscription is not active, so nothing can be changed now.",
+      "dateInvalid": "Choose a day from today up to two years ahead.",
+      "noteTooLong": "The note can be up to 100 characters.",
+      "unknown": "Something went wrong. Try again."
+    }
   }
 }

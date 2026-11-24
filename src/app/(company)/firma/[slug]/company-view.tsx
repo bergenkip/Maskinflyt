@@ -9,6 +9,7 @@ import {
   SendIcon,
 } from "@/components/icons";
 import type { CompanyPhoto } from "@/lib/company-photos-server";
+import type { FreeSlot } from "@/lib/company-hours";
 import { formatPhone } from "@/lib/customers";
 import { addDays } from "@/lib/calendar";
 import { isService, pagePath } from "@/lib/company-page";
@@ -44,9 +45,12 @@ const columns = (count: number) => (count === 1 ? "" : count === 2 || count === 
 export async function CompanyView({
   company,
   photos = [],
+  slots = null,
 }: {
   company: PublicCompany;
   photos?: CompanyPhoto[];
+  // Free times to pick from, or null when the company takes requests only.
+  slots?: FreeSlot[] | null;
 }) {
   const [t, tServices, tRequest] = await Promise.all([
     getTranslations("PublicPage"),
@@ -274,6 +278,7 @@ export async function CompanyView({
               value: service,
               label: tServices(service),
             }))}
+            slots={slots}
             minDate={today}
             maxDate={addDays(today, MAX_REQUEST_DAYS_AHEAD)}
           />

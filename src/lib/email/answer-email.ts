@@ -21,6 +21,9 @@ export type AnswerForEmail = {
   name: string;
   place: string;
   wantedDate: string | null;
+  // A time the customer picked, as an instant, shown in the company's time zone.
+  wantedStart?: string | null;
+  timeZone?: string;
   message: string | null;
   companyEmail: string | null;
   companyPhone: string | null;
@@ -33,6 +36,16 @@ const day = (iso: string, locale: AnswerLocale) =>
     new Date(`${iso}T12:00:00Z`),
   );
 
+const dayAndTime = (iso: string, locale: AnswerLocale, timeZone: string) =>
+  new Intl.DateTimeFormat(locale === "nb" ? "nb-NO" : locale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone,
+  }).format(new Date(iso));
+
 export function answerEmail(answer: AnswerForEmail, options: { to: string; testMode: boolean }) {
   const locale: AnswerLocale = answer.locale in catalogs ? (answer.locale as AnswerLocale) : "nb";
   const t = createTranslator({ locale, messages: catalogs[locale], namespace: "RequestAnswerEmail" });
@@ -43,7 +56,11 @@ export function answerEmail(answer: AnswerForEmail, options: { to: string; testM
   const intro = answer.accepted ? t("acceptedIntro", { company }) : t("declinedIntro", { company });
   const facts: [string, string][] = [
     [t("place"), answer.place],
-    ...(answer.wantedDate ? [[t("date"), day(answer.wantedDate, locale)] as [string, string]] : []),
+    ...(answer.wantedStart
+      ? [[t("time"), dayAndTime(answer.wantedStart, locale, answer.timeZone ?? "Europe/Oslo")] as [string, string]]
+      : answer.wantedDate
+        ? [[t("date"), day(answer.wantedDate, locale)] as [string, string]]
+        : []),
   ];
   const questions = answer.companyPhone ? t("questionsPhone", { phone: formatPhone(answer.companyPhone) }) : t("questions");
 

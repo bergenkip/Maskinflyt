@@ -19,6 +19,13 @@ const complete = {
 };
 
 describe("validateJobRequest", () => {
+  it("takes a picked time instead of a day", () => {
+    const { fields } = validateJobRequest(form({ ...complete, wantedStart: "2026-12-01T11:00:00+01:00" }), today);
+    expect(fields?.request_wanted_start).toBe("2026-12-01T10:00:00.000Z");
+    expect(fields?.request_wanted_date).toBeNull();
+    expect(validateJobRequest(form({ ...complete, wantedStart: "kl. 11" }), today).fieldErrors.wantedStart).toBe("slotTaken");
+  });
+
   it("tidies a complete request for the database", () => {
     const { fields, fieldErrors } = validateJobRequest(form(complete), today);
     expect(fieldErrors).toEqual({});
@@ -29,6 +36,7 @@ describe("validateJobRequest", () => {
       request_place: "Strandgaten 1, Bergen",
       request_description: "Løfte takstein til 3. etasje.\nHelst før lunsj.",
       request_wanted_date: "2026-12-01",
+      request_wanted_start: null,
       request_service: "crane_truck",
     });
   });

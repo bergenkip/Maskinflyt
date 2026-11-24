@@ -490,3 +490,17 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
   `createTranslator`), atsakymas (reply-to) eina įmonei. Kalbą reikia imti iš failų tiesiogiai: `getTranslations({ locale })`
   serveryje grąžina lankytojo kalbą.
 - Testai: `34_job_request_answers.test.sql`, `answer-email.test.ts`, `e2e/job-requests.spec.ts` (priimti ir atmesti).
+
+### 15c: laisvi laikai įmonės puslapyje (2026-11-24, Li prašymu)
+- Migracija `20261124210000_company_hours.sql`: `company_pages.free_times` (null = dar nenuspręsta) ir `slot_minutes`
+  (1, 2, 4 arba 8 val.); lentelės `company_hours` (darbo laikas kiekvienai savaitės dienai) ir `company_days_off`;
+  `job_requests.wanted_start`. Funkcijos `save_company_hours`, `add_company_day_off`, `remove_company_day_off`
+  (savininkas ar administratorius, su antru žingsniu), `company_page_booking` ir `company_free_slots` (viešos).
+- Laisvas laikas: artimiausios 14 dienų įmonės laiko zonoje, ne anksčiau nei po 2 val., ne poilsio dieną, ir
+  jį dengiančių užsakymų bei naujų užklausų mažiau nei aktyvios technikos (bent 1). `submit_job_request` laiką
+  patikrina dar kartą įmonės užrakto viduje (`slot_taken`), kad du klientai nepaimtų to paties.
+- Pasirinktas laikas yra tik pageidavimas: įmonė jį priima arba atmeta, automatiškai niekas nepatvirtinama.
+- Programoje: `/app/public-page` skiltis „Laisvi laikai“ (rodyti laikus arba tik užklausos, trukmė, darbo laikas,
+  poilsio dienos). Apžvalgoje rekomendacija „Atidarykite laisvus laikus“, kol savininkas nepasirinko.
+- Užklausos kortelė, abu laiškai ir užsakymo forma rodo ar užpildo pasirinktą laiką.
+- Testai: `35_company_hours.test.sql`, `company-hours.test.ts`, laiškų testai, `e2e/free-times.spec.ts`.

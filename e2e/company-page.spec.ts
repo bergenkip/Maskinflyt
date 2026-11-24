@@ -39,7 +39,7 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
   await page.getByLabel("Phone").fill("912 34 567");
   await page.getByLabel("Website (optional)").fill("example.com");
   await page.getByRole("checkbox", { name: "Show publicly" }).uncheck();
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Save" }).first().click();
   await expect(page.getByText("Saved. The page is hidden from others.")).toBeVisible();
 
   const visitor = await newPage(browser, baseURL!, "en");
@@ -52,7 +52,7 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
   // Published: everyone sees it, with a link to call and the services.
   await page.goto("/app/public-page");
   await page.getByRole("checkbox", { name: "Show publicly" }).check();
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Save" }).first().click();
   await expect(page.getByText("Saved. The page is public.")).toBeVisible();
 
   await visitor.page.goto(`/firma/${slug}`);

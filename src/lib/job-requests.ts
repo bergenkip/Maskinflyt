@@ -25,7 +25,8 @@ export type JobRequestFieldError =
   | "descriptionRequired"
   | "descriptionTooLong"
   | "dateInvalid"
-  | "serviceInvalid";
+  | "serviceInvalid"
+  | "slotTaken";
 
 export type JobRequestValues = {
   name: string;
@@ -33,6 +34,8 @@ export type JobRequestValues = {
   email: string;
   place: string;
   wantedDate: string;
+  // A free time the customer picked (an ISO instant from company_free_slots), when the page shows them.
+  wantedStart: string;
   service: string;
   description: string;
 };
@@ -44,6 +47,7 @@ export type JobRequestFields = {
   request_place: string;
   request_description: string;
   request_wanted_date: string | null;
+  request_wanted_start: string | null;
   request_service: Service | null;
 };
 
@@ -65,6 +69,7 @@ export function validateJobRequest(
     email: text(formData, "email").trim(),
     place: oneLine(text(formData, "place")),
     wantedDate: text(formData, "wantedDate").trim(),
+    wantedStart: text(formData, "wantedStart").trim(),
     service: text(formData, "service").trim(),
     description: text(formData, "description").replace(/\r\n?/g, "\n").trim(),
   };
@@ -98,6 +103,11 @@ export function validateJobRequest(
 
   if (values.service && !isService(values.service)) fieldErrors.service = "serviceInvalid";
 
+  // The database checks that the time is still free; here only that it is a time at all.
+  if (values.wantedStart && (!/^\d{4}-\d{2}-\d{2}T/.test(values.wantedStart) || Number.isNaN(Date.parse(values.wantedStart)))) {
+    fieldErrors.wantedStart = "slotTaken";
+  }
+
   if (Object.keys(fieldErrors).length > 0) return { values, fieldErrors };
   return {
     values,
@@ -108,7 +118,9 @@ export function validateJobRequest(
       request_email: email ?? null,
       request_place: values.place,
       request_description: values.description,
-      request_wanted_date: values.wantedDate || null,
+      // A picked time gives the day itself.
+      request_wanted_date: values.wantedStart ? null : values.wantedDate || null,
+      request_wanted_start: values.wantedStart ? new Date(values.wantedStart).toISOString() : null,
       request_service: isService(values.service) ? values.service : null,
     },
   };

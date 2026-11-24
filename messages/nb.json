@@ -186,7 +186,10 @@
     "tipPhotosText": "Bilder av maskiner og oppdrag gjør siden mer troverdig.",
     "tipPhotosAction": "Legg til bilder",
     "requestsLabel": "Nye forespørsler",
-    "requestsDetail": "Fra firmasiden deres"
+    "requestsDetail": "Fra firmasiden deres",
+    "tipTimesTitle": "Åpne ledige tider",
+    "tipTimesText": "La kundene velge en ledig tid på firmasiden, eller velg bare forespørsler.",
+    "tipTimesAction": "Åpne tider"
   },
   "Roles": {
     "owner": "Eier",
@@ -1943,8 +1946,13 @@
       "serviceInvalid": "Velg en tjeneste fra listen.",
       "closed": "Dette firmaet tar ikke imot forespørsler her nå. Bruk kontaktinformasjonen over.",
       "tooMany": "Det er sendt mange forespørsler på kort tid. Prøv igjen om en time, eller ring firmaet.",
-      "unknown": "Forespørselen ble ikke sendt. Prøv igjen."
-    }
+      "unknown": "Forespørselen ble ikke sendt. Prøv igjen.",
+      "slotTaken": "Den tiden ble nettopp tatt. Velg en annen."
+    },
+    "times": "Velg en tid (valgfritt)",
+    "timesHint": "Ledige tider de neste to ukene. Firmaet bekrefter tiden.",
+    "timeNone": "Ingen bestemt tid",
+    "noTimes": "Ingen ledige tider de neste to ukene. Skriv en ønsket dag i stedet."
   },
   "JobRequests": {
     "title": "Forespørsler",
@@ -1985,7 +1993,8 @@
       "answerTooLong": "Meldingen kan ha høyst 1000 tegn.",
       "alreadyAnswered": "Noen har allerede svart på denne forespørselen.",
       "unknown": "Svaret ble ikke lagret. Prøv igjen."
-    }
+    },
+    "wantedAt": "Ønsket: {date} kl. {time}"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} har godtatt forespørselen din",
@@ -2000,6 +2009,49 @@
     "questions": "Spørsmål? Svar på denne e-posten.",
     "closing": "Vennlig hilsen",
     "footer": "Sendt med MaskinGo for {company}.",
-    "test": "TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke et ekte svar. Mottaker: {to}"
+    "test": "TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke et ekte svar. Mottaker: {to}",
+    "time": "Ønsket tid"
+  },
+  "CompanyHours": {
+    "title": "Ledige tider",
+    "lead": "Åpne tidene kundene kan velge på firmasiden. En valgt tid er et ønske: dere godtar eller avslår den.",
+    "pageFirst": "Lag firmasiden først, og åpne så tidene.",
+    "modeLegend": "Hvordan kundene bestiller fra siden",
+    "modeOn": "Vis ledige tider",
+    "modeOnHint": "Kundene ser de ledige tidene de neste to ukene og velger én.",
+    "modeOff": "Bare forespørsler",
+    "modeOffHint": "Kundene beskriver jobben og skriver en ønsket dag.",
+    "length": "Lengde på én bestilling",
+    "lengthHours": "{hours, plural, one {# time} other {# timer}}",
+    "lengthDay": "Hel dag (8 timer)",
+    "lengthHint": "Ledige tider vises i steg av denne lengden.",
+    "weekLegend": "Arbeidstid",
+    "weekHint": "En tid er ledig når færre oppdrag overlapper den enn dere har maskiner i bruk.",
+    "openOn": "Åpent {day}",
+    "opens": "Fra",
+    "closes": "Til",
+    "save": "Lagre",
+    "savedOn": "Lagret. Kundene ser de ledige tidene.",
+    "savedOff": "Lagret. Kundene sender bare forespørsler.",
+    "daysOffTitle": "Fridager",
+    "daysOffLead": "Helligdager og andre stengte dager. Ingen ledige tider vises da.",
+    "noDaysOff": "Ingen fridager ennå.",
+    "dayOff": "Dag",
+    "dayOffNote": "Merknad (valgfritt)",
+    "dayOffNotePlaceholder": "f.eks. Jul",
+    "addDay": "Legg til fridag",
+    "adding": "Legger til…",
+    "removeDay": "Fjern {day}",
+    "errors": {
+      "timesInvalid": "Sluttiden må være etter starttiden.",
+      "noOpenDay": "Åpne minst én dag for å vise ledige tider.",
+      "lengthInvalid": "Velg en lengde fra listen.",
+      "noPage": "Lag firmasiden først.",
+      "notAllowed": "Bare eiere og administratorer kan endre firmasiden.",
+      "readOnly": "Abonnementet er ikke aktivt, så ingenting kan endres nå.",
+      "dateInvalid": "Velg en dag fra i dag og inntil to år fram.",
+      "noteTooLong": "Merknaden kan ha høyst 100 tegn.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    }
   }
 }
