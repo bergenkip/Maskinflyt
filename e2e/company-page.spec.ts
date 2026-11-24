@@ -26,8 +26,8 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
 
   // Saved hidden first: only the company sees a preview; visitors get "not found".
   await page.getByLabel("About the company").fill("Kranbil med fører i Bergen og omegn.\nVi løfter alt fra takstein til båter.");
-  await page.getByText("Crane truck", { exact: true }).click();
-  await page.getByText("Transport", { exact: true }).click();
+  await page.getByRole("checkbox", { name: "Crane truck" }).check();
+  await page.getByRole("checkbox", { name: "Transport", exact: true }).check();
   await page.getByLabel("Town or city").fill("Bergen");
   await page.getByLabel("Area you work in (optional)").fill("Bergen og omegn");
   await page.getByLabel("Phone").fill("912 34 567");
