@@ -38,9 +38,10 @@ test("a published company is found in the catalog by service and place", async (
     `/finn/kranbil?${new URLSearchParams({ sted: city })}`,
   );
 
-  // The visitor searches by service and place: the form leads to the service's own address.
-  await visitor.page.goto("/finn");
-  await expect(visitor.page.getByRole("heading", { level: 1, name: "Find a company" })).toBeVisible();
+  // The visitor starts on the home page: the header leads to the catalog, and the search is there
+  // at once. Searching by service and place leads to the service's own address.
+  await visitor.page.goto("/");
+  await expect(visitor.page.getByRole("banner").getByRole("link", { name: "Find a company" })).toHaveAttribute("href", "/finn");
   const search = visitor.page.getByRole("search", { name: "Search the catalog" });
   await search.getByLabel("Service").selectOption({ label: "Machine transport" });
   await search.getByLabel("Place").fill(city.toUpperCase());

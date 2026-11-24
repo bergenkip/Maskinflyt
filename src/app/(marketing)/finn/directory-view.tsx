@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { ArrowRightIcon, ClockIcon, MapPinIcon, SearchIcon } from "@/components/icons";
+import { DirectorySearch } from "@/components/directory-search";
+import { ArrowRightIcon, ClockIcon, MapPinIcon } from "@/components/icons";
 import { isService, pagePath, services, type Service } from "@/lib/company-page";
-import { directoryPath, MAX_PLACE_LENGTH, serviceSlugs, DIRECTORY_PATH } from "@/lib/directory";
+import { directoryPath, DIRECTORY_PATH } from "@/lib/directory";
 import type { DirectoryCompany } from "@/lib/directory-server";
 import { SITE_URL } from "@/lib/site";
 
-const control =
-  "min-h-11 w-full min-w-0 rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent";
 const chip =
   "flex min-h-11 items-center rounded-full border border-border bg-surface px-4 font-medium hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:border-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent";
 
@@ -71,50 +70,12 @@ export async function DirectoryView({
         <p className="max-w-2xl text-lg text-muted">{service ? t("leadService", { service: tServices(service).toLowerCase() }) : t("lead")}</p>
       </div>
 
-      <form
-        action={DIRECTORY_PATH}
-        method="get"
-        role="search"
-        aria-label={t("searchLabel")}
-        className="grid gap-3 rounded-xl border border-border bg-surface p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end sm:p-5"
-      >
-        <div className="grid gap-1.5">
-          <label htmlFor="directory-service" className="font-medium">
-            {t("service")}
-          </label>
-          <select id="directory-service" name="tjeneste" defaultValue={service ? serviceSlugs[service] : ""} className={control}>
-            <option value="">{t("allServices")}</option>
-            {services.map((value) => (
-              <option key={value} value={serviceSlugs[value]}>
-                {tServices(value)}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="grid gap-1.5">
-          <label htmlFor="directory-place" className="font-medium">
-            {t("place")}
-          </label>
-          <input
-            id="directory-place"
-            name="sted"
-            type="search"
-            enterKeyHint="search"
-            autoComplete="address-level2"
-            maxLength={MAX_PLACE_LENGTH}
-            defaultValue={place}
-            placeholder={t("placePlaceholder")}
-            className={control}
-          />
-        </div>
-        <button
-          type="submit"
-          className="flex min-h-11 items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
-          <SearchIcon className="size-5" />
-          {t("search")}
-        </button>
-      </form>
+      <DirectorySearch
+        id="directory"
+        service={service}
+        place={place}
+        className="rounded-xl border border-border bg-surface p-4 sm:p-5"
+      />
 
       <section aria-labelledby="directory-results" className="grid gap-4">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">

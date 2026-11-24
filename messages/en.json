@@ -62,7 +62,9 @@
       "calendarAlt": "The MaskinGo calendar for one day: machines in rows and jobs with customer and driver on a timeline from 06 to 19.",
       "driverAlt": "The driver's phone in MaskinGo: today's job with address, machine and the “I'm finished” button.",
       "caption": "Real MaskinGo screens with made-up data: the office calendar and the driver's phone."
-    }
+    },
+    "findTitle": "Looking for a machine contractor, crane truck or transport?",
+    "findLead": "Search the companies on MaskinGo by service and place, and send a request straight to the company. Free for customers."
   },
   "Nav": {
     "home": "MaskinGo home",
@@ -80,7 +82,8 @@
     "myJobs": "My jobs",
     "invoices": "Invoices",
     "invoicesWaiting": "{count, plural, one {# job waits} other {# jobs wait}}",
-    "hours": "Hours"
+    "hours": "Hours",
+    "directory": "Find a company"
   },
   "Auth": {
     "loginTitle": "Sign in to MaskinGo",

@@ -62,7 +62,9 @@
       "calendarAlt": "MaskinGo-kalenderen for én dag: maskinene i rader og oppdragene med kunde og sjåfør på en tidslinje fra 06 til 19.",
       "driverAlt": "Sjåførens telefon i MaskinGo: dagens oppdrag med adresse, maskin og knappen «Jeg er ferdig».",
       "caption": "Ekte skjermbilder fra MaskinGo med oppdiktede data: kontorets kalender og sjåførens telefon."
-    }
+    },
+    "findTitle": "Trenger du maskinentreprenør, kranbil eller transport?",
+    "findLead": "Søk blant firmaene på MaskinGo etter tjeneste og sted, og send en forespørsel rett til firmaet. Gratis for kunder."
   },
   "Nav": {
     "home": "MaskinGo forside",
@@ -80,7 +82,8 @@
     "myJobs": "Mine oppdrag",
     "invoices": "Fakturaer",
     "invoicesWaiting": "{count, plural, one {# oppdrag venter} other {# oppdrag venter}}",
-    "hours": "Timer"
+    "hours": "Timer",
+    "directory": "Finn firma"
   },
   "Auth": {
     "loginTitle": "Logg inn i MaskinGo",

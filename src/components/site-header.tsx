@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Brand } from "@/components/brand";
+import { SearchIcon } from "@/components/icons";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { DIRECTORY_PATH } from "@/lib/directory";
 
 // Header for pages visible without signing in. Sticky and full width like the
 // app header, so Safari colours the strip above it with the same colour.
@@ -14,6 +16,15 @@ export function SiteHeader({ showLogin = true }: { showLogin?: boolean }) {
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-x-3 px-4 py-2 sm:gap-x-4 sm:px-6">
         <Brand href="/" label={t("home")} />
         <div className="flex items-center gap-x-1 sm:gap-x-3">
+          {/* The catalog, from every public page. Phones have no room for it here: the home page
+              shows the search right under the title, and every page links to it in the footer. */}
+          <Link
+            href={DIRECTORY_PATH}
+            className="hidden min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-lg px-2 font-medium whitespace-nowrap text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:px-3"
+          >
+            <SearchIcon className="size-5 shrink-0" />
+            <span className="sr-only lg:not-sr-only">{t("directory")}</span>
+          </Link>
           <LanguageSwitcher />
           <ThemeToggle />
           {showLogin && (

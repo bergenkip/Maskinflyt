@@ -62,7 +62,9 @@
       "calendarAlt": "MaskinGo dienos kalendorius: technika eilutėmis, užsakymai su klientu ir vairuotoju laiko juostoje nuo 06 iki 19 val.",
       "driverAlt": "Vairuotojo telefonas MaskinGo programoje: šiandienos užsakymas su adresu, technika ir mygtuku „Baigiau“.",
       "caption": "Tikri MaskinGo ekranai su išgalvotais duomenimis: biuro kalendorius ir vairuotojo telefonas."
-    }
+    },
+    "findTitle": "Ieškote technikos rangovo, krano ar transporto?",
+    "findLead": "Ieškokite MaskinGo įmonių pagal paslaugą ir vietą ir siųskite užklausą tiesiai įmonei. Klientams nemokamai."
   },
   "Nav": {
     "home": "MaskinGo pradžia",
@@ -80,7 +82,8 @@
     "myJobs": "Mano darbai",
     "invoices": "Sąskaitos",
     "invoicesWaiting": "{count, plural, one {laukia # darbas} few {laukia # darbai} other {laukia # darbų}}",
-    "hours": "Valandos"
+    "hours": "Valandos",
+    "directory": "Rasti įmonę"
   },
   "Auth": {
     "loginTitle": "Prisijunkite prie MaskinGo",
