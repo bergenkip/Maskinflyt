@@ -237,7 +237,8 @@
       "notAllowed": "Du har ikke tilgang til å gjøre dette.",
       "lastOwner": "Firmaet må ha minst én eier.",
       "unknown": "Noe gikk galt. Prøv igjen.",
-      "seatLimit": "Planen er full. Velg en større plan før du inviterer flere."
+      "seatLimit": "Planen er full. Velg en større plan før du inviterer flere.",
+      "readOnly": "Abonnementet er ikke aktivt, så ingenting kan endres nå. Velg en plan under Abonnement."
     },
     "linkCreated": "Lenke laget for en ny {role}. Kopier den nå: av sikkerhetshensyn vises den bare én gang.",
     "invitationFor": "Invitasjon som {role}",
@@ -428,7 +429,8 @@
       "notFound": "Denne invitasjonslenken er ikke lenger gyldig. Be om en ny.",
       "alreadyMember": "Du hører allerede til et firma.",
       "unknown": "Kunne ikke bli med. Prøv igjen.",
-      "seatLimit": "Firmaets plan er full. Be den som inviterte deg om å velge en større plan."
+      "seatLimit": "Firmaets plan er full. Be den som inviterte deg om å velge en større plan.",
+      "readOnly": "Firmaets abonnement er ikke aktivt, så ingen nye kan bli med nå. Be eieren velge en plan."
     },
     "sentBody": "Kontoen din er opprettet. Vi har sendt en bekreftelseslenke til e-posten din. Åpne den for å fullføre, på hvilken som helst enhet. Du er allerede medlem av firmaet."
   },
@@ -1621,14 +1623,16 @@
     },
     "banner": {
       "trial": "{days, plural, one {# dag} other {# dager}} igjen av den gratis prøveperioden.",
-      "trialEnded": "Den gratis prøveperioden er over.",
       "pastDue": "Siste betaling feilet.",
-      "ended": "Abonnementet er avsluttet.",
       "action": "Velg plan",
-      "fix": "Oppdater kortet"
+      "fix": "Oppdater kortet",
+      "readOnly": "Abonnementet er ikke aktivt, så dataene kan bare leses.",
+      "readOnlyMember": "Firmaets abonnement er ikke aktivt, så dataene kan bare leses. Kontakt eieren av firmaet."
     },
     "plansLeadNoVat": "Det kommer ikke mva i tillegg.",
-    "noVat": "Ingen mva i tillegg"
+    "noVat": "Ingen mva i tillegg",
+    "extraPerson": "Over {count} personer: + {price} per ekstra person",
+    "extraPeople": "{count, plural, one {# person} other {# personer}} over 40 faktureres i tillegg."
   },
   "Pricing": {
     "metaTitle": "Priser · MaskinGo",

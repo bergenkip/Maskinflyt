@@ -22,10 +22,12 @@ test("a new company tries MaskinGo for 30 days and sees the plans", async ({ bro
   await expect(page.getByText("Payments are not switched on yet.")).toBeVisible();
   await expect(page.getByRole("heading", { level: 3 })).toHaveText(["Solo", "Start", "Pro", "Bedrift"]);
   await expect(page.getByText("NOK 290")).toBeVisible();
+  await expect(page.getByText("Over 40 people: + NOK 79 / month for each extra person")).toBeVisible();
   await expect(page.getByRole("button", { name: /^Choose / })).toHaveCount(0);
 
   await page.getByRole("link", { name: "Yearly: 2 months free" }).click();
   await expect(page.getByText("NOK 2,900")).toBeVisible();
+  await expect(page.getByText("Over 40 people: + NOK 790 / year for each extra person")).toBeVisible();
 
   for (const locale of locales) {
     await page.context().addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);

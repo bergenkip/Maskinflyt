@@ -237,7 +237,8 @@
       "notAllowed": "You are not allowed to do this.",
       "lastOwner": "The company must keep at least one owner.",
       "unknown": "Something went wrong. Try again.",
-      "seatLimit": "Your plan is full. Choose a bigger plan before you invite more people."
+      "seatLimit": "Your plan is full. Choose a bigger plan before you invite more people.",
+      "readOnly": "The subscription is not active, so nothing can be changed now. Choose a plan under Subscription."
     },
     "linkCreated": "Link created for a new {role}. Copy it now: for security it is shown only once.",
     "invitationFor": "Invitation as {role}",
@@ -428,7 +429,8 @@
       "notFound": "This invitation link is no longer valid. Ask for a new one.",
       "alreadyMember": "You already belong to a company.",
       "unknown": "Could not join. Try again.",
-      "seatLimit": "The company's plan is full. Ask the person who invited you to choose a bigger plan."
+      "seatLimit": "The company's plan is full. Ask the person who invited you to choose a bigger plan.",
+      "readOnly": "The company's subscription is not active, so nobody new can join now. Ask the owner to choose a plan."
     },
     "sentBody": "Your account is created. We sent a confirmation link to your e-mail. Open it to finish, on any device. You are already a member of the company."
   },
@@ -1621,14 +1623,16 @@
     },
     "banner": {
       "trial": "{days, plural, one {# day} other {# days}} left of the free trial.",
-      "trialEnded": "The free trial has ended.",
       "pastDue": "The last payment failed.",
-      "ended": "The subscription has ended.",
       "action": "Choose a plan",
-      "fix": "Update the card"
+      "fix": "Update the card",
+      "readOnly": "The subscription is not active, so the data can only be read.",
+      "readOnlyMember": "The company's subscription is not active, so the data can only be read. Contact the company's owner."
     },
     "plansLeadNoVat": "No VAT (MVA) is added.",
-    "noVat": "No VAT added"
+    "noVat": "No VAT added",
+    "extraPerson": "Over {count} people: + {price} for each extra person",
+    "extraPeople": "{count, plural, one {# person} other {# people}} over 40 billed on top."
   },
   "Pricing": {
     "metaTitle": "Pricing · MaskinGo",
