@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import {
+  ArrowRightIcon,
   CalendarIcon,
   CheckCircleIcon,
   CircleIcon,
@@ -7,11 +9,13 @@ import {
   MapPinIcon,
   PhoneIcon,
   TruckIcon,
+  UserIcon,
   XCircleIcon,
 } from "@/components/icons";
 import { isService } from "@/lib/company-page";
 import { formatPhone } from "@/lib/customers";
 import type { JobRequestStatus } from "@/lib/job-requests";
+import { AnswerForm } from "./answer-form";
 
 export type JobRequestRow = {
   id: string;
@@ -24,6 +28,9 @@ export type JobRequestRow = {
   service: string | null;
   description: string;
   created_at: string;
+  answer: string | null;
+  customer_id: string | null;
+  handled_at: string | null;
 };
 
 const looks: Record<JobRequestStatus, { icon: typeof CircleIcon; tone: string }> = {
@@ -38,7 +45,17 @@ const contactClass =
 // One request: who, where, when and what, with links to call or write back.
 // The status is shown with an icon and words. What the customer wrote is data
 // and is shown exactly as written.
-export async function RequestCard({ request, received, wanted }: { request: JobRequestRow; received: string; wanted: string | null }) {
+export async function RequestCard({
+  request,
+  received,
+  wanted,
+  answered,
+}: {
+  request: JobRequestRow;
+  received: string;
+  wanted: string | null;
+  answered: string | null;
+}) {
   const [t, tServices] = await Promise.all([getTranslations("JobRequests"), getTranslations("Services")]);
   const { icon: StatusIcon, tone } = looks[request.status];
   return (
@@ -93,6 +110,35 @@ export async function RequestCard({ request, received, wanted }: { request: JobR
               <MailIcon className="size-5 shrink-0" />
               <span className="min-w-0 break-all">{request.email}</span>
             </a>
+          )}
+        </div>
+      )}
+
+      {request.status === "new" ? (
+        <AnswerForm request={request.id} name={request.name} hasEmail={Boolean(request.email)} />
+      ) : (
+        <div className="grid gap-3 border-t border-border pt-3">
+          {answered && <p className="text-sm text-muted">{t("answeredOn", { time: answered })}</p>}
+          {request.answer && (
+            <div className="grid gap-1">
+              <p className="text-sm font-medium text-muted">{t("yourMessage")}</p>
+              <p className="[overflow-wrap:anywhere] whitespace-pre-line">{request.answer}</p>
+            </div>
+          )}
+          {request.status === "accepted" && (
+            <div className="grid gap-2 sm:flex sm:flex-wrap">
+              <Link href={`/app/jobs/new?request=${request.id}`} className={contactClass}>
+                <CalendarIcon className="size-5 shrink-0" />
+                {t("plan")}
+                <ArrowRightIcon className="size-5 shrink-0" />
+              </Link>
+              {request.customer_id && (
+                <Link href={`/app/customers/${request.customer_id}`} className={contactClass}>
+                  <UserIcon className="size-5 shrink-0" />
+                  {t("customer")}
+                </Link>
+              )}
+            </div>
           )}
         </div>
       )}

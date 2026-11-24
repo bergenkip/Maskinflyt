@@ -594,7 +594,8 @@
     "timeSpan": "{start}–~{end}",
     "statusLocked": "Sąskaita pažymėta kaip išsiųsta: būsena lieka „Atlikta“. Norėdami ją keisti, atšaukite žymą sąskaitos skiltyje.",
     "requestsLink": "Užklausos iš įmonės puslapio",
-    "requestsNew": "{count, plural, one {# nauja} few {# naujos} other {# naujų}}"
+    "requestsNew": "{count, plural, one {# nauja} few {# naujos} other {# naujų}}",
+    "fromRequest": "Pagal {name} užklausą. Pasirinkite laiką ir išsaugokite užsakymą."
   },
   "Calendar": {
     "title": "Kalendorius",
@@ -1964,6 +1965,41 @@
       "new": "Nauja",
       "accepted": "Priimta",
       "declined": "Atmesta"
+    },
+    "messageLabel": "Žinutė klientui (nebūtina)",
+    "messageHintEmail": "Klientas gaus jūsų atsakymą el. paštu.",
+    "messageHintPhone": "Klientas neturi el. pašto: paskambinkite ir praneškite atsakymą.",
+    "accept": "Priimti ir suplanuoti darbą",
+    "decline": "Atmesti",
+    "declineConfirm": "Atmesti {name} užklausą? Atšaukti nebus galima.",
+    "declineYes": "Taip, atmesti",
+    "cancel": "Atšaukti",
+    "answering": "Išsaugoma…",
+    "answeredOn": "Atsakyta {time}",
+    "yourMessage": "Jūsų žinutė",
+    "plan": "Suplanuoti darbą",
+    "customer": "Žiūrėti klientą",
+    "emailSent": "Klientui pranešta el. paštu.",
+    "emailFailed": "Atsakymas išsaugotas, bet laiško išsiųsti nepavyko. Paskambinkite arba parašykite klientui.",
+    "errors": {
+      "answerTooLong": "Žinutė gali būti ne ilgesnė nei 1000 simbolių.",
+      "alreadyAnswered": "Į šią užklausą jau kažkas atsakė.",
+      "unknown": "Atsakymo išsaugoti nepavyko. Bandykite dar kartą."
     }
+  },
+  "RequestAnswerEmail": {
+    "acceptedSubject": "{company} priėmė jūsų užklausą",
+    "acceptedIntro": "{company} priėmė jūsų užklausą ir susisieks su jumis dėl laiko.",
+    "declinedSubject": "Atsakymas į jūsų užklausą įmonei {company}",
+    "declinedIntro": "Deja, {company} negali atlikti šio darbo.",
+    "greeting": "Sveiki, {name},",
+    "place": "Vieta",
+    "date": "Pageidaujama data",
+    "message": "Žinutė nuo {company}",
+    "questionsPhone": "Turite klausimų? Atsakykite į šį laišką arba skambinkite {phone}.",
+    "questions": "Turite klausimų? Atsakykite į šį laišką.",
+    "closing": "Pagarbiai",
+    "footer": "Išsiųsta per MaskinGo įmonės {company} vardu.",
+    "test": "TEST: Šis laiškas išsiųstas iš MaskinGo bandomosios paskyros ir nėra tikras atsakymas. Gavėjas: {to}"
   }
 }

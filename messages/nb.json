@@ -594,7 +594,8 @@
     "timeSpan": "{start}–~{end}",
     "statusLocked": "Fakturaen er merket som sendt: statusen blir «Ferdig». Angre merkingen i fakturadelen for å endre den.",
     "requestsLink": "Forespørsler fra firmasiden",
-    "requestsNew": "{count} nye"
+    "requestsNew": "{count} nye",
+    "fromRequest": "Fra forespørselen til {name}. Velg tidspunkt og lagre oppdraget."
   },
   "Calendar": {
     "title": "Kalender",
@@ -1964,6 +1965,41 @@
       "new": "Ny",
       "accepted": "Godtatt",
       "declined": "Avslått"
+    },
+    "messageLabel": "Melding til kunden (valgfritt)",
+    "messageHintEmail": "Kunden får svaret ditt på e-post.",
+    "messageHintPhone": "Kunden har ikke e-post: ring og gi svaret.",
+    "accept": "Godta og planlegg jobben",
+    "decline": "Avslå",
+    "declineConfirm": "Avslå forespørselen fra {name}? Det kan ikke angres.",
+    "declineYes": "Ja, avslå",
+    "cancel": "Avbryt",
+    "answering": "Lagrer…",
+    "answeredOn": "Besvart {time}",
+    "yourMessage": "Meldingen din",
+    "plan": "Planlegg jobben",
+    "customer": "Se kunden",
+    "emailSent": "Kunden har fått beskjed på e-post.",
+    "emailFailed": "Svaret er lagret, men e-posten kunne ikke sendes. Ring eller skriv til kunden.",
+    "errors": {
+      "answerTooLong": "Meldingen kan ha høyst 1000 tegn.",
+      "alreadyAnswered": "Noen har allerede svart på denne forespørselen.",
+      "unknown": "Svaret ble ikke lagret. Prøv igjen."
     }
+  },
+  "RequestAnswerEmail": {
+    "acceptedSubject": "{company} har godtatt forespørselen din",
+    "acceptedIntro": "{company} har godtatt forespørselen din og tar kontakt for å avtale tidspunkt.",
+    "declinedSubject": "Svar på forespørselen din til {company}",
+    "declinedIntro": "Dessverre kan ikke {company} ta på seg denne jobben.",
+    "greeting": "Hei {name},",
+    "place": "Sted",
+    "date": "Ønsket dato",
+    "message": "Melding fra {company}",
+    "questionsPhone": "Spørsmål? Svar på denne e-posten eller ring {phone}.",
+    "questions": "Spørsmål? Svar på denne e-posten.",
+    "closing": "Vennlig hilsen",
+    "footer": "Sendt med MaskinGo for {company}.",
+    "test": "TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke et ekte svar. Mottaker: {to}"
   }
 }
