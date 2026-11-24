@@ -29,7 +29,7 @@ export default async function JobRequestsPage() {
     getFormatter(),
     supabase
       .from("job_requests")
-      .select("id, status, name, phone, email, place, wanted_date, service, description, created_at")
+      .select("id, status, name, phone, email, place, wanted_date, service, description, created_at, answer, customer_id, handled_at")
       .eq("organization_id", organization.id)
       .order("created_at", { ascending: false })
       .limit(200),
@@ -87,6 +87,7 @@ export default async function JobRequestsPage() {
                   request={request}
                   received={received(request.created_at)}
                   wanted={request.wanted_date ? day(request.wanted_date) : null}
+                  answered={request.handled_at ? received(request.handled_at) : null}
                 />
               </li>
             ))}

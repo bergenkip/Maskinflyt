@@ -477,3 +477,16 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
 - Dažniausiai užsakomos įmonės viršuje; greitas užsakymas (kontaktai ir adresai užpildomi, ankstesnį galima pakartoti).
 - Įmonės puslapyje rekomendacija klientui užsiregistruoti: užsakymai realiu laiku, greičiau ir greitesnis patvirtinimas.
   Patvirtina vis tiek įmonė (jokio automatinio patvirtinimo), tik greičiau, nes duomenys jau patikrinti.
+
+### 15b-2: atsakymas į užklausą (2026-11-24)
+- Migracija `20261124190000_job_request_answers.sql`: `job_requests.answer` ir `customer_id`;
+  `answer_job_request(request, accept, answer_text)` vieną kartą (`already_answered`), tik biuras; savininkui ir
+  administratoriui reikia antro žingsnio, kaip pridedant klientą. Priėmus randamas aktyvus klientas su tuo pačiu
+  telefonu ar el. paštu arba sukuriamas naujas privatus klientas.
+- Kortelėje `/app/jobs/requests`: žinutė klientui (nebūtina), „Priimti ir suplanuoti darbą“ ir „Atmesti“
+  (atmetimas klausia dar kartą). Priėmus atsidaro užsakymo forma `/app/jobs/new?request=…` su klientu, adresu,
+  data ir aprašymu; užsakymą išsaugo žmogus. Atsakytose matyti žinutė, „Suplanuoti darbą“ ir „Žiūrėti klientą“.
+- Laiškas klientui jo kalba (`src/lib/email/answer-email.ts`, tekstai `RequestAnswerEmail` vertimų failuose,
+  `createTranslator`), atsakymas (reply-to) eina įmonei. Kalbą reikia imti iš failų tiesiogiai: `getTranslations({ locale })`
+  serveryje grąžina lankytojo kalbą.
+- Testai: `34_job_request_answers.test.sql`, `answer-email.test.ts`, `e2e/job-requests.spec.ts` (priimti ir atmesti).
