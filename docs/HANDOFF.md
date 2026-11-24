@@ -349,7 +349,7 @@ papildomo žmogaus kaina 79 kr (dar neapmokestinama, 14b etapas). Puslapis `src/
 tekstai `Pricing`, nuoroda poraštėje. Sąlygų skyrius „Pris“ ir privatumo politika papildyti (Stripe kaip tiekėjas).
 Testai: `src/lib/pricing.test.ts`, `e2e/pricing.spec.ts`.
 
-## Privatumo politika ir naudojimo sąlygos (2026-11-17, juodraštis)
+## Privatumo politika ir naudojimo sąlygos (2026-11-17)
 Puslapiai `/personvern` ir `/vilkar` (nb/en/lt), tekstai `messages/*.json` → `Legal`, įmonės duomenys `src/lib/legal.ts`
 (`COMPANY`, `LEGAL_UPDATED`). Nuorodos poraštėje (`src/components/site-footer.tsx`) ir po registracijos mygtuku.
 Faktai patikrinti 2026-11-17: Supabase `eu-north-1` (Stokholmas), Vercel funkcijos `arn1`, Resend ES regionas,
@@ -378,3 +378,6 @@ MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), e
   Kol jų nėra, puslapis sako „Mokėjimai dar neįjungti“ ir mygtukų nerodo.
 - Testai: `29_subscriptions.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts` (CI dabar paleidžia ir `e2e/hours.spec.ts`).
 - 14b: tik skaitymo režimas neapmokėjus, Bedrift papildomi žmonės per Stripe kiekį.
+
+2026-11-24: Li sprendimu nuimta geltona „juodraščio“ pastaba nuo `/personvern`, `/vilkar` ir `/databehandleravtale`.
+Tekstus rašė Claude, ne advokatas; atsakomybė už juos tenka įmonei.

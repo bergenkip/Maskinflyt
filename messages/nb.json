@@ -1005,7 +1005,6 @@
   },
   "Legal": {
     "updated": "Sist oppdatert {date}",
-    "draftNote": "Dette er et utkast som skal gjennomgås av en jurist før MaskinGo tas i bruk med ekte kundedata.",
     "privacy": {
       "title": "Personvernerklæring",
       "lead": "Her forklarer vi hvilke personopplysninger MaskinGo behandler, hvorfor, og hvilke rettigheter du har.",

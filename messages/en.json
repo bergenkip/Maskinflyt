@@ -1005,7 +1005,6 @@
   },
   "Legal": {
     "updated": "Last updated {date}",
-    "draftNote": "This is a draft that a lawyer will review before MaskinGo is used with real customer data.",
     "privacy": {
       "title": "Privacy policy",
       "lead": "This page explains which personal data MaskinGo processes, why, and what rights you have.",

@@ -1005,7 +1005,6 @@
   },
   "Legal": {
     "updated": "Atnaujinta {date}",
-    "draftNote": "Tai juodraštis, kurį peržiūrės teisininkas, prieš naudojant MaskinGo su tikrais klientų duomenimis.",
     "privacy": {
       "title": "Privatumo politika",
       "lead": "Čia paaiškiname, kokius asmens duomenis tvarko MaskinGo, kodėl ir kokias teises turite.",
