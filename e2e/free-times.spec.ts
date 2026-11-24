@@ -111,7 +111,9 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   // The office sees the time and plans the job at it.
   await page.goto("/app/jobs/requests");
   const kari = page.getByRole("article", { name: "Kari Nordmann" });
-  await expect(kari.getByText(new RegExp(`^Preferred: .* at ${clock}$`))).toBeVisible();
+  // The app shows the time the English way (e.g. 08:00 AM), in the company's time zone.
+  const shown = new Intl.DateTimeFormat("en", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Oslo" }).format(new Date(startsAt!));
+  await expect(kari.getByText(new RegExp(`^Preferred: .* at ${shown}$`))).toBeVisible();
   await kari.getByRole("button", { name: "Accept and plan the job" }).click();
   await page.waitForURL("**/app/jobs/new?**");
   await expect(page.getByLabel("Date", { exact: true })).toHaveValue(chosenDay);
