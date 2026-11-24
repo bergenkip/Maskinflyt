@@ -56,7 +56,8 @@
       }
     },
     "contactTitle": "Norite išbandyti MaskinGo?",
-    "contactBody": "MaskinGo yra naujas ir kuriamas kartu su pirmaisiais naudotojais. Susikurkite paskyrą arba parašykite mums:",
+    "contactBody": "Tinka ir mažoms, ir didelėms įmonėms, net jei dirbate vienas. Visuose planuose yra visos funkcijos, o kaina priklauso tik nuo to, kiek jūsų yra. Klausimų? Parašykite mums.",
+    "seePrices": "Visos kainos",
     "showcase": {
       "calendarAlt": "MaskinGo dienos kalendorius: technika eilutėmis, užsakymai su klientu ir vairuotoju laiko juostoje nuo 06 iki 19 val.",
       "driverAlt": "Vairuotojo telefonas MaskinGo programoje: šiandienos užsakymas su adresu, technika ir mygtuku „Baigiau“.",
@@ -594,7 +595,7 @@
     "viewLabel": "Rodyti užsakymus kaip",
     "viewList": "Sąrašas",
     "viewCalendar": "Kalendorius",
-    "timeSpan": "{start}–~{end}",
+    "timeSpan": "{start} – ~{end}",
     "statusLocked": "Sąskaita pažymėta kaip išsiųsta: būsena lieka „Atlikta“. Norėdami ją keisti, atšaukite žymą sąskaitos skiltyje.",
     "requestsLink": "Užklausos iš įmonės puslapio",
     "requestsNew": "{count, plural, one {# nauja} few {# naujos} other {# naujų}}",

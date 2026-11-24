@@ -12,8 +12,8 @@ import {
   type LandingPage,
 } from "@/lib/industries";
 import { IndustryLink } from "@/components/industry-link";
+import { TrialOffer } from "@/components/trial-offer";
 import { industryPhotoSize, industryPhotos } from "@/lib/industry-photos";
-import { COMPANY } from "@/lib/legal";
 import { SITE_URL, publicPageMetadata } from "@/lib/site";
 
 export async function industryMetadata(
@@ -85,7 +85,6 @@ const pointIcons: Record<LandingPage, (keyof typeof icons)[]> = {
 // app: no prices, ratings or customer quotes until they really exist.
 export function IndustryPage({ industry }: { industry: LandingPage }) {
   const t = useTranslations("Industry");
-  const tHome = useTranslations("Home");
   const tNav = useTranslations("Nav");
 
   const problems = t.raw(`${industry}.problems`) as string[];
@@ -233,34 +232,7 @@ export function IndustryPage({ industry }: { industry: LandingPage }) {
         </dl>
       </section>
 
-      <section
-        aria-labelledby="contact-title"
-        className="mt-14 rounded-xl border border-border bg-surface p-5 sm:mt-20 sm:p-8"
-      >
-        <h2
-          id="contact-title"
-          className="text-2xl font-semibold tracking-tight"
-        >
-          {tHome("contactTitle")}
-        </h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-muted">
-          {tHome("contactBody")}
-        </p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Link href="/signup" className={primaryButton}>
-            {tNav("signup")}
-          </Link>
-          <a
-            href={`mailto:${COMPANY.email}`}
-            className={`${secondaryButton} gap-2`}
-          >
-            <Icon className="size-5 shrink-0 text-accent">
-              <path d="M4 6h16v12H4zM4 7l8 6 8-6" />
-            </Icon>
-            {COMPANY.email}
-          </a>
-        </div>
-      </section>
+      <TrialOffer />
 
       <nav aria-labelledby="others-title" className="mt-14 sm:mt-20">
         <h2

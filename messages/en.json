@@ -56,7 +56,8 @@
       }
     },
     "contactTitle": "Want to try MaskinGo?",
-    "contactBody": "MaskinGo is new and is being built together with its first users. Create an account, or write to us:",
+    "contactBody": "Fits small and large companies alike, even if you work on your own. Every plan has every feature, and the price only depends on how many of you there are. Questions? Write to us.",
+    "seePrices": "See all prices",
     "showcase": {
       "calendarAlt": "The MaskinGo calendar for one day: machines in rows and jobs with customer and driver on a timeline from 06 to 19.",
       "driverAlt": "The driver's phone in MaskinGo: today's job with address, machine and the “I'm finished” button.",
@@ -594,7 +595,7 @@
     "viewLabel": "Show jobs as",
     "viewList": "List",
     "viewCalendar": "Calendar",
-    "timeSpan": "{start}–~{end}",
+    "timeSpan": "{start} – ~{end}",
     "statusLocked": "The invoice is marked as sent: the status stays “Done”. Take the mark back in the invoice section to change it.",
     "requestsLink": "Requests from the company page",
     "requestsNew": "{count} new",
