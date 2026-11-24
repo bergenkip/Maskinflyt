@@ -11,6 +11,12 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
   const name = newCompanyName("page");
   await createCompany(page, name);
 
+  // The overview recommends the page until it is published.
+  await page.goto("/app");
+  const tips = page.getByRole("region", { name: "Recommendations" });
+  await expect(tips.getByRole("heading", { name: "Create the company page" })).toBeVisible();
+  await expect(tips.getByRole("link", { name: "Create the page" })).toHaveAttribute("href", "/app/public-page");
+
   await page.goto("/app/settings");
   await page.getByRole("link", { name: "Open the company page" }).click();
   await page.waitForURL("**/app/public-page");

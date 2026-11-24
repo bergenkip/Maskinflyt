@@ -10,10 +10,13 @@ import {
   CircleIcon,
   ClockIcon,
   ContactsIcon,
+  GlobeIcon,
+  ImageIcon,
   TruckIcon,
   UsersIcon,
 } from "@/components/icons";
 import { addDays } from "@/lib/calendar";
+import { pagePath } from "@/lib/company-page";
 import { fromLocalParts, toLocalParts } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import { formatOrgNumber } from "@/lib/org-number";
@@ -44,7 +47,7 @@ export default async function DashboardPage() {
   const today = toLocalParts(new Date(), organization.timeZone).date;
   const midnight = (day: string) =>
     fromLocalParts(day, "00:00", organization.timeZone) ?? fromLocalParts(day, "01:00", organization.timeZone)!;
-  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers, upcomingJobs, unplannedJobs, anyJob, myJobs] =
+  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers, upcomingJobs, unplannedJobs, anyJob, companyPage, companyPhotos, myJobs] =
     await Promise.all([
       getTranslations("Dashboard"),
       getTranslations("Roles"),
@@ -95,6 +98,11 @@ export default async function DashboardPage() {
             .gte("ends_at", now)
         : null,
       showJobs ? supabase.from("jobs").select("id", { count: "exact", head: true }).eq("organization_id", organization.id) : null,
+      // Recommendations (owners and admins): the public page and its photos.
+      isAdmin ? supabase.from("company_pages").select("slug, published").eq("organization_id", organization.id).maybeSingle() : null,
+      isAdmin
+        ? supabase.from("company_photos").select("id", { count: "exact", head: true }).eq("organization_id", organization.id)
+        : null,
       supabase.rpc("my_jobs", {
         org: organization.id,
         from_at: midnight(today).toISOString(),
@@ -108,6 +116,12 @@ export default async function DashboardPage() {
   const firstName = profile.data?.first_name?.trim();
   const memberCount = members.count ?? 0;
   const number = (value: number | null) => (value === null ? "–" : format.number(value));
+  const page = companyPage?.data as { slug: string; published: boolean } | null | undefined;
+  const pagePublished = page?.published === true;
+  const hasPhotos = (companyPhotos?.count ?? 0) > 0;
+  // Shown until everything is done; a query that failed hides the section rather than guessing.
+  const showRecommendations =
+    isAdmin && !companyPage?.error && !companyPhotos?.error && !(pagePublished && hasPhotos);
 
   return (
     <div className="grid gap-5 sm:gap-6">
@@ -218,7 +232,74 @@ export default async function DashboardPage() {
           </ol>
         </section>
       )}
+
+      {showRecommendations && (
+        <section aria-labelledby="tips-title" className="grid gap-3 rounded-2xl border border-border bg-surface p-4 sm:p-5">
+          <div className="grid gap-1">
+            <h2 id="tips-title" className="text-lg font-semibold">
+              {t("tipsTitle")}
+            </h2>
+            <p className="text-muted">{t("tipsLead")}</p>
+          </div>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            <Tip
+              icon={<GlobeIcon className="size-6" />}
+              title={t("tipPageTitle")}
+              text={t("tipPageText")}
+              done={pagePublished}
+              href={pagePublished && page ? pagePath(page.slug) : "/app/public-page"}
+              action={pagePublished ? t("tipPageOpen") : page ? t("tipPageFinish") : t("tipPageAction")}
+              status={t}
+            />
+            <Tip
+              icon={<ImageIcon className="size-6" />}
+              title={t("tipPhotosTitle")}
+              text={t("tipPhotosText")}
+              done={hasPhotos}
+              href="/app/public-page#page-photos"
+              action={t("tipPhotosAction")}
+              status={t}
+            />
+          </ul>
+        </section>
+      )}
     </div>
+  );
+}
+
+// A recommendation: what it brings, and a link to do it. Done is said with an icon and words.
+function Tip(props: {
+  icon: ReactNode;
+  title: string;
+  text: string;
+  done: boolean;
+  href: string;
+  action: string;
+  status: (key: "stepDone") => string;
+}) {
+  return (
+    <li className="flex flex-col gap-3 rounded-xl border border-border bg-background p-4">
+      <div className="flex items-start gap-3">
+        <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">{props.icon}</span>
+        <div className="grid min-w-0 gap-1">
+          <h3 className="font-semibold">{props.title}</h3>
+          <p className="text-sm text-muted">{props.text}</p>
+          {props.done && (
+            <p className="flex items-center gap-1.5 text-sm font-medium text-success">
+              <CheckCircleIcon className="size-4" />
+              {props.status("stepDone")}
+            </p>
+          )}
+        </div>
+      </div>
+      <Link
+        href={props.href}
+        className="mt-auto flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
+      >
+        {props.action}
+        <ArrowRightIcon className="size-5" />
+      </Link>
+    </li>
   );
 }
 

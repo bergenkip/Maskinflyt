@@ -174,7 +174,17 @@
     "jobsLabel": "Upcoming jobs",
     "jobsDetail": "{count, plural, =0 {All are planned} one {# not planned yet} other {# not planned yet}}",
     "myJobsLabel": "My jobs today",
-    "myJobsDetail": "{count, plural, =0 {all done} one {# still to do} other {# still to do}}"
+    "myJobsDetail": "{count, plural, =0 {all done} one {# still to do} other {# still to do}}",
+    "tipsTitle": "Recommendations",
+    "tipsLead": "Ways to get more jobs.",
+    "tipPageTitle": "Create the company page",
+    "tipPageText": "A page you can send to customers: what you do, where you work and how to reach you.",
+    "tipPageAction": "Create the page",
+    "tipPageFinish": "Finish and publish",
+    "tipPageOpen": "Open the page",
+    "tipPhotosTitle": "Add a logo and photos",
+    "tipPhotosText": "Photos of your machines and jobs make the page more trustworthy.",
+    "tipPhotosAction": "Add photos"
   },
   "Roles": {
     "owner": "Owner",
