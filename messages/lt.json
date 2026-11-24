@@ -129,7 +129,9 @@
     "confirmTitle": "El. pašto patvirtinimas",
     "confirmChecking": "Tvirtinamas jūsų el. paštas …",
     "confirmFailed": "Nuoroda neteisinga arba jau panaudota. Jei el. paštą jau patvirtinote anksčiau, tiesiog prisijunkite su el. paštu ir slaptažodžiu.",
-    "emailConfirmed": "El. paštas patvirtintas. Dabar galite prisijungti."
+    "emailConfirmed": "El. paštas patvirtintas. Dabar galite prisijungti.",
+    "customerSignupTitle": "Sukurti kliento paskyrą",
+    "customerSignupLead": "Užsakymams iš MaskinGo įmonių. Jūsų duomenys užpildomi automatiškai, o visas užklausas matote vienoje vietoje."
   },
   "Onboarding": {
     "title": "Sukurkite savo įmonę",
@@ -1957,7 +1959,13 @@
     "times": "Pasirinkite laiką (nebūtina)",
     "timesHint": "Laisvi artimiausių dviejų savaičių laikai. Laiką patvirtina įmonė.",
     "timeNone": "Be konkretaus laiko",
-    "noTimes": "Artimiausias dvi savaites laisvų laikų nėra. Vietoj to nurodykite pageidaujamą dieną."
+    "noTimes": "Artimiausias dvi savaites laisvų laikų nėra. Vietoj to nurodykite pageidaujamą dieną.",
+    "signedInAs": "Prisijungta kaip {name}. Jūsų duomenys užpildyti, o užklausa išsaugoma jūsų užklausų sąraše.",
+    "seeMyRequests": "Žiūrėti savo užklausas",
+    "inviteTitle": "Užsakykite greičiau su kliento paskyra",
+    "inviteText": "Jūsų duomenys užpildomi automatiškai, visas užklausas matote vienoje vietoje, o įmonė mato, kad jūsų el. paštas patvirtintas. Darbą vis tiek patvirtina įmonė.",
+    "inviteSignup": "Sukurti kliento paskyrą",
+    "inviteLogin": "Prisijungti"
   },
   "JobRequests": {
     "title": "Užklausos",
@@ -1999,7 +2007,8 @@
       "alreadyAnswered": "Į šią užklausą jau kažkas atsakė.",
       "unknown": "Atsakymo išsaugoti nepavyko. Bandykite dar kartą."
     },
-    "wantedAt": "Pageidaujama: {date} {time}"
+    "wantedAt": "Pageidaujama: {date} {time}",
+    "fromAccount": "Kliento paskyra, el. paštas patvirtintas"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} priėmė jūsų užklausą",
@@ -2088,5 +2097,44 @@
     "byPlace": "Vietos",
     "ctaTitle": "Turite technikos įmonę?",
     "ctaText": "Paskelbkite įmonės puslapį MaskinGo ir jis bus rodomas čia be papildomo mokesčio. Klientai jus suras ir siųs užklausas, kurias jūs priimsite arba atmesite."
+  },
+  "CustomerAccount": {
+    "title": "Mano užklausos",
+    "greeting": "Sveiki, {name}",
+    "lead": "Čia matote savo užklausas ir vėl užsakote iš įmonių, kurias naudojate.",
+    "findCompany": "Rasti įmonę",
+    "companiesTitle": "Jūsų įmonės",
+    "requestsCount": "{count, plural, one {# užklausa} few {# užklausos} other {# užklausų}}",
+    "orderAgain": "Siųsti naują užklausą",
+    "requestsTitle": "Jūsų užklausos",
+    "noRequests": "Užklausų dar nėra. Raskite įmonę ir išsiųskite užklausą prisijungę, tada ji atsiras čia.",
+    "sent": "Išsiųsta {date}",
+    "wantedOn": "Pageidaujama: {date}",
+    "wantedAt": "Pageidaujama: {date}, {time}",
+    "statuses": {
+      "new": "Laukia atsakymo",
+      "accepted": "Priimta",
+      "declined": "Atmesta"
+    },
+    "answerFrom": "{company} atsakymas",
+    "sendAgain": "Siųsti dar kartą",
+    "detailsTitle": "Jūsų duomenys",
+    "detailsLead": "Užpildomi siunčiant užklausą. Kiekvieną kartą galite juos pakeisti formoje.",
+    "name": "Vardas:",
+    "email": "El. paštas:",
+    "phone": "Telefonas",
+    "place": "Įprasta darbo vieta",
+    "placeHint": "Pavyzdžiui, jūsų adresas. Nebūtina.",
+    "save": "Išsaugoti",
+    "saving": "Saugoma…",
+    "saved": "Išsaugota.",
+    "create": "Pradėti užsakinėti kaip klientas",
+    "startTitle": "Užsakykite kaip klientas",
+    "startLead": "Su kliento paskyra matote savo užklausas įmonėms ir greitai užsakote dar kartą. Jei norite, pridėkite telefoną ir įprastą vietą.",
+    "errors": {
+      "phoneInvalid": "Įveskite teisingą telefono numerį.",
+      "placeTooLong": "Vieta gali būti ne ilgesnė nei 200 ženklų.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
   }
 }

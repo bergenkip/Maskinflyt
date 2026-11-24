@@ -48,6 +48,14 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // The customer's own page (stage 16a): sign in, then back to it.
+  if (!signedIn && (pathname === "/kunde" || pathname.startsWith("/kunde/"))) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = new URLSearchParams({ next: "/kunde" }).toString();
+    return NextResponse.redirect(url);
+  }
+
   // Signed-in people go straight to the app, also from the start page.
   if (signedIn && (pathname === "/" || pathname === "/login" || pathname === "/signup")) {
     const url = request.nextUrl.clone();

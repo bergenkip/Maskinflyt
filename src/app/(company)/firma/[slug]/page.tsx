@@ -8,6 +8,9 @@ import { getSupabaseEnv } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { getPagePhotos } from "@/lib/company-photos-server";
 import type { FreeSlot } from "@/lib/company-hours";
+import { getCustomerAccount, getMyRequests } from "@/lib/customer-account-server";
+import { formatPhone } from "@/lib/customers";
+import type { JobRequestValues } from "@/lib/job-requests";
 import { CompanyView, type PublicCompany } from "./company-view";
 
 // Published pages for everyone; an unpublished one only for the company's own members, as a preview.
@@ -37,8 +40,8 @@ export async function generateMetadata({ params }: PageProps<"/firma/[slug]">): 
   };
 }
 
-export default async function CompanyPublicPage({ params }: PageProps<"/firma/[slug]">) {
-  const { slug } = await params;
+export default async function CompanyPublicPage({ params, searchParams }: PageProps<"/firma/[slug]">) {
+  const [{ slug }, { gjenta }] = await Promise.all([params, searchParams]);
   const company = await loadCompany(slug);
   if (!company) notFound();
   const supabase = await createClient();
@@ -48,6 +51,29 @@ export default async function CompanyPublicPage({ params }: PageProps<"/firma/[s
   ]);
   // With free times switched on, the request form offers them; otherwise a wished-for day.
   const freeTimes = (booking.data as { free_times: boolean } | null)?.free_times === true;
-  const slots = freeTimes ? await supabase.rpc("company_free_slots", { page_slug: company.slug }) : null;
-  return <CompanyView company={company} photos={photos} slots={slots && !slots.error ? ((slots.data ?? []) as FreeSlot[]) : null} />;
+  const [slots, customer] = await Promise.all([
+    freeTimes ? supabase.rpc("company_free_slots", { page_slug: company.slug }) : null,
+    getCustomerAccount(),
+  ]);
+  // A signed-in customer (stage 16a): their details, and with ?gjenta= an earlier request to this company.
+  let prefill: Partial<JobRequestValues> | undefined;
+  if (customer) {
+    const again =
+      typeof gjenta === "string" ? (await getMyRequests())?.find((r) => r.id === gjenta && r.slug === company.slug) : undefined;
+    prefill = {
+      name: customer.name,
+      phone: customer.phone ? formatPhone(customer.phone) : "",
+      email: customer.email,
+      place: again?.place ?? customer.place ?? "",
+      ...(again ? { description: again.description, service: again.service ?? "" } : {}),
+    };
+  }
+  return (
+    <CompanyView
+      company={company}
+      photos={photos}
+      slots={slots && !slots.error ? ((slots.data ?? []) as FreeSlot[]) : null}
+      customer={customer ? { name: customer.name, prefill: prefill! } : null}
+    />
+  );
 }

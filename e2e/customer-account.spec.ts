@@ -1,0 +1,99 @@
+import { expect, test } from "@playwright/test";
+import { createCompany, fillSignUp, locales, newCompanyName, newEmail, newPage, shootAllWidths, signUp } from "./helpers";
+
+// Stage 16a: a customer signs up as a customer (no company), sends a request
+// with their details filled in, follows it on /kunde and orders again. The
+// company still accepts it by hand. Needs Supabase (the e2e-auth CI job).
+test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
+
+test("a customer account orders, follows the answer and orders again", async ({ browser, baseURL }) => {
+  test.setTimeout(420_000);
+  const { page } = await newPage(browser, baseURL!, "en");
+  await signUp(page, newEmail("cust-owner"), "Anna", "Berg");
+  const name = newCompanyName("cust");
+  await createCompany(page, name);
+  await page.goto("/app/public-page");
+  const slug = await page.getByLabel("Address").inputValue();
+  await page.getByLabel("About the company").fill("Kranbil med fører i Bergen.");
+  await page.getByRole("checkbox", { name: "Crane truck" }).check();
+  await page.getByLabel("Town or city").fill("Bergen");
+  await page.getByLabel("E-mail").fill(`post-${Date.now()}@fjellkran.test`);
+  await page.getByRole("checkbox", { name: "Show publicly" }).check();
+  await page.getByRole("button", { name: "Save" }).first().click();
+  await expect(page.getByText("Saved. The page is public.")).toBeVisible();
+
+  // Signed out, /kunde asks to sign in first.
+  const customer = await newPage(browser, baseURL!, "en");
+  await customer.page.goto("/kunde");
+  await customer.page.waitForURL((url) => url.pathname === "/login" && url.searchParams.get("next") === "/kunde");
+
+  // The company page invites to a customer account; the form still works without one.
+  await customer.page.goto(`/firma/${slug}`);
+  const form = customer.page.getByRole("region", { name: "Send a request" });
+  await expect(form.getByRole("heading", { name: "Order faster with a customer account" })).toBeVisible();
+  await form.getByRole("link", { name: "Create a customer account" }).click();
+  await customer.page.waitForURL("**/signup?konto=kunde");
+  await expect(customer.page.getByRole("heading", { level: 1, name: "Create a customer account" })).toBeVisible();
+  const email = newEmail("customer");
+  await fillSignUp(customer.page, email, "Kari", "Nordmann");
+  await customer.page.waitForURL((url) => url.pathname === "/kunde");
+  await expect(customer.page.getByRole("heading", { level: 1, name: "Hi, Kari" })).toBeVisible();
+  await expect(customer.page.getByText("No requests yet.", { exact: false })).toBeVisible();
+
+  // The details that fill in every request.
+  const details = customer.page.getByRole("region", { name: "Your details" });
+  await details.getByLabel("Phone").fill("12");
+  await details.getByRole("button", { name: "Save" }).click();
+  await expect(details.getByText("Enter a valid phone number.")).toBeVisible();
+  await details.getByLabel("Phone").fill("+47 912 34 569");
+  await details.getByLabel("Usual place of work").fill("Strandgaten 1, Bergen");
+  await details.getByRole("button", { name: "Save" }).click();
+  await expect(details.getByText("Saved.")).toBeVisible();
+
+  // A customer without a company is never asked to create one.
+  await customer.page.goto("/app");
+  await customer.page.waitForURL((url) => url.pathname === "/kunde");
+
+  // Ordering: the form is filled in from the account.
+  await customer.page.goto(`/firma/${slug}`);
+  await expect(form.getByText("Signed in as Kari Nordmann.", { exact: false })).toBeVisible();
+  await expect(form.getByLabel("Name")).toHaveValue("Kari Nordmann");
+  await expect(form.getByLabel("Phone")).toHaveValue("+47 912 34 569");
+  await expect(form.getByLabel("E-mail")).toHaveValue(email);
+  await expect(form.getByLabel("Where is the job?")).toHaveValue("Strandgaten 1, Bergen");
+  await form.getByLabel("What do you need help with?").fill("Løfte takstein til 3. etasje.");
+  await form.getByRole("button", { name: "Send request" }).click();
+  await expect(form.getByText("Your request has been sent")).toBeVisible();
+  await form.getByRole("link", { name: "See your requests" }).click();
+  await customer.page.waitForURL((url) => url.pathname === "/kunde");
+  const mine = customer.page.getByRole("article", { name });
+  await expect(mine.getByText("Waiting for an answer")).toBeVisible();
+  await expect(customer.page.getByRole("region", { name: "Your companies" }).getByText("1 request")).toBeVisible();
+
+  // The office sees that it came from a customer account, and accepts it by hand.
+  await page.goto("/app/jobs/requests");
+  const kari = page.getByRole("article", { name: "Kari Nordmann" });
+  await expect(kari.getByText("Customer account, e-mail confirmed")).toBeVisible();
+  await kari.getByLabel("Message to the customer (optional)").fill("Vi kommer tirsdag.");
+  await kari.getByRole("button", { name: "Accept and plan the job" }).click();
+  await page.waitForURL("**/app/jobs/new?**");
+
+  // The customer sees the answer.
+  await customer.page.reload();
+  await expect(mine.getByText("Accepted", { exact: true })).toBeVisible();
+  await expect(mine.getByText(`Answer from ${name}`)).toBeVisible();
+  await expect(mine.getByText("Vi kommer tirsdag.")).toBeVisible();
+  for (const locale of locales) {
+    await customer.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
+    await customer.page.goto("/kunde");
+    await shootAllWidths(customer.page, "customer-account", locale);
+  }
+  await customer.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
+  await customer.page.goto("/kunde");
+
+  // Ordering again: the earlier request fills in the form.
+  await mine.getByRole("link", { name: "Send again" }).click();
+  await customer.page.waitForURL(/\/firma\/.+\?gjenta=/);
+  await expect(form.getByLabel("What do you need help with?")).toHaveValue("Løfte takstein til 3. etasje.");
+  await expect(form.getByLabel("Where is the job?")).toHaveValue("Strandgaten 1, Bergen");
+});

@@ -129,7 +129,9 @@
     "confirmTitle": "Confirm e-mail",
     "confirmChecking": "Confirming your e-mail …",
     "confirmFailed": "The link is invalid or was already used. If you confirmed your e-mail earlier, just sign in with your e-mail and password.",
-    "emailConfirmed": "Your e-mail is confirmed. You can sign in now."
+    "emailConfirmed": "Your e-mail is confirmed. You can sign in now.",
+    "customerSignupTitle": "Create a customer account",
+    "customerSignupLead": "For ordering from companies on MaskinGo. Your details are filled in for you, and you follow every request in one place."
   },
   "Onboarding": {
     "title": "Create your company",
@@ -1957,7 +1959,13 @@
     "times": "Pick a time (optional)",
     "timesHint": "Free times for the next two weeks. The company confirms the time.",
     "timeNone": "No particular time",
-    "noTimes": "No free times in the next two weeks. Write a wished-for day instead."
+    "noTimes": "No free times in the next two weeks. Write a wished-for day instead.",
+    "signedInAs": "Signed in as {name}. Your details are filled in, and the request is saved under your requests.",
+    "seeMyRequests": "See your requests",
+    "inviteTitle": "Order faster with a customer account",
+    "inviteText": "Your details are filled in, you follow every request in one place, and the company sees that your e-mail is confirmed. The company still confirms the job.",
+    "inviteSignup": "Create a customer account",
+    "inviteLogin": "Sign in"
   },
   "JobRequests": {
     "title": "Requests",
@@ -1999,7 +2007,8 @@
       "alreadyAnswered": "Someone has already answered this request.",
       "unknown": "The answer could not be saved. Try again."
     },
-    "wantedAt": "Preferred: {date} at {time}"
+    "wantedAt": "Preferred: {date} at {time}",
+    "fromAccount": "Customer account, e-mail confirmed"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} has accepted your request",
@@ -2088,5 +2097,44 @@
     "byPlace": "Places",
     "ctaTitle": "Do you run a machine company?",
     "ctaText": "Publish your company page in MaskinGo and it is shown here, at no extra cost. Customers find you and send requests you accept or decline."
+  },
+  "CustomerAccount": {
+    "title": "My requests",
+    "greeting": "Hi, {name}",
+    "lead": "Here you follow your requests and order again from the companies you use.",
+    "findCompany": "Find a company",
+    "companiesTitle": "Your companies",
+    "requestsCount": "{count, plural, one {# request} other {# requests}}",
+    "orderAgain": "Send a new request",
+    "requestsTitle": "Your requests",
+    "noRequests": "No requests yet. Find a company and send a request while signed in, and it shows up here.",
+    "sent": "Sent {date}",
+    "wantedOn": "Preferred: {date}",
+    "wantedAt": "Preferred: {date} at {time}",
+    "statuses": {
+      "new": "Waiting for an answer",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    },
+    "answerFrom": "Answer from {company}",
+    "sendAgain": "Send again",
+    "detailsTitle": "Your details",
+    "detailsLead": "Filled in when you send a request. You can change them in the form each time.",
+    "name": "Name:",
+    "email": "E-mail:",
+    "phone": "Phone",
+    "place": "Usual place of work",
+    "placeHint": "For example your address. Optional.",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved.",
+    "create": "Start ordering as a customer",
+    "startTitle": "Order as a customer",
+    "startLead": "With a customer account you follow your requests to companies and order again quickly. Add a phone number and a usual place if you like.",
+    "errors": {
+      "phoneInvalid": "Enter a valid phone number.",
+      "placeTooLong": "The place can be at most 200 characters.",
+      "unknown": "Something went wrong. Try again."
+    }
   }
 }

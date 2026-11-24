@@ -5,10 +5,15 @@ import { useRouter } from "next/navigation";
 import { useFormatter, useTranslations } from "next-intl";
 import { useActionState, useEffect, useState } from "react";
 import { Field, FieldError, FormAlert, SubmitButton } from "@/components/form";
-import { CheckCircleIcon } from "@/components/icons";
+import { CheckCircleIcon, UserIcon } from "@/components/icons";
 import type { Service } from "@/lib/company-page";
 import { groupSlots, type FreeSlot } from "@/lib/company-hours";
-import { MAX_REQUEST_DESCRIPTION_LENGTH, MAX_REQUEST_NAME_LENGTH, MAX_REQUEST_PLACE_LENGTH } from "@/lib/job-requests";
+import {
+  MAX_REQUEST_DESCRIPTION_LENGTH,
+  MAX_REQUEST_NAME_LENGTH,
+  MAX_REQUEST_PLACE_LENGTH,
+  type JobRequestValues,
+} from "@/lib/job-requests";
 import { submitJobRequest, type RequestState } from "./request-actions";
 
 const control =
@@ -21,6 +26,7 @@ export function RequestForm({
   company,
   services,
   slots,
+  customer = null,
   minDate,
   maxDate,
 }: {
@@ -28,12 +34,14 @@ export function RequestForm({
   company: string;
   services: { value: Service; label: string }[];
   slots: FreeSlot[] | null;
+  customer?: { name: string; prefill: Partial<JobRequestValues> } | null;
   minDate: string;
   maxDate: string;
 }) {
   const t = useTranslations("JobRequestForm");
   const [state, action] = useActionState<RequestState, FormData>(submitJobRequest, {});
-  const values = state.values;
+  // What the action sent back, or else the signed-in customer's details.
+  const values: Partial<JobRequestValues> | undefined = state.values ?? customer?.prefill;
   const router = useRouter();
   // A time someone else just took: load the free times again.
   const slotTaken = state.fieldErrors?.wantedStart === "slotTaken";
@@ -52,6 +60,14 @@ export function RequestForm({
         <div className="grid gap-1">
           <p className="font-semibold">{t("sentTitle")}</p>
           <p className="text-foreground [overflow-wrap:anywhere]">{t("sentText", { company })}</p>
+          {customer && (
+            <Link
+              href="/kunde"
+              className="flex min-h-11 w-fit items-center font-semibold text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              {t("seeMyRequests")}
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -65,6 +81,14 @@ export function RequestForm({
     <form action={action} className="grid gap-4" noValidate>
       <input type="hidden" name="slug" value={slug} />
       {state.error && <FormAlert kind="error">{t(`errors.${state.error}`)}</FormAlert>}
+      {customer ? (
+        <p className="flex items-start gap-2 rounded-lg border border-border bg-background p-3 text-sm">
+          <UserIcon className="mt-0.5 size-4 shrink-0 text-muted" />
+          <span className="[overflow-wrap:anywhere]">{t("signedInAs", { name: customer.name })}</span>
+        </p>
+      ) : (
+        <CustomerInvite slug={slug} />
+      )}
 
       <Field
         name="name"
@@ -261,5 +285,30 @@ function SlotPicker({ slots, initial, error }: { slots: FreeSlot[]; initial: str
       )}
       {error && <FieldError id="request-times-error">{error}</FieldError>}
     </fieldset>
+  );
+}
+
+// Not signed in: an invitation to a customer account (stage 16a). Optional: the form works without it.
+function CustomerInvite({ slug }: { slug: string }) {
+  const t = useTranslations("JobRequestForm");
+  const link =
+    "flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  return (
+    <aside aria-labelledby="customer-invite" className="grid gap-3 rounded-lg border border-accent/40 bg-accent-soft p-4">
+      <div className="grid gap-1">
+        <h3 id="customer-invite" className="font-semibold">
+          {t("inviteTitle")}
+        </h3>
+        <p className="text-sm">{t("inviteText")}</p>
+      </div>
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <Link href="/signup?konto=kunde" className={link}>
+          {t("inviteSignup")}
+        </Link>
+        <Link href={`/login?${new URLSearchParams({ next: `/firma/${slug}` })}`} className={link}>
+          {t("inviteLogin")}
+        </Link>
+      </div>
+    </aside>
   );
 }
