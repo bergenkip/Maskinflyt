@@ -1845,6 +1845,40 @@
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
     }
   },
+  "CompanyPhotos": {
+    "title": "Logotipas ir nuotraukos",
+    "lead": "Rodomi įmonės puslapyje. Prieš siunčiant nuotraukos sumažinamos, o vietos duomenys ištrinami.",
+    "logoTitle": "Logotipas",
+    "logoHint": "Geriausiai atrodo kvadratinis logotipas arba logotipas permatomu fonu.",
+    "logoAlt": "Įmonės logotipas",
+    "addLogo": "Pasirinkti logotipą",
+    "changeLogo": "Pakeisti logotipą",
+    "removeLogo": "Pašalinti logotipą",
+    "photosTitle": "Nuotraukos",
+    "photosHint": "Iki {max} technikos ir darbų nuotraukų. Pirmoji rodoma pirmiausia.",
+    "photoAlt": "Nuotrauka nr. {number}",
+    "addPhoto": "Pridėti nuotrauką",
+    "removePhoto": "Pašalinti",
+    "photosFull": "Puslapyje jau {max} nuotraukų, daugiau negalima. Pašalinkite vieną, kad pridėtumėte naują.",
+    "alt": "Kas matyti nuotraukoje nr. {number} (neprivaloma)",
+    "altPlaceholder": "Pavyzdžiui: kranas kelia čerpes",
+    "saveAlt": "Išsaugoti",
+    "altSaved": "Išsaugota.",
+    "moveEarlier": "Perkelti nuotrauką nr. {number} į priekį",
+    "moveLater": "Perkelti nuotrauką nr. {number} atgal",
+    "sending": "Siunčiama…",
+    "removing": "Šalinama…",
+    "errors": {
+      "notAllowed": "Įmonės puslapį gali keisti tik savininkai ir administratoriai.",
+      "readOnly": "Prenumerata neaktyvi, todėl puslapio keisti negalima.",
+      "tooBig": "Nuotrauka per didelė. Pasirinkite mažesnę.",
+      "wrongType": "Šio failo negalime naudoti kaip nuotraukos. Pasirinkite JPG, PNG arba HEIC nuotrauką.",
+      "unreadable": "Nuotraukos atidaryti nepavyko. Pasirinkite kitą.",
+      "tooMany": "Puslapyje jau {max} nuotraukų. Pirmiausia pašalinkite vieną.",
+      "altTooLong": "Aprašymas gali būti ne ilgesnis nei 200 simbolių.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
+  },
   "PublicPage": {
     "madeWith": "Puslapis sukurtas su MaskinGo",
     "metaTitle": "{name} – {city}",
@@ -1852,6 +1886,9 @@
     "orgNumber": "Įm. kodas {number}",
     "services": "Paslaugos",
     "area": "Kur dirbame",
-    "contact": "Kontaktai"
+    "contact": "Kontaktai",
+    "logoAlt": "{name} logotipas",
+    "photos": "Nuotraukos",
+    "photoAlt": "{name} nuotrauka nr. {number}"
   }
 }
