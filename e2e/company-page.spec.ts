@@ -18,7 +18,7 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
   expect(slug).toMatch(/^e2e-page-\d+-[a-z0-9]+-as$/);
 
   // Publishing an empty page says what is missing, next to each field.
-  await page.getByText("Show publicly").click();
+  await page.getByText("Show publicly", { exact: true }).click();
   await page.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Write a few words about the company before showing the page.")).toBeVisible();
   await expect(page.getByText("Choose at least one service before showing the page.")).toBeVisible();
@@ -32,7 +32,7 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
   await page.getByLabel("Area you work in (optional)").fill("Bergen og omegn");
   await page.getByLabel("Phone").fill("912 34 567");
   await page.getByLabel("Website (optional)").fill("example.com");
-  if (await page.getByLabel("Show publicly").isChecked()) await page.getByText("Show publicly").click();
+  if (await page.getByLabel("Show publicly").isChecked()) await page.getByText("Show publicly", { exact: true }).click();
   await page.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Saved. The page is hidden from others.")).toBeVisible();
 
@@ -45,7 +45,7 @@ test("the owner writes and publishes the company page, and a visitor sees it", a
 
   // Published: everyone sees it, with a link to call and the services.
   await page.goto("/app/public-page");
-  await page.getByText("Show publicly").click();
+  await page.getByText("Show publicly", { exact: true }).click();
   await page.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Saved. The page is public.")).toBeVisible();
 
