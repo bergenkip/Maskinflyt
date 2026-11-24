@@ -56,7 +56,12 @@
       }
     },
     "contactTitle": "Want to try MaskinGo?",
-    "contactBody": "MaskinGo is new and is being built together with its first users. Create an account, or write to us:"
+    "contactBody": "MaskinGo is new and is being built together with its first users. Create an account, or write to us:",
+    "showcase": {
+      "calendarAlt": "The MaskinGo calendar for one day: machines in rows and jobs with customer and driver on a timeline from 06 to 19.",
+      "driverAlt": "The driver's phone in MaskinGo: today's job with address, machine and the “I'm finished” button.",
+      "caption": "Real MaskinGo screens with made-up data: the office calendar and the driver's phone."
+    }
   },
   "Nav": {
     "home": "MaskinGo home",

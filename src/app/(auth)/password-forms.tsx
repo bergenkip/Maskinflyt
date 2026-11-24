@@ -86,17 +86,23 @@ export function ResetPasswordPanel({ email }: { email: string | null }) {
     // Without tokens: a used or expired link says so in the fragment; otherwise a session from earlier may do.
     const result = accessToken && refreshToken ? startPasswordReset(accessToken, refreshToken) : Promise.resolve(failed ? null : email);
     // The server action's answer can bring back the address it started from (with the
-    // tokens), so the fragment is removed again once it has answered.
+    // tokens): the router writes it in its own transition, sometimes after this
+    // promise has settled. So the fragment is removed again then, and checked a few
+    // more times while the router finishes (it never comes back after that).
     const clear = () => {
       if (window.location.hash) window.history.replaceState(null, "", window.location.pathname);
     };
+    const settle = () => {
+      clear();
+      for (const ms of [50, 200, 500, 1000, 2000]) window.setTimeout(clear, ms);
+    };
     result.then(
       (value) => {
-        clear();
+        settle();
         setAccount(value);
       },
       () => {
-        clear();
+        settle();
         setAccount(null);
       },
     );
