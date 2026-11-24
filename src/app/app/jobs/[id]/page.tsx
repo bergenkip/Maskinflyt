@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps<"/app/jobs/[id]">):
 
 export default async function JobPage({ params, searchParams }: PageProps<"/app/jobs/[id]">) {
   const { id } = await params;
-  const { added } = await searchParams;
+  const { added, email } = await searchParams;
   const membership = await getCurrentMembership();
   if (!membership) redirect("/app/onboarding");
   if (!canSeeInvoices(membership)) redirect("/app");
@@ -103,6 +103,9 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
       </div>
 
       {added === "1" && <FormAlert kind="success">{t("added", { number: job.number })}</FormAlert>}
+      {/* Planned from a customer's request: whether the customer was told the time (stage 16b). */}
+      {added === "1" && email === "sent" && <FormAlert kind="success">{t("plannedEmailSent")}</FormAlert>}
+      {added === "1" && email === "failed" && <FormAlert kind="error">{t("plannedEmailFailed")}</FormAlert>}
 
       {/* The planning, the driver's reports and the photos are the office's. */}
       {!accountant && options && (

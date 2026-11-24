@@ -45,6 +45,11 @@ export type MyRequest = {
   company: string;
   slug: string | null;
   page_published: boolean;
+  // The job the company planned from the request (stage 16b): only its time and state.
+  job_status: "planned" | "done" | "cancelled" | null;
+  job_starts_at: string | null;
+  job_ends_at: string | null;
+  time_zone: string;
 };
 
 export async function getMyRequests(): Promise<MyRequest[] | null> {

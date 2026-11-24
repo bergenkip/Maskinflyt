@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { NEW_CUSTOMER, toLocalParts } from "@/lib/jobs";
@@ -23,23 +24,28 @@ export default async function NewJobPage({ searchParams }: PageProps<"/app/jobs/
   const { organization } = membership;
   const { customer, date, start, vehicle, driver, request, email } = await searchParams;
   const supabase = await createClient();
-  const [t, tRequests, options, fromRequest] = await Promise.all([
+  const requestId = typeof request === "string" && /^[0-9a-f-]{36}$/i.test(request) ? request : null;
+  const [t, tRequests, options, fromRequest, plannedJob] = await Promise.all([
     getTranslations("Jobs"),
     getTranslations("JobRequests"),
     getJobOptions(organization.id),
     // From an accepted request: its customer, place, day and description (RLS: this company's only).
-    typeof request === "string" && /^[0-9a-f-]{36}$/i.test(request)
+    requestId
       ? supabase
           .from("job_requests")
-          .select("name, customer_id, place, wanted_date, wanted_start, description")
-          .eq("id", request)
+          .select("name, email, customer_id, place, wanted_date, wanted_start, description")
+          .eq("id", requestId)
           .eq("status", "accepted")
           .maybeSingle()
       : null,
+    // A request is planned once (stage 16b): the job already made from it, if any.
+    requestId ? supabase.from("jobs").select("id, number").eq("request_id", requestId).maybeSingle() : null,
   ]);
+  const existing = plannedJob?.data as { id: string; number: number } | null | undefined;
   const accepted = fromRequest?.data as
     | {
         name: string;
+        email: string | null;
         customer_id: string | null;
         place: string;
         wanted_date: string | null;
@@ -78,6 +84,14 @@ export default async function NewJobPage({ searchParams }: PageProps<"/app/jobs/
           {email === "failed" && <FormAlert kind="error">{tRequests("emailFailed")}</FormAlert>}
           {/* The customer's name is data and is shown exactly as written. */}
           <p className="font-medium [overflow-wrap:anywhere]">{t("fromRequest", { name: accepted.name })}</p>
+          {existing && (
+            <p className="rounded-lg border border-border bg-background p-3 [overflow-wrap:anywhere]">
+              {t("alreadyPlanned", { number: existing.number })}{" "}
+              <Link href={`/app/jobs/${existing.id}`} className="font-semibold underline underline-offset-4">
+                {t("openPlanned", { number: existing.number })}
+              </Link>
+            </p>
+          )}
         </div>
       )}
       <section aria-label={t("addTitle")} className="grid gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6">
@@ -90,6 +104,7 @@ export default async function NewJobPage({ searchParams }: PageProps<"/app/jobs/
             drivers={options.drivers}
             suggestions={options.suggestions}
             timeZone={organization.timeZone}
+            request={accepted && requestId && !existing ? { id: requestId, email: accepted.email } : undefined}
             // With no customers yet, the first one is added with the job.
             initial={{
               customerId: customerId || (options.customers.length === 0 ? NEW_CUSTOMER : ""),

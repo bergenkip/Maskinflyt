@@ -578,7 +578,8 @@
       "unknown": "Noe gikk galt. Prøv igjen.",
       "durationInvalid": "Skriv hvor lenge oppdraget forventes å ta: fra 15 minutter til 24 timer, for eksempel 4 timer 30 min.",
       "timeNoteTooLong": "Maks 200 tegn.",
-      "locked": "Fakturaen er merket som sendt, så kunde, maskin, tid og status blir som de er."
+      "locked": "Fakturaen er merket som sendt, så kunde, maskin, tid og status blir som de er.",
+      "alreadyPlanned": "Denne forespørselen er allerede planlagt som en annen jobb."
     },
     "newCustomerOption": "+ Ny kunde",
     "newCustomerTitle": "Ny kunde",
@@ -602,7 +603,13 @@
     "statusLocked": "Fakturaen er merket som sendt: statusen blir «Ferdig». Angre merkingen i fakturadelen for å endre den.",
     "requestsLink": "Forespørsler fra firmasiden",
     "requestsNew": "{count} nye",
-    "fromRequest": "Fra forespørselen til {name}. Velg tidspunkt og lagre oppdraget."
+    "fromRequest": "Fra forespørselen til {name}. Velg tidspunkt og lagre oppdraget.",
+    "notifyCustomer": "Send det planlagte tidspunktet til kunden",
+    "notifyCustomerHint": "På e-post til {email} når jobben er lagret.",
+    "alreadyPlanned": "Denne forespørselen er allerede planlagt som jobb {number}.",
+    "openPlanned": "Åpne jobb {number}",
+    "plannedEmailSent": "Kunden fikk det planlagte tidspunktet på e-post.",
+    "plannedEmailFailed": "E-posten til kunden kunne ikke sendes. Ring eller skriv til kunden med tidspunktet."
   },
   "Calendar": {
     "title": "Kalender",
@@ -2008,7 +2015,8 @@
       "unknown": "Svaret ble ikke lagret. Prøv igjen."
     },
     "wantedAt": "Ønsket: {date} kl. {time}",
-    "fromAccount": "Kundekonto, e-post bekreftet"
+    "fromAccount": "Kundekonto, e-post bekreftet",
+    "plannedJob": "Planlagt: jobb {number}"
   },
   "RequestAnswerEmail": {
     "acceptedSubject": "{company} har godtatt forespørselen din",
@@ -2114,7 +2122,10 @@
     "statuses": {
       "new": "Venter på svar",
       "accepted": "Godtatt",
-      "declined": "Avslått"
+      "declined": "Avslått",
+      "planned": "Planlagt",
+      "done": "Utført",
+      "cancelled": "Avlyst"
     },
     "answerFrom": "Svar fra {company}",
     "sendAgain": "Send igjen",
@@ -2135,6 +2146,27 @@
       "phoneInvalid": "Skriv inn et gyldig telefonnummer.",
       "placeTooLong": "Stedet kan være høyst 200 tegn.",
       "unknown": "Noe gikk galt. Prøv igjen."
-    }
+    },
+    "plannedTime": "Planlagt tidspunkt",
+    "doneTime": "Tidspunkt for jobben",
+    "cancelledTime": "Avlyst tidspunkt",
+    "plannedHint": "Sluttidspunktet er et anslag. Firmaet tar kontakt hvis noe endres.",
+    "cancelledHint": "Jobben ble avlyst. Ta kontakt med {company} hvis du har spørsmål.",
+    "acceptedHint": "{company} planlegger tidspunktet og gir deg beskjed."
+  },
+  "JobPlannedEmail": {
+    "subject": "{company} har planlagt jobben din",
+    "greeting": "Hei {name},",
+    "intro": "{company} har planlagt jobben din.",
+    "time": "Tidspunkt",
+    "place": "Sted",
+    "estimate": "Sluttidspunktet er et anslag.",
+    "follow": "Følg forespørslene dine på kundesiden din:",
+    "followLink": "Mine forespørsler",
+    "questionsPhone": "Spørsmål, eller trenger du et annet tidspunkt? Svar på denne e-posten eller ring {phone}.",
+    "questions": "Spørsmål, eller trenger du et annet tidspunkt? Svar på denne e-posten.",
+    "closing": "Med vennlig hilsen",
+    "footer": "Sendt med MaskinGo på vegne av {company}.",
+    "test": "TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke en ekte bestilling. Mottaker: {to}"
   }
 }
