@@ -49,6 +49,23 @@ export default async function SettingsPage() {
         <LanguageForm current={locale} />
       </section>
       {membership && canManageBilling(membership) && (
+        <section aria-labelledby="page-title" className={sectionClass}>
+          <div className="grid gap-1">
+            <h2 id="page-title" className="text-lg font-semibold">
+              {t("pageTitle")}
+            </h2>
+            <p className="text-muted">{t("pageLead")}</p>
+          </div>
+          <Link
+            href="/app/public-page"
+            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+          >
+            {t("pageLink")}
+            <ArrowRightIcon className="size-5" />
+          </Link>
+        </section>
+      )}
+      {membership && canManageBilling(membership) && (
         <section aria-labelledby="billing-title" className={sectionClass}>
           <div className="grid gap-1">
             <h2 id="billing-title" className="text-lg font-semibold">

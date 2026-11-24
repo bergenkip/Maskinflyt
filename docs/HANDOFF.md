@@ -393,3 +393,17 @@ MaskinGo dar ne MVA registre: `VAT_REGISTERED = false` (`src/lib/billing.ts`), e
   nestabdo prisijungimo; ji užrašoma į logą ir pataisoma kito pakeitimo metu.
 - Stripe nustatymas, kurį tikrina Li: Billing → Revenue recovery → po visų nepavykusių bandymų „Cancel the subscription“.
 - Testai: `30_read_only.test.sql`, `src/lib/billing.test.ts`, `e2e/billing.spec.ts`.
+
+## 15a etapas: viešas įmonės puslapis (2026-11-24)
+Li pasirinko 2026-11-24. Visas planas: 15a puslapis, 15b užklausų forma (įmonė priima arba atmeta, jokio automatinio
+patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn` ir planas „tik katalogas“.
+- Migracija `20261124120000_company_pages.sql`: lentelė `company_pages` (adresas `slug`, `published`, aprašymas,
+  paslaugos iš fiksuoto sąrašo, miestas, sritis, telefonas, el. paštas, svetainė tik `https://`). Rašo tik
+  `save_company_page` (savininkas ir administratorius su antru žingsniu); nariai skaito. Lankytojai lentelės nemato:
+  `company_page(slug)` grąžina tik viešus laukus, kai puslapis paskelbtas ir įmonė ne tik skaitymo režime
+  (savo nariai mato ir nepaskelbtą, kaip peržiūrą); `published_company_pages()` sitemap'ui. Tik skaitymo trigeris uždėtas.
+- Ekranai: `/app/public-page` (nuoroda Nustatymuose savininkui ir administratoriui), viešas `/firma/[slug]`
+  (`src/app/(company)`, savas paprastas maketas su „Siden er laget med MaskinGo“), JSON-LD `LocalBusiness`,
+  canonical į maskingo.no, indeksuojama tik paskelbta ir tik produkcijoje. Sitemap'as atnaujinamas kas valandą.
+- Paslaugų sąrašas `src/lib/company-page.ts` (`services`) ir tas pats DB patikroje; tekstai `Services`.
+- Testai: `31_company_pages.test.sql`, `src/lib/company-page.test.ts`, `e2e/company-page.spec.ts`.

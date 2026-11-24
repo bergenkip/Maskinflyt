@@ -200,7 +200,10 @@
     "nameLead": "Rodomas kolegoms komandos sąraše.",
     "billingTitle": "Abonementas",
     "billingLead": "Įmonės planas, mokėjimai ir kvitai.",
-    "billingLink": "Atidaryti abonementą"
+    "billingLink": "Atidaryti abonementą",
+    "pageTitle": "Įmonės puslapis",
+    "pageLead": "Viešas puslapis, kuriame klientai mato, ką darote, kur dirbate ir kaip su jumis susisiekti.",
+    "pageLink": "Atidaryti įmonės puslapį"
   },
   "Team": {
     "title": "Komanda",
@@ -1681,5 +1684,67 @@
         "a": "Kortele per Stripe, kas mėnesį arba kas metus. Kvitai ir atsisakymas yra programoje."
       }
     ]
+  },
+  "Services": {
+    "crane_truck": "Kraninis sunkvežimis",
+    "mobile_crane": "Mobilusis kranas",
+    "excavation": "Kasimo ir žemės darbai",
+    "transport": "Transportas",
+    "machine_transport": "Technikos pervežimas",
+    "snow_clearing": "Sniego valymas ir barstymas",
+    "demolition": "Griovimas",
+    "landscaping": "Aplinkos tvarkymas"
+  },
+  "CompanyPage": {
+    "title": "Įmonės puslapis",
+    "back": "Nustatymai",
+    "lead": "Tai, ką klientai mato maskingo.no. Niekas nerodoma, kol neįjungsite „Rodyti viešai“.",
+    "formTitle": "Turinys",
+    "slug": "Adresas",
+    "slugHint": "Mažosios raidės, skaičiai ir brūkšneliai: {address}",
+    "description": "Apie įmonę",
+    "descriptionHint": "Ką darote ir kam, savais žodžiais. Iki 2000 ženklų.",
+    "services": "Paslaugos",
+    "city": "Miestas ar vietovė",
+    "area": "Kur dirbate (nebūtina)",
+    "areaHint": "Pavyzdžiui, „Bergenas ir apylinkės“ arba „visas Vestlandas“.",
+    "phone": "Telefonas",
+    "email": "El. paštas",
+    "website": "Interneto svetainė (nebūtina)",
+    "published": "Rodyti viešai",
+    "publishedHint": "Puslapį mato visi, jį galima rasti Google. Reikia aprašymo, vietovės, bent vienos paslaugos ir telefono ar el. pašto.",
+    "save": "Išsaugoti",
+    "savedPublished": "Išsaugota. Puslapis viešas.",
+    "savedHidden": "Išsaugota. Puslapis kitiems nerodomas.",
+    "statusPublished": "Puslapis viešas",
+    "statusHidden": "Puslapis paslėptas: jį matote tik jūs",
+    "open": "Atidaryti puslapį",
+    "preview": "Peržiūrėti puslapį",
+    "errors": {
+      "slugInvalid": "Naudokite 3–60 mažųjų raidžių, skaičių ir brūkšnelių, pvz. fjellkran-as.",
+      "slugTaken": "Šis adresas užimtas. Pasirinkite kitą.",
+      "descriptionRequired": "Prieš rodydami puslapį, parašykite kelis žodžius apie įmonę.",
+      "descriptionTooLong": "Aprašymas gali būti iki 2000 ženklų.",
+      "servicesRequired": "Prieš rodydami puslapį, pasirinkite bent vieną paslaugą.",
+      "cityRequired": "Prieš rodydami puslapį, įrašykite miestą ar vietovę.",
+      "cityTooLong": "Vietovė gali būti iki 100 ženklų.",
+      "areaTooLong": "Sritis gali būti iki 200 ženklų.",
+      "phoneInvalid": "Įrašykite teisingą telefono numerį.",
+      "emailInvalid": "Įrašykite teisingą el. pašto adresą.",
+      "contactRequired": "Įrašykite telefoną arba el. paštą, kad klientai galėtų susisiekti.",
+      "websiteInvalid": "Įrašykite adresą, prasidedantį https://, pvz. https://fjellkran.no.",
+      "notAllowed": "Įmonės puslapį keisti gali tik savininkas ir administratorius.",
+      "readOnly": "Abonementas neaktyvus, todėl puslapio dabar keisti negalima.",
+      "unknown": "Kažkas nepavyko. Bandykite dar kartą."
+    }
+  },
+  "PublicPage": {
+    "madeWith": "Puslapis sukurtas su MaskinGo",
+    "metaTitle": "{name} – {city}",
+    "previewNotice": "Peržiūra: puslapis dar neviešas. Jį matote tik jūs.",
+    "orgNumber": "Įm. kodas {number}",
+    "services": "Paslaugos",
+    "area": "Kur dirbame",
+    "contact": "Kontaktai"
   }
 }
