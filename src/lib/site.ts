@@ -29,6 +29,7 @@ export const publicPaths = [
   "/timeforing",
   "/faktura",
   "/priser",
+  "/finn",
   "/signup",
   "/login",
   "/personvern",

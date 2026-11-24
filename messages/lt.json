@@ -179,7 +179,7 @@
     "tipsTitle": "Rekomendacijos",
     "tipsLead": "Kaip gauti daugiau užsakymų.",
     "tipPageTitle": "Sukurkite įmonės puslapį",
-    "tipPageText": "Puslapis, kurį galite siųsti klientams: ką darote, kur dirbate ir kaip su jumis susisiekti.",
+    "tipPageText": "Puslapis, kurį galite siųsti klientams: ką darote, kur dirbate ir kaip su jumis susisiekti. Paskelbtas puslapis rodomas ir MaskinGo kataloge, kuriame klientai ieško įmonių.",
     "tipPageAction": "Sukurti puslapį",
     "tipPageFinish": "Užbaigti ir paskelbti",
     "tipPageOpen": "Atidaryti puslapį",
@@ -456,7 +456,8 @@
   "Footer": {
     "text": "MaskinGo · Sukurta Norvegijos rangovams",
     "linksLabel": "Nuorodos",
-    "pricing": "Kainos"
+    "pricing": "Kainos",
+    "directory": "Raskite įmonę"
   },
   "Mfa": {
     "verifyTitle": "Patvirtinkite, kad tai jūs",
@@ -1862,7 +1863,9 @@
       "notAllowed": "Įmonės puslapį keisti gali tik savininkas ir administratorius.",
       "readOnly": "Abonementas neaktyvus, todėl puslapio dabar keisti negalima.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
-    }
+    },
+    "inCatalog": "Rodoma MaskinGo kataloge",
+    "seeInCatalog": "Pažiūrėti kataloge"
   },
   "CompanyPhotos": {
     "title": "Logotipas ir nuotraukos",
@@ -1908,7 +1911,8 @@
     "contact": "Kontaktai",
     "logoAlt": "{name} logotipas",
     "photos": "Nuotraukos",
-    "photoAlt": "{name} nuotrauka nr. {number}"
+    "photoAlt": "{name} nuotrauka nr. {number}",
+    "moreCompanies": "Raskite daugiau įmonių"
   },
   "JobRequestForm": {
     "open": "Siųsti užklausą",
@@ -2054,5 +2058,35 @@
       "noteTooLong": "Pastaba gali būti ne ilgesnė nei 100 simbolių.",
       "unknown": "Kažkas nepavyko. Bandykite dar kartą."
     }
+  },
+  "Directory": {
+    "metaTitle": "Raskite technikos rangovą, kraninį sunkvežimį ar transportą · MaskinGo",
+    "metaDescription": "Technikos rangovai, kraniniai sunkvežimiai ir transporto įmonės Norvegijoje. Raskite pagal paslaugą ir vietą ir siųskite užklausą tiesiai įmonei.",
+    "metaTitleService": "{service}: raskite įmonę netoliese · MaskinGo",
+    "metaDescriptionService": "Įmonės, siūlančios paslaugą „{service}“. Pažiūrėkite, kur jos dirba, ir siųskite užklausą tiesiai įmonei.",
+    "title": "Raskite įmonę",
+    "titlePlace": "Įmonės: {place}",
+    "titleServicePlace": "{service}: {place}",
+    "lead": "Technikos rangovai, kraniniai sunkvežimiai ir transporto įmonės su savo puslapiu MaskinGo. Siųskite užklausą tiesiai įmonei.",
+    "leadService": "Įmonės, siūlančios paslaugą „{service}“. Atidarykite puslapį, kad pamatytumėte daugiau ir išsiųstumėte užklausą.",
+    "allCompanies": "Visos įmonės",
+    "searchLabel": "Paieška kataloge",
+    "service": "Paslauga",
+    "allServices": "Visos paslaugos",
+    "place": "Vieta",
+    "placePlaceholder": "pvz. Bergen",
+    "search": "Ieškoti",
+    "resultsTitle": "Įmonės",
+    "results": "{count, plural, =0 {Įmonių nėra} one {# įmonė} few {# įmonės} other {# įmonių}}",
+    "clear": "Rodyti visas įmones",
+    "empty": "Kol kas tinkamų įmonių nėra. Pabandykite kitą vietą arba visas paslaugas.",
+    "emptyAll": "Kataloge dar nėra įmonių.",
+    "error": "Katalogo nepavyko įkelti. Pabandykite netrukus.",
+    "freeTimes": "Laisvą laiką galima užsisakyti internetu",
+    "logoAlt": "{name} logotipas",
+    "byService": "Paieška pagal paslaugą",
+    "byPlace": "Vietos",
+    "ctaTitle": "Turite technikos įmonę?",
+    "ctaText": "Paskelbkite įmonės puslapį MaskinGo ir jis bus rodomas čia be papildomo mokesčio. Klientai jus suras ir siųs užklausas, kurias jūs priimsite arba atmesite."
   }
 }

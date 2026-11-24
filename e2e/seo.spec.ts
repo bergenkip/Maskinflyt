@@ -16,10 +16,11 @@ test("sitemap lists only the public pages on maskingo.no", async ({ request }) =
   const res = await request.get("/sitemap.xml");
   expect(res.status()).toBe(200);
   const locs = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-  // MaskinGo's own pages first, then the companies' published pages (stage 15a), if any.
-  const companies = locs.filter((loc) => loc.startsWith("https://maskingo.no/firma/"));
-  expect(locs.slice(locs.length - companies.length)).toEqual(companies);
-  expect(locs.slice(0, locs.length - companies.length)).toEqual([
+  // MaskinGo's own pages first, then the catalog's service pages (stage 15d) and the
+  // companies' published pages (stage 15a), if any.
+  const listed = locs.filter((loc) => /^https:\/\/maskingo\.no\/(finn|firma)\/[a-z0-9-]+$/.test(loc));
+  expect(locs.slice(locs.length - listed.length)).toEqual(listed);
+  expect(locs.slice(0, locs.length - listed.length)).toEqual([
     "https://maskingo.no",
     "https://maskingo.no/kranbil",
     "https://maskingo.no/maskinentreprenor",
@@ -27,6 +28,7 @@ test("sitemap lists only the public pages on maskingo.no", async ({ request }) =
     "https://maskingo.no/timeforing",
     "https://maskingo.no/faktura",
     "https://maskingo.no/priser",
+    "https://maskingo.no/finn",
     "https://maskingo.no/signup",
     "https://maskingo.no/login",
     "https://maskingo.no/personvern",

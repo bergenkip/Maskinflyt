@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { ArrowRightIcon, CheckCircleIcon, EyeOffIcon } from "@/components/icons";
 import { formatPhone } from "@/lib/customers";
 import { isService, pagePath, slugify, type CompanyPageValues } from "@/lib/company-page";
+import { directoryPath } from "@/lib/directory";
 import { getCurrentMembership } from "@/lib/membership";
 import { canManageBilling } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
@@ -111,6 +112,17 @@ export default async function CompanyPageSettings() {
               <p className="break-all">{`${host}${pagePath(page.slug)}`}</p>
             </div>
           </div>
+          {page.published && (
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span className="font-medium">{t("inCatalog")}</span>
+              <Link
+                href={directoryPath(page.services.find(isService) ?? null, page.city ?? "")}
+                className="flex min-h-11 items-center font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                {t("seeInCatalog")}
+              </Link>
+            </p>
+          )}
           <Link
             href={pagePath(page.slug)}
             className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
