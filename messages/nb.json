@@ -1845,6 +1845,40 @@
       "unknown": "Noe gikk galt. Prøv igjen."
     }
   },
+  "CompanyPhotos": {
+    "title": "Logo og bilder",
+    "lead": "Vises på firmasiden. Bildene gjøres mindre og stedsinformasjonen fjernes før de sendes.",
+    "logoTitle": "Logo",
+    "logoHint": "En kvadratisk logo eller en med gjennomsiktig bakgrunn ser best ut.",
+    "logoAlt": "Firmaets logo",
+    "addLogo": "Velg logo",
+    "changeLogo": "Bytt logo",
+    "removeLogo": "Fjern logoen",
+    "photosTitle": "Bilder",
+    "photosHint": "Opptil {max} bilder av maskiner og oppdrag. Det første vises først.",
+    "photoAlt": "Bilde {number}",
+    "addPhoto": "Legg til bilde",
+    "removePhoto": "Fjern",
+    "photosFull": "Siden har {max} bilder, som er det meste den kan vise. Fjern ett for å legge til et nytt.",
+    "alt": "Hva bilde {number} viser (valgfritt)",
+    "altPlaceholder": "For eksempel: Kranbil løfter takstein",
+    "saveAlt": "Lagre",
+    "altSaved": "Lagret.",
+    "moveEarlier": "Flytt bilde {number} fram",
+    "moveLater": "Flytt bilde {number} bak",
+    "sending": "Sender…",
+    "removing": "Fjerner…",
+    "errors": {
+      "notAllowed": "Bare eiere og administratorer kan endre firmasiden.",
+      "readOnly": "Abonnementet er ikke aktivt, så siden kan ikke endres.",
+      "tooBig": "Bildet er for stort. Velg et mindre.",
+      "wrongType": "Filen er ikke et bilde vi kan bruke. Velg et JPG-, PNG- eller HEIC-bilde.",
+      "unreadable": "Bildet kunne ikke åpnes. Velg et annet.",
+      "tooMany": "Siden har allerede {max} bilder. Fjern ett først.",
+      "altTooLong": "Beskrivelsen kan ha høyst 200 tegn.",
+      "unknown": "Noe gikk galt. Prøv igjen."
+    }
+  },
   "PublicPage": {
     "madeWith": "Siden er laget med MaskinGo",
     "metaTitle": "{name} – {city}",
@@ -1852,6 +1886,9 @@
     "orgNumber": "Org.nr. {number}",
     "services": "Tjenester",
     "area": "Område",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "logoAlt": "Logoen til {name}",
+    "photos": "Bilder",
+    "photoAlt": "Bilde {number} fra {name}"
   }
 }

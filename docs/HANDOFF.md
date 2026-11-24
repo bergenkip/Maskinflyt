@@ -434,3 +434,14 @@ patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn` ir plan
   canonical į maskingo.no, indeksuojama tik paskelbta ir tik produkcijoje. Sitemap'as atnaujinamas kas valandą.
 - Paslaugų sąrašas `src/lib/company-page.ts` (`services`) ir tas pats DB patikroje; tekstai `Services`.
 - Testai: `31_company_pages.test.sql`, `src/lib/company-page.test.ts`, `e2e/company-page.spec.ts`.
+
+### 15a+: logotipas ir nuotraukos (2026-11-24, Li prašymu)
+- Migracija `20261124150000_company_photos.sql`: lentelė `company_photos` (`logo` vienas, `photo` iki 8, aprašymas
+  ekrano skaitytuvams iki 200 ženklų, eilės tvarka, plotis ir aukštis). Failai privačiame `company-photos` bucket'e,
+  `<organization id>/<uuid>.jpg|png`, iki 2 MB. Keičia tik savininkas ir administratorius su antru žingsniu
+  (`add/update/move/remove_company_photo`), ne tik skaitymo režime. Lankytojai failus gauna per pasirašytas nuorodas
+  (1 val.) tik paskelbto puslapio ir tik įtrauktus į `company_photos` (`company_photo_visible`, `company_page_photos`).
+- Naršyklė nuotrauką perpiešia ant canvas: sumažina (logotipas 512 px PNG, nuotrauka 1600 px JPEG) ir taip
+  išmeta EXIF, įskaitant GPS. Serveris tikrina failo baitus ir dydį (`imageSize`, `src/lib/company-photos.ts`).
+- Ekranai: skiltis „Logotipas ir nuotraukos“ `/app/public-page`, logotipas šalia pavadinimo ir galerija `/firma/[slug]`.
+- Testai: `32_company_photos.test.sql`, `src/lib/company-photos.test.ts`, `e2e/company-photos.spec.ts`.

@@ -6,6 +6,7 @@ import { isService, pagePath } from "@/lib/company-page";
 import { isIndexable, ogLocale, SITE_NAME } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
+import { getPagePhotos } from "@/lib/company-photos-server";
 import { CompanyView, type PublicCompany } from "./company-view";
 
 // Published pages for everyone; an unpublished one only for the company's own members, as a preview.
@@ -39,5 +40,6 @@ export default async function CompanyPublicPage({ params }: PageProps<"/firma/[s
   const { slug } = await params;
   const company = await loadCompany(slug);
   if (!company) notFound();
-  return <CompanyView company={company} />;
+  const photos = await getPagePhotos(company.slug);
+  return <CompanyView company={company} photos={photos} />;
 }

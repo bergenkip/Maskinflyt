@@ -1845,6 +1845,40 @@
       "unknown": "Something went wrong. Try again."
     }
   },
+  "CompanyPhotos": {
+    "title": "Logo and photos",
+    "lead": "Shown on the company page. The pictures are made smaller and their location data is removed before they are sent.",
+    "logoTitle": "Logo",
+    "logoHint": "A square logo or one with a transparent background looks best.",
+    "logoAlt": "The company's logo",
+    "addLogo": "Choose a logo",
+    "changeLogo": "Change the logo",
+    "removeLogo": "Remove the logo",
+    "photosTitle": "Photos",
+    "photosHint": "Up to {max} photos of your machines and jobs. The first one is shown first.",
+    "photoAlt": "Photo {number}",
+    "addPhoto": "Add a photo",
+    "removePhoto": "Remove",
+    "photosFull": "The page has {max} photos, the most it can show. Remove one to add another.",
+    "alt": "What photo {number} shows (optional)",
+    "altPlaceholder": "For example: Crane truck lifting roof tiles",
+    "saveAlt": "Save",
+    "altSaved": "Saved.",
+    "moveEarlier": "Move photo {number} earlier",
+    "moveLater": "Move photo {number} later",
+    "sending": "Sending…",
+    "removing": "Removing…",
+    "errors": {
+      "notAllowed": "Only owners and admins can change the company page.",
+      "readOnly": "The subscription is not active, so the page cannot be changed.",
+      "tooBig": "The picture is too large. Choose a smaller one.",
+      "wrongType": "This file is not a picture we can use. Choose a JPG, PNG or HEIC photo.",
+      "unreadable": "The picture could not be opened. Choose another one.",
+      "tooMany": "The page already has {max} photos. Remove one first.",
+      "altTooLong": "The description can be at most 200 characters.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
   "PublicPage": {
     "madeWith": "Page made with MaskinGo",
     "metaTitle": "{name} – {city}",
@@ -1852,6 +1886,9 @@
     "orgNumber": "Org. no. {number}",
     "services": "Services",
     "area": "Area",
-    "contact": "Contact"
+    "contact": "Contact",
+    "logoAlt": "{name} logo",
+    "photos": "Photos",
+    "photoAlt": "Photo {number} from {name}"
   }
 }

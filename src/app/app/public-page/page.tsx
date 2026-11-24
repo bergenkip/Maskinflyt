@@ -9,7 +9,9 @@ import { isService, pagePath, slugify, type CompanyPageValues } from "@/lib/comp
 import { getCurrentMembership } from "@/lib/membership";
 import { canManageBilling } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
+import { getOwnCompanyPhotos } from "@/lib/company-photos-server";
 import { CompanyPageForm } from "./page-form";
+import { CompanyPhotosForm } from "./photos-form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("CompanyPage");
@@ -37,13 +39,16 @@ export default async function CompanyPageSettings() {
   if (!canManageBilling(membership)) redirect("/app/settings");
   const { organization } = membership;
 
-  const t = await getTranslations("CompanyPage");
+  const [t, tPhotos] = await Promise.all([getTranslations("CompanyPage"), getTranslations("CompanyPhotos")]);
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("company_pages")
-    .select("slug, published, description, services, city, area, phone, email, website")
-    .eq("organization_id", organization.id)
-    .maybeSingle();
+  const [{ data }, photos] = await Promise.all([
+    supabase
+      .from("company_pages")
+      .select("slug, published, description, services, city, area, phone, email, website")
+      .eq("organization_id", organization.id)
+      .maybeSingle(),
+    getOwnCompanyPhotos(organization.id),
+  ]);
   const page = data as PageRow | null;
   const host = (await headers()).get("x-forwarded-host") ?? "maskingo.no";
 
@@ -103,6 +108,16 @@ export default async function CompanyPageSettings() {
           {t("formTitle")}
         </h2>
         <CompanyPageForm initial={initial} host={host} />
+      </section>
+
+      <section aria-labelledby="page-photos" className={sectionClass}>
+        <div className="grid gap-1">
+          <h2 id="page-photos" className="text-lg font-semibold">
+            {tPhotos("title")}
+          </h2>
+          <p className="text-sm text-muted">{tPhotos("lead")}</p>
+        </div>
+        <CompanyPhotosForm photos={photos} />
       </section>
     </div>
   );
