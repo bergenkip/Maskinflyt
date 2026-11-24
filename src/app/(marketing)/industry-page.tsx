@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -11,6 +12,7 @@ import {
   type LandingPage,
 } from "@/lib/industries";
 import { IndustryLink } from "@/components/industry-link";
+import { industryPhotoSize, industryPhotos } from "@/lib/industry-photos";
 import { COMPANY } from "@/lib/legal";
 import { SITE_URL, publicPageMetadata } from "@/lib/site";
 
@@ -156,6 +158,20 @@ export function IndustryPage({ industry }: { industry: LandingPage }) {
           {t("readMore")}
         </Link>
       </div>
+
+      {/* A trade page shows its trade; topic pages have no photo of their own. */}
+      {isIndustry(industry) && (
+        <div className="mt-10 aspect-[3/2] overflow-hidden rounded-xl border border-border bg-border shadow-xl shadow-slate-900/10 sm:mt-14 sm:aspect-[21/9]">
+          <Image
+            src={industryPhotos[industry]}
+            alt={t(`${industry}.photoAlt`)}
+            {...industryPhotoSize}
+            sizes="(min-width: 1280px) 1200px, 100vw"
+            priority
+            className="size-full object-cover"
+          />
+        </div>
+      )}
 
       <section aria-labelledby="problems-title" className="mt-14 sm:mt-20">
         <h2

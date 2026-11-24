@@ -1423,6 +1423,7 @@
       "badge": "Kranų įmonėms",
       "title": "Krano užsakymai nuo užsakymo iki sąskaitos",
       "lead": "MaskinGo sujungia užsakymą, krano operatorių, valandas ir sąskaitą vienoje vietoje, todėl biurui nebereikia skambinėti ir perrašinėti darbo laiko lapų.",
+      "photoAlt": "Krano sunkvežimis prie fjordo kelia padėklą statybinių medžiagų prie pastolių, o darbuotojas su atšvaitine apranga stebi",
       "problems": [
         "Užsakymai ateina telefonu ir SMS, o visa apžvalga yra vieno žmogaus galvoje.",
         "Valandas ir minimalų laiką prieš išrašant sąskaitą reikia surinkti iš raštelių ir žinučių.",
@@ -1473,6 +1474,7 @@
       "badge": "Technikos rangovams",
       "title": "Viena programa užsakymams, technikai, valandoms ir sąskaitoms",
       "lead": "Tiems, kurie dirba su ekskavatoriais, krautuvais ar kita statybine technika: matykite, kas kur dirba, gaukite valandas iš telefono ir išrašykite sąskaitą jų neperrašinėdami.",
+      "photoAlt": "Geltonas ekskavatorius kasa griovį prie žvyrkelio miške, už jo matosi ratinis krautuvas",
       "problems": [
         "Operatoriai valandas rašo ant popieriaus arba SMS, ir jos ateina vėlai.",
         "Sunku pamatyti, kuri technika ir kurie operatoriai laisvi kitą savaitę.",
@@ -1523,6 +1525,7 @@
       "badge": "Transporto įmonėms",
       "title": "Transporto užsakymai be skambučių eilės ir popierinių lapelių",
       "lead": "MaskinGo dispečeriui parodo visus sunkvežimius ir vairuotojus, o vairuotojas gauna užsakymą telefone su klientu ir adresu.",
+      "photoAlt": "Savivartis sunkvežimis išverčia skaldos krovinį prie kelio palei fjordą",
       "problems": [
         "Dispečeris visą dieną skambina vairuotojams, kad paskirstytų užsakymus.",
         "Popieriniai darbo lapai pasimeta arba ateina po kelių savaičių.",

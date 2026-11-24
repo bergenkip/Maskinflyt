@@ -38,6 +38,25 @@ for (const locale of Object.keys(messages) as (keyof typeof messages)[]) {
           ).toBeVisible();
         }
 
+        // A trade page shows its trade's photo at the top, loaded and described.
+        const hero = page.getByRole("main").locator("article > div > img");
+        if ((industries as readonly string[]).includes(industry)) {
+          await expect(hero).toHaveCount(1);
+          await expect(hero).toHaveAttribute(
+            "alt",
+            (t as { photoAlt: string }).photoAlt,
+          );
+          await expect
+            .poll(() =>
+              hero.evaluate(
+                (el: HTMLImageElement) => el.complete && el.naturalWidth > 0,
+              ),
+            )
+            .toBe(true);
+        } else {
+          await expect(hero).toHaveCount(0);
+        }
+
         const overflow = await page.evaluate(
           () =>
             document.documentElement.scrollWidth -
