@@ -429,7 +429,8 @@
   },
   "Footer": {
     "text": "MaskinGo · Laget for norske entreprenører",
-    "linksLabel": "Lenker"
+    "linksLabel": "Lenker",
+    "pricing": "Priser"
   },
   "Mfa": {
     "verifyTitle": "Bekreft at det er deg",
@@ -1031,6 +1032,7 @@
             "Innlogging: for eiere og administratorer lagrer vi tidspunkt og nettlesertype ved det ekstra innloggingssteget på e-post.",
             "Oppdrag: tider fra trykkene På vei, Ankommet og Ferdig, og bilder og signaturer som lastes opp. Vi samler ikke inn posisjon (GPS).",
             "Fakturaer: innholdet i fakturaer og hvem de er sendt til på e-post.",
+            "Abonnement: valgt plan, prøveperiode og betalingsstatus. Kortopplysninger går direkte til Stripe, vi ser dem aldri.",
             "Drift: leverandørene våre logger IP-adresse og tidspunkt for å holde tjenesten sikker og i gang."
           ]
         },
@@ -1055,7 +1057,8 @@
             "Supabase: database, innlogging og filer. Lagret i Stockholm, Sverige.",
             "Vercel: drift av nettsiden. Serverfunksjonene kjører i Stockholm, Sverige.",
             "Resend: sending av e-post, i EUs region.",
-            "Alle tre er amerikanske selskaper. Opplysningene lagres i EU/EØS, men leverandøren kan i enkelte tilfeller få tilgang fra USA. Slik overføring bygger på EUs standardkontraktsbestemmelser eller EU–US Data Privacy Framework."
+            "Stripe: betaling med kort for abonnementet og kvitteringer.",
+            "Alle fire er amerikanske selskaper. Opplysningene lagres i EU/EØS, men leverandøren kan i enkelte tilfeller få tilgang fra USA. Slik overføring bygger på EUs standardkontraktsbestemmelser eller EU–US Data Privacy Framework."
           ]
         },
         {
@@ -1134,7 +1137,7 @@
         {
           "title": "Pris",
           "body": [
-            "Pris og betalingsvilkår avtales skriftlig med hver bedrift. Uten en slik avtale er bruken gratis."
+            "Prisene står på maskingo.no/priser. De første 30 dagene er gratis, uten betalingskort. Vil bedriften fortsette etter det, velger den en plan i tjenesten og betaler med kort gjennom Stripe. Ingenting trekkes før bedriften selv har valgt plan. Er betaling ikke slått på i tjenesten, er bruken gratis."
           ]
         },
         {
@@ -1621,5 +1624,58 @@
     },
     "plansLeadNoVat": "Det kommer ikke mva i tillegg.",
     "noVat": "Ingen mva i tillegg"
+  },
+  "Pricing": {
+    "metaTitle": "Priser · MaskinGo",
+    "metaDescription": "MaskinGo fra 290 kr i måneden. Alle funksjoner i alle planer, 30 dager gratis prøveperiode uten betalingskort og 2 måneder gratis ved årlig betaling.",
+    "badge": "30 dager gratis, uten betalingskort",
+    "title": "Enkle priser etter hvor mange dere er",
+    "lead": "Alle planer har alle funksjoner. Planen avgjøres bare av hvor mange personer i firmaet som bruker MaskinGo.",
+    "plansTitle": "Planer",
+    "plans": {
+      "solo": "Solo",
+      "start": "Start",
+      "pro": "Pro",
+      "bedrift": "Bedrift"
+    },
+    "seatsSolo": "1–2 personer",
+    "seats": "Opptil {count} personer",
+    "perMonth": "i måneden",
+    "perYear": "Eller {price} i året: 2 måneder gratis",
+    "extraSeat": "Over {count} personer: {price} i måneden per ekstra person",
+    "vatNotRegistered": "MaskinGo er ikke mva-registrert ennå, så det kommer ingen mva i tillegg.",
+    "vatExcluded": "Alle priser er eks. mva.",
+    "cta": "Prøv gratis i 30 dager",
+    "includedTitle": "Med i alle planer",
+    "included": [
+      "Oppdrag og kalender, også per maskin",
+      "Sjåførapp på mobilen med På vei, Ankommet og Ferdig",
+      "Bilder og kundens signatur på oppdraget",
+      "Timeliste til lønn med overtid",
+      "Kunderegister med egne priser og minstetid",
+      "Faktura med PDF og e-post, kreditnota",
+      "Eksport til regnskapsfører (CSV og PDF)",
+      "Roller for kontor, sjåfør og regnskapsfører",
+      "Norsk, engelsk og litauisk"
+    ],
+    "faqTitle": "Spørsmål om pris",
+    "faq": [
+      {
+        "q": "Hvem teller som en person?",
+        "a": "Alle i firmaet med egen innlogging: eier, kontor, sjåfører og regnskapsfører."
+      },
+      {
+        "q": "Hva skjer når prøveperioden er over?",
+        "a": "Du velger en plan i appen for å fortsette. Ingenting trekkes før du selv har valgt plan og lagt inn kort."
+      },
+      {
+        "q": "Kan vi bytte plan senere?",
+        "a": "Ja. Når dere blir flere eller færre, bytter du plan i appen. Det gjøres opp for dagene som er igjen av perioden."
+      },
+      {
+        "q": "Hvordan betaler vi?",
+        "a": "Med kort gjennom Stripe, månedlig eller årlig. Kvitteringer og oppsigelse finner du i appen."
+      }
+    ]
   }
 }

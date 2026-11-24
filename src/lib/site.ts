@@ -26,6 +26,7 @@ export const publicPaths = [
   "/kranbil",
   "/maskinentreprenor",
   "/transport",
+  "/priser",
   "/signup",
   "/login",
   "/personvern",

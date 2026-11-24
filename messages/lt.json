@@ -21,7 +21,7 @@
       },
       "check": {
         "title": "Darbas",
-        "body": "Vairuotojas spaudžia „Pakeliui“, „Atvykau“ ir „Baigiau“. Darbo laikas įrašomas pagal šiuos paspaudimus."
+        "body": "Vairuotojas spaudžia „Važiuoju“, „Atvykau“ ir „Baigiau“. Darbo laikas įrašomas pagal šiuos paspaudimus."
       },
       "approve": {
         "title": "Sąskaita",
@@ -36,7 +36,7 @@
       },
       "driver": {
         "title": "Vairuotojo programa telefone",
-        "body": "Vairuotojas mato tik savo užsakymus, spaudžia „Pakeliui“, „Atvykau“ ir „Baigiau“, prideda nuotraukas ir kliento parašą."
+        "body": "Vairuotojas mato tik savo užsakymus, spaudžia „Važiuoju“, „Atvykau“ ir „Baigiau“, prideda nuotraukas ir kliento parašą."
       },
       "hours": {
         "title": "Valandos be žiniaraščių",
@@ -429,7 +429,8 @@
   },
   "Footer": {
     "text": "MaskinGo · Sukurta Norvegijos rangovams",
-    "linksLabel": "Nuorodos"
+    "linksLabel": "Nuorodos",
+    "pricing": "Kainos"
   },
   "Mfa": {
     "verifyTitle": "Patvirtinkite, kad tai jūs",
@@ -1029,8 +1030,9 @@
             "Paskyra: vardas, el. pašto adresas, kalba, rolė ir įmonė, kuriai priklausote. Slaptažodis saugomas tik kaip kriptografinė maiša.",
             "Įmonė: pavadinimas, organizacijos numeris ir sąskaitų duomenys.",
             "Prisijungimas: savininkams ir administratoriams saugome papildomo prisijungimo žingsnio el. paštu laiką ir naršyklės tipą.",
-            "Užsakymai: laikai iš paspaudimų „Pakeliui“, „Atvykau“ ir „Baigiau“, įkeltos nuotraukos ir parašai. Vietos (GPS) nerenkame.",
+            "Užsakymai: laikai iš paspaudimų „Važiuoju“, „Atvykau“ ir „Baigiau“, įkeltos nuotraukos ir parašai. Vietos (GPS) nerenkame.",
             "Sąskaitos: sąskaitų turinys ir kam jos išsiųstos el. paštu.",
+            "Prenumerata: pasirinktas planas, bandomasis laikotarpis ir mokėjimo būsena. Kortelės duomenys keliauja tiesiai į Stripe, mes jų niekada nematome.",
             "Veikimas: mūsų tiekėjai registruoja IP adresą ir laiką, kad paslauga būtų saugi ir veiktų."
           ]
         },
@@ -1055,7 +1057,8 @@
             "Supabase: duomenų bazė, prisijungimas ir failai. Saugoma Stokholme, Švedijoje.",
             "Vercel: svetainės veikimas. Serverio funkcijos veikia Stokholme, Švedijoje.",
             "Resend: el. laiškų siuntimas, ES regione.",
-            "Visi trys yra JAV įmonės. Duomenys saugomi ES/EEE, bet tiekėjas kai kuriais atvejais gali juos pasiekti iš JAV. Toks perdavimas grindžiamas ES standartinėmis sutarčių sąlygomis arba ES ir JAV duomenų privatumo sistema."
+            "Stripe: prenumeratos mokėjimai kortele ir kvitai.",
+            "Visi keturi yra JAV įmonės. Duomenys saugomi ES/EEE, bet tiekėjas kai kuriais atvejais gali juos pasiekti iš JAV. Toks perdavimas grindžiamas ES standartinėmis sutarčių sąlygomis arba ES ir JAV duomenų privatumo sistema."
           ]
         },
         {
@@ -1134,7 +1137,7 @@
         {
           "title": "Kaina",
           "body": [
-            "Kaina ir mokėjimo sąlygos su kiekviena įmone sutariamos raštu. Be tokios sutarties naudojimasis nemokamas."
+            "Kainos pateiktos maskingo.no/priser. Pirmos 30 dienų nemokamos, be mokėjimo kortelės. Jei įmonė nori tęsti, ji paslaugoje pasirenka planą ir moka kortele per Stripe. Niekas nenuskaičiuojama, kol įmonė pati nepasirenka plano. Kol mokėjimas paslaugoje neįjungtas, naudojimasis nemokamas."
           ]
         },
         {
@@ -1621,5 +1624,58 @@
     },
     "plansLeadNoVat": "PVM (MVA) neskaičiuojamas.",
     "noVat": "Be PVM priedo"
+  },
+  "Pricing": {
+    "metaTitle": "Kainos · MaskinGo",
+    "metaDescription": "MaskinGo nuo 290 kr per mėnesį. Visos funkcijos visuose planuose, 30 dienų nemokamas bandymas be kortelės ir 2 mėnesiai nemokamai mokant metams.",
+    "badge": "30 dienų nemokamai, be mokėjimo kortelės",
+    "title": "Paprastos kainos pagal komandos dydį",
+    "lead": "Visi planai turi visas funkcijas. Planas priklauso tik nuo to, kiek įmonės žmonių naudoja MaskinGo.",
+    "plansTitle": "Planai",
+    "plans": {
+      "solo": "Solo",
+      "start": "Start",
+      "pro": "Pro",
+      "bedrift": "Bedrift"
+    },
+    "seatsSolo": "1–2 žmonės",
+    "seats": "Iki {count} žmonių",
+    "perMonth": "per mėnesį",
+    "perYear": "Arba {price} per metus: 2 mėnesiai nemokamai",
+    "extraSeat": "Daugiau nei {count} žmonių: {price} per mėnesį už kiekvieną papildomą žmogų",
+    "vatNotRegistered": "MaskinGo dar neįregistruota PVM mokėtoja, todėl PVM nepridedamas.",
+    "vatExcluded": "Visos kainos be PVM.",
+    "cta": "Išbandyti nemokamai 30 dienų",
+    "includedTitle": "Įeina į visus planus",
+    "included": [
+      "Užsakymai ir kalendorius, taip pat pagal mašinas",
+      "Vairuotojo programa telefone su Važiuoju, Atvykau ir Baigiau",
+      "Nuotraukos ir kliento parašas prie užsakymo",
+      "Valandų lapas atlyginimui su viršvalandžiais",
+      "Klientų registras su savomis kainomis ir minimaliu laiku",
+      "Sąskaitos su PDF ir el. paštu, kreditinės sąskaitos",
+      "Eksportas buhalteriui (CSV ir PDF)",
+      "Rolės biurui, vairuotojui ir buhalteriui",
+      "Norvegų, anglų ir lietuvių kalbos"
+    ],
+    "faqTitle": "Klausimai apie kainas",
+    "faq": [
+      {
+        "q": "Kas laikomas žmogumi?",
+        "a": "Kiekvienas įmonės narys su savo prisijungimu: savininkas, biuras, vairuotojai ir buhalteris."
+      },
+      {
+        "q": "Kas bus, kai baigsis bandymas?",
+        "a": "Norėdami tęsti, programoje pasirenkate planą. Niekas nenuskaičiuojama, kol patys nepasirenkate plano ir neįvedate kortelės."
+      },
+      {
+        "q": "Ar galime vėliau pakeisti planą?",
+        "a": "Taip. Kai jūsų padaugėja ar sumažėja, planą pakeičiate programoje. Už likusias laikotarpio dienas atsiskaitoma."
+      },
+      {
+        "q": "Kaip mokame?",
+        "a": "Kortele per Stripe, kas mėnesį arba kas metus. Kvitai ir atsisakymas yra programoje."
+      }
+    ]
   }
 }

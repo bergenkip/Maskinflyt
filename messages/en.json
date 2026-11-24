@@ -429,7 +429,8 @@
   },
   "Footer": {
     "text": "MaskinGo · Built for Norwegian contractors",
-    "linksLabel": "Links"
+    "linksLabel": "Links",
+    "pricing": "Pricing"
   },
   "Mfa": {
     "verifyTitle": "Confirm it is you",
@@ -1031,6 +1032,7 @@
             "Sign-in: for owners and admins we store the time and browser type of the extra sign-in step by e-mail.",
             "Jobs: times from the On the way, Arrived and Finished taps, and uploaded photos and signatures. We do not collect location (GPS).",
             "Invoices: the content of invoices and who they were e-mailed to.",
+            "Subscription: chosen plan, trial and payment status. Card details go straight to Stripe; we never see them.",
             "Operations: our providers log IP address and time to keep the service secure and running."
           ]
         },
@@ -1055,7 +1057,8 @@
             "Supabase: database, sign-in and files. Stored in Stockholm, Sweden.",
             "Vercel: runs the website. Server functions run in Stockholm, Sweden.",
             "Resend: sends e-mail, in its EU region.",
-            "All three are US companies. The data is stored in the EU/EEA, but a provider may in some cases access it from the US. Such transfers rely on the EU Standard Contractual Clauses or the EU–US Data Privacy Framework."
+            "Stripe: card payments for the subscription, and receipts.",
+            "All four are US companies. The data is stored in the EU/EEA, but a provider may in some cases access it from the US. Such transfers rely on the EU Standard Contractual Clauses or the EU–US Data Privacy Framework."
           ]
         },
         {
@@ -1134,7 +1137,7 @@
         {
           "title": "Price",
           "body": [
-            "Price and payment terms are agreed in writing with each company. Without such an agreement, use is free."
+            "The prices are at maskingo.no/priser. The first 30 days are free, without a card. If the company wants to continue after that, it chooses a plan in the service and pays by card through Stripe. Nothing is charged until the company has chosen a plan itself. While payment is not switched on in the service, use is free."
           ]
         },
         {
@@ -1621,5 +1624,58 @@
     },
     "plansLeadNoVat": "No VAT (MVA) is added.",
     "noVat": "No VAT added"
+  },
+  "Pricing": {
+    "metaTitle": "Pricing · MaskinGo",
+    "metaDescription": "MaskinGo from NOK 290 a month. Every feature in every plan, a 30-day free trial without a card, and 2 months free when you pay yearly.",
+    "badge": "30 days free, no card needed",
+    "title": "Simple pricing by team size",
+    "lead": "Every plan has every feature. The plan only depends on how many people in the company use MaskinGo.",
+    "plansTitle": "Plans",
+    "plans": {
+      "solo": "Solo",
+      "start": "Start",
+      "pro": "Pro",
+      "bedrift": "Bedrift"
+    },
+    "seatsSolo": "1–2 people",
+    "seats": "Up to {count} people",
+    "perMonth": "a month",
+    "perYear": "Or {price} a year: 2 months free",
+    "extraSeat": "Over {count} people: {price} a month per extra person",
+    "vatNotRegistered": "MaskinGo is not VAT registered yet, so no VAT is added.",
+    "vatExcluded": "All prices exclude VAT.",
+    "cta": "Try free for 30 days",
+    "includedTitle": "In every plan",
+    "included": [
+      "Jobs and calendar, also per machine",
+      "Driver app on the phone with On the way, Arrived and Finished",
+      "Photos and the customer's signature on the job",
+      "Timesheet for payroll with overtime",
+      "Customer register with own prices and minimum time",
+      "Invoices with PDF and email, credit notes",
+      "Export for the accountant (CSV and PDF)",
+      "Roles for office, driver and accountant",
+      "Norwegian, English and Lithuanian"
+    ],
+    "faqTitle": "Questions about pricing",
+    "faq": [
+      {
+        "q": "Who counts as a person?",
+        "a": "Everyone in the company with their own login: owner, office, drivers and accountant."
+      },
+      {
+        "q": "What happens when the trial ends?",
+        "a": "You choose a plan in the app to continue. Nothing is charged until you have chosen a plan and added a card yourself."
+      },
+      {
+        "q": "Can we change plan later?",
+        "a": "Yes. When you grow or shrink, you change the plan in the app. The days left in the period are settled."
+      },
+      {
+        "q": "How do we pay?",
+        "a": "By card through Stripe, monthly or yearly. Receipts and cancellation are in the app."
+      }
+    ]
   }
 }
