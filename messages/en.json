@@ -184,7 +184,9 @@
     "tipPageOpen": "Open the page",
     "tipPhotosTitle": "Add a logo and photos",
     "tipPhotosText": "Photos of your machines and jobs make the page more trustworthy.",
-    "tipPhotosAction": "Add photos"
+    "tipPhotosAction": "Add photos",
+    "requestsLabel": "New requests",
+    "requestsDetail": "From your company page"
   },
   "Roles": {
     "owner": "Owner",
@@ -590,7 +592,9 @@
     "viewList": "List",
     "viewCalendar": "Calendar",
     "timeSpan": "{start}–~{end}",
-    "statusLocked": "The invoice is marked as sent: the status stays “Done”. Take the mark back in the invoice section to change it."
+    "statusLocked": "The invoice is marked as sent: the status stays “Done”. Take the mark back in the invoice section to change it.",
+    "requestsLink": "Requests from the company page",
+    "requestsNew": "{count} new"
   },
   "Calendar": {
     "title": "Calendar",
@@ -1900,5 +1904,66 @@
     "logoAlt": "{name} logo",
     "photos": "Photos",
     "photoAlt": "Photo {number} from {name}"
+  },
+  "JobRequestForm": {
+    "open": "Send a request",
+    "title": "Send a request",
+    "lead": "Describe the job and {company} will contact you. Nothing is booked until the company confirms.",
+    "preview": "When the page is public, visitors can send requests here.",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "E-mail",
+    "contactHint": "Give a phone number or an e-mail address, so the company can answer you.",
+    "place": "Where is the job?",
+    "placeHint": "Address or place",
+    "service": "Service",
+    "serviceAny": "Not sure / other",
+    "date": "Preferred date (optional)",
+    "dateHint": "The company confirms the time.",
+    "description": "What do you need help with?",
+    "descriptionHint": "For example what is to be lifted or dug, weight, size and access.",
+    "trap": "Leave this field empty",
+    "privacy": "{company} receives what you write here in order to answer you. <link>How we handle personal data</link>.",
+    "send": "Send request",
+    "sending": "Sending…",
+    "sentTitle": "Your request has been sent",
+    "sentText": "{company} has received your request and will contact you. Nothing is booked until they confirm.",
+    "errors": {
+      "nameRequired": "Enter your name.",
+      "nameTooLong": "The name can be at most 100 characters.",
+      "phoneInvalid": "Enter a valid phone number.",
+      "emailInvalid": "Enter a valid e-mail address.",
+      "contactRequired": "Give a phone number or an e-mail address.",
+      "placeRequired": "Enter where the job is.",
+      "placeTooLong": "The place can be at most 200 characters.",
+      "descriptionRequired": "Describe briefly what you need.",
+      "descriptionTooLong": "The description can be at most 2,000 characters.",
+      "dateInvalid": "Choose a date from today up to two years ahead.",
+      "serviceInvalid": "Choose a service from the list.",
+      "closed": "This company does not take requests here right now. Use the contact details above.",
+      "tooMany": "Many requests have been sent in a short time. Try again in an hour, or call the company.",
+      "unknown": "The request was not sent. Try again."
+    }
+  },
+  "JobRequests": {
+    "title": "Requests",
+    "back": "Jobs",
+    "lead": "Requests customers sent from your company page. Contact the customer and agree on the job before you plan it.",
+    "error": "The requests could not be loaded. Try again.",
+    "emptyPublished": "No requests yet. Customers send them with the \"Send a request\" button on your company page.",
+    "emptyNoPage": "No requests yet. Customers can send them once your company page is public.",
+    "setUpPage": "Set up the company page",
+    "listTitle": "Newest first",
+    "count": "{count, plural, one {# request} other {# requests}}, {unanswered} new",
+    "received": "Received {time}",
+    "place": "Place",
+    "wantedDate": "Preferred date",
+    "wantedOn": "Preferred: {date}",
+    "service": "Service",
+    "statuses": {
+      "new": "New",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    }
   }
 }

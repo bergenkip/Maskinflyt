@@ -184,7 +184,9 @@
     "tipPageOpen": "Atidaryti puslapį",
     "tipPhotosTitle": "Pridėkite logotipą ir nuotraukas",
     "tipPhotosText": "Technikos ir darbų nuotraukos padaro puslapį patikimesnį.",
-    "tipPhotosAction": "Pridėti nuotraukų"
+    "tipPhotosAction": "Pridėti nuotraukų",
+    "requestsLabel": "Naujos užklausos",
+    "requestsDetail": "Iš jūsų įmonės puslapio"
   },
   "Roles": {
     "owner": "Savininkas",
@@ -590,7 +592,9 @@
     "viewList": "Sąrašas",
     "viewCalendar": "Kalendorius",
     "timeSpan": "{start}–~{end}",
-    "statusLocked": "Sąskaita pažymėta kaip išsiųsta: būsena lieka „Atlikta“. Norėdami ją keisti, atšaukite žymą sąskaitos skiltyje."
+    "statusLocked": "Sąskaita pažymėta kaip išsiųsta: būsena lieka „Atlikta“. Norėdami ją keisti, atšaukite žymą sąskaitos skiltyje.",
+    "requestsLink": "Užklausos iš įmonės puslapio",
+    "requestsNew": "{count, plural, one {# nauja} few {# naujos} other {# naujų}}"
   },
   "Calendar": {
     "title": "Kalendorius",
@@ -1900,5 +1904,66 @@
     "logoAlt": "{name} logotipas",
     "photos": "Nuotraukos",
     "photoAlt": "{name} nuotrauka nr. {number}"
+  },
+  "JobRequestForm": {
+    "open": "Siųsti užklausą",
+    "title": "Siųsti užklausą",
+    "lead": "Aprašykite darbą, ir {company} su jumis susisieks. Niekas neužsakoma, kol įmonė nepatvirtina.",
+    "preview": "Kai puslapis bus viešas, lankytojai čia galės siųsti užklausas.",
+    "name": "Vardas",
+    "phone": "Telefonas",
+    "email": "El. paštas",
+    "contactHint": "Nurodykite telefoną arba el. paštą, kad įmonė galėtų jums atsakyti.",
+    "place": "Kur atliekamas darbas?",
+    "placeHint": "Adresas arba vieta",
+    "service": "Paslauga",
+    "serviceAny": "Nežinau / kita",
+    "date": "Pageidaujama data (nebūtina)",
+    "dateHint": "Laiką patvirtina įmonė.",
+    "description": "Kuo galime padėti?",
+    "descriptionHint": "Pavyzdžiui, ką reikia pakelti ar iškasti, svoris, matmenys ir privažiavimas.",
+    "trap": "Palikite šį lauką tuščią",
+    "privacy": "{company} gaus tai, ką čia parašysite, kad galėtų jums atsakyti. <link>Kaip tvarkome asmens duomenis</link>.",
+    "send": "Siųsti užklausą",
+    "sending": "Siunčiama…",
+    "sentTitle": "Užklausa išsiųsta",
+    "sentText": "{company} gavo jūsų užklausą ir su jumis susisieks. Niekas neužsakoma, kol jie nepatvirtina.",
+    "errors": {
+      "nameRequired": "Įrašykite savo vardą.",
+      "nameTooLong": "Vardas gali būti ne ilgesnis nei 100 simbolių.",
+      "phoneInvalid": "Įrašykite teisingą telefono numerį.",
+      "emailInvalid": "Įrašykite teisingą el. pašto adresą.",
+      "contactRequired": "Nurodykite telefoną arba el. paštą.",
+      "placeRequired": "Įrašykite, kur atliekamas darbas.",
+      "placeTooLong": "Vieta gali būti ne ilgesnė nei 200 simbolių.",
+      "descriptionRequired": "Trumpai aprašykite, ko reikia.",
+      "descriptionTooLong": "Aprašymas gali būti ne ilgesnis nei 2000 simbolių.",
+      "dateInvalid": "Pasirinkite datą nuo šiandien iki dvejų metų į priekį.",
+      "serviceInvalid": "Pasirinkite paslaugą iš sąrašo.",
+      "closed": "Ši įmonė dabar čia nepriima užklausų. Naudokite kontaktus aukščiau.",
+      "tooMany": "Per trumpą laiką išsiųsta daug užklausų. Bandykite po valandos arba paskambinkite įmonei.",
+      "unknown": "Užklausa neišsiųsta. Bandykite dar kartą."
+    }
+  },
+  "JobRequests": {
+    "title": "Užklausos",
+    "back": "Užsakymai",
+    "lead": "Užklausos, kurias klientai atsiuntė iš jūsų įmonės puslapio. Susisiekite su klientu ir sutarkite dėl darbo prieš jį suplanuodami.",
+    "error": "Nepavyko įkelti užklausų. Bandykite dar kartą.",
+    "emptyPublished": "Užklausų dar nėra. Klientai jas siunčia mygtuku „Siųsti užklausą“ jūsų įmonės puslapyje.",
+    "emptyNoPage": "Užklausų dar nėra. Klientai galės jas siųsti, kai jūsų įmonės puslapis bus viešas.",
+    "setUpPage": "Sukurti įmonės puslapį",
+    "listTitle": "Naujausios viršuje",
+    "count": "{count, plural, one {# užklausa} few {# užklausos} other {# užklausų}}, naujų: {unanswered}",
+    "received": "Gauta {time}",
+    "place": "Vieta",
+    "wantedDate": "Pageidaujama data",
+    "wantedOn": "Pageidaujama: {date}",
+    "service": "Paslauga",
+    "statuses": {
+      "new": "Nauja",
+      "accepted": "Priimta",
+      "declined": "Atmesta"
+    }
   }
 }

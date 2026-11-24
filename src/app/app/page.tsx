@@ -12,6 +12,7 @@ import {
   ContactsIcon,
   GlobeIcon,
   ImageIcon,
+  InboxIcon,
   TruckIcon,
   UsersIcon,
 } from "@/components/icons";
@@ -47,7 +48,7 @@ export default async function DashboardPage() {
   const today = toLocalParts(new Date(), organization.timeZone).date;
   const midnight = (day: string) =>
     fromLocalParts(day, "00:00", organization.timeZone) ?? fromLocalParts(day, "01:00", organization.timeZone)!;
-  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers, upcomingJobs, unplannedJobs, anyJob, companyPage, companyPhotos, myJobs] =
+  const [t, tRoles, format, profile, members, invitations, vehicles, activeVehicles, customers, upcomingJobs, unplannedJobs, anyJob, companyPage, companyPhotos, myJobs, newRequests] =
     await Promise.all([
       getTranslations("Dashboard"),
       getTranslations("Roles"),
@@ -108,7 +109,16 @@ export default async function DashboardPage() {
         from_at: midnight(today).toISOString(),
         to_at: midnight(addDays(today, 1)).toISOString(),
       }),
+      // Requests from the company page that nobody has answered yet.
+      showJobs
+        ? supabase
+            .from("job_requests")
+            .select("id", { count: "exact", head: true })
+            .eq("organization_id", organization.id)
+            .eq("status", "new")
+        : null,
     ]);
+  const requestCount = newRequests && !newRequests.error ? (newRequests.count ?? 0) : 0;
   const myJobsToday = myJobs.error ? null : ((myJobs.data ?? []) as { status: string }[]).length;
   const myJobsOpen = ((myJobs.data ?? []) as { status: string }[]).filter((job) => job.status !== "done").length;
 
@@ -146,6 +156,19 @@ export default async function DashboardPage() {
           {t("numbersTitle")}
         </h2>
         <ul className="grid gap-3 sm:grid-cols-2">
+          {requestCount > 0 && (
+            <li>
+              <StatCard
+                href="/app/jobs/requests"
+                tone="bg-warning-soft text-warning"
+                icon={<InboxIcon className="size-6" />}
+                value={requestCount}
+                format={number}
+                label={t("requestsLabel")}
+                detail={t("requestsDetail")}
+              />
+            </li>
+          )}
           <li>
             <StatCard
               href="/app/team"

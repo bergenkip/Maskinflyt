@@ -450,3 +450,22 @@ patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn`, nemoka
 Po „Nuo ko pradėti“ savininkui ir administratoriui rodoma „Rekomendacijos“ (`Tip` `src/app/app/page.tsx`, tekstai
 `Dashboard.tip*`): sukurti ir paskelbti įmonės puslapį, pridėti logotipą ir nuotraukas. Skiltis pasislepia, kai viskas
 atlikta. Katalogo rekomendacija bus pridėta kartu su 15d (kol katalogo nėra, nuoroda niekur nevestų).
+
+### 15b-1: užklausos per įmonės puslapį (2026-11-24)
+Li sprendimas 2026-11-24: laisvi laikai rodomi 15c etape, iškart po 15b-1. 15c: įmonė programoje „atidaro laikus“
+(darbo valandos, poilsio dienos), apžvalgoje rekomendacija tai padaryti, kai puslapis sukurtas, ir jungiklis
+išjungti laikus (tada tik užklausos su pageidaujama data, kaip dabar). Klientui pasirinktas laikas vis tiek tik pasiūlymas.
+- Migracija `20261124170000_job_requests.sql`: lentelė `job_requests` (vardas, telefonas ir/ar el. paštas, vieta,
+  pageidaujama data, paslauga, aprašymas, kalba, būsena `new|accepted|declined`). Skaito tik biuras (owner, admin,
+  dispatcher ir `plan_jobs`); niekas nerašo tiesiogiai. Lankytojas siunčia per `submit_job_request(slug, …)`: tik
+  paskelbtam ne tik skaitymo įmonės puslapiui, laukai tikrinami dar kartą, ne daugiau kaip 20 per valandą įmonei
+  ir 3 per valandą iš to paties telefono ar el. pašto (`too_many`).
+- Forma `/firma/[slug]#request` (`request-form.tsx`, `request-actions.ts`), be paskyros; paslaugos tik iš įmonės sąrašo.
+  Paslėptas laukas robotams (`company_website`): jį užpildžius nieko neišsaugoma.
+- Laiškas įmonei norvegiškai (`src/lib/email/request-email.ts`, `foresporsel@maskingo.no`) į puslapio viešą el. paštą,
+  atsakymas (reply-to) eina klientui. Be `INVOICE_EMAIL_LIVE=1` tik į testinę dėžutę ir tik `.test` adresams.
+  Jei puslapyje el. pašto nėra, laiškas nesiunčiamas; užklausa vis tiek matoma programoje.
+- Programa: `/app/jobs/requests` (sąrašas, skambinti / rašyti), nuoroda su naujų skaičiumi `/app/jobs`,
+  kortelė „Naujos užklausos“ apžvalgoje, kai jų yra.
+- 15b-2 (toliau): priimti (klientas ir užsakymo juodraštis) arba atmesti, laiškas klientui jo kalba (`locale`).
+- Testai: `33_job_requests.test.sql`, `src/lib/job-requests.test.ts`, `src/lib/email/request-email.test.ts`, `e2e/job-requests.spec.ts`.

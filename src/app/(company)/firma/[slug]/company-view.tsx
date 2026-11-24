@@ -6,12 +6,17 @@ import {
   MailIcon,
   MapPinIcon,
   PhoneIcon,
+  SendIcon,
 } from "@/components/icons";
 import type { CompanyPhoto } from "@/lib/company-photos-server";
 import { formatPhone } from "@/lib/customers";
+import { addDays } from "@/lib/calendar";
 import { isService, pagePath } from "@/lib/company-page";
+import { toLocalParts } from "@/lib/jobs";
+import { MAX_REQUEST_DAYS_AHEAD } from "@/lib/job-requests";
 import { formatOrgNumber } from "@/lib/org-number";
 import { SITE_URL } from "@/lib/site";
+import { RequestForm } from "./request-form";
 
 export type PublicCompany = {
   name: string;
@@ -43,10 +48,13 @@ export async function CompanyView({
   company: PublicCompany;
   photos?: CompanyPhoto[];
 }) {
-  const [t, tServices] = await Promise.all([
+  const [t, tServices, tRequest] = await Promise.all([
     getTranslations("PublicPage"),
     getTranslations("Services"),
+    getTranslations("JobRequestForm"),
   ]);
+  // A request can be for today (in Norway) or a later day.
+  const today = toLocalParts(new Date(), "Europe/Oslo").date;
   const services = company.services.filter(isService);
   const logo = photos.find((photo) => photo.kind === "logo" && photo.url);
   const pictures = photos.filter(
@@ -126,6 +134,16 @@ export async function CompanyView({
           </p>
         </div>
       </header>
+
+      {company.published && (
+        <a
+          href="#request"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+        >
+          <SendIcon className="size-5" />
+          {tRequest("open")}
+        </a>
+      )}
 
       {company.description && (
         <p className="text-lg leading-relaxed [overflow-wrap:anywhere] whitespace-pre-line">
@@ -234,6 +252,38 @@ export async function CompanyView({
           </div>
         </section>
       )}
+
+      <section
+        id="request"
+        aria-labelledby="request-title"
+        className="grid scroll-mt-6 gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6"
+      >
+        <div className="grid gap-1">
+          <h2 id="request-title" className="text-xl font-semibold">
+            {tRequest("title")}
+          </h2>
+          <p className="text-muted [overflow-wrap:anywhere]">
+            {tRequest("lead", { company: company.name })}
+          </p>
+        </div>
+        {company.published ? (
+          <RequestForm
+            slug={company.slug}
+            company={company.name}
+            services={services.map((service) => ({
+              value: service,
+              label: tServices(service),
+            }))}
+            minDate={today}
+            maxDate={addDays(today, MAX_REQUEST_DAYS_AHEAD)}
+          />
+        ) : (
+          <p className="flex items-start gap-2 font-medium text-muted">
+            <EyeOffIcon className="mt-0.5 size-5 shrink-0" />
+            {tRequest("preview")}
+          </p>
+        )}
+      </section>
 
       {jsonLd && (
         <script

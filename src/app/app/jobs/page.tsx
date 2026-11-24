@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { ArrowRightIcon, CheckCircleIcon, ClockIcon, MapPinIcon, PlusIcon, TruckIcon, UserIcon } from "@/components/icons";
+import { ArrowRightIcon, CheckCircleIcon, ClockIcon, InboxIcon, MapPinIcon, PlusIcon, TruckIcon, UserIcon } from "@/components/icons";
 import { toLocalParts, type JobStatus } from "@/lib/jobs";
 import type { JobProgress } from "@/lib/progress";
 import { getCurrentMembership } from "@/lib/membership";
@@ -52,7 +52,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
     .from("jobs")
     .select("id, number, address, starts_at, ends_at, status, progress, progress_at, driver_id, customers(name), vehicles(name), job_times(id)")
     .eq("organization_id", organization.id);
-  const [t, tMy, tTime, format, result, members] = await Promise.all([
+  const [t, tMy, tTime, format, result, members, newRequests] = await Promise.all([
     getTranslations("Jobs"),
     getTranslations("MyJobs"),
     getTranslations("JobTime"),
@@ -61,7 +61,13 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
       ? request.lt("ends_at", now.toISOString()).order("starts_at", { ascending: false }).limit(100)
       : request.gte("ends_at", now.toISOString()).order("starts_at").limit(200),
     supabase.rpc("list_members", { org: organization.id }),
+    supabase
+      .from("job_requests")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", organization.id)
+      .eq("status", "new"),
   ]);
+  const requestCount = newRequests.error ? 0 : (newRequests.count ?? 0);
   const jobs = (result.data ?? []) as unknown as Row[];
   const people = new Map(((members.data ?? []) as MemberRow[]).map((m) => [m.user_id, m.full_name ?? m.email]));
 
@@ -99,6 +105,18 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
         </Link>
       </div>
       <JobsViewNav current="list" />
+      {/* Requests from the company page: highlighted while some are unanswered. */}
+      <Link
+        href="/app/jobs/requests"
+        className={`group flex min-h-11 items-center gap-3 rounded-xl border p-3 font-medium hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${requestCount > 0 ? "border-warning/40 bg-warning-soft" : "border-border bg-surface"}`}
+      >
+        <InboxIcon className={`size-5 shrink-0 ${requestCount > 0 ? "text-warning" : "text-muted"}`} />
+        <span className="min-w-0 flex-1">{t("requestsLink")}</span>
+        {requestCount > 0 && (
+          <span className="shrink-0 text-sm font-semibold text-warning">{t("requestsNew", { count: requestCount })}</span>
+        )}
+        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+      </Link>
 
       <section aria-labelledby="list-title" className="grid gap-4">
         <h2 id="list-title" className="sr-only">
