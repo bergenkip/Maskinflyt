@@ -423,7 +423,7 @@ apačioje. Generatoriaus išgalvoti smulkūs užrašai užlieti. Antra kranų nu
 
 ## 15a etapas: viešas įmonės puslapis (2026-11-24)
 Li pasirinko 2026-11-24. Visas planas: 15a puslapis, 15b užklausų forma (įmonė priima arba atmeta, jokio automatinio
-patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn` ir planas „tik katalogas“.
+patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn`, nemokamas (Li sprendimas 2026-11-24, vietoj plano „tik katalogas“). Pardavimo laiškai jau žada užsakymą per puslapį ir katalogą, todėl 15b ir 15d svarbūs paleidimui.
 - Migracija `20261124120000_company_pages.sql`: lentelė `company_pages` (adresas `slug`, `published`, aprašymas,
   paslaugos iš fiksuoto sąrašo, miestas, sritis, telefonas, el. paštas, svetainė tik `https://`). Rašo tik
   `save_company_page` (savininkas ir administratorius su antru žingsniu); nariai skaito. Lankytojai lentelės nemato:
@@ -445,3 +445,8 @@ patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn` ir plan
   išmeta EXIF, įskaitant GPS. Serveris tikrina failo baitus ir dydį (`imageSize`, `src/lib/company-photos.ts`).
 - Ekranai: skiltis „Logotipas ir nuotraukos“ `/app/public-page`, logotipas šalia pavadinimo ir galerija `/firma/[slug]`.
 - Testai: `32_company_photos.test.sql`, `src/lib/company-photos.test.ts`, `e2e/company-photos.spec.ts`.
+
+### Rekomendacijos apžvalgoje (2026-11-24, Li prašymu)
+Po „Nuo ko pradėti“ savininkui ir administratoriui rodoma „Rekomendacijos“ (`Tip` `src/app/app/page.tsx`, tekstai
+`Dashboard.tip*`): sukurti ir paskelbti įmonės puslapį, pridėti logotipą ir nuotraukas. Skiltis pasislepia, kai viskas
+atlikta. Katalogo rekomendacija bus pridėta kartu su 15d (kol katalogo nėra, nuoroda niekur nevestų).

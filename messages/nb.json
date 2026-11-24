@@ -174,7 +174,17 @@
     "jobsLabel": "Kommende oppdrag",
     "jobsDetail": "{count, plural, =0 {Alle er planlagt} one {# ikke planlagt ennå} other {# ikke planlagt ennå}}",
     "myJobsLabel": "Mine oppdrag i dag",
-    "myJobsDetail": "{count, plural, =0 {alt er gjort} one {# gjenstår} other {# gjenstår}}"
+    "myJobsDetail": "{count, plural, =0 {alt er gjort} one {# gjenstår} other {# gjenstår}}",
+    "tipsTitle": "Anbefalinger",
+    "tipsLead": "Slik får du flere oppdrag.",
+    "tipPageTitle": "Lag firmasiden",
+    "tipPageText": "En side du kan sende til kunder: hva dere gjør, hvor dere jobber og hvordan de når dere.",
+    "tipPageAction": "Lag siden",
+    "tipPageFinish": "Fullfør og publiser",
+    "tipPageOpen": "Åpne siden",
+    "tipPhotosTitle": "Legg til logo og bilder",
+    "tipPhotosText": "Bilder av maskiner og oppdrag gjør siden mer troverdig.",
+    "tipPhotosAction": "Legg til bilder"
   },
   "Roles": {
     "owner": "Eier",

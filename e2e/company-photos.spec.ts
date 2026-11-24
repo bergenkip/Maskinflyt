@@ -77,6 +77,12 @@ test("the owner adds a logo and photos; visitors see them only on the published 
     await shootAllWidths(page, "company-photos-settings", locale);
   }
 
+  // Published with photos: nothing left to recommend on the overview.
+  await page.context().addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
+  await page.goto("/app");
+  await expect(page.getByRole("heading", { name: "Get started" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "Recommendations" })).toHaveCount(0);
+
   // Removing a photo takes it off the page.
   await page.context().addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
   await page.goto("/app/public-page");

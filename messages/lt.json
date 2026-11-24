@@ -174,7 +174,17 @@
     "jobsLabel": "Būsimi užsakymai",
     "jobsDetail": "{count, plural, =0 {Visi suplanuoti} one {# dar nesuplanuotas} few {# dar nesuplanuoti} other {# dar nesuplanuotų}}",
     "myJobsLabel": "Mano darbai šiandien",
-    "myJobsDetail": "{count, plural, =0 {viskas atlikta} one {liko #} few {liko #} other {liko #}}"
+    "myJobsDetail": "{count, plural, =0 {viskas atlikta} one {liko #} few {liko #} other {liko #}}",
+    "tipsTitle": "Rekomendacijos",
+    "tipsLead": "Kaip gauti daugiau užsakymų.",
+    "tipPageTitle": "Sukurkite įmonės puslapį",
+    "tipPageText": "Puslapis, kurį galite siųsti klientams: ką darote, kur dirbate ir kaip su jumis susisiekti.",
+    "tipPageAction": "Sukurti puslapį",
+    "tipPageFinish": "Užbaigti ir paskelbti",
+    "tipPageOpen": "Atidaryti puslapį",
+    "tipPhotosTitle": "Pridėkite logotipą ir nuotraukas",
+    "tipPhotosText": "Technikos ir darbų nuotraukos padaro puslapį patikimesnį.",
+    "tipPhotosAction": "Pridėti nuotraukų"
   },
   "Roles": {
     "owner": "Savininkas",
