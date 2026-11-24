@@ -1,9 +1,12 @@
 name: CI
 
+# A change to notes only (docs/, *.md) runs nothing: nothing in it reaches the app.
 on:
   pull_request:
+    paths-ignore: ["docs/**", "**/*.md"]
   push:
     branches: [main]
+    paths-ignore: ["docs/**", "**/*.md"]
 
 permissions:
   contents: read
@@ -64,8 +67,14 @@ jobs:
 
   e2e-auth:
     # Sign-up, onboarding and settings against a local Supabase (synthetic users only).
+    # Split over three machines that run at the same time, each with its own Supabase.
+    name: e2e-auth (${{ matrix.shard }}/3)
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -86,7 +95,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts e2e/calendar.spec.ts e2e/driver.spec.ts e2e/job-time.spec.ts e2e/job-files.spec.ts e2e/invoice.spec.ts e2e/invoices.spec.ts e2e/accountant.spec.ts e2e/permissions.spec.ts e2e/invoice-settings.spec.ts e2e/invoice-issue.spec.ts e2e/hours.spec.ts e2e/billing.spec.ts e2e/company-page.spec.ts
+      - run: npx playwright test e2e/auth.spec.ts e2e/team.spec.ts e2e/vehicles.spec.ts e2e/customers.spec.ts e2e/password.spec.ts e2e/confirm.spec.ts e2e/jobs.spec.ts e2e/calendar.spec.ts e2e/driver.spec.ts e2e/job-time.spec.ts e2e/job-files.spec.ts e2e/invoice.spec.ts e2e/invoices.spec.ts e2e/accountant.spec.ts e2e/permissions.spec.ts e2e/invoice-settings.spec.ts e2e/invoice-issue.spec.ts e2e/hours.spec.ts e2e/billing.spec.ts e2e/company-page.spec.ts --shard=${{ matrix.shard }}/3
         env:
           CI: true
       - name: Show what the page looked like when a test failed
@@ -96,6 +105,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-auth
+          name: screenshots-auth-${{ matrix.shard }}
           path: test-results/screenshots/
           retention-days: 14
