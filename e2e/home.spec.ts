@@ -58,6 +58,14 @@ for (const locale of locales) {
         expect(Math.abs(ratio - 1), "image keeps its proportions").toBeLessThan(0.02);
       }
 
+      // Every trade card has its photo, loaded.
+      const photos = main.locator('nav[aria-labelledby="industries-title"] img');
+      await expect(photos).toHaveCount(3);
+      for (const img of await photos.all()) {
+        await img.scrollIntoViewIfNeeded();
+        await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+      }
+
       await page.screenshot({
         path: `test-results/screenshots/home-${locale}-${width}.png`,
         fullPage: true,
