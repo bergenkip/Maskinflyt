@@ -117,25 +117,34 @@ async function waitForAnimations(page: Page) {
 }
 
 // Every screen: no sideways scroll, inputs big enough and 16px+ (no iPhone zoom).
+// Measured in one round trip to the browser: field by field it took seconds on long forms.
 export async function checkLayout(page: Page) {
   await waitForAnimations(page);
-  const overflow = await page.evaluate(
-    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-  );
-  expect(overflow, "page must not scroll sideways").toBeLessThanOrEqual(0);
-
-  for (const field of await page.locator("input:visible, select:visible, button:visible").all()) {
-    // A visually hidden input (a styled file picker) is tapped through its label: measure that.
-    const target = (await field.evaluate((el) => el.classList.contains("sr-only") && el.closest("label") !== null))
-      ? field.locator("xpath=ancestor::label[1]")
-      : field;
-    const box = await target.boundingBox();
-    const what = await target.evaluate((el) => el.outerHTML.slice(0, 160));
-    expect(box?.height ?? 0, `tap target at least 44px: ${what}`).toBeGreaterThanOrEqual(44);
+  const layout = await page.evaluate(() => {
+    // The same rule as Playwright's :visible: rendered, not visibility:hidden, and a non-empty box.
+    const visible = (el: Element) => {
+      const box = el.getBoundingClientRect();
+      return el.checkVisibility({ visibilityProperty: true }) && box.width > 0 && box.height > 0;
+    };
+    const fields = [...document.querySelectorAll("input, select, button")].filter(visible);
+    return {
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      targets: fields.map((el) => {
+        // A visually hidden input (a styled file picker) is tapped through its label: measure that.
+        const target = el.classList.contains("sr-only") ? (el.closest("label") ?? el) : el;
+        return { what: target.outerHTML.slice(0, 160), height: target.getBoundingClientRect().height };
+      }),
+      fonts: fields
+        .filter((el) => el.tagName !== "BUTTON")
+        .map((el) => ({ what: el.outerHTML.slice(0, 160), size: parseFloat(getComputedStyle(el).fontSize) })),
+    };
+  });
+  expect(layout.overflow, "page must not scroll sideways").toBeLessThanOrEqual(0);
+  for (const { what, height } of layout.targets) {
+    expect(height, `tap target at least 44px: ${what}`).toBeGreaterThanOrEqual(44);
   }
-  for (const field of await page.locator("input:visible, select:visible").all()) {
-    const size = await field.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
-    expect(size, "16px+ so iPhone Safari does not zoom").toBeGreaterThanOrEqual(16);
+  for (const { what, size } of layout.fonts) {
+    expect(size, `16px+ so iPhone Safari does not zoom: ${what}`).toBeGreaterThanOrEqual(16);
   }
 }
 
