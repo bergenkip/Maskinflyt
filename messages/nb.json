@@ -184,7 +184,9 @@
     "tipPageOpen": "Åpne siden",
     "tipPhotosTitle": "Legg til logo og bilder",
     "tipPhotosText": "Bilder av maskiner og oppdrag gjør siden mer troverdig.",
-    "tipPhotosAction": "Legg til bilder"
+    "tipPhotosAction": "Legg til bilder",
+    "requestsLabel": "Nye forespørsler",
+    "requestsDetail": "Fra firmasiden deres"
   },
   "Roles": {
     "owner": "Eier",
@@ -590,7 +592,9 @@
     "viewList": "Liste",
     "viewCalendar": "Kalender",
     "timeSpan": "{start}–~{end}",
-    "statusLocked": "Fakturaen er merket som sendt: statusen blir «Ferdig». Angre merkingen i fakturadelen for å endre den."
+    "statusLocked": "Fakturaen er merket som sendt: statusen blir «Ferdig». Angre merkingen i fakturadelen for å endre den.",
+    "requestsLink": "Forespørsler fra firmasiden",
+    "requestsNew": "{count} nye"
   },
   "Calendar": {
     "title": "Kalender",
@@ -1900,5 +1904,66 @@
     "logoAlt": "Logoen til {name}",
     "photos": "Bilder",
     "photoAlt": "Bilde {number} fra {name}"
+  },
+  "JobRequestForm": {
+    "open": "Send forespørsel",
+    "title": "Send en forespørsel",
+    "lead": "Beskriv jobben, så tar {company} kontakt med deg. Ingenting er bestilt før firmaet har bekreftet.",
+    "preview": "Når siden er offentlig, kan besøkende sende forespørsler her.",
+    "name": "Navn",
+    "phone": "Telefon",
+    "email": "E-post",
+    "contactHint": "Oppgi telefon eller e-post, så firmaet kan svare deg.",
+    "place": "Hvor er jobben?",
+    "placeHint": "Adresse eller sted",
+    "service": "Tjeneste",
+    "serviceAny": "Vet ikke / annet",
+    "date": "Ønsket dato (valgfritt)",
+    "dateHint": "Firmaet bekrefter tidspunktet.",
+    "description": "Hva trenger du hjelp med?",
+    "descriptionHint": "For eksempel hva som skal løftes eller graves, vekt, mål og adkomst.",
+    "trap": "La dette feltet stå tomt",
+    "privacy": "{company} får det du skriver her, for å kunne svare deg. <link>Slik behandler vi personopplysninger</link>.",
+    "send": "Send forespørsel",
+    "sending": "Sender…",
+    "sentTitle": "Forespørselen er sendt",
+    "sentText": "{company} har fått forespørselen din og tar kontakt med deg. Ingenting er bestilt før de har bekreftet.",
+    "errors": {
+      "nameRequired": "Skriv navnet ditt.",
+      "nameTooLong": "Navnet kan ha høyst 100 tegn.",
+      "phoneInvalid": "Skriv et gyldig telefonnummer.",
+      "emailInvalid": "Skriv en gyldig e-postadresse.",
+      "contactRequired": "Oppgi telefon eller e-post.",
+      "placeRequired": "Skriv hvor jobben er.",
+      "placeTooLong": "Stedet kan ha høyst 200 tegn.",
+      "descriptionRequired": "Beskriv kort hva du trenger.",
+      "descriptionTooLong": "Beskrivelsen kan ha høyst 2000 tegn.",
+      "dateInvalid": "Velg en dato fra i dag og inntil to år fram.",
+      "serviceInvalid": "Velg en tjeneste fra listen.",
+      "closed": "Dette firmaet tar ikke imot forespørsler her nå. Bruk kontaktinformasjonen over.",
+      "tooMany": "Det er sendt mange forespørsler på kort tid. Prøv igjen om en time, eller ring firmaet.",
+      "unknown": "Forespørselen ble ikke sendt. Prøv igjen."
+    }
+  },
+  "JobRequests": {
+    "title": "Forespørsler",
+    "back": "Oppdrag",
+    "lead": "Forespørsler kundene har sendt fra firmasiden deres. Ta kontakt med kunden og avtal jobben før du planlegger den.",
+    "error": "Forespørslene kunne ikke lastes. Prøv igjen.",
+    "emptyPublished": "Ingen forespørsler ennå. Kundene sender dem med knappen «Send forespørsel» på firmasiden.",
+    "emptyNoPage": "Ingen forespørsler ennå. Kundene kan sende dem når firmasiden er offentlig.",
+    "setUpPage": "Lag firmasiden",
+    "listTitle": "Nyeste først",
+    "count": "{count, plural, one {# forespørsel} other {# forespørsler}}, {unanswered} nye",
+    "received": "Mottatt {time}",
+    "place": "Sted",
+    "wantedDate": "Ønsket dato",
+    "wantedOn": "Ønsket: {date}",
+    "service": "Tjeneste",
+    "statuses": {
+      "new": "Ny",
+      "accepted": "Godtatt",
+      "declined": "Avslått"
+    }
   }
 }
