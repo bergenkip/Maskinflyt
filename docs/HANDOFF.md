@@ -538,5 +538,13 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
   el. paštas). Laiškas `src/lib/email/planned-email.ts` siunčiamas tik išsaugojus darbą su varnele, vieną kartą darbui.
   Užklausos kortelė rodo „Planlagt: jobb N“ vietoj „Planlegg jobben“.
 - `/kunde`: būsena „Planlagt / Utført / Avlyst“, suplanuotas laikas įmonės laiko juosta, pastaba, kad pabaiga apytikslė.
-- Dar nėra: laiškas klientui, kai darbo laikas vėliau pakeičiamas ar darbas atšaukiamas (`/kunde` visada rodo dabartinį).
+
+### 16c: klientas sužino apie pakeistą ar atšauktą darbą (2026-11-24)
+- Migracija `20261125130000_job_customer_notices.sql`: lentelė `job_customer_notices` (ką klientas paskutinį kartą
+  gavo el. paštu: laikas ir ar atšaukta). Rašo ir skaito tik tos įmonės biuras, tik darbui iš užklausos.
+- Darbo puslapyje skiltis „Beskjed til kunden“: palygina darbą su tuo, ką klientas gavo (`src/lib/job-notice.ts`), ir
+  rodo vieną mygtuką: siųsti laiką, naują laiką arba pranešti apie atšaukimą. Siunčiama tik paspaudus, niekada savaime.
+  Veikia nepriklausomai nuo to, kur laikas pakeistas (forma ar kalendorius). Atliktas darbas pranešimo nereikalauja.
+- Laiškai `planned-email.ts` (`kind`: planned, changed su ankstesniu laiku, cancelled), nb/en/lt.
+- Testai: `39_job_customer_notices.test.sql`, `job-notice.test.ts`, laiškų testai, `e2e/customer-account.spec.ts`.
 - Testai: `38_planned_requests.test.sql`, `planned-email.test.ts`, `e2e/customer-account.spec.ts`.

@@ -612,7 +612,23 @@
     "alreadyPlanned": "This request is already planned as job {number}.",
     "openPlanned": "Open job {number}",
     "plannedEmailSent": "The customer got the planned time by e-mail.",
-    "plannedEmailFailed": "The e-mail to the customer could not be sent. Call or write to the customer with the time."
+    "plannedEmailFailed": "The e-mail to the customer could not be sent. Call or write to the customer with the time.",
+    "noticeTitle": "Message to the customer",
+    "noticeTo": "{name} asked for this job: {email}",
+    "noticeNoEmail": "{name} asked for this job and gave no e-mail. Call the customer about changes.",
+    "noticeTold": "The customer was sent the current time on {time}.",
+    "noticeToldCancelled": "The customer was told on {time} that the job is cancelled.",
+    "noticeNever": "The customer has not been sent the time by e-mail yet.",
+    "noticeBack": "The customer was told the job is cancelled, but it is planned again.",
+    "noticeChanged": "The time has changed since the customer was told: {time}.",
+    "noticeCancelled": "The job is cancelled, but the customer does not know yet.",
+    "noticeSend": {
+      "planned": "Send the time to the customer",
+      "changed": "Send the new time to the customer",
+      "cancelled": "Tell the customer the job is cancelled"
+    },
+    "noticeSending": "Sending…",
+    "noticeFailed": "The e-mail could not be sent. Try again, or call the customer."
   },
   "Calendar": {
     "title": "Calendar",
@@ -2170,6 +2186,13 @@
     "questions": "Questions or need another time? Reply to this e-mail.",
     "closing": "Best regards",
     "footer": "Sent with MaskinGo on behalf of {company}.",
-    "test": "TEST: This e-mail was sent from a test account in MaskinGo and is not a real booking. Recipient: {to}"
+    "test": "TEST: This e-mail was sent from a test account in MaskinGo and is not a real booking. Recipient: {to}",
+    "changedSubject": "{company} has changed the time of your job",
+    "changedIntro": "{company} has changed the time of your job.",
+    "newTime": "New time",
+    "previousTime": "Before",
+    "cancelledSubject": "{company} has cancelled your job",
+    "cancelledIntro": "Unfortunately, {company} has cancelled your job.",
+    "cancelledTime": "Was planned"
   }
 }

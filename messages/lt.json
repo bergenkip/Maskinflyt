@@ -612,7 +612,23 @@
     "alreadyPlanned": "Ši užklausa jau suplanuota kaip darbas {number}.",
     "openPlanned": "Atidaryti darbą {number}",
     "plannedEmailSent": "Klientas gavo suplanuotą laiką el. paštu.",
-    "plannedEmailFailed": "Laiško klientui išsiųsti nepavyko. Paskambinkite arba parašykite klientui apie laiką."
+    "plannedEmailFailed": "Laiško klientui išsiųsti nepavyko. Paskambinkite arba parašykite klientui apie laiką.",
+    "noticeTitle": "Pranešimas klientui",
+    "noticeTo": "{name} užsakė šį darbą: {email}",
+    "noticeNoEmail": "{name} užsakė šį darbą ir nenurodė el. pašto. Apie pakeitimus praneškite telefonu.",
+    "noticeTold": "Klientas gavo dabartinį laiką {time}.",
+    "noticeToldCancelled": "Klientui {time} pranešta, kad darbas atšauktas.",
+    "noticeNever": "Klientas dar negavo laiko el. paštu.",
+    "noticeBack": "Klientui pranešta, kad darbas atšauktas, bet jis vėl suplanuotas.",
+    "noticeChanged": "Laikas pakeistas po to, kai klientas jį gavo: {time}.",
+    "noticeCancelled": "Darbas atšauktas, bet klientas to dar nežino.",
+    "noticeSend": {
+      "planned": "Siųsti laiką klientui",
+      "changed": "Siųsti naują laiką klientui",
+      "cancelled": "Pranešti klientui, kad darbas atšauktas"
+    },
+    "noticeSending": "Siunčiama…",
+    "noticeFailed": "Laiško išsiųsti nepavyko. Bandykite dar kartą arba paskambinkite klientui."
   },
   "Calendar": {
     "title": "Kalendorius",
@@ -2170,6 +2186,13 @@
     "questions": "Turite klausimų ar reikia kito laiko? Atsakykite į šį laišką.",
     "closing": "Pagarbiai",
     "footer": "Išsiųsta per MaskinGo įmonės {company} vardu.",
-    "test": "TEST: Šis laiškas išsiųstas iš MaskinGo bandomosios paskyros ir nėra tikras užsakymas. Gavėjas: {to}"
+    "test": "TEST: Šis laiškas išsiųstas iš MaskinGo bandomosios paskyros ir nėra tikras užsakymas. Gavėjas: {to}",
+    "changedSubject": "{company} pakeitė jūsų darbo laiką",
+    "changedIntro": "{company} pakeitė jūsų darbo laiką.",
+    "newTime": "Naujas laikas",
+    "previousTime": "Anksčiau",
+    "cancelledSubject": "{company} atšaukė jūsų darbą",
+    "cancelledIntro": "Deja, {company} atšaukė jūsų darbą.",
+    "cancelledTime": "Buvo suplanuota"
   }
 }
