@@ -423,7 +423,7 @@ apačioje. Generatoriaus išgalvoti smulkūs užrašai užlieti. Antra kranų nu
 
 ## 15a etapas: viešas įmonės puslapis (2026-11-24)
 Li pasirinko 2026-11-24. Visas planas: 15a puslapis, 15b užklausų forma (įmonė priima arba atmeta, jokio automatinio
-patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn` ir planas „tik katalogas“.
+patvirtinimo), 15c darbo laikas ir laisvos dienos, 15d katalogas `/finn`, nemokamas (Li sprendimas 2026-11-24, vietoj plano „tik katalogas“). Pardavimo laiškai jau žada užsakymą per puslapį ir katalogą, todėl 15b ir 15d svarbūs paleidimui.
 - Migracija `20261124120000_company_pages.sql`: lentelė `company_pages` (adresas `slug`, `published`, aprašymas,
   paslaugos iš fiksuoto sąrašo, miestas, sritis, telefonas, el. paštas, svetainė tik `https://`). Rašo tik
   `save_company_page` (savininkas ir administratorius su antru žingsniu); nariai skaito. Lankytojai lentelės nemato:
