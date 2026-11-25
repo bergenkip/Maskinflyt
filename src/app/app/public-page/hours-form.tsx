@@ -4,7 +4,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { FieldError, FormAlert, SubmitButton } from "@/components/form";
 import { CalendarIcon, CheckIcon, TrashIcon } from "@/components/icons";
-import { bookingLengths, MAX_DAY_OFF_NOTE_LENGTH, type HoursValues } from "@/lib/company-hours";
+import { bookingLengths, MAX_DAY_OFF_NOTE_LENGTH, slotSteps, type HoursValues } from "@/lib/company-hours";
 import { addDayOff, removeDayOff, saveCompanyHours, type DayOffState, type HoursState } from "./hours-actions";
 
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
@@ -24,6 +24,7 @@ export function HoursForm({ initial }: { initial: HoursValues }) {
   const values = state.values ?? initial;
   const dayName = (weekday: number) => format.dateTime(new Date(MONDAY + (weekday - 1) * 86_400_000), { weekday: "long", timeZone: "UTC" });
   const freeError = state.fieldErrors?.freeTimes;
+  const stepError = state.fieldErrors?.stepMinutes;
 
   return (
     <form action={action} className="grid gap-6">
@@ -59,7 +60,8 @@ export function HoursForm({ initial }: { initial: HoursValues }) {
         {freeError && <FieldError id="free-times-error">{t(`errors.${freeError}`)}</FieldError>}
       </fieldset>
 
-      <div className="grid gap-1.5 sm:max-w-xs">
+      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid content-start gap-1.5">
         <label htmlFor="booking-minutes" className="font-medium">
           {t("length")}
         </label>
@@ -71,6 +73,29 @@ export function HoursForm({ initial }: { initial: HoursValues }) {
           ))}
         </select>
         <p className="text-sm text-muted">{t("lengthHint")}</p>
+      </div>
+      <div className="grid content-start gap-1.5">
+        <label htmlFor="step-minutes" className="font-medium">
+          {t("step")}
+        </label>
+        <select
+          key={values.stepMinutes}
+          id="step-minutes"
+          name="stepMinutes"
+          defaultValue={values.stepMinutes}
+          aria-describedby={stepError ? "step-minutes-hint step-minutes-error" : "step-minutes-hint"}
+          aria-invalid={stepError ? true : undefined}
+          className={control}
+        >
+          {slotSteps.map((minutes) => (
+            <option key={minutes} value={minutes}>
+              {t("stepMinutes", { minutes })}
+            </option>
+          ))}
+        </select>
+        <p id="step-minutes-hint" className="text-sm text-muted">{t("stepHint")}</p>
+        {stepError && <FieldError id="step-minutes-error">{t(`errors.${stepError}`)}</FieldError>}
+      </div>
       </div>
 
       <fieldset className="grid gap-3">

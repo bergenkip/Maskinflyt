@@ -12,7 +12,7 @@ import { createClient } from "@/lib/supabase/server";
 export type HoursState = {
   values?: HoursValues;
   dayErrors?: Partial<Record<Weekday, HoursFieldError>>;
-  fieldErrors?: Partial<Record<"freeTimes" | "bookingMinutes", HoursFieldError>>;
+  fieldErrors?: Partial<Record<"freeTimes" | "bookingMinutes" | "stepMinutes", HoursFieldError>>;
   error?: "noPage" | "notAllowed" | "readOnly" | "unknown";
   savedAt?: number;
 };
@@ -46,9 +46,11 @@ export async function saveCompanyHours(_prev: HoursState, formData: FormData): P
     show_free_times: fields.show_free_times,
     booking_minutes: fields.booking_minutes,
     week: fields.week,
+    step_minutes: fields.step_minutes,
   });
   if (error) {
     if (error.hint === "no_hours") return { values, fieldErrors: { freeTimes: "noOpenDay" } };
+    if (error.hint === "invalid_step") return { values, fieldErrors: { stepMinutes: "stepInvalid" } };
     if (error.hint === "invalid_hours") return { values, error: "unknown" };
     return { values, error: failure(error) };
   }

@@ -382,12 +382,12 @@ function SlotPicker({ slots, from, initial, error }: { slots: FreeSlot[]; from: 
       {chosen ? (
         <div className="grid gap-2">
           <p className="font-medium first-letter:uppercase">{dayLabel(day)}</p>
-          <div role="radiogroup" aria-label={dayLabel(day)} className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
+          <div role="radiogroup" aria-label={dayLabel(day)} className="grid grid-cols-4 gap-2 sm:grid-cols-6">
             {chosen.map((slot) =>
               isFree(slot) ? (
                 <label
                   key={slot.starts_at}
-                  className="relative flex min-h-11 min-w-20 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold tabular-nums has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-on-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
+                  className="relative flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface px-2 font-semibold tabular-nums has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-on-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
                 >
                   <input
                     type="radio"
@@ -401,7 +401,7 @@ function SlotPicker({ slots, from, initial, error }: { slots: FreeSlot[]; from: 
               ) : (
                 <span
                   key={slot.starts_at}
-                  className="flex min-h-11 min-w-20 flex-col items-center justify-center rounded-lg border border-dashed border-border px-4 py-1 text-muted tabular-nums"
+                  className="flex min-h-11 flex-col items-center justify-center rounded-lg border border-dashed border-border px-1 py-1 text-muted tabular-nums"
                 >
                   <span className="leading-tight font-semibold line-through">{slot.start_time}</span>
                   <span className="text-xs leading-tight">{t("taken")}</span>

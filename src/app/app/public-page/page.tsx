@@ -36,6 +36,7 @@ type PageRow = {
   website: string | null;
   free_times: boolean | null;
   slot_minutes: number;
+  slot_step_minutes: number;
 };
 
 // The company's public page (stage 15a): owners and admins write it and choose when it is shown.
@@ -55,7 +56,7 @@ export default async function CompanyPageSettings() {
   const [{ data }, photos, hours, daysOff] = await Promise.all([
     supabase
       .from("company_pages")
-      .select("slug, published, description, services, city, area, phone, email, website, free_times, slot_minutes")
+      .select("slug, published, description, services, city, area, phone, email, website, free_times, slot_minutes, slot_step_minutes")
       .eq("organization_id", organization.id)
       .maybeSingle(),
     getOwnCompanyPhotos(organization.id),
@@ -167,6 +168,7 @@ export default async function CompanyPageSettings() {
               initial={{
                 freeTimes: page.free_times === true,
                 bookingMinutes: String(page.slot_minutes),
+                stepMinutes: String(page.slot_step_minutes),
                 week: weekFromRows((hours.data ?? []) as { weekday: number; opens: string; closes: string }[]),
               }}
             />

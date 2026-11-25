@@ -49,16 +49,16 @@ select is(pg_temp.board(), '{}'::text[], 'no calendar while the company takes re
 reset role;
 set local role authenticated;
 select pg_temp.as_user('00000000-0000-0000-0000-000000000001');
-select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true, 240, pg_temp.week());
+select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true, 240, pg_temp.week(), 60);
 reset role;
 
 set local role anon;
-select is(pg_temp.board(), array['07:00 free', '11:00 free'], 'both times free on an empty day');
+select is(pg_temp.board(), array['07:00 free', '08:00 free', '09:00 free', '10:00 free', '11:00 free'], 'hourly times all free on an empty day');
 reset role;
 insert into public.jobs (organization_id, number, customer_id, address, starts_at, ends_at)
 values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 1, 'a2000000-0000-0000-0000-000000000001', 'Storgata 1', pg_temp.at('08:00'), pg_temp.at('10:00'));
 set local role anon;
-select is(pg_temp.board(), array['07:00 taken', '11:00 free'], 'a job marks its time as taken');
+select is(pg_temp.board(), array['07:00 taken', '08:00 taken', '09:00 taken', '10:00 free', '11:00 free'], 'a job 08–10 marks the times it overlaps as taken');
 select is(
   (select array_agg(start_time order by start_time) from public.company_time_slots('fjellkran-as') where free and day = pg_temp.d()),
   (select array_agg(start_time order by start_time) from public.company_free_slots('fjellkran-as') where day = pg_temp.d()),

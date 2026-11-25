@@ -31,7 +31,7 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   await expect(page.getByText("Saved. The page is public.")).toBeVisible();
   await page.reload();
 
-  // Showing times with no open day is explained; then every day 08–16, two-hour bookings.
+  // Showing times with no open day is explained; then every day 08–16, two-hour bookings starting every 15 minutes.
   await times.getByRole("radio", { name: "Show free times" }).check();
   await times.getByRole("button", { name: "Save" }).click();
   await expect(times.getByText("Open at least one day to show free times.")).toBeVisible();
@@ -41,6 +41,7 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
     await times.getByLabel(`To ${day}`).fill("16:00");
   }
   await times.getByLabel("Length of one booking").selectOption("120");
+  await times.getByLabel("How often a time starts").selectOption("15");
   await times.getByRole("button", { name: "Save" }).click();
   await expect(times.getByText("Saved. Customers see your free times.")).toBeVisible();
 
@@ -87,6 +88,11 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   const startsAt = await firstTime.getAttribute("value");
   const clock = (await firstTime.locator("..").innerText()).trim();
   expect(clock).toMatch(/^\d{2}:\d{2}$/);
+  // Times start every 15 minutes (Li, 2026-11-25), not one booking length apart.
+  if ((await form.getByRole("radio").count()) > 1) {
+    const second = await form.getByRole("radio").nth(1).getAttribute("value");
+    expect(new Date(second!).getTime() - new Date(startsAt!).getTime()).toBe(15 * 60 * 1000);
+  }
 
   await form.getByLabel("Name").fill("Kari Nordmann");
   await form.getByLabel("E-mail").fill("kari@nordmann.test");
