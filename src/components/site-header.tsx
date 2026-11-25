@@ -12,10 +12,12 @@ import { getUserId } from "@/lib/supabase/server";
 // Header for pages visible without signing in. Sticky and full width like the
 // app header, so Safari colours the strip above it with the same colour.
 // Signed in, the corner leads back to the person's own pages instead of "Sign in":
-// a customer to /kunde, everyone else to the app.
+// a customer to /kunde, everyone else to the app. The sign-in pages (showLogin false)
+// show neither: on /reset-password the e-mailed link has just signed the person in,
+// and a prefetched link to /app there raced the form's own redirect to /app.
 export async function SiteHeader({ showLogin = true }: { showLogin?: boolean }) {
   const t = await getTranslations("Nav");
-  const userId = getSupabaseEnv() ? await getUserId() : null;
+  const userId = showLogin && getSupabaseEnv() ? await getUserId() : null;
   const home = userId ? ((await getCustomerAccount()) ? "/kunde" : "/app") : null;
 
   return (
