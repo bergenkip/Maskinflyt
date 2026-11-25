@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { DirectorySearch } from "@/components/directory-search";
 import { IndustryLink } from "@/components/industry-link";
+import { CustomerSignup } from "@/components/customer-signup";
 import { TrialOffer } from "@/components/trial-offer";
 import { ProductShowcase } from "@/components/product-showcase";
 import { SiteFooter } from "@/components/site-footer";
@@ -205,6 +206,7 @@ export default function Home() {
               <p className="text-muted">{t("findLead")}</p>
             </div>
             <DirectorySearch id="home-find" />
+            <CustomerSignup headingId="home-customer" className="border-t border-accent/30 pt-4" />
           </section>
         </main>
 

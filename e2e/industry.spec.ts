@@ -28,10 +28,11 @@ for (const locale of Object.keys(messages) as (keyof typeof messages)[]) {
           t.title,
         );
         await expect(page.getByRole("main")).toContainText(t.faq[0].q);
-        // Sign-up button at the top and at the bottom, links to the two other trades.
+        // Sign-up button at the top and at the bottom, plus the free plan's
+        // (Li, 2026-11-25), and links to the two other trades.
         expect(
           await page.getByRole("main").locator('a[href="/signup"]').count(),
-        ).toBe(2);
+        ).toBe(3);
         for (const other of industries.filter((i) => i !== industry)) {
           await expect(
             page.getByRole("main").locator(`a[href="/${other}"]`),

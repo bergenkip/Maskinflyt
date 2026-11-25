@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { CustomerSignup } from "@/components/customer-signup";
 import { DirectorySearch } from "@/components/directory-search";
 import { ArrowRightIcon, ClockIcon, MapPinIcon } from "@/components/icons";
 import { isService, pagePath, services, type Service } from "@/lib/company-page";
@@ -143,6 +144,10 @@ export async function DirectoryView({
           </ul>
         </nav>
       )}
+
+      <section aria-labelledby="directory-customer" className="rounded-xl border border-accent/40 bg-accent-soft p-5 sm:p-6">
+        <CustomerSignup headingId="directory-customer" />
+      </section>
 
       <section aria-labelledby="directory-cta" className="grid gap-3 rounded-xl border border-border bg-accent-soft p-5 sm:p-6">
         <h2 id="directory-cta" className="text-xl font-semibold">

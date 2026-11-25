@@ -40,7 +40,10 @@ for (const locale of locales) {
       await expect(main.locator('a[href="/signup"]').first()).toBeVisible();
       await expect(main.locator('a[href="/login"]')).toBeVisible();
       await expect(main.locator('a[href="mailto:hei@maskingo.no"]')).toBeVisible();
-      await expect(main.getByRole("heading", { level: 3 })).toHaveCount(9);
+      // Nine headings, plus the free plan and the customer account (Li, 2026-11-25).
+      await expect(main.getByRole("heading", { level: 3 })).toHaveCount(11);
+      await expect(main.locator('a[href="/signup?konto=kunde"]')).toBeVisible();
+      await expect(main.locator('a[href="/login?next=%2Fkunde"]')).toBeVisible();
       for (const link of await main.getByRole("link").all()) {
         const box = await link.boundingBox();
         expect(box?.height ?? 0, "button at least 44px tall").toBeGreaterThanOrEqual(44);

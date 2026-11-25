@@ -65,7 +65,10 @@
     },
     "findTitle": "Looking for a machine contractor, crane truck or transport?",
     "findLead": "Search the companies on MaskinGo by service and place, and send a request straight to the company. Free for customers.",
-    "freeLine": "Free: only a company page in the catalog with contact details, 0 kr."
+    "customerTitle": "Order often? Create a customer account",
+    "customerText": "Free for customers: follow all your requests in one place and order faster next time with your details filled in. The company still confirms the job.",
+    "customerSignup": "Create a customer account",
+    "customerLogin": "Sign in as a customer"
   },
   "Nav": {
     "home": "MaskinGo home",

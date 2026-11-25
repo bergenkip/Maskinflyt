@@ -65,7 +65,10 @@
     },
     "findTitle": "Ieškote technikos rangovo, krano ar transporto?",
     "findLead": "Ieškokite MaskinGo įmonių pagal paslaugą ir vietą ir siųskite užklausą tiesiai įmonei. Klientams nemokamai.",
-    "freeLine": "Nemokamai: tik įmonės puslapis kataloge su kontaktais, 0 kr."
+    "customerTitle": "Užsakote dažnai? Susikurkite kliento paskyrą",
+    "customerText": "Klientams nemokama: visas užklausas matote vienoje vietoje, o kitą kartą užsakote greičiau, nes duomenys jau užpildyti. Darbą vis tiek patvirtina įmonė.",
+    "customerSignup": "Sukurti kliento paskyrą",
+    "customerLogin": "Prisijungti kaip klientas"
   },
   "Nav": {
     "home": "MaskinGo pradžia",
