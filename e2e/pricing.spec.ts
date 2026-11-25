@@ -31,6 +31,9 @@ for (const locale of Object.keys(messages) as (keyof typeof messages)[]) {
       await expect(page.getByRole("main")).toContainText(/290/);
       await expect(page.getByRole("main")).toContainText(/3[\s ,.]?490/);
       await expect(page.getByRole("main")).toContainText(t.vatNotRegistered);
+      // The free plan: only the company page in the catalog.
+      await expect(page.getByText(t.free.what, { exact: true })).toBeVisible();
+      await expect(page.getByRole("link", { name: t.free.cta })).toBeVisible();
 
       const overflow = await page.evaluate(
         () =>
@@ -72,6 +75,6 @@ test("pricing page is reachable from the footer and has prices for search engine
       "{}",
   );
   expect(data.offers.map((offer: { price: number }) => offer.price)).toEqual([
-    290, 790, 1790, 3490,
+    0, 290, 790, 1790, 3490,
   ]);
 });

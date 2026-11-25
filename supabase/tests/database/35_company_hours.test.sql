@@ -1,7 +1,7 @@
 -- Stage 15c: opening hours, days off and the free times a visitor may pick.
 -- Synthetic data (.test). "D" is the day after tomorrow in Oslo, always ahead.
 begin;
-select plan(24);
+select plan(25);
 
 insert into auth.users (id, email, email_confirmed_at) values
   ('00000000-0000-0000-0000-000000000001', 'eier@fjellkran.test', now()),
@@ -47,6 +47,8 @@ select throws_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aa
   '22023', 'Invalid booking length', 'only the listed booking lengths');
 select throws_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', false, 240, '[]', 45) $$,
   '22023', 'Invalid time step', 'only the listed start time steps');
+select lives_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', false, 90, '[]') $$,
+  'one and a half hours is a booking length too');
 select lives_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', false, 240, pg_temp.week()) $$, 'the week is saved');
 select is((select count(*)::int from public.company_hours), 7, 'seven open days');
 

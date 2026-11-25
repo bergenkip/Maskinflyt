@@ -5,7 +5,8 @@
 export const weekdays = [1, 2, 3, 4, 5, 6, 7] as const; // ISO: Monday 1 … Sunday 7
 export type Weekday = (typeof weekdays)[number];
 
-export const bookingLengths = [60, 120, 240, 480] as const;
+// Minutes: 30 min … a full day (8 h) or 10 h (Li, 2026-11-25: "more varied lengths").
+export const bookingLengths = [30, 60, 90, 120, 180, 240, 300, 360, 480, 600] as const;
 export type BookingLength = (typeof bookingLengths)[number];
 
 // How often a start time is offered (07:00, 07:30, …); a booking still lasts its length.

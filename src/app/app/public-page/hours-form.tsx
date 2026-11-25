@@ -68,7 +68,7 @@ export function HoursForm({ initial }: { initial: HoursValues }) {
         <select key={values.bookingMinutes} id="booking-minutes" name="bookingMinutes" defaultValue={values.bookingMinutes} className={control}>
           {bookingLengths.map((minutes) => (
             <option key={minutes} value={minutes}>
-              {minutes === 480 ? t("lengthDay") : t("lengthHours", { hours: minutes / 60 })}
+              {minutes === 480 ? t("lengthDay") : minutes < 60 ? t("stepMinutes", { minutes }) : t("lengthHours", { hours: minutes / 60 })}
             </option>
           ))}
         </select>

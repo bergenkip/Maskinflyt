@@ -56,7 +56,7 @@
       }
     },
     "contactTitle": "Vil du prøve MaskinGo?",
-    "contactBody": "Passer for både små og store firma, også når du jobber alene. Alle planer har alle funksjoner, og prisen avhenger bare av hvor mange dere er. Spørsmål? Skriv til oss.",
+    "contactBody": "Passer for både små og store firma, også når du jobber alene. Alle betalte planer har alle funksjoner, og prisen avhenger bare av hvor mange dere er. Spørsmål? Skriv til oss.",
     "seePrices": "Se alle priser",
     "showcase": {
       "calendarAlt": "MaskinGo-kalenderen for én dag: maskinene i rader og oppdragene med kunde og sjåfør på en tidslinje fra 06 til 19.",
@@ -64,7 +64,8 @@
       "caption": "Ekte skjermbilder fra MaskinGo med oppdiktede data: kontorets kalender og sjåførens telefon."
     },
     "findTitle": "Trenger du maskinentreprenør, kranbil eller transport?",
-    "findLead": "Søk blant firmaene på MaskinGo etter tjeneste og sted, og send en forespørsel rett til firmaet. Gratis for kunder."
+    "findLead": "Søk blant firmaene på MaskinGo etter tjeneste og sted, og send en forespørsel rett til firmaet. Gratis for kunder.",
+    "freeLine": "Gratis: bare firmaside i katalogen med kontaktinfo, 0 kr."
   },
   "Nav": {
     "home": "MaskinGo forside",
@@ -1729,19 +1730,19 @@
   },
   "Billing": {
     "title": "Abonnement",
-    "lead": "Firmaets MaskinGo-plan. Alle planer har alle funksjoner; de skiller seg bare i hvor mange personer firmaet har.",
+    "lead": "Firmaets MaskinGo-plan. Alle betalte planer har alle funksjoner; de skiller seg bare i hvor mange personer firmaet har.",
     "status": {
       "trial": "Gratis prøveperiode: {days, plural, one {# dag} other {# dager}} igjen",
       "trialLead": "Gratis til {date}. Du trenger ikke kort mens du prøver.",
       "trialEnded": "Den gratis prøveperioden er over",
-      "trialEndedLead": "Velg en plan for å fortsette med MaskinGo.",
+      "trialEndedLead": "Firmaet er nå på gratisplanen: firmasiden vises i katalogen med kontaktinfo. Velg en plan for å bruke resten av MaskinGo igjen.",
       "active": "{plan}-planen",
       "activeRenews": "Fornyes {date}.",
       "activeEnding": "Slutter {date}. Du kan slå den på igjen under «Kort, kvitteringer og oppsigelse».",
       "pastDue": "Betalingen feilet",
       "pastDueLead": "Stripe fikk ikke trukket betalingen. Oppdater kortet under «Kort, kvitteringer og oppsigelse».",
       "ended": "Abonnementet er avsluttet",
-      "endedLead": "Velg en plan for å starte igjen."
+      "endedLead": "Firmaet er nå på gratisplanen: firmasiden vises i katalogen med kontaktinfo. Velg en plan for å starte igjen."
     },
     "people": "{taken, plural, one {# person} other {# personer}} i firmaet",
     "peopleOf": "{taken} av {seats} personer i planen",
@@ -1780,8 +1781,8 @@
       "pastDue": "Siste betaling feilet.",
       "action": "Velg plan",
       "fix": "Oppdater kortet",
-      "readOnly": "Abonnementet er ikke aktivt, så dataene kan bare leses.",
-      "readOnlyMember": "Firmaets abonnement er ikke aktivt, så dataene kan bare leses. Kontakt eieren av firmaet."
+      "readOnly": "Gratisplan: firmasiden vises i katalogen, alt annet kan bare leses.",
+      "readOnlyMember": "Firmaet er på gratisplanen: firmasiden vises i katalogen, alt annet kan bare leses. Kontakt eieren av firmaet."
     },
     "plansLeadNoVat": "Det kommer ikke mva i tillegg.",
     "noVat": "Ingen mva i tillegg",
@@ -1793,7 +1794,7 @@
     "metaDescription": "MaskinGo fra 290 kr i måneden. Alle funksjoner i alle planer, 30 dager gratis prøveperiode uten betalingskort og 2 måneder gratis ved årlig betaling.",
     "badge": "30 dager gratis, uten betalingskort",
     "title": "Enkle priser etter hvor mange dere er",
-    "lead": "Alle planer har alle funksjoner. Planen avgjøres bare av hvor mange personer i firmaet som bruker MaskinGo.",
+    "lead": "Alle betalte planer har alle funksjoner. Planen avgjøres bare av hvor mange personer i firmaet som bruker MaskinGo.",
     "plansTitle": "Planer",
     "plans": {
       "solo": "Solo",
@@ -1809,7 +1810,7 @@
     "vatNotRegistered": "MaskinGo er ikke mva-registrert ennå, så det kommer ingen mva i tillegg.",
     "vatExcluded": "Alle priser er eks. mva.",
     "cta": "Prøv gratis i 30 dager",
-    "includedTitle": "Med i alle planer",
+    "includedTitle": "Med i alle betalte planer",
     "included": [
       "Oppdrag og kalender, også per maskin",
       "Sjåførapp på mobilen med På vei, Ankommet og Ferdig",
@@ -1829,7 +1830,7 @@
       },
       {
         "q": "Hva skjer når prøveperioden er over?",
-        "a": "Du velger en plan i appen for å fortsette. Ingenting trekkes før du selv har valgt plan og lagt inn kort."
+        "a": "Du velger en plan i appen for å fortsette. Velger du ingen, går firmaet over til gratisplanen: firmasiden blir i katalogen med kontaktinfo, og alt annet kan bare leses. Ingenting trekkes før du selv har valgt plan og lagt inn kort."
       },
       {
         "q": "Kan vi bytte plan senere?",
@@ -1839,7 +1840,15 @@
         "q": "Hvordan betaler vi?",
         "a": "Med kort gjennom Stripe, månedlig eller årlig. Kvitteringer og oppsigelse finner du i appen."
       }
-    ]
+    ],
+    "free": {
+      "name": "Gratis",
+      "what": "Bare firmaside i katalogen",
+      "body": "Firmaet vises i MaskinGo-katalogen med kontaktinfo, logo og bilder. Kundene ringer eller sender e-post direkte.",
+      "not": "Ingen forespørsler, ledige tider, oppdrag eller faktura.",
+      "after": "Velger dere ingen plan etter prøveperioden, går firmaet over hit av seg selv.",
+      "cta": "Opprett gratis firmaside"
+    }
   },
   "Services": {
     "crane_truck": "Kranbil",
@@ -1938,6 +1947,7 @@
     "services": "Tjenester",
     "area": "Område",
     "contact": "Kontakt",
+    "contactDirect": "{company} tar ikke imot forespørsler via MaskinGo. Ring eller send e-post direkte.",
     "logoAlt": "Logoen til {name}",
     "photos": "Bilder",
     "photoAlt": "Bilde {number} fra {name}",

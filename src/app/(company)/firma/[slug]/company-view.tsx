@@ -14,7 +14,10 @@ import { formatPhone } from "@/lib/customers";
 import { addDays } from "@/lib/calendar";
 import { isService, pagePath } from "@/lib/company-page";
 import { toLocalParts } from "@/lib/jobs";
-import { MAX_REQUEST_DAYS_AHEAD, type JobRequestValues } from "@/lib/job-requests";
+import {
+  MAX_REQUEST_DAYS_AHEAD,
+  type JobRequestValues,
+} from "@/lib/job-requests";
 import { formatOrgNumber } from "@/lib/org-number";
 import { SITE_URL } from "@/lib/site";
 import { RequestForm } from "./request-form";
@@ -39,7 +42,12 @@ const actionClass =
   "flex min-h-11 w-full min-w-0 items-center gap-3 rounded-lg border border-border bg-surface px-4 py-2 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 // Rows without a lonely photo where possible: 1 wide, 2 and 4 in pairs, others in threes.
-const columns = (count: number) => (count === 1 ? "" : count === 2 || count === 4 ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-3");
+const columns = (count: number) =>
+  count === 1
+    ? ""
+    : count === 2 || count === 4
+      ? "grid-cols-2"
+      : "grid-cols-2 sm:grid-cols-3";
 
 // The page itself, without the database, so it can also be shown on its own.
 export async function CompanyView({
@@ -47,6 +55,7 @@ export async function CompanyView({
   photos = [],
   slots = null,
   customer = null,
+  takesRequests = true,
 }: {
   company: PublicCompany;
   photos?: CompanyPhoto[];
@@ -54,6 +63,8 @@ export async function CompanyView({
   slots?: FreeSlot[] | null;
   // A signed-in customer (stage 16a): the form is filled in from their account.
   customer?: { name: string; prefill: Partial<JobRequestValues> } | null;
+  // False on the free plan "Katalog": the page shows the contact details only.
+  takesRequests?: boolean;
 }) {
   const [t, tServices, tRequest] = await Promise.all([
     getTranslations("PublicPage"),
@@ -142,7 +153,7 @@ export async function CompanyView({
         </div>
       </header>
 
-      {company.published && (
+      {company.published && takesRequests && (
         <a
           href="#request"
           className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
@@ -163,9 +174,7 @@ export async function CompanyView({
           <h2 id="photos-title" className="sr-only">
             {t("photos")}
           </h2>
-          <ul
-            className={`grid gap-2 sm:gap-3 ${columns(pictures.length)}`}
-          >
+          <ul className={`grid gap-2 sm:gap-3 ${columns(pictures.length)}`}>
             {pictures.map((photo, index) => (
               <li
                 key={photo.id}
@@ -225,9 +234,16 @@ export async function CompanyView({
           aria-labelledby="contact-title"
           className="grid gap-3 rounded-xl border border-border bg-surface p-5 sm:p-6"
         >
-          <h2 id="contact-title" className="text-xl font-semibold">
-            {t("contact")}
-          </h2>
+          <div className="grid gap-1">
+            <h2 id="contact-title" className="text-xl font-semibold">
+              {t("contact")}
+            </h2>
+            {!takesRequests && (
+              <p className="text-muted [overflow-wrap:anywhere]">
+                {t("contactDirect", { company: company.name })}
+              </p>
+            )}
+          </div>
           <div className="grid gap-2 sm:grid-cols-2">
             {company.phone && (
               <a href={`tel:${company.phone}`} className={actionClass}>
@@ -260,39 +276,41 @@ export async function CompanyView({
         </section>
       )}
 
-      <section
-        id="request"
-        aria-labelledby="request-title"
-        className="grid scroll-mt-6 gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6"
-      >
-        <div className="grid gap-1">
-          <h2 id="request-title" className="text-xl font-semibold">
-            {tRequest("title")}
-          </h2>
-          <p className="text-muted [overflow-wrap:anywhere]">
-            {tRequest("lead", { company: company.name })}
-          </p>
-        </div>
-        {company.published ? (
-          <RequestForm
-            slug={company.slug}
-            company={company.name}
-            services={services.map((service) => ({
-              value: service,
-              label: tServices(service),
-            }))}
-            slots={slots}
-            customer={customer}
-            minDate={today}
-            maxDate={addDays(today, MAX_REQUEST_DAYS_AHEAD)}
-          />
-        ) : (
-          <p className="flex items-start gap-2 font-medium text-muted">
-            <EyeOffIcon className="mt-0.5 size-5 shrink-0" />
-            {tRequest("preview")}
-          </p>
-        )}
-      </section>
+      {takesRequests && (
+        <section
+          id="request"
+          aria-labelledby="request-title"
+          className="grid scroll-mt-6 gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6"
+        >
+          <div className="grid gap-1">
+            <h2 id="request-title" className="text-xl font-semibold">
+              {tRequest("title")}
+            </h2>
+            <p className="text-muted [overflow-wrap:anywhere]">
+              {tRequest("lead", { company: company.name })}
+            </p>
+          </div>
+          {company.published ? (
+            <RequestForm
+              slug={company.slug}
+              company={company.name}
+              services={services.map((service) => ({
+                value: service,
+                label: tServices(service),
+              }))}
+              slots={slots}
+              customer={customer}
+              minDate={today}
+              maxDate={addDays(today, MAX_REQUEST_DAYS_AHEAD)}
+            />
+          ) : (
+            <p className="flex items-start gap-2 font-medium text-muted">
+              <EyeOffIcon className="mt-0.5 size-5 shrink-0" />
+              {tRequest("preview")}
+            </p>
+          )}
+        </section>
+      )}
 
       {jsonLd && (
         <script

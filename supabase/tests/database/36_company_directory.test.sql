@@ -1,7 +1,7 @@
--- Stage 15d: the catalog lists published, running companies only, filtered by
--- service and place. Synthetic data (.test).
+-- Stage 15d: the catalog lists published pages, filtered by service and place.
+-- Free-plan companies (no running subscription) are listed after the running ones. Synthetic data (.test).
 begin;
-select plan(11);
+select plan(12);
 
 insert into public.organizations (id, name, org_number) values
   ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'Fjellkran AS', '123456785'),
@@ -13,6 +13,7 @@ insert into public.company_pages (organization_id, slug, published, description,
   ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'vest-maskin', true, 'Graving og transport.', array['excavation', 'transport'], 'Stord', 'Sunnhordland_100%', '+4791234568'),
   ('cccccccc-cccc-cccc-cccc-cccccccccccc', 'skjult-graving', false, 'Ikke publisert.', array['excavation'], 'Bergen', null, '+4791234569'),
   ('dddddddd-dddd-dddd-dddd-dddddddddddd', 'stengt-transport', true, 'Abonnement avsluttet.', array['transport'], 'bergen', null, '+4791234560');
+update public.company_pages set free_times = true where slug = 'stengt-transport';
 insert into public.company_photos (organization_id, kind, path, width, height) values
   ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'logo', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/11111111-1111-1111-1111-111111111111.png', 512, 256);
 update public.subscriptions set status = 'canceled' where organization_id = 'dddddddd-dddd-dddd-dddd-dddddddddddd';
@@ -21,12 +22,12 @@ select set_config('request.jwt.claim.sub', '', true), set_config('request.jwt.cl
 set local role anon;
 
 select results_eq($$ select slug from public.company_directory() $$,
-  $$ values ('fjellkran-as'::text), ('vest-maskin'::text) $$,
-  'only published pages of running companies, by name');
+  $$ values ('fjellkran-as'::text), ('vest-maskin'::text), ('stengt-transport'::text) $$,
+  'published pages only: running companies by name, then the free plan');
 select results_eq($$ select slug from public.company_directory('excavation') $$,
   $$ values ('vest-maskin'::text) $$, 'filtered by service');
 select results_eq($$ select slug from public.company_directory(null, '  bERG ') $$,
-  $$ values ('fjellkran-as'::text) $$, 'a place matches part of the city, any case');
+  $$ values ('fjellkran-as'::text), ('stengt-transport'::text) $$, 'a place matches part of the city, any case');
 select results_eq($$ select slug from public.company_directory(null, 'askøy') $$,
   $$ values ('fjellkran-as'::text) $$, 'a place also matches the area');
 select results_eq($$ select slug from public.company_directory('transport', 'stord') $$,
@@ -37,8 +38,10 @@ select is((select char_length(description) from public.company_directory('crane_
 select results_eq($$ select logo_path, logo_width from public.company_directory('crane_truck') $$,
   $$ values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/11111111-1111-1111-1111-111111111111.png'::text, 512) $$,
   'the logo comes with the company');
-select results_eq($$ select city, companies from public.company_directory_places() $$,
-  $$ values ('Bergen'::text, 1), ('Stord'::text, 1) $$, 'places count only listed companies');
+select results_eq($$ select lower(city), companies from public.company_directory_places() $$,
+  $$ values ('bergen'::text, 2), ('stord'::text, 1) $$, 'places count only listed companies, any case');
+select is((select free_times from public.company_directory() where slug = 'stengt-transport'), false,
+  'a free-plan company never shows free times');
 select throws_ok($$ select * from public.company_pages $$, '42501', null, 'visitors still cannot read the table');
 reset role;
 

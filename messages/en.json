@@ -56,7 +56,7 @@
       }
     },
     "contactTitle": "Want to try MaskinGo?",
-    "contactBody": "Fits small and large companies alike, even if you work on your own. Every plan has every feature, and the price only depends on how many of you there are. Questions? Write to us.",
+    "contactBody": "Fits small and large companies alike, even if you work on your own. Every paid plan has every feature, and the price only depends on how many of you there are. Questions? Write to us.",
     "seePrices": "See all prices",
     "showcase": {
       "calendarAlt": "The MaskinGo calendar for one day: machines in rows and jobs with customer and driver on a timeline from 06 to 19.",
@@ -64,7 +64,8 @@
       "caption": "Real MaskinGo screens with made-up data: the office calendar and the driver's phone."
     },
     "findTitle": "Looking for a machine contractor, crane truck or transport?",
-    "findLead": "Search the companies on MaskinGo by service and place, and send a request straight to the company. Free for customers."
+    "findLead": "Search the companies on MaskinGo by service and place, and send a request straight to the company. Free for customers.",
+    "freeLine": "Free: only a company page in the catalog with contact details, 0 kr."
   },
   "Nav": {
     "home": "MaskinGo home",
@@ -1729,19 +1730,19 @@
   },
   "Billing": {
     "title": "Subscription",
-    "lead": "Your company's MaskinGo plan. Every plan has every feature; they differ only in how many people the company has.",
+    "lead": "Your company's MaskinGo plan. Every paid plan has every feature; they differ only in how many people the company has.",
     "status": {
       "trial": "Free trial: {days, plural, one {# day} other {# days}} left",
       "trialLead": "Free until {date}. No card is needed while you try.",
       "trialEnded": "The free trial has ended",
-      "trialEndedLead": "Choose a plan to keep using MaskinGo.",
+      "trialEndedLead": "The company is now on the free plan: its page is listed in the catalog with contact details. Choose a plan to use the rest of MaskinGo again.",
       "active": "{plan} plan",
       "activeRenews": "Renews on {date}.",
       "activeEnding": "Ends on {date}. You can turn it back on with “Card, receipts and cancelling”.",
       "pastDue": "The payment failed",
       "pastDueLead": "Stripe could not take the payment. Update the card with “Card, receipts and cancelling”.",
       "ended": "The subscription has ended",
-      "endedLead": "Choose a plan to start again."
+      "endedLead": "The company is now on the free plan: its page is listed in the catalog with contact details. Choose a plan to start again."
     },
     "people": "{taken, plural, one {# person} other {# people}} in the company",
     "peopleOf": "{taken} of {seats} people in the plan",
@@ -1780,8 +1781,8 @@
       "pastDue": "The last payment failed.",
       "action": "Choose a plan",
       "fix": "Update the card",
-      "readOnly": "The subscription is not active, so the data can only be read.",
-      "readOnlyMember": "The company's subscription is not active, so the data can only be read. Contact the company's owner."
+      "readOnly": "Free plan: the company page is listed in the catalog, everything else is read-only.",
+      "readOnlyMember": "The company is on the free plan: its page is listed in the catalog, everything else is read-only. Contact the company's owner."
     },
     "plansLeadNoVat": "No VAT (MVA) is added.",
     "noVat": "No VAT added",
@@ -1793,7 +1794,7 @@
     "metaDescription": "MaskinGo from NOK 290 a month. Every feature in every plan, a 30-day free trial without a card, and 2 months free when you pay yearly.",
     "badge": "30 days free, no card needed",
     "title": "Simple pricing by team size",
-    "lead": "Every plan has every feature. The plan only depends on how many people in the company use MaskinGo.",
+    "lead": "Every paid plan has every feature. The plan only depends on how many people in the company use MaskinGo.",
     "plansTitle": "Plans",
     "plans": {
       "solo": "Solo",
@@ -1809,7 +1810,7 @@
     "vatNotRegistered": "MaskinGo is not VAT registered yet, so no VAT is added.",
     "vatExcluded": "All prices exclude VAT.",
     "cta": "Try free for 30 days",
-    "includedTitle": "In every plan",
+    "includedTitle": "In every paid plan",
     "included": [
       "Jobs and calendar, also per machine",
       "Driver app on the phone with On the way, Arrived and Finished",
@@ -1829,7 +1830,7 @@
       },
       {
         "q": "What happens when the trial ends?",
-        "a": "You choose a plan in the app to continue. Nothing is charged until you have chosen a plan and added a card yourself."
+        "a": "You choose a plan in the app to continue. If you choose none, the company moves to the free plan: the company page stays in the catalog with contact details, and everything else is read-only. Nothing is charged until you have chosen a plan and added a card yourself."
       },
       {
         "q": "Can we change plan later?",
@@ -1839,7 +1840,15 @@
         "q": "How do we pay?",
         "a": "By card through Stripe, monthly or yearly. Receipts and cancellation are in the app."
       }
-    ]
+    ],
+    "free": {
+      "name": "Free",
+      "what": "Only a company page in the catalog",
+      "body": "The company is listed in the MaskinGo catalog with contact details, logo and photos. Customers call or e-mail you directly.",
+      "not": "No requests, free times, jobs or invoices.",
+      "after": "If you choose no plan after the trial, the company moves here by itself.",
+      "cta": "Create a free company page"
+    }
   },
   "Services": {
     "crane_truck": "Crane truck",
@@ -1938,6 +1947,7 @@
     "services": "Services",
     "area": "Area",
     "contact": "Contact",
+    "contactDirect": "{company} does not take requests through MaskinGo. Call or e-mail them directly.",
     "logoAlt": "{name} logo",
     "photos": "Photos",
     "photoAlt": "Photo {number} from {name}",
