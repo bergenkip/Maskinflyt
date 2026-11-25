@@ -577,3 +577,15 @@ Li prašymas 2026-11-25 (1 ir 3 punktai; kiekis m³/t/reisai yra atskiras kitas 
 - Vertimai `Workload.*`. Testai: `src/lib/workload.test.ts`, `e2e/workload.spec.ts`, `e2e/calendar.spec.ts`.
 - Nestabilus kalendoriaus tempimo testas: juosta kartais būdavo žemiau 720 px lango, pelė jos nepasiekdavo. `drag()` dabar
   pirmiausia `scrollIntoViewIfNeeded()`.
+
+## Gautų laiškų persiuntimas į Gmail (2026-11-25)
+
+Kai į `hei@maskingo.no` (Resend Receiving) ateina laiškas, Resend kviečia `POST /api/resend/inbound` (įvykis `email.received`).
+- `src/lib/email/inbound.ts`: parašo patikra (Svix: `svix-id`, `svix-timestamp`, `svix-signature`, ±5 min.),
+  laiško paėmimas `GET /emails/receiving/{id}`, persiuntimo laiškas `buildForward` (siuntėjas `MaskinGo <hei@maskingo.no>`,
+  Reply-To = klientas, tema „Fwd: …“, tekstas ir pabėgęs HTML; priedai nepersiunčiami, tik nurodomas jų skaičius).
+  Nepersiunčiama, jei siuntėjas `@maskingo.no` arba pats persiuntimo adresas (kad nebūtų ciklo). `Idempotency-Key` = `inbound-<id>`.
+- Gautam laiškui perskaityti reikia pilnos prieigos rakto `RESEND_RECEIVING_API_KEY` (siuntimo raktas gauna 401). Be jo persiunčiamas tik pranešimas (siuntėjas, tema), tekstas skaitomas Resend.
+- Vercel aplinkos kintamieji (Production, Sensitive): `RESEND_WEBHOOK_SECRET` (Resend webhook signing secret),
+  `INBOUND_FORWARD_TO` (Li asmeninis paštas; kode jo nėra). Be jų: 503.
+- Testai: `src/lib/email/inbound.test.ts`.
