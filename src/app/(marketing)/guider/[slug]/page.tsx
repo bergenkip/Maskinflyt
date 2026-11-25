@@ -206,10 +206,6 @@ function GuideArticle({ guide }: { guide: Guide }) {
           </section>
         ))}
 
-        <p role="note" className="mt-10 rounded-xl border border-border bg-surface p-5 text-sm leading-relaxed text-muted">
-          {t("disclaimer")}
-        </p>
-
         <section aria-labelledby="faq-title" className="mt-12 sm:mt-16">
           <h2 id="faq-title" className="text-2xl font-semibold tracking-tight">
             {t("faqTitle")}

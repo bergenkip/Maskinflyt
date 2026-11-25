@@ -2206,7 +2206,6 @@
     "guideBadge": "Guide",
     "readGuide": "Les guiden",
     "updated": "Oppdatert {date}",
-    "disclaimer": "Dette er generell informasjon, ikke juridisk råd. Sjekk avtalene dine, og spør regnskapsføreren hvis du er usikker.",
     "faqTitle": "Spørsmål og svar",
     "relatedTitle": "Les mer om MaskinGo",
     "moreTitle": "Flere guider",
@@ -2222,7 +2221,7 @@
         {
           "heading": "Hvorfor timelisten er viktig",
           "body": [
-            "Arbeidsmiljøloven § 10-7 krever at arbeidsgiveren har en oversikt over hvor mye hver ansatt har arbeidet. Den samme oversikten brukes til lønn, til overtid og til å fakturere kunden.",
+            "Arbeidsmiljøloven § 10-7 krever at det finnes en oversikt som viser hvor mye hver ansatt har arbeidet, og at den er tilgjengelig for Arbeidstilsynet og de tillitsvalgte. Den samme oversikten brukes til lønn, til overtid og til å fakturere kunden.",
             "Når timene føres på lapper og leveres i slutten av måneden, blir de ofte ufullstendige. Da må kontoret ringe rundt, og noen timer blir aldri fakturert."
           ]
         },
@@ -2297,8 +2296,8 @@
         {
           "heading": "Overtid: grensene i loven",
           "body": [
-            "Etter arbeidsmiljøloven er alminnelig arbeidstid som hovedregel høyst 9 timer per døgn og 40 timer per uke. Arbeid ut over dette er overtid, og loven krever et tillegg på minst 40 prosent.",
-            "Mange i bransjen har tariffavtale eller egen avtale med andre grenser og høyere tillegg, for eksempel for kveld og natt. Det er avtalen som gjelder, så sjekk den."
+            "Etter arbeidsmiljøloven § 10-4 må den alminnelige arbeidstiden ikke overstige 9 timer i løpet av 24 timer og 40 timer i løpet av sju dager. Etter avtale kan den regnes som et gjennomsnitt over en lengre periode (§ 10-5).",
+            "Arbeid ut over lovens grense er overtid (§ 10-6). For overtid skal det betales et tillegg på minst 40 prosent av lønnen for tilsvarende arbeid. Mange i bransjen har tariffavtale med høyere tillegg, for eksempel for kveld og natt, og da gjelder avtalen."
           ]
         },
         {
@@ -2322,11 +2321,11 @@
       "faq": [
         {
           "q": "Må timelisten signeres?",
-          "a": "Loven krever ikke signatur, men at den ansatte bekrefter timelisten gjør det lettere å unngå uenighet senere."
+          "a": "Nei. Loven krever at oversikten finnes og er tilgjengelig for Arbeidstilsynet og de tillitsvalgte, ikke at den signeres. At den ansatte bekrefter timelisten, gjør det likevel lettere å unngå uenighet senere."
         },
         {
           "q": "Hvor lenge skal timelister tas vare på?",
-          "a": "Timelister som er grunnlag for lønn og faktura hører til regnskapsmaterialet. Spør regnskapsføreren hvor lenge dere må oppbevare dem."
+          "a": "Brukes timelistene som dokumentasjon for lønn eller faktura, er de dokumentasjon av bokførte opplysninger. Etter bokføringsloven § 13 skal slik dokumentasjon oppbevares i Norge i fem år etter regnskapsårets slutt."
         },
         {
           "q": "Teller kjøring til anlegget som arbeidstid?",
@@ -2340,7 +2339,7 @@
       "metaDescription": "Slik fakturerer du timer for gravemaskin, kranbil og lastebil: timepris, minstetid, tillegg, egne linjer og hva fakturaen må inneholde.",
       "summary": "Timepris, minstetid, egne linjer og hva fakturaen må inneholde.",
       "title": "Slik fakturerer du maskintimer",
-      "lead": "Mange maskinentreprenører taper penger på timer som aldri blir fakturert. Her går vi gjennom grunnlaget, prisene og hva fakturaen må inneholde.",
+      "lead": "Timer som ikke blir fakturert, er tapte penger. Her går vi gjennom grunnlaget, prisene, hva fakturaen skal inneholde og fristene.",
       "sections": [
         {
           "heading": "Start med godkjente timer",
@@ -2372,26 +2371,24 @@
         {
           "heading": "Dette må fakturaen inneholde",
           "body": [
-            "Bokføringsforskriften stiller krav til hva en faktura skal inneholde. Blant annet:"
+            "Bokføringsforskriften §§ 5-1-1 og 5-1-2 sier hva fakturaen minst skal inneholde:"
           ],
           "list": [
-            "Fortløpende fakturanummer og fakturadato",
-            "Ditt navn og organisasjonsnummer, med MVA hvis du er registrert",
-            "«Foretaksregisteret» hvis firmaet er registrert der",
-            "Kundens navn og adresse",
-            "Hva som er levert, og når og hvor det ble levert",
-            "Pris, beløp og merverdiavgift",
-            "Forfallsdato"
-          ],
-          "after": [
-            "Listen er ikke fullstendig. Spør regnskapsføreren hvis du er usikker."
+            "Nummer og fakturadato",
+            "Ditt navn og organisasjonsnummer, med MVA etter nummeret hvis du er registrert i Merverdiavgiftsregisteret",
+            "Ordet «Foretaksregisteret» og hovedkontorets adresse hvis firmaet er et AS",
+            "Kundens navn og adresse eller organisasjonsnummer",
+            "Hva som er levert, og hvor mye",
+            "Når og hvor det ble levert",
+            "Pris og forfallsdato",
+            "Merverdiavgift, oppgitt i norske kroner"
           ]
         },
         {
-          "heading": "Fakturer samme uke",
+          "heading": "Frister og retting",
           "body": [
-            "Jo lenger det går fra jobben er gjort, jo flere timer glemmes, og jo senere kommer pengene inn. En fast rutine, for eksempel hver fredag, gjør stor forskjell.",
-            "Er en faktura sendt med feil, skal den ikke endres eller slettes. Lag en kreditnota og en ny faktura."
+            "Etter bokføringsforskriften § 5-2-2 skal fakturaen utstedes snarest mulig og senest en måned etter levering. Fakturerer du månedlig, kan det skje innen 15 virkedager i måneden etter leveringsmåneden (§ 5-2-3). En fast rutine, for eksempel hver fredag, gjør at færre timer glemmes og at pengene kommer raskere inn.",
+            "Skal en sendt faktura erstattes, krever § 5-2-7 at du utsteder en kreditnota som reverserer den opprinnelige fakturaen, og så en ny faktura."
           ]
         },
         {
@@ -2408,11 +2405,11 @@
         },
         {
           "q": "Kan jeg endre en faktura som er sendt?",
-          "a": "Nei. En sendt faktura rettes med en kreditnota, og så sender du en ny faktura med riktige tall."
+          "a": "Nei. Du utsteder en kreditnota som reverserer den (bokføringsforskriften § 5-2-7), og sender en ny faktura med riktige tall."
         },
         {
           "q": "Må jeg sende EHF?",
-          "a": "Offentlige kunder krever elektronisk faktura (EHF). Private kunder godtar ofte PDF på e-post. Spør kunden hva de krever."
+          "a": "Offentlige oppdragsgivere skal kreve elektronisk faktura i godkjent format, som EHF, og kan holde tilbake betalingen til den kommer (forskrift om elektronisk faktura i offentlige anskaffelser § 5). Private kunder godtar ofte PDF på e-post."
         }
       ]
     },

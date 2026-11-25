@@ -2206,7 +2206,6 @@
     "guideBadge": "Gidas",
     "readGuide": "Skaityti gidą",
     "updated": "Atnaujinta {date}",
-    "disclaimer": "Tai bendra informacija, ne teisinė konsultacija. Pasitikrinkite savo sutartis ir, jei abejojate, klauskite buhalterio.",
     "faqTitle": "Klausimai ir atsakymai",
     "relatedTitle": "Daugiau apie MaskinGo",
     "moreTitle": "Daugiau gidų",
@@ -2222,7 +2221,7 @@
         {
           "heading": "Kodėl žiniaraštis svarbus",
           "body": [
-            "Norvegijos darbo aplinkos įstatymo (arbeidsmiljøloven) 10-7 straipsnis reikalauja, kad darbdavys turėtų kiekvieno darbuotojo dirbto laiko apskaitą. Ta pati apskaita naudojama atlyginimui, viršvalandžiams ir sąskaitai klientui.",
+            "Norvegijos darbo aplinkos įstatymo (arbeidsmiljøloven) 10-7 straipsnis reikalauja, kad būtų apskaita, rodanti, kiek dirbo kiekvienas darbuotojas, ir kad ji būtų prieinama Darbo inspekcijai bei darbuotojų atstovams. Ta pati apskaita naudojama atlyginimui, viršvalandžiams ir sąskaitai klientui.",
             "Kai valandos rašomos ant lapelių ir pateikiamos mėnesio pabaigoje, jos dažnai būna neišsamios. Biurui tenka skambinėti, o dalis valandų taip ir lieka neįtrauktos į sąskaitą."
           ]
         },
@@ -2297,8 +2296,8 @@
         {
           "heading": "Viršvalandžiai: įstatymo ribos",
           "body": [
-            "Pagal darbo aplinkos įstatymą įprastas darbo laikas paprastai yra ne daugiau kaip 9 valandos per parą ir 40 valandų per savaitę. Darbas virš šių ribų yra viršvalandžiai, o įstatymas reikalauja ne mažesnio kaip 40 procentų priedo.",
-            "Daugelis šakos įmonių turi kolektyvinę ar savo sutartį su kitomis ribomis ir didesniais priedais, pvz. vakarui ir nakčiai. Galioja sutartis, todėl ją pasitikrinkite."
+            "Pagal darbo aplinkos įstatymo 10-4 straipsnį įprastas darbo laikas negali viršyti 9 valandų per 24 valandas ir 40 valandų per septynias dienas. Susitarus jį galima skaičiuoti kaip ilgesnio laikotarpio vidurkį (10-5 str.).",
+            "Darbas virš įstatymo ribos yra viršvalandžiai (10-6 str.). Už viršvalandžius mokamas ne mažesnis kaip 40 procentų priedas prie atlyginimo už tokį patį darbą. Daug šakos įmonių turi kolektyvinę sutartį su didesniais priedais, pvz. vakarui ir nakčiai, ir tada galioja sutartis."
           ]
         },
         {
@@ -2322,11 +2321,11 @@
       "faq": [
         {
           "q": "Ar žiniaraštį reikia pasirašyti?",
-          "a": "Įstatymas parašo nereikalauja, bet darbuotojo patvirtinimas padeda išvengti nesutarimų vėliau."
+          "a": "Ne. Įstatymas reikalauja, kad apskaita būtų ir būtų prieinama Darbo inspekcijai bei darbuotojų atstovams, bet ne kad ji būtų pasirašyta. Vis dėlto darbuotojo patvirtinimas padeda išvengti nesutarimų vėliau."
         },
         {
           "q": "Kiek laiko reikia saugoti žiniaraščius?",
-          "a": "Žiniaraščiai, kuriais remiamasi skaičiuojant atlyginimą ir sąskaitas, yra apskaitos dokumentai. Paklauskite buhalterio, kiek laiko juos reikia saugoti."
+          "a": "Jei žiniaraščiais grindžiamas atlyginimas ar sąskaitos, jie yra apskaitos įrašus pagrindžiantys dokumentai. Pagal apskaitos įstatymo (bokføringsloven) 13 straipsnį tokie dokumentai Norvegijoje saugomi penkerius metus nuo finansinių metų pabaigos."
         },
         {
           "q": "Ar kelionė į objektą yra darbo laikas?",
@@ -2340,7 +2339,7 @@
       "metaDescription": "Kaip išrašyti sąskaitą už ekskavatoriaus, krano ar sunkvežimio valandas: valandinis įkainis, minimalus laikas, priedai, papildomos eilutės ir privalomi duomenys.",
       "summary": "Valandinis įkainis, minimalus laikas, papildomos eilutės ir privalomi sąskaitos duomenys.",
       "title": "Kaip išrašyti sąskaitą už technikos valandas",
-      "lead": "Daug technikos įmonių praranda pinigus už valandas, kurios taip ir neįtraukiamos į sąskaitą. Čia aptariame pagrindą, kainas ir ką turi apimti sąskaita.",
+      "lead": "Valandos, kurios neįtraukiamos į sąskaitą, yra prarasti pinigai. Čia aptariame pagrindą, kainas, ką turi apimti sąskaita, ir terminus.",
       "sections": [
         {
           "heading": "Pradėkite nuo patvirtintų valandų",
@@ -2372,26 +2371,24 @@
         {
           "heading": "Ką turi apimti sąskaita",
           "body": [
-            "Norvegijos apskaitos taisyklės (bokføringsforskriften) nustato, ką turi apimti sąskaita. Be kita ko:"
+            "Norvegijos apskaitos taisyklių (bokføringsforskriften) 5-1-1 ir 5-1-2 straipsniai nustato, ką sąskaita turi apimti mažiausiai:"
           ],
           "list": [
-            "Eilės tvarka einantį sąskaitos numerį ir datą",
-            "Jūsų pavadinimą ir organizacijos numerį, su MVA, jei esate PVM mokėtojas",
-            "Žodį „Foretaksregisteret“, jei įmonė ten įregistruota",
-            "Kliento pavadinimą ir adresą",
-            "Kas buvo atlikta, kada ir kur",
-            "Kainą, sumą ir PVM",
-            "Mokėjimo terminą"
-          ],
-          "after": [
-            "Sąrašas nėra išsamus. Jei abejojate, klauskite buhalterio."
+            "Numerį ir sąskaitos datą",
+            "Jūsų pavadinimą ir organizacijos numerį, po jo MVA, jei esate PVM mokėtojų registre",
+            "Žodį „Foretaksregisteret“ ir būstinės adresą, jei įmonė yra AS",
+            "Kliento pavadinimą ir adresą arba organizacijos numerį",
+            "Kas buvo atlikta ir kiek",
+            "Kada ir kur tai buvo atlikta",
+            "Kainą ir mokėjimo terminą",
+            "PVM, nurodytą Norvegijos kronomis"
           ]
         },
         {
-          "heading": "Išrašykite sąskaitą tą pačią savaitę",
+          "heading": "Terminai ir taisymas",
           "body": [
-            "Kuo daugiau laiko praeina nuo darbo, tuo daugiau valandų pamirštama ir tuo vėliau ateina pinigai. Pastovi tvarka, pvz. kiekvieną penktadienį, labai padeda.",
-            "Jei sąskaita išsiųsta su klaida, jos negalima keisti ar ištrinti. Išrašykite kreditinę sąskaitą ir naują sąskaitą."
+            "Pagal apskaitos taisyklių 5-2-2 straipsnį sąskaita išrašoma kuo greičiau ir ne vėliau kaip per mėnesį po atlikimo. Jei sąskaitas išrašote kas mėnesį, tai galima padaryti per 15 darbo dienų nuo kito mėnesio pradžios (5-2-3 str.). Pastovi tvarka, pvz. kiekvieną penktadienį, reiškia mažiau pamirštų valandų ir greičiau gautus pinigus.",
+            "Jei išsiųstą sąskaitą reikia pakeisti, 5-2-7 straipsnis reikalauja išrašyti kreditinę sąskaitą, kuri panaikina pradinę, ir tada naują sąskaitą."
           ]
         },
         {
@@ -2408,11 +2405,11 @@
         },
         {
           "q": "Ar galiu pakeisti išsiųstą sąskaitą?",
-          "a": "Ne. Išsiųsta sąskaita taisoma kreditine sąskaita, o tada išsiunčiama nauja sąskaita su teisingais skaičiais."
+          "a": "Ne. Išrašote kreditinę sąskaitą, kuri ją panaikina (apskaitos taisyklių 5-2-7 str.), ir išsiunčiate naują sąskaitą su teisingais skaičiais."
         },
         {
           "q": "Ar privalau siųsti EHF?",
-          "a": "Viešojo sektoriaus klientai reikalauja elektroninių sąskaitų (EHF). Privatūs klientai dažnai priima PDF el. paštu. Paklauskite kliento, ko jis reikalauja."
+          "a": "Viešojo sektoriaus pirkėjai privalo reikalauti elektroninių sąskaitų patvirtintu formatu, pvz. EHF, ir gali sulaikyti mokėjimą, kol jos negauna (Elektroninių sąskaitų viešuosiuose pirkimuose taisyklių 5 str.). Privatūs klientai dažnai priima PDF el. paštu."
         }
       ]
     },

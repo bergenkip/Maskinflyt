@@ -2206,7 +2206,6 @@
     "guideBadge": "Guide",
     "readGuide": "Read the guide",
     "updated": "Updated {date}",
-    "disclaimer": "This is general information, not legal advice. Check your agreements, and ask your accountant if you are unsure.",
     "faqTitle": "Questions and answers",
     "relatedTitle": "Read more about MaskinGo",
     "moreTitle": "More guides",
@@ -2222,7 +2221,7 @@
         {
           "heading": "Why the timesheet matters",
           "body": [
-            "Section 10-7 of the Norwegian Working Environment Act (arbeidsmiljøloven) requires the employer to keep a record of how much each employee has worked. The same record is used for pay, for overtime and for invoicing the customer.",
+            "Section 10-7 of the Norwegian Working Environment Act (arbeidsmiljøloven) requires a record showing how much each employee has worked, available to the Labour Inspection Authority and the employee representatives. The same record is used for pay, for overtime and for invoicing the customer.",
             "When hours are written on notes and handed in at the end of the month, they are often incomplete. The office has to call around, and some hours are never invoiced."
           ]
         },
@@ -2297,8 +2296,8 @@
         {
           "heading": "Overtime: the limits in the law",
           "body": [
-            "Under the Working Environment Act, ordinary working time is as a rule at most 9 hours in 24 hours and 40 hours a week. Work beyond this is overtime, and the law requires a supplement of at least 40 percent.",
-            "Many in the trade have a collective agreement or their own agreement with other limits and higher supplements, for example for evenings and nights. The agreement is what applies, so check it."
+            "Under section 10-4 of the Working Environment Act, ordinary working time must not exceed 9 hours in 24 hours and 40 hours in seven days. By agreement it can be calculated as an average over a longer period (section 10-5).",
+            "Work beyond the legal limit is overtime (section 10-6). Overtime must be paid with a supplement of at least 40 percent of the pay for the same work. Many in the trade have a collective agreement with higher supplements, for example for evenings and nights, and then the agreement applies."
           ]
         },
         {
@@ -2322,11 +2321,11 @@
       "faq": [
         {
           "q": "Does the timesheet have to be signed?",
-          "a": "The law does not require a signature, but having the employee confirm the timesheet makes disagreements later less likely."
+          "a": "No. The law requires the record to exist and be available to the Labour Inspection Authority and the employee representatives, not that it is signed. Having the employee confirm the timesheet still makes disagreements later less likely."
         },
         {
           "q": "How long should timesheets be kept?",
-          "a": "Timesheets that pay and invoices are based on are part of the accounting records. Ask your accountant how long you must keep them."
+          "a": "If the timesheets document pay or invoices, they are documentation of booked entries. Under section 13 of the Bookkeeping Act (bokføringsloven), such documentation must be kept in Norway for five years after the end of the financial year."
         },
         {
           "q": "Does driving to the site count as working time?",
@@ -2340,7 +2339,7 @@
       "metaDescription": "How to invoice hours for excavators, crane trucks and lorries: hourly rate, minimum time, supplements, extra lines and what the invoice must contain.",
       "summary": "Hourly rate, minimum time, extra lines and what the invoice must contain.",
       "title": "How to invoice machine hours",
-      "lead": "Many machine contractors lose money on hours that are never invoiced. Here we go through the basis, the prices and what the invoice must contain.",
+      "lead": "Hours that are never invoiced are lost money. Here we go through the basis, the prices, what the invoice must contain and the deadlines.",
       "sections": [
         {
           "heading": "Start with approved hours",
@@ -2372,26 +2371,24 @@
         {
           "heading": "What the invoice must contain",
           "body": [
-            "The Norwegian bookkeeping regulations (bokføringsforskriften) set requirements for what an invoice must contain. Among other things:"
+            "Sections 5-1-1 and 5-1-2 of the Bookkeeping Regulations (bokføringsforskriften) say what an invoice must contain at a minimum:"
           ],
           "list": [
-            "A sequential invoice number and the invoice date",
-            "Your name and organisation number, with MVA if you are VAT registered",
-            "\"Foretaksregisteret\" if the company is registered there",
-            "The customer's name and address",
-            "What was delivered, and when and where it was delivered",
-            "Price, amount and VAT",
-            "Due date"
-          ],
-          "after": [
-            "The list is not complete. Ask your accountant if you are unsure."
+            "Number and invoice date",
+            "Your name and organisation number, followed by MVA if you are in the VAT register",
+            "The word \"Foretaksregisteret\" and the head office address if the company is an AS",
+            "The customer's name and address or organisation number",
+            "What was delivered, and how much",
+            "When and where it was delivered",
+            "Price and due date",
+            "VAT, stated in Norwegian kroner"
           ]
         },
         {
-          "heading": "Invoice the same week",
+          "heading": "Deadlines and corrections",
           "body": [
-            "The longer it takes from the job being done, the more hours are forgotten and the later the money comes in. A fixed routine, for example every Friday, makes a big difference.",
-            "If an invoice was sent with a mistake, it must not be changed or deleted. Make a credit note and a new invoice."
+            "Under section 5-2-2 of the Bookkeeping Regulations, the invoice must be issued as soon as possible and no later than one month after delivery. If you invoice monthly, you may do so within 15 working days of the month after the delivery month (section 5-2-3). A fixed routine, for example every Friday, means fewer forgotten hours and money in sooner.",
+            "If a sent invoice is to be replaced, section 5-2-7 requires a credit note that reverses the original invoice, and then a new invoice."
           ]
         },
         {
@@ -2408,11 +2405,11 @@
         },
         {
           "q": "Can I change an invoice that has been sent?",
-          "a": "No. A sent invoice is corrected with a credit note, and then you send a new invoice with the right numbers."
+          "a": "No. You issue a credit note that reverses it (section 5-2-7 of the Bookkeeping Regulations) and send a new invoice with the right numbers."
         },
         {
           "q": "Do I have to send EHF?",
-          "a": "Public sector customers require electronic invoices (EHF). Private customers often accept a PDF by email. Ask the customer what they require."
+          "a": "Public sector buyers must require electronic invoices in an approved format such as EHF, and may hold back payment until one arrives (Regulation on electronic invoicing in public procurement, section 5). Private customers often accept a PDF by email."
         }
       ]
     },
