@@ -560,3 +560,20 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
   Pasikeitus įstatymams, tekstus reikia patikrinti iš naujo ir pakeisti `GUIDES_UPDATED`.
 - Naujas straipsnis: įrašyk į `guides` + `guideSlugs` + `guideRelated`, tekstus trimis kalbomis, adresą į `publicPaths`;
   `src/lib/guides.test.ts` patikrina, kad nieko nepamiršta. `GUIDES_UPDATED` pakeisk, kai tekstai peržiūrimi.
+
+## Darbo kiekis ir administratoriaus skaičiai (2026-11-25)
+Li prašymas 2026-11-25 (1 ir 3 punktai; kiekis m³/t/reisai yra atskiras kitas etapas). Duomenų bazė nekeista.
+- `src/lib/workload.ts`: `workload(jobs, days, { timeZone, activeMachines, week, daysOff })` grąžina darbų skaičių, atliktus,
+  minutes (užsakymas per vidurnaktį skaičiuojamas kiekvienai dienai pagal jos dalį), mašinas ir užimtumą
+  („belegg“ = mašinų suplanuotos minutės / aktyvios mašinos × darbo laikas tą dieną). Atšaukti neskaičiuojami.
+  Užimtumas `null`, kai galimo laiko nėra (savaitgalis, laisva diena), ir gali būti daugiau nei 100 %.
+- Darbo laikas iš `company_hours` (įmonės puslapio „Darbo laikas“), laisvos dienos iš `company_days_off`
+  (`src/lib/workload-data.ts`). Kol įmonė nenustatė: pirmadienis–penktadienis 07–15. Užklausa nepavyko: užimtumas nerodomas.
+- Kalendorius: dienos vaizde eilutė „2 jobs · 6 h · 1 machine in use · 25 % booked“ ir valandos prie kiekvienos mašinos;
+  savaitės dienose valandos ir užimtumas; mėnesio dienose kompiuteryje valandos prie datos (ir `dayJobs` etiketėje).
+- Apžvalga (savininkas ir administratorius): `src/app/app/workload-overview.tsx`, kortelės Šiandien / Ši savaitė / Šis mėnuo
+  (valandos, darbai, atlikta, mašinos, užimtumas, išrašyta be PVM: sąskaitos minus kreditnotos pagal `issue_date`) ir mėnesio
+  stulpelinis grafikas (valandos per dieną, lentelė ekrano skaitytuvams). Kortelė atidaro kalendorių tą laikotarpį.
+- Vertimai `Workload.*`. Testai: `src/lib/workload.test.ts`, `e2e/workload.spec.ts`, `e2e/calendar.spec.ts`.
+- Nestabilus kalendoriaus tempimo testas: juosta kartais būdavo žemiau 720 px lango, pelė jos nepasiekdavo. `drag()` dabar
+  pirmiausia `scrollIntoViewIfNeeded()`.

@@ -663,7 +663,7 @@
     "month": "Mėnuo",
     "previousMonth": "Ankstesnis mėnuo",
     "nextMonth": "Kitas mėnuo",
-    "dayJobs": "{day}: {count, plural, =0 {užsakymų nėra} one {# užsakymas} few {# užsakymai} other {# užsakymų}}",
+    "dayJobs": "{day}: {count, plural, =0 {užsakymų nėra} one {# užsakymas, {hours} val.} few {# užsakymai, {hours} val.} other {# užsakymų, {hours} val.}}",
     "more": "dar {count}",
     "editJob": "Redaguoti užsakymą {number}, {customer}, {time}, {status}",
     "moveBusy": "Užsakymas {number}, {time}: šiuo metu jau užimta",
@@ -2520,5 +2520,28 @@
         }
       ]
     }
+  },
+  "Workload": {
+    "title": "Darbo kiekis",
+    "today": "Šiandien",
+    "week": "Ši savaitė",
+    "month": "Šis mėnuo",
+    "weekNumber": "{week} savaitė",
+    "jobs": "{count, plural, one {# užsakymas} few {# užsakymai} other {# užsakymų}}",
+    "hours": "{hours} val.",
+    "hoursLabel": "suplanuotos valandos",
+    "done": "Atlikta {done} iš {count}",
+    "machines": "{count, plural, =0 {Mašinos nenaudojamos} one {Naudojama # mašina} few {Naudojamos # mašinos} other {Naudojama # mašinų}}",
+    "busy": "Užimtumas {percent}",
+    "invoiced": "Išrašyta sąskaitų (be PVM)",
+    "failed": "Nepavyko gauti darbo kiekio. Įkelkite puslapį iš naujo.",
+    "chartTitle": "Valandos per dieną, {month}",
+    "chartLead": "Daugiausia darbo per dieną: {hours} val.",
+    "chartToday": "Šiandien",
+    "chartPast": "Anksčiau",
+    "chartAhead": "Suplanuota į priekį",
+    "chartDay": "Diena",
+    "chartHours": "Valandos",
+    "dayLabel": "Šios dienos darbas"
   }
 }

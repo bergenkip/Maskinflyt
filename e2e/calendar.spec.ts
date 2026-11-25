@@ -33,6 +33,8 @@ async function addJob(page: Page, job: { start: string; hours: string; vehicle?:
 // Drags a job's bar (or its right edge) by a number of hours on the day timeline.
 async function drag(page: Page, number: number, hours: number, edge = false) {
   const bar = page.locator(`[data-job="${number}"]`);
+  // The mouse only reaches what is on screen: a message above the timeline can push the bar below the fold.
+  await bar.scrollIntoViewIfNeeded();
   const track = await bar.locator("xpath=..").boundingBox();
   const hourWidth = track!.width / 14; // 06–20
   const grip = await (edge ? bar.locator("[data-resize]") : bar).boundingBox();
@@ -75,7 +77,8 @@ test("the calendar shows a month, a week and a day, and jobs are moved and made 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Calendar");
   await page.goto(`/app/jobs/calendar?date=${day}`);
   await expect(page.getByRole("heading", { level: 2, name: "May 2030" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Monday, May 6: 3 jobs" })).toBeVisible();
+  // Each day says how many jobs and hours it holds (4 + 2 + 2 hours).
+  await expect(page.getByRole("link", { name: "Monday, May 6: 3 jobs, 8 h" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Tuesday, May 7: no jobs" })).toBeVisible();
   await page.getByRole("link", { name: "Next month" }).click();
   await expect(page.getByRole("heading", { level: 2, name: "June 2030" })).toBeVisible();
@@ -88,12 +91,20 @@ test("the calendar shows a month, a week and a day, and jobs are moved and made 
   await expect(monday).toContainText("Kranbil 1");
   await expect(monday).toContainText("Sander Lie");
   await expect(monday).toContainText("No machine");
+  // 6 machine hours of 2 machines × 8 working hours (Monday to Friday 07–15 until the company sets its hours).
+  await expect(monday).toContainText("8 h");
+  await expect(monday).toContainText("38% booked");
 
   // The day: machines with their drivers, and the job without a machine at the top.
   await monday.getByRole("link", { name: "Open Monday, May 6" }).click();
   await expect(page.getByRole("heading", { level: 2, name: "Monday, May 6" })).toBeVisible();
+  const work = page.getByRole("list", { name: "Work this day" });
+  for (const fact of ["3 jobs", "8 h", "1 machine in use", "38% booked"]) await expect(work).toContainText(fact);
   const kranbil = page.getByRole("group", { name: "Kranbil 1" });
   await expect(kranbil).toContainText("Sander Lie");
+  // A machine's own hours beside its name.
+  await expect(kranbil.getByText("6 h", { exact: true })).toBeVisible();
+  await expect(page.getByRole("group", { name: "No machine" }).getByText("2 h", { exact: true })).toBeVisible();
   await expect(kranbil.getByRole("link", { name: /^Edit job 1, Nordbygg AS, 07:00/ })).toBeVisible();
   await expect(page.getByRole("region", { name: "1 job without a machine" })).toContainText("Not planned");
 
@@ -105,6 +116,8 @@ test("the calendar shows a month, a week and a day, and jobs are moved and made 
   await expect(page.getByText(/^Job 1 moved to 07:00 AM\s– ~11:00 AM\.$/)).toBeVisible();
   // The bar is back at 07:00 before its edge is grabbed, or the drag starts from the old place.
   await expect(kranbil.getByRole("link", { name: /^Edit job 1, Nordbygg AS, 07:00 AM\s– ~11:00 AM/ })).toBeVisible();
+  // And the undo is saved: while a save is running, a new drag is ignored (Undo is disabled until then).
+  await expect(page.getByRole("button", { name: "Undo" })).toBeEnabled();
 
   // Made an hour longer by its right edge; it stays so after a reload.
   await drag(page, 1, 1, true);

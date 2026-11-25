@@ -18,6 +18,9 @@ import { toLocalParts, type JobStatus } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import { canSeeJobs } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
+import { minutesOn, workload } from "@/lib/workload";
+import { loadWorkingTime } from "@/lib/workload-data";
+import { BusyMeter, busyPercent, hoursNumber, WorkloadFacts } from "@/components/workload-facts";
 import { StatusIcon } from "../status-badge";
 import { JobsViewNav, segmentClass } from "../view-nav";
 import { DayTimeline, type TimelineJob, type TimelineRow } from "./day-timeline";
@@ -65,9 +68,10 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
   const range = calendarRange(date, view, timeZone);
 
   const supabase = await createClient();
-  const [t, tJobs, format, jobsResult, vehiclesResult, membersResult, mainResult] = await Promise.all([
+  const [t, tJobs, tLoad, format, jobsResult, vehiclesResult, membersResult, mainResult, working] = await Promise.all([
     getTranslations("Calendar"),
     getTranslations("Jobs"),
+    getTranslations("Workload"),
     getFormatter(),
     // Every job that shares any time with the days shown; cancelled ones stay on the list only.
     supabase
@@ -82,6 +86,7 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
     supabase.from("vehicles").select("id, name, active").eq("organization_id", organization.id).order("name"),
     supabase.rpc("list_members", { org: organization.id }),
     supabase.from("memberships").select("user_id, main_vehicle_id").eq("organization_id", organization.id),
+    loadWorkingTime(supabase, organization.id, range.days[0], range.days[range.days.length - 1]),
   ]);
   const failed = jobsResult.error ?? vehiclesResult.error ?? membersResult.error;
   const jobs = (jobsResult.data ?? []) as unknown as Row[];
@@ -89,6 +94,28 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
   const vehicles = (vehiclesResult.data ?? []) as Named[];
   const vehicleName = new Map(vehicles.map((v) => [v.id, v.name]));
   const driverOf = (job: Row) => (job.driver_id ? (people.get(job.driver_id) ?? null) : null);
+
+  // How much work the days hold. Without the working hours, how busy is left out rather than guessed.
+  const loadOptions = {
+    timeZone,
+    activeMachines: vehicles.filter((v) => v.active).length,
+    week: working.failed ? [] : working.week,
+    daysOff: working.daysOff,
+  };
+  const loadOf = (days: string[]) => workload(jobs, days, loadOptions);
+  const hoursOf = (minutes: number) => tLoad("hours", { hours: hoursNumber(format, minutes) });
+  // A day of the week: hours, and how busy the machines are (with a bar, and the number in words).
+  const weekDayLoad = (load: ReturnType<typeof loadOf>) => (
+    <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+      <span className="whitespace-nowrap">{hoursOf(load.minutes)}</span>
+      {load.busy !== null && (
+        <span className="flex items-center gap-1.5 whitespace-nowrap">
+          <BusyMeter busy={load.busy} />
+          {tLoad("busy", { percent: busyPercent(format, load.busy) })}
+        </span>
+      )}
+    </p>
+  );
 
   // Jobs that share some time with that day (a job ending at midnight is not on the next day).
   const jobsOn = (list: Row[], day: string) =>
@@ -186,6 +213,11 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
     customer: customer(job),
     driver: driverOf(job),
   });
+  // A machine's hours that day; nothing for a free machine.
+  const rowHours = (own: Row[]) => {
+    const minutes = own.reduce((sum, job) => sum + minutesOn(job, date, timeZone), 0);
+    return minutes > 0 ? hoursOf(minutes) : undefined;
+  };
   const timelineRows: TimelineRow[] = vehicles
     .filter((v) => v.active || busy.has(v.id))
     .map((v) => {
@@ -194,10 +226,16 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
         ...named(own.map(driverOf)),
         ...named(mains.filter((m) => m.main_vehicle_id === v.id).map((m) => people.get(m.user_id))),
       ]);
-      return { id: v.id, name: v.name, drivers: [...drivers], jobs: own.map(toTimeline) };
+      return { id: v.id, name: v.name, drivers: [...drivers], jobs: own.map(toTimeline), hours: rowHours(own) };
     });
   if (unassigned.length > 0) {
-    timelineRows.push({ id: "", name: tJobs("noVehicle"), drivers: [], jobs: unassigned.map(toTimeline) });
+    timelineRows.push({
+      id: "",
+      name: tJobs("noVehicle"),
+      drivers: [],
+      jobs: unassigned.map(toTimeline),
+      hours: rowHours(unassigned),
+    });
   }
   const hours = visibleHours(dayJobs.map((job) => minutesOnDay(job, date, timeZone)));
 
@@ -282,18 +320,27 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
               const own = jobsOn(jobs, day);
               const inMonth = day.slice(0, 7) === date.slice(0, 7);
               const waiting = own.some((job) => !job.vehicle_id || !job.driver_id);
+              const load = loadOf([day]);
               return (
                 <li key={day} className="min-w-0 border-r border-b border-border/70 nth-[7n]:border-r-0">
                   <Link
                     href={here({ date: day, view: "day" })}
-                    aria-label={t("dayJobs", { day: dayName(day), count: own.length })}
+                    aria-label={t("dayJobs", { day: dayName(day), count: own.length, hours: hoursNumber(format, load.minutes) })}
                     aria-current={day === today ? "date" : undefined}
                     className={`flex h-full min-h-16 flex-col gap-1 p-1 hover:bg-accent-soft/50 md:min-h-28 md:p-1.5 ${inMonth ? "" : "bg-background/60 text-muted"} ${focusRing}`}
                   >
-                    <span
-                      className={`flex size-7 items-center justify-center self-center rounded-full text-sm tabular-nums md:self-start ${day === today ? "bg-accent font-semibold text-on-accent" : "font-medium"}`}
-                    >
-                      {Number(day.slice(8))}
+                    <span className="flex items-center justify-center md:justify-between md:gap-1">
+                      <span
+                        className={`flex size-7 shrink-0 items-center justify-center rounded-full text-sm tabular-nums ${day === today ? "bg-accent font-semibold text-on-accent" : "font-medium"}`}
+                      >
+                        {Number(day.slice(8))}
+                      </span>
+                      {/* Computers: the day's hours beside the date. */}
+                      {load.minutes > 0 && (
+                        <span className="hidden truncate text-xs font-medium text-muted tabular-nums md:inline">
+                          {hoursOf(load.minutes)}
+                        </span>
+                      )}
                     </span>
                     {own.length > 0 && (
                       <>
@@ -356,6 +403,7 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
                   </span>
                   {day === today && <span className="text-sm font-medium text-link">{t("today")}</span>}
                 </Link>
+                {own.length > 0 && weekDayLoad(loadOf([day]))}
                 {own.length === 0 ? (
                   <p className="text-sm text-muted">{t("noJobsDay")}</p>
                 ) : (
@@ -374,6 +422,9 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
         </ol>
       ) : (
         <>
+          <div className="rounded-xl border border-border bg-surface px-4 py-3">
+            <WorkloadFacts load={loadOf([date])} label={tLoad("dayLabel")} />
+          </div>
           {unassigned.length > 0 && (
             <section
               aria-labelledby="unassigned-title"
@@ -401,7 +452,10 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
                       <li key={row.id} className="grid gap-2 rounded-xl border border-border bg-surface p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div className="grid min-w-0">
-                            <h3 className="font-semibold [overflow-wrap:anywhere]">{row.name}</h3>
+                            <h3 className="font-semibold [overflow-wrap:anywhere]">
+                              {row.name}{" "}
+                              {row.hours && <span className="ml-1 text-sm font-medium text-muted tabular-nums">{row.hours}</span>}
+                            </h3>
                             {row.drivers.length > 0 && (
                               <p className="text-sm text-muted [overflow-wrap:anywhere]">{row.drivers.join(", ")}</p>
                             )}

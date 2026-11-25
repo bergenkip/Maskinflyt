@@ -19,7 +19,8 @@ export type TimelineJob = {
   customer: string;
   driver: string | null;
 };
-export type TimelineRow = { id: string; name: string; drivers: string[]; jobs: TimelineJob[] };
+// hours: the row's work that day, already in words ("7 t"); missing when the machine is free.
+export type TimelineRow = { id: string; name: string; drivers: string[]; jobs: TimelineJob[]; hours?: string };
 type Span = { starts_at: string; ends_at: string };
 type Drag = { id: string; mode: "move" | "resize"; x: number; width: number; minutes: number; moved: boolean };
 type Change = { job: TimelineJob; from: Span; to: Span };
@@ -212,7 +213,10 @@ export function DayTimeline({
               >
                 <div className="flex items-center justify-between gap-2 px-3 py-1.5">
                   <span className="grid min-w-0">
-                    <span className="text-sm font-medium [overflow-wrap:anywhere]">{row.name}</span>
+                    <span className="text-sm font-medium [overflow-wrap:anywhere]">
+                      {row.name}{" "}
+                      {row.hours && <span className="ml-1 text-xs text-muted tabular-nums">{row.hours}</span>}
+                    </span>
                     {row.drivers.length > 0 && (
                       <span className="text-xs text-muted [overflow-wrap:anywhere]">{row.drivers.join(", ")}</span>
                     )}

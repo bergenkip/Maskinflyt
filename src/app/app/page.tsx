@@ -23,6 +23,7 @@ import { getCurrentMembership } from "@/lib/membership";
 import { formatOrgNumber } from "@/lib/org-number";
 import { canSeeCustomers, canSeeJobs, canSeeVehicles } from "@/lib/roles";
 import { createClient, getUserId } from "@/lib/supabase/server";
+import { WorkloadOverview } from "./workload-overview";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Dashboard");
@@ -152,6 +153,16 @@ export default async function DashboardPage() {
           )}
         </p>
       </div>
+
+      {isAdmin && showJobs && (
+        <WorkloadOverview
+          organizationId={organization.id}
+          timeZone={organization.timeZone}
+          currency={organization.currency}
+          today={today}
+          activeMachines={activeVehicles && !activeVehicles.error ? (activeVehicles.count ?? 0) : 0}
+        />
+      )}
 
       <section aria-labelledby="numbers-title" className="grid gap-3">
         <h2 id="numbers-title" className="sr-only">
