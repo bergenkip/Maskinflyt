@@ -18,9 +18,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const sectionClass = "grid gap-4 rounded-xl border border-border bg-surface p-4 sm:p-6";
 const primary =
-  "flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit";
+  "flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit";
 const secondary =
-  "flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 // The customer's own page (stage 16a): their requests and what the companies
 // answered, the companies they use most (to order again in one tap), and the

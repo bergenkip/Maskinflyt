@@ -8,9 +8,9 @@ import { decide, loadRequest, type Request } from "./actions";
 type View = { status: "loading" } | Request | { status: "declined" | "error" };
 
 const primaryClass =
-  "flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70";
+  "flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70";
 const secondaryClass =
-  "flex min-h-11 items-center justify-center rounded-lg border border-border px-5 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-60";
+  "flex min-h-11 items-center justify-center rounded-full border border-border px-5 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-60";
 
 export function ApprovePanel({ requestId }: { requestId: string }) {
   const t = useTranslations("Approve");

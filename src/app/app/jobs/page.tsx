@@ -98,7 +98,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
         </div>
         <Link
           href="/app/jobs/new"
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-auto"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-auto"
         >
           <PlusIcon className="size-5" />
           {t("addTitle")}
@@ -115,7 +115,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
         {requestCount > 0 && (
           <span className="shrink-0 text-sm font-semibold text-warning">{t("requestsNew", { count: requestCount })}</span>
         )}
-        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
       </Link>
 
       <section aria-labelledby="list-title" className="grid gap-4">
@@ -211,7 +211,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/app/jobs">)
                               </span>
                             ))}
                         </span>
-                        <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                        <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
                       </Link>
                     </li>
                   ))}

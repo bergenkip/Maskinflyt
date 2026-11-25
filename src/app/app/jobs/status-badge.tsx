@@ -3,7 +3,7 @@ import type { JobStatus } from "@/lib/jobs";
 
 const looks: Record<JobStatus, { icon: typeof CircleIcon; tone: string }> = {
   new: { icon: CircleIcon, tone: "text-warning" },
-  planned: { icon: ClockIcon, tone: "text-accent" },
+  planned: { icon: ClockIcon, tone: "text-link" },
   done: { icon: CheckCircleIcon, tone: "text-success" },
   cancelled: { icon: XCircleIcon, tone: "text-muted" },
 };

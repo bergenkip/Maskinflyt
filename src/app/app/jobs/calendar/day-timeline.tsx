@@ -147,14 +147,14 @@ export function DayTimeline({
             <button
               type="button"
               onClick={() => save(asked, true)}
-              className={`min-h-11 rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 ${focusRing}`}
+              className={`min-h-11 rounded-full bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 ${focusRing}`}
             >
               {tJobs("saveAnyway")}
             </button>
             <button
               type="button"
               onClick={() => setAsked(null)}
-              className={`min-h-11 rounded-lg border border-border bg-surface px-4 font-medium hover:bg-accent-soft ${focusRing}`}
+              className={`min-h-11 rounded-full border border-border bg-surface px-4 font-medium hover:bg-accent-soft ${focusRing}`}
             >
               {t("keepTime")}
             </button>
@@ -173,7 +173,7 @@ export function DayTimeline({
                 setDone(null);
                 save({ job: { ...done.job, ...done.to }, from: done.to, to: done.from }, true);
               }}
-              className={`min-h-11 rounded-lg px-2 font-semibold text-accent underline underline-offset-4 disabled:opacity-60 ${focusRing}`}
+              className={`min-h-11 rounded-lg px-2 font-semibold text-link underline underline-offset-4 disabled:opacity-60 ${focusRing}`}
             >
               {t("undo")}
             </button>
@@ -220,7 +220,7 @@ export function DayTimeline({
                   <Link
                     href={newJob(7)}
                     aria-label={t("newJobFor", { name: row.name })}
-                    className={`flex size-11 shrink-0 items-center justify-center rounded-lg text-muted hover:bg-accent-soft hover:text-accent ${focusRing}`}
+                    className={`flex size-11 shrink-0 items-center justify-center rounded-lg text-muted hover:bg-accent-soft hover:text-link ${focusRing}`}
                   >
                     <PlusIcon className="size-5" />
                   </Link>
@@ -275,7 +275,7 @@ export function DayTimeline({
                           href={`/app/jobs/${job.id}`}
                           aria-label={t("editJob", { number: job.number, customer: job.customer, time: span(now), status })}
                           onPointerDown={(event) => event.stopPropagation()}
-                          className={`flex size-11 shrink-0 items-center justify-center rounded-lg text-muted hover:bg-surface/70 hover:text-accent ${focusRing}`}
+                          className={`flex size-11 shrink-0 items-center justify-center rounded-lg text-muted hover:bg-surface/70 hover:text-link ${focusRing}`}
                         >
                           <PencilIcon className="size-4" />
                         </Link>

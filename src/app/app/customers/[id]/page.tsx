@@ -68,7 +68,7 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
     <div className="grid max-w-3xl gap-8">
       <div className="grid gap-2">
         <BackLink label={t("back")} />
-        <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t(`kinds.${customer.kind}`)}</p>
+        <p className="text-sm font-semibold tracking-wide text-link uppercase">{t(`kinds.${customer.kind}`)}</p>
         {/* Customer names are data and are shown exactly as entered. */}
         <h1 className="text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">{customer.name}</h1>
         {/* Person names are data and are shown exactly as entered. */}
@@ -76,7 +76,7 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
         {customer.active && (
           <Link
             href={`/app/jobs/new?customer=${customer.id}`}
-            className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border px-4 font-medium hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+            className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border px-4 font-medium hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
           >
             <PlusIcon className="size-5" />
             {tJobs("addTitle")}

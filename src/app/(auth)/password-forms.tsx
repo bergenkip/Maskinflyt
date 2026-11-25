@@ -14,7 +14,7 @@ import {
 import { MIN_PASSWORD_LENGTH } from "./validation";
 
 const linkClass =
-  "inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "inline-flex min-h-11 items-center font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 export function ForgotPasswordForm() {
   const t = useTranslations("Auth");

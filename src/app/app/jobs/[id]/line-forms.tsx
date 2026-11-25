@@ -113,7 +113,7 @@ export function RemoveLineForm({ job, line }: { job: string; line: string }) {
       <button
         type="submit"
         disabled={pending}
-        className={`flex min-h-11 items-center justify-center rounded-lg border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
+        className={`flex min-h-11 items-center justify-center rounded-full border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
       >
         {pending ? t("removing") : t("remove")}
       </button>

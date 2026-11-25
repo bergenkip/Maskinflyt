@@ -8,7 +8,7 @@ import { progressIcon } from "../jobs/progress-badge";
 import { addNote, recordStep, type NoteState, type StepState } from "./actions";
 
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-const big = `flex min-h-14 w-full items-center justify-center gap-2 rounded-xl px-4 text-lg font-semibold disabled:opacity-70 ${focusRing}`;
+const big = `flex min-h-14 w-full items-center justify-center gap-2 rounded-full px-4 text-lg font-semibold disabled:opacity-70 ${focusRing}`;
 
 // The big buttons on a job: the next step first, a break beside it. Finishing
 // asks once more, since it closes the job for the office.
@@ -100,7 +100,7 @@ export function NoteForm({ job }: { job: string }) {
       <button
         type="submit"
         disabled={pending}
-        className={`min-h-11 rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-accent-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
+        className={`min-h-11 rounded-full border border-border bg-surface px-4 font-semibold hover:bg-accent-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
       >
         {t("saveNote")}
       </button>

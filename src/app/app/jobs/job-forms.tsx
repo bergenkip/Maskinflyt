@@ -18,7 +18,7 @@ import type { Suggestion } from "./options";
 const selectClass =
   "min-h-11 w-full min-w-0 rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent aria-invalid:border-danger";
 const secondaryButtonClass =
-  "min-h-11 w-full rounded-lg border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto";
+  "min-h-11 w-full rounded-full border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto";
 
 export type Option = { id: string; name: string; active?: boolean };
 
@@ -496,7 +496,7 @@ export function JobStatusForm({ id, status }: { id: string; status: JobStatus })
             disabled={pending}
             className={
               move.primary
-                ? "min-h-11 w-full rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto"
+                ? "min-h-11 w-full rounded-full bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto"
                 : secondaryButtonClass
             }
           >

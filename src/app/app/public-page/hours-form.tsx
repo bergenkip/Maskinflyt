@@ -238,7 +238,7 @@ export function DaysOffForm({ days, minDate }: { days: { day: string; note: stri
         <button
           type="submit"
           disabled={pending}
-          className={`flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft disabled:opacity-70 ${focusRing}`}
+          className={`flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft disabled:opacity-70 ${focusRing}`}
         >
           {pending ? t("adding") : t("addDay")}
         </button>

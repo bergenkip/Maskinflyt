@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
       {/* The native select lies invisibly over a compact button face: phones show
           the language code (NB / EN / LT), wider screens the full name. Tapping
           still opens the system picker with the full names. */}
-      <div className="relative flex min-h-11 items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 text-base sm:px-3 text-foreground focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent has-disabled:opacity-60">
+      <div className="relative flex min-h-11 items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 text-base sm:px-3 text-foreground focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent has-disabled:opacity-60">
         <GlobeIcon className="size-4 text-muted max-[399px]:hidden sm:hidden" />
         <span aria-hidden="true" className="font-medium sm:hidden">
           {current.toUpperCase()}
@@ -40,7 +40,7 @@ export function LanguageSwitcher() {
             startTransition(() => setLocale(formData));
           }}
           // 16px text stops iPhone Safari from zooming in; it covers the whole face, border included, so the tap area is 44px.
-          className="absolute -top-px -left-px h-11 w-[calc(100%+2px)] cursor-pointer appearance-none rounded-lg text-base opacity-0"
+          className="absolute -top-px -left-px h-11 w-[calc(100%+2px)] cursor-pointer appearance-none rounded-full text-base opacity-0"
         >
           {visibleLocales(current).map((value) => (
             <option key={value} value={value} lang={value}>
@@ -53,7 +53,7 @@ export function LanguageSwitcher() {
       <noscript>
         <button
           type="submit"
-          className="min-h-11 rounded-lg bg-accent px-3 text-base text-surface"
+          className="min-h-11 rounded-full bg-accent px-3 text-base text-surface"
         >
           {t("submit")}
         </button>

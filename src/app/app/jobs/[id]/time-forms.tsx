@@ -35,7 +35,7 @@ export function ApproveTimeForm({ job, values }: { job: string; values: TimeForm
       <button
         type="submit"
         disabled={pending}
-        className={`flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-70 sm:w-auto sm:justify-self-start ${focusRing}`}
+        className={`flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-70 sm:w-auto sm:justify-self-start ${focusRing}`}
       >
         <CheckIcon className="size-5" />
         {t("approve")}

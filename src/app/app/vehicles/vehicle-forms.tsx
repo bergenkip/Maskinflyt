@@ -235,7 +235,7 @@ export function VehicleStatusForm({ id, active }: { id: string; active: boolean 
         <button
           type="submit"
           disabled={pending}
-          className="min-h-11 w-full rounded-lg border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto"
+          className="min-h-11 w-full rounded-full border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto"
         >
           {pending ? tAuth("pending") : active ? t("deactivate") : t("activate")}
         </button>

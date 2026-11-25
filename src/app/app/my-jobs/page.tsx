@@ -36,7 +36,7 @@ type MyJob = {
 type EventRow = { job_id: string; kind: JobEventKind; note: string | null; created_at: string };
 
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-const linkButton = `flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft ${focusRing}`;
+const linkButton = `flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft ${focusRing}`;
 
 // The driver's phone view: today's and tomorrow's jobs (and any started and not
 // finished), with the address, whom to call and big buttons for each step.

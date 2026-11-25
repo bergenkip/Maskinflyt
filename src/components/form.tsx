@@ -73,7 +73,7 @@ export function SubmitButton({ children, pendingLabel }: { children: ReactNode; 
       type="submit"
       disabled={pending}
       aria-disabled={pending}
-      className="min-h-11 w-full rounded-lg bg-accent px-4 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto"
+      className="min-h-11 w-full rounded-full bg-accent px-4 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 sm:w-auto"
     >
       {pending ? pendingLabel : children}
     </button>

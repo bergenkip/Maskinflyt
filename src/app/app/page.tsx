@@ -138,7 +138,7 @@ export default async function DashboardPage() {
   return (
     <div className="grid gap-5 sm:gap-6">
       <div className="grid gap-1">
-        <p className="text-sm font-semibold tracking-wide text-accent uppercase">
+        <p className="text-sm font-semibold tracking-wide text-link uppercase">
           {firstName ? t("greeting", { name: firstName }) : t("title")}
         </p>
         {/* Company names are data and are shown exactly as entered. */}
@@ -186,7 +186,7 @@ export default async function DashboardPage() {
             <li>
               <StatCard
                 href="/app/vehicles"
-                tone="bg-accent-soft text-accent"
+                tone="bg-accent-soft text-link"
                 icon={<TruckIcon className="size-6" />}
                 value={vehicles.error ? null : (vehicles.count ?? 0)}
                 format={number}
@@ -203,7 +203,7 @@ export default async function DashboardPage() {
             <li>
               <StatCard
                 href="/app/customers"
-                tone="bg-accent-soft text-accent"
+                tone="bg-accent-soft text-link"
                 icon={<ContactsIcon className="size-6" />}
                 value={customers.error ? null : (customers.count ?? 0)}
                 format={number}
@@ -314,7 +314,7 @@ function Tip(props: {
   return (
     <li className="flex flex-col gap-3 rounded-xl border border-border bg-background p-4">
       <div className="flex items-start gap-3">
-        <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">{props.icon}</span>
+        <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-link">{props.icon}</span>
         <div className="grid min-w-0 gap-1">
           <h3 className="font-semibold">{props.title}</h3>
           <p className="text-sm text-muted">{props.text}</p>
@@ -328,7 +328,7 @@ function Tip(props: {
       </div>
       <Link
         href={props.href}
-        className="mt-auto flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
+        className="mt-auto flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
       >
         {props.action}
         <ArrowRightIcon className="size-5" />
@@ -357,7 +357,7 @@ function StatCard(props: {
         <span className="font-medium">{props.label}</span>
         {props.detail && <span className="text-sm text-muted">{props.detail}</span>}
       </span>
-      <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+      <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
     </Link>
   );
 }
@@ -378,7 +378,7 @@ function Step(props: {
   ) : props.later ? (
     <ClockIcon className="size-6 text-muted" />
   ) : (
-    <CircleIcon className="size-6 text-accent" />
+    <CircleIcon className="size-6 text-link" />
   );
   const body = (
     <>
@@ -398,7 +398,7 @@ function Step(props: {
           className="flex min-h-12 items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           {body}
-          <ArrowRightIcon className="size-5 text-accent" />
+          <ArrowRightIcon className="size-5 text-link" />
         </Link>
       ) : (
         <div className="flex min-h-12 items-center gap-3 px-2 py-1.5">{body}</div>

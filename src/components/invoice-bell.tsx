@@ -14,7 +14,7 @@ export function InvoiceBell({ count, label, countLabel }: { count: number; label
       aria-label={count > 0 ? `${label}: ${countLabel}` : label}
       title={count > 0 ? `${label}: ${countLabel}` : label}
       aria-current={pathname.startsWith("/app/invoices") ? "page" : undefined}
-      className="relative flex size-11 items-center justify-center rounded-lg text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent"
+      className="relative flex size-11 items-center justify-center rounded-full text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-link"
     >
       <BellIcon />
       {count > 0 && (

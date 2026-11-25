@@ -41,12 +41,12 @@ export default async function VehiclePage({ params }: PageProps<"/app/vehicles/[
       <div className="grid gap-2">
         <Link
           href="/app/vehicles"
-          className="-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-lg px-2 font-medium text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-full px-2 font-medium text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           <ArrowRightIcon className="size-5 rotate-180" />
           {t("back")}
         </Link>
-        <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t("editTitle")}</p>
+        <p className="text-sm font-semibold tracking-wide text-link uppercase">{t("editTitle")}</p>
         {/* Vehicle names are data and are shown exactly as entered. */}
         <h1 className="text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">{vehicle.name}</h1>
         {/* Person names are data and are shown exactly as entered. */}

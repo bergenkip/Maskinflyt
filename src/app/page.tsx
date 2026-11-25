@@ -40,9 +40,9 @@ const featureIcons: Record<(typeof features)[number], ReactNode> = {
 // The company's own inbox (Resend → Inboxes, see docs/HANDOFF.md).
 
 const primaryButton =
-  "flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 const secondaryButton =
-  "flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-5 text-base font-semibold text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-5 text-base font-semibold text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 function Icon({ children, className }: { children: ReactNode; className: string }) {
   return (
@@ -113,7 +113,7 @@ export default function Home() {
       {/* The header reaches the screen edges; the content keeps clear of the notch in landscape. */}
       <div className="flex flex-1 flex-col pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-10 sm:px-6 sm:pt-6 sm:pb-16">
-          <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+          <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-link">
             <Icon className="size-4 shrink-0">
               <path d="M3 17h2l2-6h6l2 6h2M7 17a2 2 0 1 0 4 0M13 17a2 2 0 1 0 4 0M14 11l4-7 2 1" />
             </Icon>
@@ -145,7 +145,7 @@ export default function Home() {
               {steps.map((step, index) => (
                 <li key={step} className="rounded-xl border border-border bg-surface p-5">
                   <div className="flex items-center gap-3">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-link">
                       <Icon className="size-5">{stepIcons[step]}</Icon>
                     </span>
                     <h3 className="font-semibold [overflow-wrap:anywhere] hyphens-auto">
@@ -166,7 +166,7 @@ export default function Home() {
             <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((feature) => (
                 <li key={feature} className="flex gap-4 rounded-xl border border-border bg-surface p-5">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-link">
                     <Icon className="size-5">{featureIcons[feature]}</Icon>
                   </span>
                   <div className="min-w-0">

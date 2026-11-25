@@ -64,7 +64,7 @@ export function AppNav({ labels, showJobs, showMyJobs, showInvoices, showCustome
             <Link
               href={href}
               aria-current={active ? "page" : undefined}
-              className="group flex min-h-14 flex-col items-center justify-center gap-0.5 px-0.5 text-xs max-[400px]:text-[11px] font-medium text-muted hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent aria-[current=page]:text-accent sm:text-sm xl:min-h-11 xl:flex-row xl:gap-1.5 xl:rounded-lg xl:px-2 xl:hover:bg-accent-soft xl:focus-visible:outline-offset-2 xl:aria-[current=page]:bg-accent-soft"
+              className="group flex min-h-14 flex-col items-center justify-center gap-0.5 px-0.5 text-xs max-[400px]:text-[11px] font-medium text-muted hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent aria-[current=page]:text-link sm:text-sm xl:min-h-11 xl:flex-row xl:gap-1.5 xl:rounded-full xl:px-2 xl:hover:bg-accent-soft xl:focus-visible:outline-offset-2 xl:aria-[current=page]:bg-accent-soft"
             >
               <span className="flex h-7 w-12 items-center justify-center rounded-full transition-colors group-aria-[current=page]:bg-accent-soft xl:h-auto xl:w-auto xl:bg-transparent xl:group-aria-[current=page]:bg-transparent">
                 <Icon className="size-5" />
@@ -86,7 +86,7 @@ export function SettingsLink({ label }: { label: string }) {
       href="/app/settings"
       aria-label={label}
       aria-current={pathname.startsWith("/app/settings") ? "page" : undefined}
-      className="flex size-11 items-center justify-center rounded-lg text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent xl:hidden"
+      className="flex size-11 items-center justify-center rounded-lg text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-link xl:hidden"
     >
       <SettingsIcon className="size-5" />
     </Link>

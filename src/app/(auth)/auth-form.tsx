@@ -26,7 +26,7 @@ type Props = {
 
 // Opens in a new tab, so a half-filled sign-up form is not lost.
 const legalLink =
-  "font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 export function AuthForm({ mode, action, initialError, notice, invite, next, intro, switchHref, customer }: Props) {
   const t = useTranslations("Auth");
@@ -112,7 +112,7 @@ export function AuthForm({ mode, action, initialError, notice, invite, next, int
         {!isSignUp && (
           <Link
             href="/forgot-password"
-            className="-my-2 inline-flex min-h-11 w-fit items-center text-sm font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="-my-2 inline-flex min-h-11 w-fit items-center text-sm font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {t("forgotLink")}
           </Link>
@@ -140,7 +140,7 @@ export function AuthForm({ mode, action, initialError, notice, invite, next, int
         {isSignUp ? t("haveAccount") : t("noAccount")}{" "}
         <Link
           href={switchHref ?? (isSignUp ? "/login" : "/signup")}
-          className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="inline-flex min-h-11 items-center font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           {isSignUp ? tNav("login") : tNav("signup")}
         </Link>

@@ -2,15 +2,17 @@
 
 :root {
   color-scheme: light;
-  /* White, with the logo's blues: navy text, blue details. The logo blue
-     (#0177fc) is slightly darkened for text and buttons to pass WCAG AA. */
-  --background: #ffffff;
+  /* Deep blue (owner's choice "B", 2026-11-25): a light blue-grey page with
+     white cards, navy text, deep blue buttons and a brighter blue for links.
+     All text colours pass WCAG AA on both the page and the cards. */
+  --background: #f3f6fb;
   --surface: #ffffff;
-  --foreground: #012042;
-  --muted: #536173;
-  --border: #dfe4ea;
-  --accent: #0068d9;
-  --accent-soft: #eaf3ff;
+  --foreground: #0d2240;
+  --muted: #566476;
+  --border: #dde4ee;
+  --accent: #1a3d7c;
+  --accent-soft: #e6edf8;
+  --link: #1a56c4;
   --warning: #7a4b00;
   --warning-soft: #fbf0d9;
   --danger: #a3261b;
@@ -21,23 +23,24 @@
 }
 
 /* Dark mode is chosen with the sun/moon button (ThemeToggle), not by the phone:
-   neutral graphite, with the logo's blue made lighter for contrast. */
+   deep navy, with the blues made lighter for contrast. */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #111214;
-  --surface: #1b1c1f;
-  --foreground: #f1f2f4;
-  --muted: #a3a7ae;
-  --border: #2e3036;
-  --accent: #5aaaff;
-  --accent-soft: #1c2a3b;
+  --background: #0c1422;
+  --surface: #142033;
+  --foreground: #eef2f8;
+  --muted: #a0abbd;
+  --border: #26344c;
+  --accent: #9dbcff;
+  --accent-soft: #1d2c48;
+  --link: #9dbcff;
   --warning: #f2c46d;
   --warning-soft: #3a2c10;
   --danger: #ff9b8f;
   --danger-soft: #3b1714;
   --success: #7fd19b;
   --success-soft: #12301d;
-  --on-accent: #0b0c0e;
+  --on-accent: #0c1422;
 }
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
@@ -50,6 +53,7 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-link: var(--link);
   --color-warning: var(--warning);
   --color-warning-soft: var(--warning-soft);
   --color-danger: var(--danger);
@@ -57,7 +61,7 @@
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-on-accent: var(--on-accent);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-jakarta);
   --font-mono: var(--font-geist-mono);
   --animate-enter: enter 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }

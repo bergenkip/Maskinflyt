@@ -34,9 +34,9 @@ export async function industryMetadata(
 }
 
 const primaryButton =
-  "flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 const secondaryButton =
-  "flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-5 text-base font-semibold text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-5 text-base font-semibold text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 function Icon({
   children,
@@ -135,7 +135,7 @@ export function IndustryPage({ industry }: { industry: LandingPage }) {
         }}
       />
 
-      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-link">
         <Icon className="size-4 shrink-0">
           <path d="M3 17h2l2-6h6l2 6h2M7 17a2 2 0 1 0 4 0M13 17a2 2 0 1 0 4 0M14 11l4-7 2 1" />
         </Icon>
@@ -204,7 +204,7 @@ export function IndustryPage({ industry }: { industry: LandingPage }) {
               key={point.title}
               className="flex gap-4 rounded-xl border border-border bg-surface p-5"
             >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-link">
                 <Icon className="size-5">
                   {icons[pointIcons[industry][index] ?? "calendar"]}
                 </Icon>

@@ -89,7 +89,7 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
       <div className="grid gap-2">
         {accountant ? <BackLink label={tInvoices("back")} href="/app/invoices" /> : <BackLink label={t("back")} />}
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-          <p className="text-sm font-semibold tracking-wide text-accent uppercase">{t("jobTitle", { number: job.number })}</p>
+          <p className="text-sm font-semibold tracking-wide text-link uppercase">{t("jobTitle", { number: job.number })}</p>
           <StatusBadge status={job.status} label={t(`statuses.${job.status}`)} size="md" />
         </div>
         {/* Customer names are data and are shown exactly as entered. */}

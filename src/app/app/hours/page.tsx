@@ -56,12 +56,12 @@ export default async function HoursPage() {
           href="/app/hours/all"
           className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-4 hover:border-accent/60 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
-          <UsersIcon className="size-6 shrink-0 text-accent" />
+          <UsersIcon className="size-6 shrink-0 text-link" />
           <span className="grid min-w-0 flex-1 gap-0.5">
             <span className="font-semibold">{t("allLink")}</span>
             <span className="text-sm text-muted">{t("allLinkHint")}</span>
           </span>
-          <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+          <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
         </Link>
       )}
 
@@ -73,7 +73,7 @@ export default async function HoursPage() {
         {canEditInvoiceSettings(membership.role) && (
           <Link
             href="/app/hours/settings"
-            className={`-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-lg px-2 font-medium text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+            className={`-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-full px-2 font-medium text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
           >
             <SettingsIcon className="size-5" />
             {tSettings("title")}
@@ -117,7 +117,7 @@ export default async function HoursPage() {
                         )}
                       </span>
                     </span>
-                    <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                    <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
                   </Link>
                 </li>
               );

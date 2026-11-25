@@ -7,7 +7,7 @@ import { MAX_SIGNER_LENGTH, PHOTO_MAX_SIDE } from "@/lib/job-files";
 import { addJobFile, type FileState } from "./actions";
 
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-const secondary = `flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft disabled:opacity-70 ${focusRing}`;
+const secondary = `flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft disabled:opacity-70 ${focusRing}`;
 
 // A phone photo is several megabytes: it is made smaller (and turned upright)
 // here before it is sent, as a JPEG with the longest side at most PHOTO_MAX_SIDE.
@@ -184,7 +184,7 @@ export function SignaturePad({ job }: { job: string }) {
           type="button"
           onClick={save}
           disabled={!signed || name.trim() === "" || pending}
-          className={`flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-60 ${focusRing}`}
+          className={`flex min-h-11 items-center justify-center rounded-full bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-60 ${focusRing}`}
         >
           {pending ? t("sending") : t("saveSignature")}
         </button>

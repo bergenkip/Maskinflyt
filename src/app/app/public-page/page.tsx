@@ -89,7 +89,7 @@ export default async function CompanyPageSettings() {
       <div className="grid gap-2">
         <Link
           href="/app/settings"
-          className="-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-lg px-2 font-medium text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-full px-2 font-medium text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           <ArrowRightIcon className="size-5 rotate-180" />
           {t("back")}
@@ -118,7 +118,7 @@ export default async function CompanyPageSettings() {
               <span className="font-medium">{t("inCatalog")}</span>
               <Link
                 href={directoryPath(page.services.find(isService) ?? null, page.city ?? "")}
-                className="flex min-h-11 items-center font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="flex min-h-11 items-center font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 {t("seeInCatalog")}
               </Link>
@@ -126,7 +126,7 @@ export default async function CompanyPageSettings() {
           )}
           <Link
             href={pagePath(page.slug)}
-            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
           >
             {page.published ? t("open") : t("preview")}
             <ArrowRightIcon className="size-5" />

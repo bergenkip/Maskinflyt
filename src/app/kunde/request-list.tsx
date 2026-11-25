@@ -6,14 +6,14 @@ import { repeatPath } from "@/lib/customer-account";
 import type { MyRequest } from "@/lib/customer-account-server";
 
 const secondary =
-  "flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 // The request's state, or, once the company has planned a job from it, the job's.
 const looks = {
   new: { icon: CircleIcon, tone: "text-warning" },
   accepted: { icon: CheckCircleIcon, tone: "text-success" },
   declined: { icon: XCircleIcon, tone: "text-muted" },
-  planned: { icon: CalendarIcon, tone: "text-accent" },
+  planned: { icon: CalendarIcon, tone: "text-link" },
   done: { icon: CheckCircleIcon, tone: "text-success" },
   cancelled: { icon: XCircleIcon, tone: "text-danger" },
 } as const;

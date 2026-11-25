@@ -28,14 +28,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const primaryButton =
-  "flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 function Check() {
   return (
     <svg
       aria-hidden="true"
       viewBox="0 0 24 24"
-      className="mt-0.5 size-5 shrink-0 text-accent"
+      className="mt-0.5 size-5 shrink-0 text-link"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -112,7 +112,7 @@ export default function Page() {
         }}
       />
 
-      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-link">
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
@@ -195,7 +195,7 @@ export default function Page() {
           </div>
           <Link
             href="/signup"
-            className="flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-5 py-2.5 text-center leading-snug font-semibold text-foreground hyphens-none hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-5 py-2.5 text-center leading-snug font-semibold text-foreground hyphens-none hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {t("free.cta")}
           </Link>

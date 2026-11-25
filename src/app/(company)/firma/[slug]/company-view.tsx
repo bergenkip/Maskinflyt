@@ -39,7 +39,7 @@ export type PublicCompany = {
 };
 
 const actionClass =
-  "flex min-h-11 w-full min-w-0 items-center gap-3 rounded-lg border border-border bg-surface px-4 py-2 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 w-full min-w-0 items-center gap-3 rounded-full border border-border bg-surface px-4 py-2 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 // Rows without a lonely photo where possible: 1 wide, 2 and 4 in pairs, others in threes.
 const columns = (count: number) =>
@@ -156,7 +156,7 @@ export async function CompanyView({
       {company.published && takesRequests && (
         <a
           href="#request"
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
         >
           <SendIcon className="size-5" />
           {tRequest("open")}
@@ -209,7 +209,7 @@ export async function CompanyView({
                 key={service}
                 className="flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 font-medium"
               >
-                <CheckIcon className="size-4 text-accent" />
+                <CheckIcon className="size-4 text-link" />
                 {tServices(service)}
               </li>
             ))}

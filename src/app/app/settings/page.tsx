@@ -58,7 +58,7 @@ export default async function SettingsPage() {
           </div>
           <Link
             href="/app/public-page"
-            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
           >
             {t("pageLink")}
             <ArrowRightIcon className="size-5" />
@@ -75,7 +75,7 @@ export default async function SettingsPage() {
           </div>
           <Link
             href="/app/billing"
-            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
           >
             {t("billingLink")}
             <ArrowRightIcon className="size-5" />
