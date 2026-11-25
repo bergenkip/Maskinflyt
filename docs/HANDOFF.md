@@ -568,6 +568,7 @@ Kai į `hei@maskingo.no` (Resend Receiving) ateina laiškas, Resend kviečia `PO
   laiško paėmimas `GET /emails/receiving/{id}`, persiuntimo laiškas `buildForward` (siuntėjas `MaskinGo <hei@maskingo.no>`,
   Reply-To = klientas, tema „Fwd: …“, tekstas ir pabėgęs HTML; priedai nepersiunčiami, tik nurodomas jų skaičius).
   Nepersiunčiama, jei siuntėjas `@maskingo.no` arba pats persiuntimo adresas (kad nebūtų ciklo). `Idempotency-Key` = `inbound-<id>`.
+- Gautam laiškui perskaityti reikia pilnos prieigos rakto `RESEND_RECEIVING_API_KEY` (siuntimo raktas gauna 401). Be jo persiunčiamas tik pranešimas (siuntėjas, tema), tekstas skaitomas Resend.
 - Vercel aplinkos kintamieji (Production, Sensitive): `RESEND_WEBHOOK_SECRET` (Resend webhook signing secret),
   `INBOUND_FORWARD_TO` (Li asmeninis paštas; kode jo nėra). Be jų: 503.
 - Testai: `src/lib/email/inbound.test.ts`.
