@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator } from "@playwright/test";
 import { createCompany, locales, newCompanyName, newEmail, newPage, resendStub, shootAllWidths, signUp } from "./helpers";
 
 // Stage 15c: the company opens its free times; a visitor picks one on the
@@ -31,7 +31,7 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   await expect(page.getByText("Saved. The page is public.")).toBeVisible();
   await page.reload();
 
-  // Showing times with no open day is explained; then every day 08–16, two-hour bookings.
+  // Showing times with no open day is explained; then every day 08–16, two-hour bookings starting every 15 minutes.
   await times.getByRole("radio", { name: "Show free times" }).check();
   await times.getByRole("button", { name: "Save" }).click();
   await expect(times.getByText("Open at least one day to show free times.")).toBeVisible();
@@ -41,6 +41,7 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
     await times.getByLabel(`To ${day}`).fill("16:00");
   }
   await times.getByLabel("Length of one booking").selectOption("120");
+  await times.getByLabel("How often a time starts").selectOption("15");
   await times.getByRole("button", { name: "Save" }).click();
   await expect(times.getByText("Saved. Customers see your free times.")).toBeVisible();
 
@@ -64,7 +65,7 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
     await visitor.context.addCookies([{ name: "NEXT_LOCALE", value: locale, url: baseURL! }]);
     await visitor.page.goto(`/firma/${slug}`);
     const region = visitor.page.locator("#request");
-    await region.locator("select").first().selectOption({ index: 1 });
+    await firstFreeDay(region).then((day) => day.click());
     await shootAllWidths(visitor.page, "job-request-times", locale);
   }
   await visitor.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
@@ -73,17 +74,25 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   const form = visitor.page.getByRole("region", { name: "Send a request" });
   await expect(form.getByText("Pick a time (optional)")).toBeVisible();
   await expect(form.locator('input[type="date"]')).toHaveCount(0);
-  const daySelect = form.getByRole("combobox", {
-    name: "Preferred date (optional)",
-  });
-  await expect(daySelect.locator(`option[value="${dayOff}"]`)).toHaveCount(0);
-  await daySelect.selectOption({ index: 1 });
-  const chosenDay = await daySelect.inputValue();
+  // The calendar: the day off is never offered; the first free day opens its times.
+  const days = form.getByRole("group", { name: "Preferred date (optional)" });
+  await expect(days.locator(`[data-day="${dayOff}"]:not([data-kind="closed"]):not([data-kind="outside"])`)).toHaveCount(0);
+  await expect(form.getByText("Free times", { exact: true })).toBeVisible();
+  await expect(form.getByText("Closed", { exact: true })).toBeVisible();
+  const day = await firstFreeDay(form);
+  const chosenDay = (await day.getAttribute("data-day"))!;
+  await day.click();
+  await expect(day).toHaveAttribute("aria-pressed", "true");
   const firstTime = form.getByRole("radio").first();
   await expect(firstTime).toBeChecked();
   const startsAt = await firstTime.getAttribute("value");
   const clock = (await firstTime.locator("..").innerText()).trim();
   expect(clock).toMatch(/^\d{2}:\d{2}$/);
+  // Times start every 15 minutes (Li, 2026-11-25), not one booking length apart.
+  if ((await form.getByRole("radio").count()) > 1) {
+    const second = await form.getByRole("radio").nth(1).getAttribute("value");
+    expect(new Date(second!).getTime() - new Date(startsAt!).getTime()).toBe(15 * 60 * 1000);
+  }
 
   await form.getByLabel("Name").fill("Kari Nordmann");
   await form.getByLabel("E-mail").fill("kari@nordmann.test");
@@ -94,13 +103,13 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
 
   // With one machine slot, the time is now taken for the next visitor.
   await visitor.page.goto(`/firma/${slug}`);
-  const daySelectAgain = form.getByRole("combobox", {
-    name: "Preferred date (optional)",
-  });
-  if ((await daySelectAgain.locator(`option[value="${chosenDay}"]`).count()) > 0) {
-    await daySelectAgain.selectOption(chosenDay);
-    await expect(form.locator(`input[value="${startsAt}"]`)).toHaveCount(0);
+  // The picked time now shows as taken on that day, and can no longer be chosen.
+  if ((await form.locator(`[data-day="${chosenDay}"]`).count()) === 0) {
+    await form.getByRole("button", { name: "Next month" }).click();
   }
+  await form.locator(`[data-day="${chosenDay}"]`).click();
+  await expect(form.locator(`input[value="${startsAt}"]`)).toHaveCount(0);
+  await expect(form.getByText("Taken").first()).toBeVisible();
 
   // The company e-mail names the time.
   const emails = (await (await page.request.get(`${resendStub}/emails`)).json()) as { subject: string; text: string }[];
@@ -133,3 +142,10 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   await expect(form.locator('input[type="date"]')).toBeVisible();
   await expect(form.getByText("Pick a time (optional)")).toHaveCount(0);
 });
+
+// The first day with free times in the calendar, turning to the next month when this one has none left.
+async function firstFreeDay(scope: Locator) {
+  const free = scope.locator('[data-kind="free"]');
+  if ((await free.count()) === 0) await scope.getByRole("button", { name: /^(Next month|Neste måned|Kitas mėnuo)$/ }).click();
+  return free.first();
+}

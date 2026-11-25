@@ -18,21 +18,21 @@ describe("weekFromRows", () => {
 describe("validateHours", () => {
   it("sends the open days only", () => {
     const { fields } = validateHours(
-      form({ freeTimes: "on", bookingMinutes: "240", "open-1": "on", "opens-1": "07:00", "closes-1": "15:00", "opens-2": "07:00", "closes-2": "15:00" }),
+      form({ freeTimes: "on", bookingMinutes: "240", stepMinutes: "15", "open-1": "on", "opens-1": "07:00", "closes-1": "15:00", "opens-2": "07:00", "closes-2": "15:00" }),
     );
-    expect(fields).toEqual({ show_free_times: true, booking_minutes: 240, week: [{ weekday: 1, opens: "07:00", closes: "15:00" }] });
+    expect(fields).toEqual({ show_free_times: true, booking_minutes: 240, step_minutes: 15, week: [{ weekday: 1, opens: "07:00", closes: "15:00" }] });
   });
 
   it("refuses closing before opening, odd lengths, and free times without an open day", () => {
-    const bad = validateHours(form({ bookingMinutes: "45", "open-3": "on", "opens-3": "15:00", "closes-3": "07:00" }));
+    const bad = validateHours(form({ bookingMinutes: "45", stepMinutes: "45", "open-3": "on", "opens-3": "15:00", "closes-3": "07:00" }));
     expect(bad.fields).toBeUndefined();
     expect(bad.dayErrors).toEqual({ 3: "timesInvalid" });
-    expect(bad.fieldErrors).toEqual({ bookingMinutes: "lengthInvalid" });
-    expect(validateHours(form({ freeTimes: "on", bookingMinutes: "120" })).fieldErrors).toEqual({ freeTimes: "noOpenDay" });
+    expect(bad.fieldErrors).toEqual({ bookingMinutes: "lengthInvalid", stepMinutes: "stepInvalid" });
+    expect(validateHours(form({ freeTimes: "on", bookingMinutes: "120", stepMinutes: "30" })).fieldErrors).toEqual({ freeTimes: "noOpenDay" });
   });
 
   it("allows requests only with no open days", () => {
-    expect(validateHours(form({ bookingMinutes: "120" })).fields).toEqual({ show_free_times: false, booking_minutes: 120, week: [] });
+    expect(validateHours(form({ bookingMinutes: "120", stepMinutes: "30" })).fields).toEqual({ show_free_times: false, booking_minutes: 120, step_minutes: 30, week: [] });
   });
 });
 

@@ -1,7 +1,7 @@
 -- Stage 15c: opening hours, days off and the free times a visitor may pick.
 -- Synthetic data (.test). "D" is the day after tomorrow in Oslo, always ahead.
 begin;
-select plan(22);
+select plan(24);
 
 insert into auth.users (id, email, email_confirmed_at) values
   ('00000000-0000-0000-0000-000000000001', 'eier@fjellkran.test', now()),
@@ -45,6 +45,8 @@ select throws_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aa
   '[{"weekday": 1, "opens": "15:00", "closes": "07:00"}]') $$, '22023', 'Invalid hours', 'closing before opening is refused');
 select throws_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', false, 45, '[]') $$,
   '22023', 'Invalid booking length', 'only the listed booking lengths');
+select throws_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', false, 240, '[]', 45) $$,
+  '22023', 'Invalid time step', 'only the listed start time steps');
 select lives_ok($$ select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', false, 240, pg_temp.week()) $$, 'the week is saved');
 select is((select count(*)::int from public.company_hours), 7, 'seven open days');
 
@@ -62,20 +64,32 @@ select pg_temp.as_user('00000000-0000-0000-0000-000000000001');
 select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true, 240, pg_temp.week());
 reset role;
 set local role anon;
-select is(pg_temp.slots_on_d(), array['07:00', '11:00'], 'two four-hour times a day within 07–15');
+select is(pg_temp.slots_on_d(), array['07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00'], 'four-hour times start every 30 minutes within 07–15');
 select ok(not exists (select 1 from public.company_free_slots('fjellkran-as') where starts_at < now() + interval '2 hours'),
   'nothing starts in less than two hours');
+reset role;
+set local role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-000000000001');
+select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true, 240, pg_temp.week(), 15);
+reset role;
+set local role anon;
+select is((pg_temp.slots_on_d())[1:3] || array[cardinality(pg_temp.slots_on_d())::text], array['07:00', '07:15', '07:30', '17'],
+  'with a 15-minute step: 07:00, 07:15 … 11:00');
+reset role;
+set local role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-000000000001');
+select public.save_company_hours('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true, 240, pg_temp.week(), 30);
 reset role;
 
 -- A job takes the morning (one machine); a second machine frees it again.
 insert into public.jobs (organization_id, number, customer_id, address, starts_at, ends_at)
 values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 1, 'a2000000-0000-0000-0000-000000000001', 'Storgata 1', pg_temp.at('08:00'), pg_temp.at('10:00'));
 set local role anon;
-select is(pg_temp.slots_on_d(), array['11:00'], 'a job takes the time it overlaps');
+select is(pg_temp.slots_on_d(), array['10:00', '10:30', '11:00'], 'a job 08–10 takes every four-hour time it overlaps');
 reset role;
 insert into public.vehicles (organization_id, type, name) values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'excavator', 'Gravemaskin');
 set local role anon;
-select is(pg_temp.slots_on_d(), array['07:00', '11:00'], 'with two machines the morning is free again');
+select is(pg_temp.slots_on_d(), array['07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00'], 'with two machines the morning is free again');
 reset role;
 update public.vehicles set active = false where name = 'Gravemaskin';
 
@@ -83,7 +97,7 @@ update public.vehicles set active = false where name = 'Gravemaskin';
 set local role anon;
 select lives_ok($$ select public.submit_job_request('fjellkran-as', 'Kari', 'Bergen', 'Løfte.', '91234568',
   request_wanted_start => pg_temp.at('11:00')) $$, 'a visitor picks a free time');
-select is(pg_temp.slots_on_d(), '{}'::text[], 'the picked time is no longer offered');
+select is(pg_temp.slots_on_d(), '{}'::text[], 'the picked 11–15 takes every time it overlaps');
 select throws_ok($$ select public.submit_job_request('fjellkran-as', 'Ola', 'Bergen', 'Løfte.', '91234569',
   request_wanted_start => pg_temp.at('11:00')) $$, '22023', 'The time is no longer free', 'nobody else gets it');
 select throws_ok($$ select public.submit_job_request('fjellkran-as', 'Ola', 'Bergen', 'Løfte.', '91234569',

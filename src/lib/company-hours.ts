@@ -8,13 +8,18 @@ export type Weekday = (typeof weekdays)[number];
 export const bookingLengths = [60, 120, 240, 480] as const;
 export type BookingLength = (typeof bookingLengths)[number];
 
+// How often a start time is offered (07:00, 07:30, …); a booking still lasts its length.
+export const slotSteps = [15, 30, 60] as const;
+export type SlotStep = (typeof slotSteps)[number];
+export const DEFAULT_SLOT_STEP: SlotStep = 30;
+
 export const DEFAULT_OPENS = "07:00";
 export const DEFAULT_CLOSES = "15:00";
 export const MAX_DAY_OFF_NOTE_LENGTH = 100;
 
 export type DayHours = { weekday: Weekday; open: boolean; opens: string; closes: string };
-export type HoursValues = { freeTimes: boolean; bookingMinutes: string; week: DayHours[] };
-export type HoursFieldError = "timesInvalid" | "noOpenDay" | "lengthInvalid";
+export type HoursValues = { freeTimes: boolean; bookingMinutes: string; stepMinutes: string; week: DayHours[] };
+export type HoursFieldError = "timesInvalid" | "noOpenDay" | "lengthInvalid" | "stepInvalid";
 
 const time = /^([01]\d|2[0-3]):[0-5]\d$/;
 
@@ -28,16 +33,17 @@ export function weekFromRows(rows: { weekday: number; opens: string; closes: str
   });
 }
 
-// The settings form: on or off, the booking length, and opens/closes for each open day.
+// The settings form: on or off, the booking length, the start time step, and opens/closes for each open day.
 export function validateHours(formData: FormData): {
   values: HoursValues;
   dayErrors: Partial<Record<Weekday, HoursFieldError>>;
-  fieldErrors: Partial<Record<"freeTimes" | "bookingMinutes", HoursFieldError>>;
-  fields?: { show_free_times: boolean; booking_minutes: BookingLength; week: { weekday: Weekday; opens: string; closes: string }[] };
+  fieldErrors: Partial<Record<"freeTimes" | "bookingMinutes" | "stepMinutes", HoursFieldError>>;
+  fields?: { show_free_times: boolean; booking_minutes: BookingLength; step_minutes: SlotStep; week: { weekday: Weekday; opens: string; closes: string }[] };
 } {
   const values: HoursValues = {
     freeTimes: formData.get("freeTimes") === "on",
     bookingMinutes: String(formData.get("bookingMinutes") ?? ""),
+    stepMinutes: String(formData.get("stepMinutes") ?? ""),
     week: weekdays.map((weekday) => ({
       weekday,
       open: formData.get(`open-${weekday}`) === "on",
@@ -46,10 +52,12 @@ export function validateHours(formData: FormData): {
     })),
   };
   const dayErrors: Partial<Record<Weekday, HoursFieldError>> = {};
-  const fieldErrors: Partial<Record<"freeTimes" | "bookingMinutes", HoursFieldError>> = {};
+  const fieldErrors: Partial<Record<"freeTimes" | "bookingMinutes" | "stepMinutes", HoursFieldError>> = {};
 
   const length = Number(values.bookingMinutes);
   if (!(bookingLengths as readonly number[]).includes(length)) fieldErrors.bookingMinutes = "lengthInvalid";
+  const step = Number(values.stepMinutes);
+  if (!(slotSteps as readonly number[]).includes(step)) fieldErrors.stepMinutes = "stepInvalid";
   for (const day of values.week) {
     // "HH:MM" strings compare in time order.
     if (day.open && (!time.test(day.opens) || !time.test(day.closes) || day.closes <= day.opens)) {
@@ -67,12 +75,14 @@ export function validateHours(formData: FormData): {
     fields: {
       show_free_times: values.freeTimes,
       booking_minutes: length as BookingLength,
+      step_minutes: step as SlotStep,
       week: open.map(({ weekday, opens, closes }) => ({ weekday, opens, closes })),
     },
   };
 }
 
-export type FreeSlot = { day: string; start_time: string; starts_at: string };
+// `free` is false for a time that is already taken (company_time_slots); company_free_slots leaves it out.
+export type FreeSlot = { day: string; start_time: string; starts_at: string; free?: boolean };
 
 // Free times by day, in the order they come.
 export function groupSlots(slots: FreeSlot[]): { day: string; slots: FreeSlot[] }[] {

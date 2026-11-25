@@ -52,7 +52,7 @@ export default async function CompanyPublicPage({ params, searchParams }: PagePr
   // With free times switched on, the request form offers them; otherwise a wished-for day.
   const freeTimes = (booking.data as { free_times: boolean } | null)?.free_times === true;
   const [slots, customer] = await Promise.all([
-    freeTimes ? supabase.rpc("company_free_slots", { page_slug: company.slug }) : null,
+    freeTimes ? supabase.rpc("company_time_slots", { page_slug: company.slug }) : null,
     getCustomerAccount(),
   ]);
   // A signed-in customer (stage 16a): their details, and with ?gjenta= an earlier request to this company.
