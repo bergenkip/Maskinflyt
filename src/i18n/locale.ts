@@ -15,40 +15,20 @@ export const localeNames: Record<Locale, string> = {
   lt: "Lietuvių",
 };
 
-// Browsers may send "no" or "nn" for Norwegian; we only ship Bokmål.
-const aliases: Record<string, Locale> = {
-  nb: "nb",
-  no: "nb",
-  nn: "nb",
-  en: "en",
-  lt: "lt",
-};
+// Languages everyone can pick. Lithuanian works everywhere but stays hidden
+// until it is switched on with the link ?lang=lt (owner's decision 2026-11-25).
+export const publicLocales: readonly Locale[] = ["nb", "en"];
+
+// The choices to list: the public ones, plus the current one if it is hidden,
+// so a person who switched it on can still see and keep it.
+export function visibleLocales(current: string): Locale[] {
+  const list = [...publicLocales];
+  if (isLocale(current) && !list.includes(current)) list.push(current);
+  return list;
+}
 
 export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (locales as readonly string[]).includes(value);
-}
-
-export function matchAcceptLanguage(header: string | null | undefined): Locale | undefined {
-  if (!header) return undefined;
-
-  const ranked = header
-    .split(",")
-    .map((part, index) => {
-      const [tag, ...params] = part.trim().split(";");
-      const q = params
-        .map((p) => p.trim())
-        .find((p) => p.startsWith("q="));
-      const quality = q ? Number(q.slice(2)) : 1;
-      return { tag: tag.toLowerCase(), quality: Number.isNaN(quality) ? 0 : quality, index };
-    })
-    .filter((entry) => entry.tag && entry.quality > 0)
-    .sort((a, b) => b.quality - a.quality || a.index - b.index);
-
-  for (const { tag } of ranked) {
-    const match = aliases[tag.split("-")[0]];
-    if (match) return match;
-  }
-  return undefined;
 }
 
 export type LocaleSources = {
@@ -58,13 +38,13 @@ export type LocaleSources = {
   cookie?: string | null;
   // The company's default language.
   organization?: string | null;
-  acceptLanguage?: string | null;
 };
 
-// Order: profile → this device's choice → company default → browser → nb.
+// Order: profile → this device's choice → company default → nb.
+// The browser's language is not used: every new visitor sees Norwegian first.
 export function resolveLocale(sources: LocaleSources): Locale {
   if (isLocale(sources.profile)) return sources.profile;
   if (isLocale(sources.cookie)) return sources.cookie;
   if (isLocale(sources.organization)) return sources.organization;
-  return matchAcceptLanguage(sources.acceptLanguage) ?? defaultLocale;
+  return defaultLocale;
 }

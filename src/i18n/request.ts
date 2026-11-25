@@ -1,4 +1,4 @@
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { getRequestConfig } from "next-intl/server";
 import { cache } from "react";
 import { getSupabaseEnv } from "@/lib/supabase/env";
@@ -32,17 +32,12 @@ const getSavedLocales = cache(async (): Promise<{ profile: string | null; organi
 });
 
 export default getRequestConfig(async () => {
-  const [cookieStore, headerStore, saved] = await Promise.all([
-    cookies(),
-    headers(),
-    getSavedLocales(),
-  ]);
+  const [cookieStore, saved] = await Promise.all([cookies(), getSavedLocales()]);
 
   const locale = resolveLocale({
     profile: saved.profile,
     cookie: cookieStore.get(LOCALE_COOKIE)?.value,
     organization: saved.organization,
-    acceptLanguage: headerStore.get("accept-language"),
   });
 
   return {

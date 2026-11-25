@@ -20,8 +20,9 @@ test("signed-out visitors are sent to sign in", async ({ page }) => {
   await expect(page).toHaveURL(/\/login$/);
 });
 
-test("sign up, create a company and see it as owner", async ({ browser }) => {
-  const context = await browser.newContext({ locale: "en-US" });
+test("sign up, create a company and see it as owner", async ({ browser, baseURL }) => {
+  const context = await browser.newContext();
+  await context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
   const page = await context.newPage();
 
   // Mistakes are shown next to the field, and nothing is sent.
@@ -52,7 +53,10 @@ test("sign up, create a company and see it as owner", async ({ browser }) => {
   await expect(page).toHaveURL(/\/mfa$/);
   await passSecondStep(page);
 
-  // The user has not chosen a language yet, so the company default (Norwegian) applies now.
+  // English was only this device's choice. Without it, and with nothing saved
+  // in the profile, the company default (Norwegian) applies.
+  await context.clearCookies({ name: "NEXT_LOCALE" });
+  await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "nb");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Fjordlys Engros AS");
   await expect(page.getByText("Din rolle: Eier")).toBeVisible();
@@ -72,6 +76,7 @@ test("sign up, create a company and see it as owner", async ({ browser }) => {
   await expect(page).toHaveURL(/\/login$/);
 
   // Someone else cannot register the same company again; they need an invitation.
+  await context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
   await signUp(page, newEmail("second"));
   await page.getByLabel("Company name").fill("fjordlys  engros as");
   await page.getByRole("button", { name: "Create company" }).click();
@@ -91,11 +96,12 @@ test("sign up, create a company and see it as owner", async ({ browser }) => {
   await page.getByRole("button", { name: "Create company" }).click();
   await page.waitForURL((url) => url.pathname === "/mfa");
   await passSecondStep(page);
-  await expect(page.getByText("Org.nr. SC123456")).toBeVisible();
+  await expect(page.getByText("Org. no. SC123456")).toBeVisible();
   await context.close();
 });
 
-test("wrong password is refused", async ({ page }) => {
+test("wrong password is refused", async ({ page, context, baseURL }) => {
+  await context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
   await page.goto("/login");
   await page.locator('input[name="email"]').fill(newEmail("nobody"));
   await page.locator('input[name="password"]').fill(password);
@@ -104,9 +110,9 @@ test("wrong password is refused", async ({ page }) => {
   await expect(page).toHaveURL(/\/login$/);
 });
 
-test("language saved in Settings follows the user to another device", async ({ browser }) => {
+test("language saved in Settings follows the user to another device", async ({ browser, baseURL }) => {
   const email = newEmail("lang");
-  const first = await browser.newContext({ locale: "nb-NO" });
+  const first = await browser.newContext();
   const page = await first.newPage();
   await signUp(page, email);
   await createCompany(page, "Nordkapp Fisk AS", "");
@@ -123,19 +129,31 @@ test("language saved in Settings follows the user to another device", async ({ b
   await nameSection.getByRole("button", { name: "Lagre" }).click();
   await expect(nameSection.getByText("Lagret.")).toBeVisible();
 
+  // Lithuanian is hidden: Settings lists only Norwegian and English.
   const languageSection = page.getByRole("region", { name: "Språk" });
-  await languageSection.getByLabel("Språk i grensesnittet").selectOption("lt");
+  await expect(languageSection.getByLabel("Språk i grensesnittet").locator("option")).toHaveText(["Norsk bokmål", "English"]);
+  await languageSection.getByLabel("Språk i grensesnittet").selectOption("en");
   await languageSection.getByRole("button", { name: "Lagre" }).click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("region", { name: "Language" }).getByText("Saved.")).toBeVisible();
+
+  // The secret link switches on Lithuanian and saves it in the profile at once.
+  await page.goto("/app/settings?lang=lt");
+  await expect(page).toHaveURL(/\/app\/settings$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "lt");
-  await expect(page.getByRole("region", { name: "Kalba" }).getByText("Išsaugota.")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Kalba" }).getByLabel("Sąsajos kalba").locator("option")).toHaveText([
+    "Norsk bokmål",
+    "English",
+    "Lietuvių",
+  ]);
   await expect(page.getByLabel("Pavardė")).toHaveValue("Nordmann-Hansen");
   await first.close();
 
-  // A fresh browser in English with no cookies: the profile decides.
+  // A fresh browser in English with no cookies: Norwegian until sign-in, then the profile decides.
   const second = await browser.newContext({ locale: "en-US" });
   const other = await second.newPage();
   await other.goto("/login");
-  await expect(other.locator("html")).toHaveAttribute("lang", "en");
+  await expect(other.locator("html")).toHaveAttribute("lang", "nb");
   await other.locator('input[name="email"]').fill(email);
   await other.locator('input[name="password"]').fill(password);
   await other.locator('main form button[type="submit"]').click();
@@ -146,7 +164,8 @@ test("language saved in Settings follows the user to another device", async ({ b
   await expect(other).toHaveURL(/\/mfa$/);
   // The link can be opened in another browser (e.g. the Gmail app). Saying
   // "no" there keeps the waiting window locked.
-  const mailApp = await browser.newContext({ locale: "en-US" });
+  const mailApp = await browser.newContext();
+  await mailApp.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
   const mailPage = await mailApp.newPage();
   await answerApproval(mailPage, await requestLink(other), false);
   await expect(mailPage.getByText("Sign-in not approved.", { exact: false })).toBeVisible();
