@@ -663,7 +663,7 @@
     "month": "Måned",
     "previousMonth": "Forrige måned",
     "nextMonth": "Neste måned",
-    "dayJobs": "{day}: {count, plural, =0 {ingen oppdrag} one {# oppdrag} other {# oppdrag}}",
+    "dayJobs": "{day}: {count, plural, =0 {ingen oppdrag} one {# oppdrag, {hours} t} other {# oppdrag, {hours} t}}",
     "more": "+{count} til",
     "editJob": "Rediger oppdrag {number}, {customer}, {time}, {status}",
     "moveBusy": "Oppdrag {number} kl. {time}: allerede opptatt på denne tiden",
@@ -2520,5 +2520,28 @@
         }
       ]
     }
+  },
+  "Workload": {
+    "title": "Arbeidsmengde",
+    "today": "I dag",
+    "week": "Denne uken",
+    "month": "Denne måneden",
+    "weekNumber": "Uke {week}",
+    "jobs": "{count, plural, one {# oppdrag} other {# oppdrag}}",
+    "hours": "{hours} t",
+    "hoursLabel": "planlagte timer",
+    "done": "{done} av {count} utført",
+    "machines": "{count, plural, =0 {Ingen maskiner i bruk} one {# maskin i bruk} other {# maskiner i bruk}}",
+    "busy": "{percent} belegg",
+    "invoiced": "Fakturert (eks. mva.)",
+    "failed": "Arbeidsmengden kunne ikke hentes. Last inn siden på nytt.",
+    "chartTitle": "Timer per dag, {month}",
+    "chartLead": "Travleste dag: {hours} t",
+    "chartToday": "I dag",
+    "chartPast": "Tidligere",
+    "chartAhead": "Planlagt fremover",
+    "chartDay": "Dag",
+    "chartHours": "Timer",
+    "dayLabel": "Arbeid denne dagen"
   }
 }

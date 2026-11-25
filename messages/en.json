@@ -663,7 +663,7 @@
     "month": "Month",
     "previousMonth": "Previous month",
     "nextMonth": "Next month",
-    "dayJobs": "{day}: {count, plural, =0 {no jobs} one {# job} other {# jobs}}",
+    "dayJobs": "{day}: {count, plural, =0 {no jobs} one {# job, {hours} h} other {# jobs, {hours} h}}",
     "more": "+{count} more",
     "editJob": "Edit job {number}, {customer}, {time}, {status}",
     "moveBusy": "Job {number} at {time}: already busy at this time",
@@ -2520,5 +2520,28 @@
         }
       ]
     }
+  },
+  "Workload": {
+    "title": "Workload",
+    "today": "Today",
+    "week": "This week",
+    "month": "This month",
+    "weekNumber": "Week {week}",
+    "jobs": "{count, plural, one {# job} other {# jobs}}",
+    "hours": "{hours} h",
+    "hoursLabel": "hours planned",
+    "done": "{done} of {count} done",
+    "machines": "{count, plural, =0 {No machines in use} one {# machine in use} other {# machines in use}}",
+    "busy": "{percent} booked",
+    "invoiced": "Invoiced (excl. VAT)",
+    "failed": "The workload could not be loaded. Reload the page.",
+    "chartTitle": "Hours per day, {month}",
+    "chartLead": "Busiest day: {hours} h",
+    "chartToday": "Today",
+    "chartPast": "Earlier",
+    "chartAhead": "Planned ahead",
+    "chartDay": "Day",
+    "chartHours": "Hours",
+    "dayLabel": "Work this day"
   }
 }
