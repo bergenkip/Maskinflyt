@@ -48,4 +48,23 @@ describe("planned e-mail", () => {
     expect(email.text).not.toContain("Spørsmål");
     expect(email.replyTo).toBeUndefined();
   });
+
+  it("tells a new time, with the one before", () => {
+    const email = plannedEmail(
+      { ...job, kind: "changed", startsAt: "2026-12-02T08:00:00.000Z", endsAt: "2026-12-02T12:00:00.000Z", previous: { startsAt: job.startsAt, endsAt: job.endsAt } },
+      { to: "kari@nordmann.test", testMode: false },
+    );
+    expect(email.subject).toBe('Fjellkran "Vest" AS har endret tidspunktet for jobben din');
+    expect(email.text).toMatch(/Nytt tidspunkt: onsdag 2\. desember 2026.*09:00.*13:00/);
+    expect(email.text).toMatch(/Før: tirsdag 1\. desember 2026.*08:00.*12:00/);
+    expect(email.text).toContain("Sluttidspunktet er et anslag.");
+  });
+
+  it("tells a cancellation plainly, without an estimate", () => {
+    const email = plannedEmail({ ...job, kind: "cancelled", locale: "lt" }, { to: "kari@nordmann.test", testMode: false });
+    expect(email.subject).toBe('Fjellkran "Vest" AS atšaukė jūsų darbą');
+    expect(email.text).toContain('Deja, Fjellkran "Vest" AS atšaukė jūsų darbą.');
+    expect(email.text).toMatch(/Buvo suplanuota: .*gruodžio 1/);
+    expect(email.text).not.toContain("apytikslis");
+  });
 });

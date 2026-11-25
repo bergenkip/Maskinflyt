@@ -9,15 +9,20 @@ import { SITE_URL } from "../site";
 import { escapeHtml, senderName } from "./invoice-email";
 import { REQUEST_FROM_ADDRESS } from "./request-email";
 
-// Stage 16b: the company has planned the job from a customer's request, and
-// tells the customer the time. Sent only when the person who planned it leaves
-// the box ticked. In the language the customer wrote in (JobPlannedEmail).
+// Stage 16b and 16c: the company tells the customer who requested a job its
+// planned time, a new time, or that it is cancelled. Sent only when a person in
+// the office asks for it. In the language the customer wrote in (JobPlannedEmail).
 // Names and places are data: escaped in the HTML, one line in the subject.
 
 const catalogs = { nb, en, lt } as const;
 type Locale = keyof typeof catalogs;
 
+export type NoticeKind = "planned" | "changed" | "cancelled";
+
 export type PlannedForEmail = {
+  kind?: NoticeKind;
+  // The time the customer was told before, for a changed time.
+  previous?: { startsAt: string; endsAt: string } | null;
   company: string;
   name: string;
   address: string;
@@ -51,12 +56,24 @@ export function plannedEmail(job: PlannedForEmail, options: { to: string; testMo
   const company = oneLine(job.company);
   const name = oneLine(job.name);
 
+  const kind = job.kind ?? "planned";
+  const time = plannedTime(job.startsAt, job.endsAt, locale, job.timeZone);
   const test = options.testMode ? t("test", { to: options.to }) : null;
-  const intro = t("intro", { company });
-  const facts: [string, string][] = [
-    [t("time"), plannedTime(job.startsAt, job.endsAt, locale, job.timeZone)],
-    [t("place"), job.address],
-  ];
+  const intro = kind === "cancelled" ? t("cancelledIntro", { company }) : kind === "changed" ? t("changedIntro", { company }) : t("intro", { company });
+  const facts: [string, string][] =
+    kind === "cancelled"
+      ? [
+          [t("cancelledTime"), time],
+          [t("place"), job.address],
+        ]
+      : [
+          [kind === "changed" ? t("newTime") : t("time"), time],
+          ...(kind === "changed" && job.previous
+            ? [[t("previousTime"), plannedTime(job.previous.startsAt, job.previous.endsAt, locale, job.timeZone)] as [string, string]]
+            : []),
+          [t("place"), job.address],
+        ];
+  const estimate = kind === "cancelled" ? null : t("estimate");
   const questions = job.companyPhone ? t("questionsPhone", { phone: formatPhone(job.companyPhone) }) : t("questions");
   const follow = job.hasAccount ? t("follow") : null;
   const link = `${SITE_URL}${CUSTOMER_PATH}`;
@@ -68,7 +85,7 @@ export function plannedEmail(job: PlannedForEmail, options: { to: string; testMo
     intro,
     "",
     ...facts.map(([label, value]) => `${label}: ${value}`),
-    t("estimate"),
+    ...(estimate ? [estimate] : []),
     "",
     ...(follow ? [`${follow} ${link}`, ""] : []),
     job.companyEmail || job.companyPhone ? questions : "",
@@ -88,7 +105,7 @@ ${test ? `<p style="margin:0 0 16px;padding:12px;border-radius:8px;background:#f
 <p style="margin:0 0 16px">${escapeHtml(t("greeting", { name }))}</p>
 <p style="margin:0 0 16px">${escapeHtml(intro)}</p>
 <table role="presentation" style="border-collapse:collapse;margin:0 0 8px">${facts.map(row).join("")}</table>
-<p style="margin:0 0 16px;font-size:14px;color:#5b6472">${escapeHtml(t("estimate"))}</p>
+${estimate ? `<p style="margin:0 0 16px;font-size:14px;color:#5b6472">${escapeHtml(estimate)}</p>` : `<div style="height:8px"></div>`}
 ${follow ? `<p style="margin:0 0 16px">${escapeHtml(follow)} <a href="${link}" style="color:#1d4ed8">${escapeHtml(t("followLink"))}</a></p>` : ""}
 ${job.companyEmail || job.companyPhone ? `<p style="margin:0 0 16px">${escapeHtml(questions)}</p>` : ""}
 <p style="margin:0">${escapeHtml(t("closing"))}<br>${escapeHtml(company)}</p>
@@ -100,7 +117,7 @@ ${job.companyEmail || job.companyPhone ? `<p style="margin:0 0 16px">${escapeHtm
     from: `"${senderName(job.company)}" <${REQUEST_FROM_ADDRESS}>`,
     // Answers from the customer go to the company, not to MaskinGo.
     replyTo: job.companyEmail ?? undefined,
-    subject: `${options.testMode ? "TEST: " : ""}${t("subject", { company })}`.slice(0, 200),
+    subject: `${options.testMode ? "TEST: " : ""}${t(kind === "cancelled" ? "cancelledSubject" : kind === "changed" ? "changedSubject" : "subject", { company })}`.slice(0, 200),
     text,
     html,
   };

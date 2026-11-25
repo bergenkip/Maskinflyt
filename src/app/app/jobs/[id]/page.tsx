@@ -15,6 +15,7 @@ import { BackLink } from "../back-link";
 import { JobFilesView } from "../job-files-view";
 import { JobForm, JobStatusForm } from "../job-forms";
 import { getJobOptions } from "../options";
+import { CustomerNoticeSection } from "./customer-notice";
 import { InvoiceSection } from "./invoice-section";
 import { JobTimeSection } from "./job-time-section";
 import { ProgressBadge, progressIcon } from "../progress-badge";
@@ -23,14 +24,20 @@ import { StatusBadge } from "../status-badge";
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const sectionClass = "grid gap-4 rounded-xl border border-border bg-surface p-5 sm:p-6";
 
-type JobRow = Job & { customers: { name: string } | null; progress: JobProgress | null; progress_at: string | null };
+type JobRow = Job & {
+  customers: { name: string } | null;
+  progress: JobProgress | null;
+  progress_at: string | null;
+  // Planned from a customer's request (stage 16b).
+  request_id: string | null;
+};
 type EventRow = { kind: JobEventKind; note: string | null; created_at: string };
 
 async function getJob(id: string) {
   if (!uuid.test(id)) return null;
   const supabase = await createClient();
   // RLS returns nothing for another company's job: it is "not found" here too.
-  const { data } = await supabase.from("jobs").select(`${jobColumns}, progress, progress_at, customers(name)`).eq("id", id).maybeSingle();
+  const { data } = await supabase.from("jobs").select(`${jobColumns}, progress, progress_at, request_id, customers(name)`).eq("id", id).maybeSingle();
   return data as unknown as JobRow | null;
 }
 
@@ -106,6 +113,9 @@ export default async function JobPage({ params, searchParams }: PageProps<"/app/
       {/* Planned from a customer's request: whether the customer was told the time (stage 16b). */}
       {added === "1" && email === "sent" && <FormAlert kind="success">{t("plannedEmailSent")}</FormAlert>}
       {added === "1" && email === "failed" && <FormAlert kind="error">{t("plannedEmailFailed")}</FormAlert>}
+      {!accountant && job.request_id && (
+        <CustomerNoticeSection job={{ ...job, request_id: job.request_id }} timeZone={organization.timeZone} />
+      )}
 
       {/* The planning, the driver's reports and the photos are the office's. */}
       {!accountant && options && (

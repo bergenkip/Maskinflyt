@@ -4,7 +4,8 @@ import { createCompany, fillSignUp, locales, newCompanyName, newEmail, newPage, 
 // Stage 16a: a customer signs up as a customer (no company), sends a request
 // with their details filled in, follows it on /kunde and orders again. The
 // company still accepts it and plans the job by hand; the customer then sees
-// the planned time and gets it by e-mail (16b). Needs Supabase (the e2e-auth CI job).
+// the planned time and gets it by e-mail (16b), and hears of a new time and
+// of the cancellation when the office taps to send them (16c). Needs Supabase (the e2e-auth CI job).
 test.skip(!process.env.NEXT_PUBLIC_SUPABASE_URL, "needs Supabase: run in the e2e-auth CI job");
 
 test("a customer account orders, follows the answer and orders again", async ({ browser, baseURL }) => {
@@ -96,6 +97,7 @@ test("a customer account orders, follows the answer and orders again", async ({ 
   await shootAllWidths(page, "job-from-request", "en");
   await page.getByRole("button", { name: "Add job" }).click();
   await page.waitForURL(/\/app\/jobs\/[0-9a-f-]{36}\?added=1/);
+  const jobPath = new URL(page.url()).pathname;
   await expect(page.getByText("The customer got the planned time by e-mail.")).toBeVisible();
   const sent = (await (await page.request.get(`${resendStub}/emails`)).json()) as { subject: string; text: string; to: string[] }[];
   const planned = sent.find((one) => one.text.includes(`Recipient: ${email}`) && one.subject === `TEST: ${name} has planned your job`);
@@ -129,4 +131,37 @@ test("a customer account orders, follows the answer and orders again", async ({ 
   await customer.page.waitForURL(/\/firma\/.+\?gjenta=/);
   await expect(form.getByLabel("What do you need help with?")).toHaveValue("Løfte takstein til 3. etasje.");
   await expect(form.getByLabel("Where is the job?")).toHaveValue("Strandgaten 1, Bergen");
+
+  // A new time: the office sees the customer does not know it yet, and sends it with one tap (stage 16c).
+  await page.goto(jobPath);
+  const notice = page.getByRole("region", { name: "Message to the customer" });
+  await expect(notice.getByText("The customer was sent the current time on", { exact: false })).toBeVisible();
+  await expect(notice.getByRole("button")).toHaveCount(0);
+  await page.locator('input[name="startTime"]').fill("09:00");
+  await page.getByRole("button", { name: "Save changes" }).click();
+  await expect(notice.getByText("The time has changed since the customer was told", { exact: false })).toBeVisible();
+  await shootAllWidths(page, "job-notice", "en");
+  await notice.getByRole("button", { name: "Send the new time to the customer" }).click();
+  await expect(notice.getByText("The customer was sent the current time on", { exact: false })).toBeVisible();
+  const changed = ((await (await page.request.get(`${resendStub}/emails`)).json()) as { subject: string; text: string }[]).find(
+    (one) => one.text.includes(`Recipient: ${email}`) && one.subject === `TEST: ${name} has changed the time of your job`,
+  );
+  expect(changed).toBeDefined();
+  expect(changed!.text).toMatch(/New time: .*9:00.AM.*1:00.PM/);
+  expect(changed!.text).toMatch(/Before: .*8:00.AM.*12:00.PM/);
+  await customer.page.goto("/kunde");
+  await expect(mine.getByText(/9:00.AM.*1:00.PM/)).toBeVisible();
+
+  // Cancelled: the customer is told once, and sees it on their page.
+  await page.getByRole("region", { name: "Status" }).getByRole("button", { name: "Cancel job" }).click();
+  await expect(notice.getByText("The job is cancelled, but the customer does not know yet.")).toBeVisible();
+  await notice.getByRole("button", { name: "Tell the customer the job is cancelled" }).click();
+  await expect(notice.getByText("that the job is cancelled", { exact: false })).toBeVisible();
+  await expect(notice.getByRole("button")).toHaveCount(0);
+  const cancelled = ((await (await page.request.get(`${resendStub}/emails`)).json()) as { subject: string }[]).filter(
+    (one) => one.subject === `TEST: ${name} has cancelled your job`,
+  );
+  expect(cancelled).toHaveLength(1);
+  await customer.page.reload();
+  await expect(mine.getByText("Cancelled", { exact: true })).toBeVisible();
 });

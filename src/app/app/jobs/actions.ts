@@ -2,13 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { normalizeEmail, validateCustomer, type CustomerFieldError, type CustomerFormValues } from "@/lib/customers";
-import { invoiceEmailLive, TEST_INBOX } from "@/lib/email/invoice-email";
-import { plannedEmail } from "@/lib/email/planned-email";
-import { emailConfigured, sendEmail } from "@/lib/email/resend";
+import { validateCustomer, type CustomerFieldError, type CustomerFormValues } from "@/lib/customers";
 import { NEW_CUSTOMER, validateJob, type JobFieldError, type JobFields, type JobFormValues } from "@/lib/jobs";
 import { getCurrentMembership } from "@/lib/membership";
 import { createClient } from "@/lib/supabase/server";
+import { sendJobNotice } from "./job-notice";
 
 // RLS decides who may add or change a job (owners, admins, dispatchers) and the
 // database sets the number, the price and "new" or "planned"; these actions
@@ -169,7 +167,8 @@ async function saveJob(formData: FormData, id?: string): Promise<JobFormState> {
     revalidatePath("/app", "layout");
     const params = new URLSearchParams({ added: "1" });
     if (requestId && formData.get("notifyCustomer") === "1") {
-      params.set("email", await tellCustomer(supabase, data.id, requestId, fields, organization));
+      const job = { id: data.id, request_id: requestId, address: fields.address, starts_at: fields.starts_at, ends_at: fields.ends_at };
+      params.set("email", await sendJobNotice(supabase, job, organization, "planned", null));
     }
     redirect(`/app/jobs/${data.id}?${params}`);
   }
@@ -181,52 +180,6 @@ async function saveJob(formData: FormData, id?: string): Promise<JobFormState> {
 
   revalidatePath("/app", "layout");
   return { values, savedAt: Date.now() };
-}
-
-type PlannedRequest = {
-  name: string;
-  email: string | null;
-  locale: string;
-  user_id: string | null;
-};
-
-// Tells the customer the planned time by e-mail, once per job. Only when the
-// request gave an e-mail and the person who planned the job left the box ticked.
-async function tellCustomer(
-  supabase: Supabase,
-  jobId: string,
-  requestId: string,
-  fields: Pick<JobFields, "address" | "starts_at" | "ends_at">,
-  organization: { id: string; name: string; timeZone: string },
-): Promise<"sent" | "failed" | "none"> {
-  const [{ data: request }, { data: page }] = await Promise.all([
-    supabase.from("job_requests").select("name, email, locale, user_id").eq("id", requestId).maybeSingle(),
-    supabase.from("company_pages").select("email, phone").eq("organization_id", organization.id).maybeSingle(),
-  ]);
-  const found = request as PlannedRequest | null;
-  const to = found?.email ? normalizeEmail(found.email) : null;
-  if (!found || !to) return "none";
-  const testMode = !invoiceEmailLive();
-  // In test mode (local development and CI) only .test addresses, and only to the test inbox.
-  if (!emailConfigured() || (testMode && !to.endsWith(".test"))) return "failed";
-  const contact = page as { email: string | null; phone: string | null } | null;
-  const made = plannedEmail(
-    {
-      company: organization.name,
-      name: found.name,
-      address: fields.address,
-      startsAt: fields.starts_at,
-      endsAt: fields.ends_at,
-      timeZone: organization.timeZone,
-      companyEmail: contact?.email ?? null,
-      companyPhone: contact?.phone ?? null,
-      locale: found.locale,
-      hasAccount: Boolean(found.user_id),
-    },
-    { to, testMode },
-  );
-  const result = await sendEmail({ ...made, to: testMode ? TEST_INBOX : to, idempotencyKey: `job-planned-${jobId}` });
-  return result.ok ? "sent" : "failed";
 }
 
 export async function addJob(_prev: JobFormState, formData: FormData): Promise<JobFormState> {

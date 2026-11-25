@@ -612,7 +612,23 @@
     "alreadyPlanned": "Denne forespørselen er allerede planlagt som jobb {number}.",
     "openPlanned": "Åpne jobb {number}",
     "plannedEmailSent": "Kunden fikk det planlagte tidspunktet på e-post.",
-    "plannedEmailFailed": "E-posten til kunden kunne ikke sendes. Ring eller skriv til kunden med tidspunktet."
+    "plannedEmailFailed": "E-posten til kunden kunne ikke sendes. Ring eller skriv til kunden med tidspunktet.",
+    "noticeTitle": "Beskjed til kunden",
+    "noticeTo": "{name} ba om denne jobben: {email}",
+    "noticeNoEmail": "{name} ba om denne jobben og oppga ingen e-post. Ring kunden om endringer.",
+    "noticeTold": "Kunden fikk det gjeldende tidspunktet {time}.",
+    "noticeToldCancelled": "Kunden fikk beskjed {time} om at jobben er avlyst.",
+    "noticeNever": "Kunden har ikke fått tidspunktet på e-post ennå.",
+    "noticeBack": "Kunden fikk beskjed om at jobben var avlyst, men den er planlagt igjen.",
+    "noticeChanged": "Tidspunktet er endret siden kunden fikk det: {time}.",
+    "noticeCancelled": "Jobben er avlyst, men kunden vet det ikke ennå.",
+    "noticeSend": {
+      "planned": "Send tidspunktet til kunden",
+      "changed": "Send det nye tidspunktet til kunden",
+      "cancelled": "Fortell kunden at jobben er avlyst"
+    },
+    "noticeSending": "Sender …",
+    "noticeFailed": "E-posten kunne ikke sendes. Prøv igjen, eller ring kunden."
   },
   "Calendar": {
     "title": "Kalender",
@@ -2170,6 +2186,13 @@
     "questions": "Spørsmål, eller trenger du et annet tidspunkt? Svar på denne e-posten.",
     "closing": "Med vennlig hilsen",
     "footer": "Sendt med MaskinGo på vegne av {company}.",
-    "test": "TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke en ekte bestilling. Mottaker: {to}"
+    "test": "TEST: Denne e-posten er sendt fra en testkonto i MaskinGo og er ikke en ekte bestilling. Mottaker: {to}",
+    "changedSubject": "{company} har endret tidspunktet for jobben din",
+    "changedIntro": "{company} har endret tidspunktet for jobben din.",
+    "newTime": "Nytt tidspunkt",
+    "previousTime": "Før",
+    "cancelledSubject": "{company} har avlyst jobben din",
+    "cancelledIntro": "Dessverre har {company} avlyst jobben din.",
+    "cancelledTime": "Var planlagt"
   }
 }
