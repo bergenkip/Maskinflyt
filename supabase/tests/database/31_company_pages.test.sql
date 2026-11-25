@@ -1,7 +1,7 @@
 -- Stage 15a: the company's public page. Owners and admins write it, visitors
 -- see only published pages and only the public fields. Synthetic data (.test).
 begin;
-select plan(20);
+select plan(24);
 
 insert into auth.users (id, email, email_confirmed_at) values
   ('00000000-0000-0000-0000-000000000001', 'eier@fjellkran.test', now()),
@@ -72,10 +72,24 @@ select results_eq($$ select slug from public.published_company_pages() $$, $$ va
 select throws_ok($$ select * from public.company_pages $$, '42501', null, 'visitors cannot read the table');
 reset role;
 
--- A company whose subscription ended (stage 14b) disappears from the web.
+-- A company whose subscription ended is on the free plan "Katalog" (2026-11-25):
+-- its page stays on the web with the contact details, but takes no requests.
+set local role anon;
+select is(public.company_takes_requests('fjellkran-as'), true, 'a running company takes requests');
+reset role;
 update public.subscriptions set status = 'canceled' where organization_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
 set local role anon;
-select is((select count(*)::int from public.company_page('fjellkran-as')), 0, 'a read-only company''s page is not shown');
+select results_eq($$ select name, phone from public.company_page('fjellkran-as') $$,
+  $$ values ('Fjellkran AS'::text, '+4791234567'::text) $$, 'a free-plan company''s page is still shown, with the contact details');
+select is(public.company_takes_requests('fjellkran-as'), false, 'but it takes no requests');
+reset role;
+set local role authenticated;
+select pg_temp.as_user('00000000-0000-0000-0000-000000000001');
+select lives_ok($$ select public.save_company_page('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'fjellkran-as', true,
+  'Kranbil med fører i Bergen og Askøy.', array['crane_truck'], 'Bergen', null, '+47 912 34 567', 'post@fjellkran.test') $$,
+  'on the free plan the owner still edits the page');
+select throws_ok($$ insert into public.customers (organization_id, name) values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'Nordbygg AS') $$,
+  '42501', null, 'everything else stays read-only');
 reset role;
 
 select * from finish();

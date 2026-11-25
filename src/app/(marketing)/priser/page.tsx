@@ -2,7 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
-import { BEDRIFT_EXTRA_PERSON_ORE, VAT_REGISTERED, planPrice, planSeats, plans, type Plan } from "@/lib/billing";
+import {
+  BEDRIFT_EXTRA_PERSON_ORE,
+  VAT_REGISTERED,
+  planPrice,
+  planSeats,
+  plans,
+  type Plan,
+} from "@/lib/billing";
 import { SITE_NAME, SITE_URL, publicPageMetadata } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -64,20 +71,29 @@ export default function Page() {
     url: SITE_URL,
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web, iOS, Android",
-    offers: plans.map((plan) => ({
-      "@type": "Offer",
-      name: t(`plans.${plan}`),
-      url: `${SITE_URL}/priser`,
-      priceCurrency: "NOK",
-      price: planPrice(plan, "month") / 100,
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: planPrice(plan, "month") / 100,
+    offers: [
+      {
+        "@type": "Offer",
+        name: t("free.name"),
+        url: `${SITE_URL}/priser`,
         priceCurrency: "NOK",
-        unitCode: "MON",
-        valueAddedTaxIncluded: false,
+        price: 0,
       },
-    })),
+      ...plans.map((plan) => ({
+        "@type": "Offer",
+        name: t(`plans.${plan}`),
+        url: `${SITE_URL}/priser`,
+        priceCurrency: "NOK",
+        price: planPrice(plan, "month") / 100,
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: planPrice(plan, "month") / 100,
+          priceCurrency: "NOK",
+          unitCode: "MON",
+          valueAddedTaxIncluded: false,
+        },
+      })),
+    ],
   };
 
   function seatsLabel(plan: Plan) {
@@ -161,6 +177,29 @@ export default function Page() {
         <p className="mt-4 text-sm text-muted">
           {VAT_REGISTERED ? t("vatExcluded") : t("vatNotRegistered")}
         </p>
+
+        {/* The free plan "Katalog" (Li, 2026-11-25): only the company page in the catalog. */}
+        <div className="mt-6 grid gap-4 rounded-xl border border-dashed border-border p-5 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8">
+          <div className="grid gap-2">
+            <h3 className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-lg font-semibold">{t("free.name")}</span>
+              <span className="text-2xl font-semibold tracking-tight whitespace-nowrap tabular-nums">
+                {kr(0)}
+              </span>
+              <span className="text-muted">{t("free.what")}</span>
+            </h3>
+            <p className="leading-relaxed">{t("free.body")}</p>
+            <p className="text-sm text-muted">
+              {t("free.not")} {t("free.after")}
+            </p>
+          </div>
+          <Link
+            href="/signup"
+            className="flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-5 py-2.5 text-center leading-snug font-semibold text-foreground hyphens-none hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            {t("free.cta")}
+          </Link>
+        </div>
       </section>
 
       <section aria-labelledby="included-title" className="mt-14 sm:mt-20">

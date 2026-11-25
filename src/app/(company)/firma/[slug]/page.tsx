@@ -45,12 +45,15 @@ export default async function CompanyPublicPage({ params, searchParams }: PagePr
   const company = await loadCompany(slug);
   if (!company) notFound();
   const supabase = await createClient();
-  const [photos, booking] = await Promise.all([
+  const [photos, booking, takes] = await Promise.all([
     getPagePhotos(company.slug),
     supabase.rpc("company_page_booking", { page_slug: company.slug }).maybeSingle(),
+    supabase.rpc("company_takes_requests", { page_slug: company.slug }),
   ]);
+  // The free plan "Katalog": contact details only, no request form.
+  const takesRequests = takes.data !== false;
   // With free times switched on, the request form offers them; otherwise a wished-for day.
-  const freeTimes = (booking.data as { free_times: boolean } | null)?.free_times === true;
+  const freeTimes = takesRequests && (booking.data as { free_times: boolean } | null)?.free_times === true;
   const [slots, customer] = await Promise.all([
     freeTimes ? supabase.rpc("company_time_slots", { page_slug: company.slug }) : null,
     getCustomerAccount(),
@@ -74,6 +77,7 @@ export default async function CompanyPublicPage({ params, searchParams }: PagePr
       photos={photos}
       slots={slots && !slots.error ? ((slots.data ?? []) as FreeSlot[]) : null}
       customer={customer ? { name: customer.name, prefill: prefill! } : null}
+      takesRequests={takesRequests}
     />
   );
 }

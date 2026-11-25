@@ -56,7 +56,7 @@
       }
     },
     "contactTitle": "Norite išbandyti MaskinGo?",
-    "contactBody": "Tinka ir mažoms, ir didelėms įmonėms, net jei dirbate vienas. Visuose planuose yra visos funkcijos, o kaina priklauso tik nuo to, kiek jūsų yra. Klausimų? Parašykite mums.",
+    "contactBody": "Tinka ir mažoms, ir didelėms įmonėms, net jei dirbate vienas. Visuose mokamuose planuose yra visos funkcijos, o kaina priklauso tik nuo to, kiek jūsų yra. Klausimų? Parašykite mums.",
     "seePrices": "Visos kainos",
     "showcase": {
       "calendarAlt": "MaskinGo dienos kalendorius: technika eilutėmis, užsakymai su klientu ir vairuotoju laiko juostoje nuo 06 iki 19 val.",
@@ -64,7 +64,8 @@
       "caption": "Tikri MaskinGo ekranai su išgalvotais duomenimis: biuro kalendorius ir vairuotojo telefonas."
     },
     "findTitle": "Ieškote technikos rangovo, krano ar transporto?",
-    "findLead": "Ieškokite MaskinGo įmonių pagal paslaugą ir vietą ir siųskite užklausą tiesiai įmonei. Klientams nemokamai."
+    "findLead": "Ieškokite MaskinGo įmonių pagal paslaugą ir vietą ir siųskite užklausą tiesiai įmonei. Klientams nemokamai.",
+    "freeLine": "Nemokamai: tik įmonės puslapis kataloge su kontaktais, 0 kr."
   },
   "Nav": {
     "home": "MaskinGo pradžia",
@@ -1729,19 +1730,19 @@
   },
   "Billing": {
     "title": "Abonementas",
-    "lead": "Įmonės MaskinGo planas. Visuose planuose yra visos funkcijos; jie skiriasi tik žmonių skaičiumi įmonėje.",
+    "lead": "Įmonės MaskinGo planas. Visuose mokamuose planuose yra visos funkcijos; jie skiriasi tik žmonių skaičiumi įmonėje.",
     "status": {
       "trial": "Nemokamas bandymas: liko {days, plural, one {# diena} few {# dienos} other {# dienų}}",
       "trialLead": "Bandant kortelės nereikia. Nemokamai iki {date}",
       "trialEnded": "Nemokamas bandymas baigėsi",
-      "trialEndedLead": "Pasirinkite planą, kad galėtumėte toliau naudotis MaskinGo.",
+      "trialEndedLead": "Įmonė dabar naudoja nemokamą planą: jos puslapis rodomas kataloge su kontaktais. Pasirinkite planą, kad vėl galėtumėte naudotis visu MaskinGo.",
       "active": "Planas {plan}",
       "activeRenews": "Atsinaujina {date}",
       "activeEnding": "Vėl įjungti galite per „Kortelė, kvitai ir atšaukimas“. Baigiasi {date}",
       "pastDue": "Mokėjimas nepavyko",
       "pastDueLead": "Stripe nepavyko nuskaičiuoti mokėjimo. Atnaujinkite kortelę per „Kortelė, kvitai ir atšaukimas“.",
       "ended": "Abonementas baigėsi",
-      "endedLead": "Pasirinkite planą, kad pradėtumėte iš naujo."
+      "endedLead": "Įmonė dabar naudoja nemokamą planą: jos puslapis rodomas kataloge su kontaktais. Pasirinkite planą, kad pradėtumėte iš naujo."
     },
     "people": "Įmonėje {taken, plural, one {# žmogus} few {# žmonės} other {# žmonių}}",
     "peopleOf": "Plane {taken} iš {seats} žmonių",
@@ -1780,8 +1781,8 @@
       "pastDue": "Paskutinis mokėjimas nepavyko.",
       "action": "Pasirinkti planą",
       "fix": "Atnaujinti kortelę",
-      "readOnly": "Abonementas neaktyvus, todėl duomenis galima tik peržiūrėti.",
-      "readOnlyMember": "Įmonės abonementas neaktyvus, todėl duomenis galima tik peržiūrėti. Kreipkitės į įmonės savininką."
+      "readOnly": "Nemokamas planas: įmonės puslapis rodomas kataloge, visa kita galima tik skaityti.",
+      "readOnlyMember": "Įmonė naudoja nemokamą planą: jos puslapis rodomas kataloge, visa kita galima tik skaityti. Kreipkitės į įmonės savininką."
     },
     "plansLeadNoVat": "PVM (MVA) neskaičiuojamas.",
     "noVat": "Be PVM priedo",
@@ -1793,7 +1794,7 @@
     "metaDescription": "MaskinGo nuo 290 kr per mėnesį. Visos funkcijos visuose planuose, 30 dienų nemokamas bandymas be kortelės ir 2 mėnesiai nemokamai mokant metams.",
     "badge": "30 dienų nemokamai, be mokėjimo kortelės",
     "title": "Paprastos kainos pagal komandos dydį",
-    "lead": "Visi planai turi visas funkcijas. Planas priklauso tik nuo to, kiek įmonės žmonių naudoja MaskinGo.",
+    "lead": "Visi mokami planai turi visas funkcijas. Planas priklauso tik nuo to, kiek įmonės žmonių naudoja MaskinGo.",
     "plansTitle": "Planai",
     "plans": {
       "solo": "Solo",
@@ -1809,7 +1810,7 @@
     "vatNotRegistered": "MaskinGo dar neįregistruota PVM mokėtoja, todėl PVM nepridedamas.",
     "vatExcluded": "Visos kainos be PVM.",
     "cta": "Išbandyti nemokamai 30 dienų",
-    "includedTitle": "Įeina į visus planus",
+    "includedTitle": "Įeina į visus mokamus planus",
     "included": [
       "Užsakymai ir kalendorius, taip pat pagal mašinas",
       "Vairuotojo programa telefone su Važiuoju, Atvykau ir Baigiau",
@@ -1829,7 +1830,7 @@
       },
       {
         "q": "Kas bus, kai baigsis bandymas?",
-        "a": "Norėdami tęsti, programoje pasirenkate planą. Niekas nenuskaičiuojama, kol patys nepasirenkate plano ir neįvedate kortelės."
+        "a": "Norėdami tęsti, programoje pasirenkate planą. Jei nepasirenkate, įmonė pereina į nemokamą planą: įmonės puslapis lieka kataloge su kontaktais, o visa kita galima tik skaityti. Nieko nenuskaitoma, kol patys nepasirenkate plano ir neįvedate kortelės."
       },
       {
         "q": "Ar galime vėliau pakeisti planą?",
@@ -1839,7 +1840,15 @@
         "q": "Kaip mokame?",
         "a": "Kortele per Stripe, kas mėnesį arba kas metus. Kvitai ir atsisakymas yra programoje."
       }
-    ]
+    ],
+    "free": {
+      "name": "Nemokamas",
+      "what": "Tik įmonės puslapis kataloge",
+      "body": "Įmonė rodoma MaskinGo kataloge su kontaktais, logotipu ir nuotraukomis. Klientai skambina ar rašo tiesiogiai.",
+      "not": "Be užklausų, laisvų laikų, užsakymų ir sąskaitų.",
+      "after": "Jei po bandomojo laikotarpio plano nepasirinksite, įmonė pereis čia savaime.",
+      "cta": "Sukurti nemokamą įmonės puslapį"
+    }
   },
   "Services": {
     "crane_truck": "Kraninis sunkvežimis",
@@ -1938,6 +1947,7 @@
     "services": "Paslaugos",
     "area": "Kur dirbame",
     "contact": "Kontaktai",
+    "contactDirect": "{company} nepriima užklausų per MaskinGo. Skambinkite arba rašykite tiesiogiai.",
     "logoAlt": "{name} logotipas",
     "photos": "Nuotraukos",
     "photoAlt": "{name} nuotrauka nr. {number}",
@@ -2075,7 +2085,7 @@
     "modeOff": "Tik užklausos",
     "modeOffHint": "Klientai aprašo darbą ir nurodo pageidaujamą dieną.",
     "length": "Vieno užsakymo trukmė",
-    "lengthHours": "{hours, plural, one {# valanda} few {# valandos} other {# valandų}}",
+    "lengthHours": "{hours, plural, one {# valanda} few {# valandos} many {# valandos} other {# valandų}}",
     "lengthDay": "Visa diena (8 valandos)",
     "lengthHint": "Kiek trunka vienas kliento darbas. Pasirinktas laikas užimamas tiek laiko.",
     "step": "Kaip dažnai prasideda laikas",
