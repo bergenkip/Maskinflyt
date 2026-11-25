@@ -188,7 +188,7 @@ export function RequestForm({
         )}
       </div>
       {slots !== null && slots.length === 0 && <p className="-mt-2 text-sm text-muted">{t("noTimes")}</p>}
-      {showSlots && <SlotPicker slots={slots} initial={values?.wantedStart ?? ""} error={error("wantedStart")} />}
+      {showSlots && <SlotPicker slots={slots} from={minDate} initial={values?.wantedStart ?? ""} error={error("wantedStart")} />}
 
       <div className="grid gap-1.5">
         <label htmlFor="request-description" className="font-medium">
@@ -234,54 +234,192 @@ export function RequestForm({
   );
 }
 
-// The free times: first the day, then a time on it. "No particular time" sends none.
-function SlotPicker({ slots, initial, error }: { slots: FreeSlot[]; initial: string; error?: string }) {
+// The next two weeks as a small month calendar (Li, 2026-11-25): open days with
+// free times (blue dot), full days (grey dot) and closed days (struck through),
+// each also said in words. A tapped day shows its times: free ones to pick, taken
+// ones marked "Taken". "No particular time" sends none.
+const WINDOW_DAYS = 14;
+
+function SlotPicker({ slots, from, initial, error }: { slots: FreeSlot[]; from: string; initial: string; error?: string }) {
   const t = useTranslations("JobRequestForm");
   const format = useFormatter();
-  const days = groupSlots(slots);
+  const byDay = new Map(groupSlots(slots).map((d) => [d.day, d.slots]));
+  const isFree = (slot: FreeSlot) => slot.free !== false;
   const initialDay = slots.find((slot) => slot.starts_at === initial)?.day ?? "";
   const [day, setDay] = useState(initialDay);
-  const chosen = days.find((d) => d.day === day);
-  const dayLabel = (iso: string) =>
-    format.dateTime(new Date(`${iso}T12:00:00Z`), {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      timeZone: "UTC",
-    });
+
+  // Dates are plain YYYY-MM-DD strings, read at noon UTC so no time zone moves them a day.
+  const at = (iso: string) => new Date(`${iso}T12:00:00Z`);
+  const iso = (date: Date) => date.toISOString().slice(0, 10);
+  const plus = (date: string, days: number) => iso(new Date(at(date).getTime() + days * 86_400_000));
+  const last = plus(from, WINDOW_DAYS - 1);
+  const months = [...new Set([from.slice(0, 7), last.slice(0, 7)])];
+  const [month, setMonth] = useState(initialDay.slice(0, 7) || months[0]);
+  const monthIndex = months.indexOf(month);
+
+  const dayLabel = (date: string) =>
+    format.dateTime(at(date), { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+  type DayKind = "free" | "full" | "closed" | "outside";
+  const kindOf = (date: string): DayKind => {
+    if (date < from || date > last) return "outside";
+    const times = byDay.get(date);
+    if (!times) return "closed";
+    return times.some(isFree) ? "free" : "full";
+  };
+  const [year, monthNumber] = month.split("-").map(Number);
+  const first = new Date(Date.UTC(year, monthNumber - 1, 1, 12));
+  const lead = (first.getUTCDay() + 6) % 7; // Monday first, as in Norway
+  const length = new Date(Date.UTC(year, monthNumber, 0, 12)).getUTCDate();
+  const cells: (string | null)[] = [
+    ...Array.from({ length: lead }, () => null),
+    ...Array.from({ length }, (_, i) => `${month}-${String(i + 1).padStart(2, "0")}`),
+  ];
+  // Weekday names from a known Monday (2024-01-01).
+  const weekdays = Array.from({ length: 7 }, (_, i) =>
+    format.dateTime(new Date(Date.UTC(2024, 0, 1 + i, 12)), { weekday: "short", timeZone: "UTC" }),
+  );
+  const chosen = byDay.get(day);
+  const firstFree = chosen?.find(isFree)?.starts_at;
+  const navButton =
+    "flex size-11 items-center justify-center rounded-lg text-foreground hover:bg-accent-soft disabled:opacity-30 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  const dot = "inline-block size-1.5 shrink-0 rounded-full";
 
   return (
-    <fieldset className="grid gap-3" aria-describedby={`request-times-hint${error ? " request-times-error" : ""}`}>
+    <fieldset className="grid min-w-0 gap-3" aria-describedby={`request-times-hint${error ? " request-times-error" : ""}`}>
       <legend className="mb-1.5 font-medium">{t("times")}</legend>
       <p id="request-times-hint" className="-mt-1 text-sm text-muted">
         {t("timesHint")}
       </p>
-      <select aria-label={t("date")} value={day} onChange={(event) => setDay(event.target.value)} className={`${control} sm:max-w-xs`}>
-        <option value="">{t("timeNone")}</option>
-        {days.map((d) => (
-          <option key={d.day} value={d.day}>
-            {dayLabel(d.day)}
-          </option>
-        ))}
-      </select>
-      {chosen && (
-        <div role="radiogroup" aria-label={dayLabel(chosen.day)} className="flex flex-wrap gap-2">
-          {chosen.slots.map((slot, index) => (
-            <label
-              key={slot.starts_at}
-              className="relative flex min-h-11 min-w-20 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold tabular-nums has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-on-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
-            >
-              <input
-                type="radio"
-                name="wantedStart"
-                value={slot.starts_at}
-                defaultChecked={initial ? slot.starts_at === initial : index === 0}
-                className="absolute -inset-px m-0 cursor-pointer appearance-none rounded-lg opacity-0"
-              />
-              {slot.start_time}
-            </label>
+
+      <div className="w-full max-w-sm rounded-xl border border-border p-2 sm:p-3">
+        <div className="flex items-center justify-between gap-2">
+          <button type="button" className={navButton} onClick={() => setMonth(months[monthIndex - 1])} disabled={monthIndex <= 0} aria-label={t("prevMonth")}>
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 6l-6 6 6 6" />
+            </svg>
+          </button>
+          <p aria-live="polite" className="font-semibold first-letter:uppercase">
+            {format.dateTime(first, { month: "long", year: "numeric", timeZone: "UTC" })}
+          </p>
+          <button
+            type="button"
+            className={navButton}
+            onClick={() => setMonth(months[monthIndex + 1])}
+            disabled={monthIndex >= months.length - 1}
+            aria-label={t("nextMonth")}
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+        <div aria-hidden="true" className="mt-1 grid grid-cols-7 text-center text-xs font-medium text-muted uppercase">
+          {weekdays.map((name) => (
+            <span key={name} className="py-1">
+              {name.replace(".", "")}
+            </span>
           ))}
         </div>
+        <div role="group" aria-label={t("date")} className="grid grid-cols-7">
+          {cells.map((cell, index) => {
+            if (!cell) return <span key={`blank-${index}`} />;
+            const kind = kindOf(cell);
+            const selected = cell === day;
+            const times = byDay.get(cell) ?? [];
+            const label =
+              kind === "free"
+                ? t("dayFree", { date: dayLabel(cell), count: times.filter(isFree).length })
+                : kind === "full"
+                  ? t("dayFull", { date: dayLabel(cell) })
+                  : kind === "closed"
+                    ? t("dayClosed", { date: dayLabel(cell) })
+                    : dayLabel(cell);
+            const look = selected
+              ? "bg-accent font-semibold text-on-accent"
+              : kind === "free"
+                ? "font-semibold text-foreground hover:bg-accent-soft"
+                : kind === "full"
+                  ? "text-muted hover:bg-accent-soft"
+                  : kind === "closed"
+                    ? "text-muted line-through decoration-2"
+                    : "text-muted/40";
+            return (
+              <button
+                key={cell}
+                type="button"
+                data-day={cell}
+                data-kind={kind}
+                disabled={kind === "closed" || kind === "outside"}
+                aria-pressed={kind === "free" || kind === "full" ? selected : undefined}
+                aria-label={label}
+                onClick={() => setDay(selected ? "" : cell)}
+                className={`relative mx-auto flex size-11 items-center justify-center rounded-full tabular-nums focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent ${look}`}
+              >
+                {Number(cell.slice(8))}
+                {!selected && (kind === "free" || kind === "full") && (
+                  <span aria-hidden="true" className={`absolute bottom-1.5 ${dot} ${kind === "free" ? "bg-accent" : "bg-muted/60"}`} />
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <ul aria-hidden="true" className="mt-2 flex flex-wrap gap-x-4 gap-y-1 border-t border-border px-1 pt-2 text-xs text-muted">
+          <li className="flex items-center gap-1.5">
+            <span className={`${dot} bg-accent`} />
+            <span>{t("legendFree")}</span>
+          </li>
+          <li className="flex items-center gap-1.5">
+            <span className={`${dot} bg-muted/60`} />
+            <span>{t("legendFull")}</span>
+          </li>
+          <li className="flex items-center gap-1.5">
+            <span className="line-through decoration-2">12</span>
+            <span>{t("legendClosed")}</span>
+          </li>
+        </ul>
+      </div>
+
+      {chosen ? (
+        <div className="grid gap-2">
+          <p className="font-medium first-letter:uppercase">{dayLabel(day)}</p>
+          <div role="radiogroup" aria-label={dayLabel(day)} className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
+            {chosen.map((slot) =>
+              isFree(slot) ? (
+                <label
+                  key={slot.starts_at}
+                  className="relative flex min-h-11 min-w-20 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold tabular-nums has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-on-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
+                >
+                  <input
+                    type="radio"
+                    name="wantedStart"
+                    value={slot.starts_at}
+                    defaultChecked={initial ? slot.starts_at === initial : slot.starts_at === firstFree}
+                    className="absolute -inset-px m-0 cursor-pointer appearance-none rounded-lg opacity-0"
+                  />
+                  {slot.start_time}
+                </label>
+              ) : (
+                <span
+                  key={slot.starts_at}
+                  className="flex min-h-11 min-w-20 flex-col items-center justify-center rounded-lg border border-dashed border-border px-4 py-1 text-muted tabular-nums"
+                >
+                  <span className="leading-tight font-semibold line-through">{slot.start_time}</span>
+                  <span className="text-xs leading-tight">{t("taken")}</span>
+                </span>
+              ),
+            )}
+          </div>
+          {!firstFree && <p className="text-sm text-muted">{t("dayFullHint")}</p>}
+          <button
+            type="button"
+            onClick={() => setDay("")}
+            className="flex min-h-11 w-fit items-center font-medium text-accent underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            {t("timeNone")}
+          </button>
+        </div>
+      ) : (
+        <p className="text-sm text-muted">{t("pickDay")}</p>
       )}
       {error && <FieldError id="request-times-error">{error}</FieldError>}
     </fieldset>

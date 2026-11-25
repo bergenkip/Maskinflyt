@@ -83,7 +83,8 @@
     "invoices": "Sąskaitos",
     "invoicesWaiting": "{count, plural, one {laukia # darbas} few {laukia # darbai} other {laukia # darbų}}",
     "hours": "Valandos",
-    "directory": "Rasti įmonę"
+    "directory": "Rasti įmonę",
+    "myAccount": "Mano paskyra"
   },
   "Auth": {
     "loginTitle": "Prisijunkite prie MaskinGo",
@@ -1985,13 +1986,24 @@
     "times": "Pasirinkite laiką (nebūtina)",
     "timesHint": "Laisvi artimiausių dviejų savaičių laikai. Laiką patvirtina įmonė.",
     "timeNone": "Be konkretaus laiko",
+    "prevMonth": "Ankstesnis mėnuo",
+    "nextMonth": "Kitas mėnuo",
+    "dayFree": "{date}: {count, plural, one {# laisvas laikas} few {# laisvi laikai} other {# laisvų laikų}}",
+    "pickDay": "Paspauskite dieną su mėlynu tašku, kad pamatytumėte laisvus laikus. Galite siųsti ir be laiko.",
     "noTimes": "Artimiausias dvi savaites laisvų laikų nėra. Vietoj to nurodykite pageidaujamą dieną.",
     "signedInAs": "Prisijungta kaip {name}. Jūsų duomenys užpildyti, o užklausa išsaugoma jūsų užklausų sąraše.",
     "seeMyRequests": "Žiūrėti savo užklausas",
     "inviteTitle": "Užsakykite greičiau su kliento paskyra",
     "inviteText": "Jūsų duomenys užpildomi automatiškai, visas užklausas matote vienoje vietoje, o įmonė mato, kad jūsų el. paštas patvirtintas. Darbą vis tiek patvirtina įmonė.",
     "inviteSignup": "Sukurti kliento paskyrą",
-    "inviteLogin": "Prisijungti"
+    "inviteLogin": "Prisijungti",
+    "dayFull": "{date}: užimta",
+    "dayClosed": "{date}: nedirba",
+    "legendFree": "Laisvi laikai",
+    "legendFull": "Viskas užimta",
+    "legendClosed": "Nedirba",
+    "taken": "Užimta",
+    "dayFullHint": "Visi šios dienos laikai užimti. Pasirinkite kitą dieną arba siųskite be laiko."
   },
   "JobRequests": {
     "title": "Užklausos",

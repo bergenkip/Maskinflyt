@@ -134,19 +134,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* For customers: the free catalog of companies (stage 15d), searchable at once. */}
-          <section
-            aria-labelledby="find-title"
-            className="mt-8 grid gap-4 rounded-xl border border-accent/40 bg-accent-soft p-4 sm:mt-10 sm:p-6"
-          >
-            <div className="grid gap-1">
-              <h2 id="find-title" className="text-xl font-semibold [overflow-wrap:anywhere]">
-                {t("findTitle")}
-              </h2>
-              <p className="text-muted">{t("findLead")}</p>
-            </div>
-            <DirectorySearch id="home-find" />
-          </section>
 
           <ProductShowcase />
 
@@ -205,6 +192,20 @@ export default function Home() {
           </nav>
 
           <TrialOffer />
+
+          {/* For customers: the free catalog of companies (stage 15d), at the end of the page (Li, 2026-11-25). */}
+          <section
+            aria-labelledby="find-title"
+            className="mt-14 grid gap-4 rounded-xl border border-accent/40 bg-accent-soft p-4 sm:mt-20 sm:p-6"
+          >
+            <div className="grid gap-1">
+              <h2 id="find-title" className="text-xl font-semibold [overflow-wrap:anywhere]">
+                {t("findTitle")}
+              </h2>
+              <p className="text-muted">{t("findLead")}</p>
+            </div>
+            <DirectorySearch id="home-find" />
+          </section>
         </main>
 
         <SiteFooter />

@@ -1,15 +1,22 @@
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Brand } from "@/components/brand";
-import { SearchIcon } from "@/components/icons";
+import { SearchIcon, UserIcon } from "@/components/icons";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { getCustomerAccount } from "@/lib/customer-account-server";
 import { DIRECTORY_PATH } from "@/lib/directory";
+import { getSupabaseEnv } from "@/lib/supabase/env";
+import { getUserId } from "@/lib/supabase/server";
 
 // Header for pages visible without signing in. Sticky and full width like the
 // app header, so Safari colours the strip above it with the same colour.
-export function SiteHeader({ showLogin = true }: { showLogin?: boolean }) {
-  const t = useTranslations("Nav");
+// Signed in, the corner leads back to the person's own pages instead of "Sign in":
+// a customer to /kunde, everyone else to the app.
+export async function SiteHeader({ showLogin = true }: { showLogin?: boolean }) {
+  const t = await getTranslations("Nav");
+  const userId = getSupabaseEnv() ? await getUserId() : null;
+  const home = userId ? ((await getCustomerAccount()) ? "/kunde" : "/app") : null;
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-surface pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]">
@@ -27,7 +34,16 @@ export function SiteHeader({ showLogin = true }: { showLogin?: boolean }) {
           </Link>
           <LanguageSwitcher />
           <ThemeToggle />
-          {showLogin && (
+          {home ? (
+            <Link
+              href={home}
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 font-medium whitespace-nowrap sm:px-3 text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              {/* Phones show the person icon only, so long words ("Mano paskyra") never push the page sideways. */}
+              <UserIcon className="size-5 shrink-0 sm:hidden" />
+              <span className="sr-only sm:not-sr-only">{t("myAccount")}</span>
+            </Link>
+          ) : showLogin && (
             <Link
               href="/login"
               className="flex min-h-11 items-center rounded-lg px-2 font-medium whitespace-nowrap sm:px-3 text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"

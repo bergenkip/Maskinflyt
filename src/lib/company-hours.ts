@@ -72,7 +72,8 @@ export function validateHours(formData: FormData): {
   };
 }
 
-export type FreeSlot = { day: string; start_time: string; starts_at: string };
+// `free` is false for a time that is already taken (company_time_slots); company_free_slots leaves it out.
+export type FreeSlot = { day: string; start_time: string; starts_at: string; free?: boolean };
 
 // Free times by day, in the order they come.
 export function groupSlots(slots: FreeSlot[]): { day: string; slots: FreeSlot[] }[] {
