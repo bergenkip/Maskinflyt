@@ -462,7 +462,8 @@
     "text": "MaskinGo · Sukurta Norvegijos rangovams",
     "linksLabel": "Nuorodos",
     "pricing": "Kainos",
-    "directory": "Raskite įmonę"
+    "directory": "Raskite įmonę",
+    "guides": "Gidai"
   },
   "Mfa": {
     "verifyTitle": "Patvirtinkite, kad tai jūs",
@@ -2194,5 +2195,304 @@
     "cancelledSubject": "{company} atšaukė jūsų darbą",
     "cancelledIntro": "Deja, {company} atšaukė jūsų darbą.",
     "cancelledTime": "Buvo suplanuota"
+  },
+  "Guides": {
+    "navName": "Gidai",
+    "metaTitle": "Gidai technikos, kranų ir transporto įmonėms · MaskinGo",
+    "metaDescription": "Praktiniai gidai apie darbo laiko apskaitą, viršvalandžius, sąskaitas už technikos valandas, minimalų laiką ir vakaro priedus Norvegijoje.",
+    "badge": "Gidai",
+    "title": "Gidai technikos, kranų ir transporto įmonėms",
+    "lead": "Trumpi, praktiški gidai apie valandas, viršvalandžius ir sąskaitas tiems, kurie dirba su technika, kranais ar transportu.",
+    "guideBadge": "Gidas",
+    "readGuide": "Skaityti gidą",
+    "updated": "Atnaujinta {date}",
+    "disclaimer": "Tai bendra informacija, ne teisinė konsultacija. Pasitikrinkite savo sutartis ir, jei abejojate, klauskite buhalterio.",
+    "faqTitle": "Klausimai ir atsakymai",
+    "relatedTitle": "Daugiau apie MaskinGo",
+    "moreTitle": "Daugiau gidų",
+    "allGuides": "Visi gidai",
+    "timesheet": {
+      "navName": "Darbo laiko žiniaraštis statyboms",
+      "metaTitle": "Darbo laiko žiniaraštis statyboms: pavyzdys ir taisyklės · MaskinGo",
+      "metaDescription": "Ką turi apimti darbo laiko žiniaraštis statybose ir transporte, kaip Norvegijoje skaičiuojami viršvalandžiai, savaitės pavyzdys ir dažniausios klaidos.",
+      "summary": "Ką turi apimti žiniaraštis, savaitės pavyzdys ir viršvalandžių ribos.",
+      "title": "Darbo laiko žiniaraštis statyboms: pavyzdys ir taisyklės",
+      "lead": "Geras žiniaraštis reiškia teisingą atlyginimą, teisingą sąskaitą ir mažiau klausimų. Štai ką jis turi apimti, paprastas pavyzdys ir dažniausios klaidos.",
+      "sections": [
+        {
+          "heading": "Kodėl žiniaraštis svarbus",
+          "body": [
+            "Norvegijos darbo aplinkos įstatymo (arbeidsmiljøloven) 10-7 straipsnis reikalauja, kad darbdavys turėtų kiekvieno darbuotojo dirbto laiko apskaitą. Ta pati apskaita naudojama atlyginimui, viršvalandžiams ir sąskaitai klientui.",
+            "Kai valandos rašomos ant lapelių ir pateikiamos mėnesio pabaigoje, jos dažnai būna neišsamios. Biurui tenka skambinėti, o dalis valandų taip ir lieka neįtrauktos į sąskaitą."
+          ]
+        },
+        {
+          "heading": "Ką turi apimti žiniaraštis",
+          "list": [
+            "Darbuotojo vardą ir laikotarpį (savaitę ar mėnesį)",
+            "Kiekvienos dienos datą, pradžią ir pabaigą",
+            "Pertraukas",
+            "Užsakymą ar klientą, kuriam skirtos valandos",
+            "Naudotą techniką ar automobilį",
+            "Viršvalandžius atskirai nuo įprastų valandų",
+            "Darbuotojo patvirtinimą su data"
+          ]
+        },
+        {
+          "heading": "Pavyzdys: technikos operatoriaus savaitė",
+          "body": [
+            "Taip gali atrodyti savaitė. Skaičiai yra tik pavyzdys."
+          ],
+          "table": {
+            "caption": "Žiniaraštis, 48 savaitė",
+            "head": [
+              "Diena",
+              "Pradžia–pabaiga",
+              "Pertrauka",
+              "Valandos",
+              "Užsakymas"
+            ],
+            "rows": [
+              [
+                "Pr",
+                "07:00–15:30",
+                "0:30",
+                "8:00",
+                "Žemės darbai, Fana"
+              ],
+              [
+                "An",
+                "07:00–17:30",
+                "0:30",
+                "10:00",
+                "Žemės darbai, Fana"
+              ],
+              [
+                "Tr",
+                "07:00–15:00",
+                "0:30",
+                "7:30",
+                "Kasimas, Åsane"
+              ],
+              [
+                "Kt",
+                "06:30–15:00",
+                "0:30",
+                "8:00",
+                "Kasimas, Åsane"
+              ],
+              [
+                "Pn",
+                "07:00–14:30",
+                "0:30",
+                "7:00",
+                "Grunto vežimas"
+              ]
+            ]
+          },
+          "after": [
+            "Savaitėje 40,5 valandos. Jei riba yra 9 valandos per dieną, 1 antradienio valanda yra viršvalandis, o likusios yra įprastas laikas."
+          ]
+        },
+        {
+          "heading": "Viršvalandžiai: įstatymo ribos",
+          "body": [
+            "Pagal darbo aplinkos įstatymą įprastas darbo laikas paprastai yra ne daugiau kaip 9 valandos per parą ir 40 valandų per savaitę. Darbas virš šių ribų yra viršvalandžiai, o įstatymas reikalauja ne mažesnio kaip 40 procentų priedo.",
+            "Daugelis šakos įmonių turi kolektyvinę ar savo sutartį su kitomis ribomis ir didesniais priedais, pvz. vakarui ir nakčiai. Galioja sutartis, todėl ją pasitikrinkite."
+          ]
+        },
+        {
+          "heading": "Dažniausios klaidos",
+          "list": [
+            "Valandos užrašomos po kelių dienų, iš atminties",
+            "Pertraukos pamirštamos arba atimamos skirtingai",
+            "Kelionė į objektą ir atgal žymima skirtingai kiekvieno darbuotojo",
+            "Viršvalandžiai skaičiuojami rankiniu būdu skaičiuoklėje",
+            "Žiniaraštį galima keisti jau išmokėjus atlyginimą"
+          ]
+        },
+        {
+          "heading": "Popierius, skaičiuoklė ar programa?",
+          "body": [
+            "Popierius ir skaičiuoklė tinka, kai jūsų nedaug, bet valandas tenka iš naujo suvesti atlyginimui ir sąskaitai. Su programa laikas žymimas darbo metu, o tos pačios valandos naudojamos toliau.",
+            "MaskinGo vairuotojas telefone spaudžia „Važiuoju“, „Atvykau“ ir „Baigiau“. Biuras patvirtina valandas, o darbuotojas patvirtina žiniaraštį atlyginimui. Viršvalandžiai skaičiuojami pagal jūsų nustatytas taisykles, o patvirtintas žiniaraštis užrakinamas ir PDF formatu išsiunčiamas buhalteriui."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar žiniaraštį reikia pasirašyti?",
+          "a": "Įstatymas parašo nereikalauja, bet darbuotojo patvirtinimas padeda išvengti nesutarimų vėliau."
+        },
+        {
+          "q": "Kiek laiko reikia saugoti žiniaraščius?",
+          "a": "Žiniaraščiai, kuriais remiamasi skaičiuojant atlyginimą ir sąskaitas, yra apskaitos dokumentai. Paklauskite buhalterio, kiek laiko juos reikia saugoti."
+        },
+        {
+          "q": "Ar kelionė į objektą yra darbo laikas?",
+          "a": "Tai priklauso nuo sutarties ir nuo to, kur prasideda darbo diena. Pasitikrinkite kolektyvinę ar darbo sutartį ir žymėkite visiems vienodai."
+        }
+      ]
+    },
+    "invoicing": {
+      "navName": "Sąskaitos už technikos valandas",
+      "metaTitle": "Sąskaitos už technikos valandas: kaip tai daryti · MaskinGo",
+      "metaDescription": "Kaip išrašyti sąskaitą už ekskavatoriaus, krano ar sunkvežimio valandas: valandinis įkainis, minimalus laikas, priedai, papildomos eilutės ir privalomi duomenys.",
+      "summary": "Valandinis įkainis, minimalus laikas, papildomos eilutės ir privalomi sąskaitos duomenys.",
+      "title": "Kaip išrašyti sąskaitą už technikos valandas",
+      "lead": "Daug technikos įmonių praranda pinigus už valandas, kurios taip ir neįtraukiamos į sąskaitą. Čia aptariame pagrindą, kainas ir ką turi apimti sąskaita.",
+      "sections": [
+        {
+          "heading": "Pradėkite nuo patvirtintų valandų",
+          "body": [
+            "Sąskaita niekada nebus geresnė už valandas, kuriomis ji remiasi. Žymėkite valandas darbo metu, o biuras tegul jas patvirtina prieš išrašant sąskaitą.",
+            "Jei vairuotojas ar operatorius suklydo, pataisykite valandas nurodydami priežastį. Tada visi žinos, kodėl skaičius pasikeitė, jei klientas paklaus."
+          ]
+        },
+        {
+          "heading": "Valandinis įkainis, kliento kaina ir minimalus laikas",
+          "body": [
+            "Dauguma įmonių turi valandinį įkainį kiekvienai technikai. Nuolatiniai klientai dažnai turi savo sutartą kainą, o daug technikos turi minimalų laiką, pvz. 2 valandas. Tada 1 valandos ir 15 minučių darbas apmokestinamas kaip 2 valandos.",
+            "Darbas po tam tikros valandos gali turėti vakaro priedą: procentais prie valandinio įkainio arba atskirą valandinį įkainį. Užsirašykite susitarimą, kad kaskart būtų vienodai."
+          ]
+        },
+        {
+          "heading": "Tai, kas nėra valandos",
+          "body": [
+            "Didelė dalis to, kas įtraukiama į sąskaitą, nėra valandos. Įrašykite tai atskiromis eilutėmis su kiekiu, vienetu ir kaina:"
+          ],
+          "list": [
+            "Keltas ir kelių mokesčiai",
+            "Skalda, žvyras ir gruntas tonomis",
+            "Važiavimas kilometrais ar reisais",
+            "Įrangos nuoma parai",
+            "Atliekų priėmimas ir mokesčiai"
+          ]
+        },
+        {
+          "heading": "Ką turi apimti sąskaita",
+          "body": [
+            "Norvegijos apskaitos taisyklės (bokføringsforskriften) nustato, ką turi apimti sąskaita. Be kita ko:"
+          ],
+          "list": [
+            "Eilės tvarka einantį sąskaitos numerį ir datą",
+            "Jūsų pavadinimą ir organizacijos numerį, su MVA, jei esate PVM mokėtojas",
+            "Žodį „Foretaksregisteret“, jei įmonė ten įregistruota",
+            "Kliento pavadinimą ir adresą",
+            "Kas buvo atlikta, kada ir kur",
+            "Kainą, sumą ir PVM",
+            "Mokėjimo terminą"
+          ],
+          "after": [
+            "Sąrašas nėra išsamus. Jei abejojate, klauskite buhalterio."
+          ]
+        },
+        {
+          "heading": "Išrašykite sąskaitą tą pačią savaitę",
+          "body": [
+            "Kuo daugiau laiko praeina nuo darbo, tuo daugiau valandų pamirštama ir tuo vėliau ateina pinigai. Pastovi tvarka, pvz. kiekvieną penktadienį, labai padeda.",
+            "Jei sąskaita išsiųsta su klaida, jos negalima keisti ar ištrinti. Išrašykite kreditinę sąskaitą ir naują sąskaitą."
+          ]
+        },
+        {
+          "heading": "Kaip tai daro MaskinGo",
+          "body": [
+            "Kai darbo laikas patvirtintas, MaskinGo sukuria sąskaitos juodraštį su technikos valandiniu įkainiu, kliento kaina, minimaliu laiku ir vakaro priedu. Jūs pridedate savo eilutes ir išsiunčiate PDF el. paštu, kai paspaudžiate „Siųsti sąskaitą“. Niekas nesiunčiama automatiškai."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar į sąskaitą įtraukti kelionę į objektą?",
+          "a": "Tai lemia susitarimas su klientu. Daugelis kelionę įtraukia kaip valandas arba pagal kilometrus. Įrašykite tai į pasiūlymą, ir vėliau nebus ginčų."
+        },
+        {
+          "q": "Ar galiu pakeisti išsiųstą sąskaitą?",
+          "a": "Ne. Išsiųsta sąskaita taisoma kreditine sąskaita, o tada išsiunčiama nauja sąskaita su teisingais skaičiais."
+        },
+        {
+          "q": "Ar privalau siųsti EHF?",
+          "a": "Viešojo sektoriaus klientai reikalauja elektroninių sąskaitų (EHF). Privatūs klientai dažnai priima PDF el. paštu. Paklauskite kliento, ko jis reikalauja."
+        }
+      ]
+    },
+    "minimumTime": {
+      "navName": "Minimalus laikas ir vakaro priedas",
+      "metaTitle": "Minimalus laikas ir vakaro priedas kranams · MaskinGo",
+      "metaDescription": "Kaip veikia minimalus laikas ir vakaro priedas kranams ir technikai, su skaičiavimo pavyzdžiais, ir kaip tai įrašyti į pasiūlymą bei sąskaitą.",
+      "summary": "Kaip skaičiuojamas minimalus laikas ir vakaro priedas, su pavyzdžiais.",
+      "title": "Minimalus laikas ir vakaro priedas kranams",
+      "lead": "Minimalus laikas ir vakaro priedas įprasti kranams ir technikai, bet dažnai kelia klientų klausimų. Štai kaip jie veikia, su skaičiavimo pavyzdžiais.",
+      "sections": [
+        {
+          "heading": "Kas yra minimalus laikas?",
+          "body": [
+            "Minimalus laikas yra mažiausias valandų skaičius, už kurį moka klientas, kad ir koks trumpas būtų darbas. Automobilis turi atvažiuoti, krano įranga turi būti paruošta ir sudėta, o tuo metu jis negali atlikti kito darbo.",
+            "Koks minimalus laikas įprastas, priklauso nuo automobilio, regiono ir kliento. Svarbiausia, kad jis būtų įrašytas pasiūlyme ar sutartyje."
+          ]
+        },
+        {
+          "heading": "Skaičiavimo pavyzdys: trumpas darbas",
+          "body": [
+            "Krano valandinis įkainis 1 500 kr, minimalus laikas 2 valandos. Kainos yra tik pavyzdys."
+          ],
+          "list": [
+            "Dirbta: 1 valanda ir 15 minučių",
+            "Į sąskaitą: 2 valandos (minimalus laikas)",
+            "Suma: 2 × 1 500 kr = 3 000 kr be PVM"
+          ]
+        },
+        {
+          "heading": "Kas yra vakaro priedas?",
+          "body": [
+            "Vakaro priedas yra didesnė kaina už darbą po tam tikros valandos, pvz. po 17:00. Tai gali būti procentinis priedas prie valandinio įkainio, pvz. 50 %, arba atskiras vakaro valandinis įkainis.",
+            "Priedas paprastai taikomas tik valandoms po nurodyto laiko, ne visam darbui."
+          ]
+        },
+        {
+          "heading": "Skaičiavimo pavyzdys: darbas, kuris tęsiasi iki vakaro",
+          "body": [
+            "Tas pats kranas, vakaro priedas 50 % nuo 17:00. Darbas trunka nuo 15:30 iki 18:30 be pertraukos."
+          ],
+          "list": [
+            "15:30–17:00: 1,5 val. × 1 500 kr = 2 250 kr",
+            "17:00–18:30: 1,5 val. × 2 250 kr = 3 375 kr",
+            "Iš viso: 5 625 kr be PVM"
+          ]
+        },
+        {
+          "heading": "Aiškiai įrašykite tai pasiūlyme",
+          "body": [
+            "Klientai retai pyksta dėl minimalaus laiko, įrašyto pasiūlyme. Ginčus kelia staigmena sąskaitoje. Nurodykite:"
+          ],
+          "list": [
+            "Valandinį įkainį kiekvienam automobiliui ar technikai",
+            "Minimalų laiką ir ar jis taikomas užsakymui, ar dienai",
+            "Nuo kada taikomas vakaro priedas ir koks jis didelis",
+            "Ar kelionė, keltas ir kelių mokesčiai skaičiuojami papildomai"
+          ]
+        },
+        {
+          "heading": "Kaip tai daro MaskinGo",
+          "body": [
+            "Kiekvienas kranas ir technika turi savo valandinį įkainį, minimalų laiką ir vakaro priedą: procentais arba atskiru valandiniu įkainiu nuo nurodytos valandos. Klientas gali turėti savo kainą. Kai valandos patvirtintos, sąskaitos juodraštis pats apskaičiuoja minimalų laiką ir vakaro valandas, o jūs matote kiekvieną eilutę prieš išsiųsdami."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Ar minimalus laikas taikomas užsakymui ar dienai?",
+          "a": "Tai nusprendžiate susitarime su klientu. Dažniausiai užsakymui, ir MaskinGo minimalus laikas taikomas kiekvienam užsakymui."
+        },
+        {
+          "q": "Ar vakaro priedas taikomas savaitgaliais?",
+          "a": "Priklauso nuo susitarimo. Daugelis turi atskirą priedą savaitgaliams ir šventėms. MaskinGo vakaro priedas skaičiuojamas nuo nurodytos valandos, o savaitgalio priedą galima pridėti atskira eilute."
+        },
+        {
+          "q": "O pertraukos?",
+          "a": "Pertraukos atimamos iš dirbto laiko. MaskinGo pertrauka pirmiausia atimama iš valandų su įprasta kaina."
+        }
+      ]
+    }
   }
 }

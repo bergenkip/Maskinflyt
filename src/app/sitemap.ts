@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { isService, pagePath, services } from "@/lib/company-page";
 import { directoryPath } from "@/lib/directory";
+import { GUIDES_PATH } from "@/lib/guides";
 import { industries, topics } from "@/lib/industries";
 import { SITE_URL, publicPaths } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
@@ -50,7 +51,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ? 1
         : [...industries, ...topics].some((page) => path === `/${page}`)
           ? 0.8
-          : 0.5,
+          : path.startsWith(GUIDES_PATH)
+            ? 0.7
+            : 0.5,
   }));
   const [pages, directory] = await Promise.all([companyPages(), directoryPages()]);
   return [...own, ...directory, ...pages];

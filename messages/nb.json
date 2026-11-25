@@ -462,7 +462,8 @@
     "text": "MaskinGo · Laget for norske entreprenører",
     "linksLabel": "Lenker",
     "pricing": "Priser",
-    "directory": "Finn et firma"
+    "directory": "Finn et firma",
+    "guides": "Guider"
   },
   "Mfa": {
     "verifyTitle": "Bekreft at det er deg",
@@ -2194,5 +2195,304 @@
     "cancelledSubject": "{company} har avlyst jobben din",
     "cancelledIntro": "Dessverre har {company} avlyst jobben din.",
     "cancelledTime": "Var planlagt"
+  },
+  "Guides": {
+    "navName": "Guider",
+    "metaTitle": "Guider for maskin, kranbil og transport · MaskinGo",
+    "metaDescription": "Praktiske guider om timelister, overtid, fakturering av maskintimer, minstetid og kveldstillegg for maskinentreprenører, kranbil og transport.",
+    "badge": "Guider",
+    "title": "Guider for maskin, kranbil og transport",
+    "lead": "Korte, praktiske guider om timer, overtid og fakturering, skrevet for deg som driver med maskin, kranbil eller transport.",
+    "guideBadge": "Guide",
+    "readGuide": "Les guiden",
+    "updated": "Oppdatert {date}",
+    "disclaimer": "Dette er generell informasjon, ikke juridisk råd. Sjekk avtalene dine, og spør regnskapsføreren hvis du er usikker.",
+    "faqTitle": "Spørsmål og svar",
+    "relatedTitle": "Les mer om MaskinGo",
+    "moreTitle": "Flere guider",
+    "allGuides": "Alle guider",
+    "timesheet": {
+      "navName": "Timeliste for anleggsarbeid",
+      "metaTitle": "Timeliste for anleggsarbeid: mal og regler · MaskinGo",
+      "metaDescription": "Hva en timeliste for anlegg og transport bør inneholde, hvordan overtid regnes, en enkel mal for én uke og de vanligste feilene.",
+      "summary": "Hva timelisten bør inneholde, en mal for én uke og grensene for overtid.",
+      "title": "Timeliste for anleggsarbeid: mal og regler",
+      "lead": "En god timeliste gir riktig lønn, riktig faktura og færre spørsmål. Her er hva den bør inneholde, en enkel mal og de vanligste feilene.",
+      "sections": [
+        {
+          "heading": "Hvorfor timelisten er viktig",
+          "body": [
+            "Arbeidsmiljøloven § 10-7 krever at arbeidsgiveren har en oversikt over hvor mye hver ansatt har arbeidet. Den samme oversikten brukes til lønn, til overtid og til å fakturere kunden.",
+            "Når timene føres på lapper og leveres i slutten av måneden, blir de ofte ufullstendige. Da må kontoret ringe rundt, og noen timer blir aldri fakturert."
+          ]
+        },
+        {
+          "heading": "Dette bør timelisten inneholde",
+          "list": [
+            "Navnet på den ansatte og perioden (uke eller måned)",
+            "Dato, start og slutt for hver dag",
+            "Pauser",
+            "Oppdraget eller kunden timene gjelder",
+            "Maskinen eller bilen som ble brukt",
+            "Overtid, holdt adskilt fra vanlige timer",
+            "Den ansattes bekreftelse med dato"
+          ]
+        },
+        {
+          "heading": "Mal: én uke for en maskinfører",
+          "body": [
+            "Slik kan en uke se ut. Tallene er bare et eksempel."
+          ],
+          "table": {
+            "caption": "Timeliste, uke 48",
+            "head": [
+              "Dag",
+              "Start–slutt",
+              "Pause",
+              "Timer",
+              "Oppdrag"
+            ],
+            "rows": [
+              [
+                "Man",
+                "07:00–15:30",
+                "0:30",
+                "8:00",
+                "Grunnarbeid, Fana"
+              ],
+              [
+                "Tir",
+                "07:00–17:30",
+                "0:30",
+                "10:00",
+                "Grunnarbeid, Fana"
+              ],
+              [
+                "Ons",
+                "07:00–15:00",
+                "0:30",
+                "7:30",
+                "Graving, Åsane"
+              ],
+              [
+                "Tor",
+                "06:30–15:00",
+                "0:30",
+                "8:00",
+                "Graving, Åsane"
+              ],
+              [
+                "Fre",
+                "07:00–14:30",
+                "0:30",
+                "7:00",
+                "Massetransport"
+              ]
+            ]
+          },
+          "after": [
+            "Uken har 40,5 timer. Med 9 timer per dag som grense er 1 time på tirsdag overtid, og resten er vanlig tid."
+          ]
+        },
+        {
+          "heading": "Overtid: grensene i loven",
+          "body": [
+            "Etter arbeidsmiljøloven er alminnelig arbeidstid som hovedregel høyst 9 timer per døgn og 40 timer per uke. Arbeid ut over dette er overtid, og loven krever et tillegg på minst 40 prosent.",
+            "Mange i bransjen har tariffavtale eller egen avtale med andre grenser og høyere tillegg, for eksempel for kveld og natt. Det er avtalen som gjelder, så sjekk den."
+          ]
+        },
+        {
+          "heading": "Vanlige feil",
+          "list": [
+            "Timene skrives ned flere dager etterpå, etter hukommelsen",
+            "Pauser glemmes eller trekkes ulikt",
+            "Kjøring til og fra anlegget føres ulikt fra person til person",
+            "Overtid regnes for hånd i et regneark",
+            "Timelisten kan endres etter at lønnen er kjørt"
+          ]
+        },
+        {
+          "heading": "Papir, regneark eller app?",
+          "body": [
+            "Papir og regneark fungerer når dere er få, men timene må tastes inn på nytt til lønn og til faktura. Med en app føres tiden mens jobben pågår, og de samme timene brukes videre.",
+            "I MaskinGo trykker sjåføren «Jeg er på vei», «Jeg er fremme» og «Jeg er ferdig» på mobilen. Kontoret godkjenner timene, og den ansatte bekrefter timelisten til lønn. Overtid deles etter reglene du setter opp, og den bekreftede timelisten låses og sendes som PDF til regnskapsføreren."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Må timelisten signeres?",
+          "a": "Loven krever ikke signatur, men at den ansatte bekrefter timelisten gjør det lettere å unngå uenighet senere."
+        },
+        {
+          "q": "Hvor lenge skal timelister tas vare på?",
+          "a": "Timelister som er grunnlag for lønn og faktura hører til regnskapsmaterialet. Spør regnskapsføreren hvor lenge dere må oppbevare dem."
+        },
+        {
+          "q": "Teller kjøring til anlegget som arbeidstid?",
+          "a": "Det avhenger av avtalen og av hvor arbeidsdagen starter. Sjekk tariffavtalen eller arbeidsavtalen, og før det likt for alle."
+        }
+      ]
+    },
+    "invoicing": {
+      "navName": "Fakturere maskintimer",
+      "metaTitle": "Fakturere maskintimer: slik gjør du det · MaskinGo",
+      "metaDescription": "Slik fakturerer du timer for gravemaskin, kranbil og lastebil: timepris, minstetid, tillegg, egne linjer og hva fakturaen må inneholde.",
+      "summary": "Timepris, minstetid, egne linjer og hva fakturaen må inneholde.",
+      "title": "Slik fakturerer du maskintimer",
+      "lead": "Mange maskinentreprenører taper penger på timer som aldri blir fakturert. Her går vi gjennom grunnlaget, prisene og hva fakturaen må inneholde.",
+      "sections": [
+        {
+          "heading": "Start med godkjente timer",
+          "body": [
+            "Fakturaen blir aldri bedre enn timene den bygger på. Før timene mens jobben pågår, og la kontoret godkjenne dem før de faktureres.",
+            "Har sjåføren eller maskinføreren ført feil, rett timene med en begrunnelse. Da vet alle hvorfor tallet ble endret hvis kunden spør."
+          ]
+        },
+        {
+          "heading": "Timepris, kundepris og minstetid",
+          "body": [
+            "De fleste har en timepris per maskin. Faste kunder har ofte en egen avtalt pris, og mange maskiner har en minstetid, for eksempel 2 timer. Et oppdrag på 1 time og 15 minutter faktureres da som 2 timer.",
+            "Arbeid etter et bestemt klokkeslett kan ha et kveldstillegg, enten som prosent på toppen av timeprisen eller som en egen timepris. Skriv avtalen ned, så blir den lik hver gang."
+          ]
+        },
+        {
+          "heading": "Det som ikke er timer",
+          "body": [
+            "Mye av det som faktureres, er ikke timer. Før det som egne linjer med antall, enhet og pris:"
+          ],
+          "list": [
+            "Ferje og bompenger",
+            "Pukk, grus og masser per tonn",
+            "Kjøring per km eller per tur",
+            "Leie av utstyr per dag",
+            "Deponi og avgifter"
+          ]
+        },
+        {
+          "heading": "Dette må fakturaen inneholde",
+          "body": [
+            "Bokføringsforskriften stiller krav til hva en faktura skal inneholde. Blant annet:"
+          ],
+          "list": [
+            "Fortløpende fakturanummer og fakturadato",
+            "Ditt navn og organisasjonsnummer, med MVA hvis du er registrert",
+            "«Foretaksregisteret» hvis firmaet er registrert der",
+            "Kundens navn og adresse",
+            "Hva som er levert, og når og hvor det ble levert",
+            "Pris, beløp og merverdiavgift",
+            "Forfallsdato"
+          ],
+          "after": [
+            "Listen er ikke fullstendig. Spør regnskapsføreren hvis du er usikker."
+          ]
+        },
+        {
+          "heading": "Fakturer samme uke",
+          "body": [
+            "Jo lenger det går fra jobben er gjort, jo flere timer glemmes, og jo senere kommer pengene inn. En fast rutine, for eksempel hver fredag, gjør stor forskjell.",
+            "Er en faktura sendt med feil, skal den ikke endres eller slettes. Lag en kreditnota og en ny faktura."
+          ]
+        },
+        {
+          "heading": "Slik gjør MaskinGo det",
+          "body": [
+            "Når arbeidstiden er godkjent, lager MaskinGo et fakturautkast med maskinens timepris, kundens pris, minstetid og kveldstillegg. Du legger til egne linjer og sender PDF-en på e-post når du trykker «Send faktura». Ingenting sendes automatisk."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Skal kjøring til anlegget faktureres?",
+          "a": "Det avgjøres av avtalen med kunden. Mange fakturerer framkjøring som timer eller per km. Skriv det i tilbudet, så slipper du diskusjon etterpå."
+        },
+        {
+          "q": "Kan jeg endre en faktura som er sendt?",
+          "a": "Nei. En sendt faktura rettes med en kreditnota, og så sender du en ny faktura med riktige tall."
+        },
+        {
+          "q": "Må jeg sende EHF?",
+          "a": "Offentlige kunder krever elektronisk faktura (EHF). Private kunder godtar ofte PDF på e-post. Spør kunden hva de krever."
+        }
+      ]
+    },
+    "minimumTime": {
+      "navName": "Minstetid og kveldstillegg",
+      "metaTitle": "Minstetid og kveldstillegg for kranbil · MaskinGo",
+      "metaDescription": "Slik fungerer minstetid og kveldstillegg for kranbil og maskin, med regneeksempler, og slik skriver du det i tilbud og faktura.",
+      "summary": "Hvordan minstetid og kveldstillegg regnes, med eksempler.",
+      "title": "Minstetid og kveldstillegg for kranbil",
+      "lead": "Minstetid og kveldstillegg er vanlig for kranbil og maskin, men skaper ofte spørsmål fra kunden. Her er hvordan de fungerer, med regneeksempler.",
+      "sections": [
+        {
+          "heading": "Hva er minstetid?",
+          "body": [
+            "Minstetid er det minste antallet timer kunden betaler for, uansett hvor kort oppdraget er. Bilen må kjøres fram og rigges opp og ned, og den kan ikke ta en annen jobb i mellomtiden.",
+            "Hvor lang minstetid som er vanlig, varierer med bil, område og kunde. Det viktigste er at den står i tilbudet eller avtalen."
+          ]
+        },
+        {
+          "heading": "Regneeksempel: kort oppdrag",
+          "body": [
+            "Kranbilen har timepris 1 500 kr og minstetid 2 timer. Prisene er bare et eksempel."
+          ],
+          "list": [
+            "Arbeidet tid: 1 time og 15 minutter",
+            "Fakturert tid: 2 timer (minstetiden)",
+            "Beløp: 2 × 1 500 kr = 3 000 kr eks. mva."
+          ]
+        },
+        {
+          "heading": "Hva er kveldstillegg?",
+          "body": [
+            "Kveldstillegg er en høyere pris for arbeid etter et bestemt klokkeslett, for eksempel etter kl. 17. Det kan være et prosenttillegg på timeprisen, for eksempel 50 %, eller en egen timepris for kveld.",
+            "Tillegget gjelder vanligvis bare timene etter klokkeslettet, ikke hele oppdraget."
+          ]
+        },
+        {
+          "heading": "Regneeksempel: oppdrag som går inn i kvelden",
+          "body": [
+            "Samme kranbil, med kveldstillegg på 50 % fra kl. 17. Oppdraget varer fra 15:30 til 18:30 uten pause."
+          ],
+          "list": [
+            "15:30–17:00: 1,5 timer × 1 500 kr = 2 250 kr",
+            "17:00–18:30: 1,5 timer × 2 250 kr = 3 375 kr",
+            "Sum: 5 625 kr eks. mva."
+          ]
+        },
+        {
+          "heading": "Skriv det tydelig i tilbudet",
+          "body": [
+            "Kunden blir sjelden irritert over en minstetid som står i tilbudet. Det er overraskelsen på fakturaen som skaper diskusjon. Ta med:"
+          ],
+          "list": [
+            "Timepris per bil eller maskin",
+            "Minstetid, og om den gjelder per oppdrag eller per dag",
+            "Klokkeslettet for kveldstillegg og hvor stort det er",
+            "Om framkjøring, ferje og bompenger kommer i tillegg"
+          ]
+        },
+        {
+          "heading": "Slik gjør MaskinGo det",
+          "body": [
+            "Hver kranbil og maskin har sin timepris, minstetid og kveldstillegg, enten i prosent eller som egen timepris fra et klokkeslett. En kunde kan ha egen pris. Når timene er godkjent, regner fakturautkastet ut minstetid og kveldstimer for deg, og du ser hver linje før du sender."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Gjelder minstetiden per oppdrag eller per dag?",
+          "a": "Det bestemmer du i avtalen med kunden. Det vanligste er per oppdrag, og i MaskinGo gjelder minstetiden per oppdrag."
+        },
+        {
+          "q": "Gjelder kveldstillegget i helgen?",
+          "a": "Det avhenger av avtalen. Mange har eget tillegg for helg og helligdager. I MaskinGo regnes kveldstillegget fra klokkeslettet, og et helgetillegg kan legges til som en egen linje."
+        },
+        {
+          "q": "Hva med pauser?",
+          "a": "Pauser trekkes fra arbeidet tid. I MaskinGo trekkes pausen først fra timene med vanlig pris."
+        }
+      ]
+    }
   }
 }

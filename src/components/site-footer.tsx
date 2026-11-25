@@ -22,6 +22,9 @@ export function SiteFooter() {
           <Link href="/finn" className={linkClass}>
             {t("directory")}
           </Link>
+          <Link href="/guider" className={linkClass}>
+            {t("guides")}
+          </Link>
           <Link href="/timeforing" className={linkClass}>
             {tIndustry("timeforing.navName")}
           </Link>
