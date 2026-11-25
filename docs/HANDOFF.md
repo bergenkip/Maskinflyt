@@ -548,3 +548,15 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
 - Laiškai `planned-email.ts` (`kind`: planned, changed su ankstesniu laiku, cancelled), nb/en/lt.
 - Testai: `39_job_customer_notices.test.sql`, `job-notice.test.ts`, laiškų testai, `e2e/customer-account.spec.ts`.
 - Testai: `38_planned_requests.test.sql`, `planned-email.test.ts`, `e2e/customer-account.spec.ts`.
+
+## Gidai SEO (2026-11-25)
+- `/guider` (sąrašas) ir trys straipsniai: `/guider/timeliste-anlegg`, `/guider/fakturere-maskintimer`,
+  `/guider/minstetid-kveldstillegg-kranbil`. Tekstai `messages/*.json` → `Guides`, sąrašas ir adresai `src/lib/guides.ts`.
+- Puslapiai `publicPaths` ir sitemap (prioritetas 0.7), JSON-LD: Article + BreadcrumbList + FAQPage. Nuoroda „Guider“ apačioje.
+- Lentelė telefone rodoma kortelėmis, nuo 640 px lentele.
+- Teisiniai teiginiai patikrinti pagal Lovdata 2026-11-25 (Li prašymu, be „ne teisinė konsultacija“ pastabos):
+  arbeidsmiljøloven §§ 10-4, 10-5, 10-6 (11), 10-7; bokføringsforskriften §§ 5-1-1, 5-1-2, 5-2-2, 5-2-3, 5-2-7;
+  bokføringsloven § 13; forskrift om elektronisk faktura i offentlige anskaffelser (2019-04-01-444) § 5.
+  Pasikeitus įstatymams, tekstus reikia patikrinti iš naujo ir pakeisti `GUIDES_UPDATED`.
+- Naujas straipsnis: įrašyk į `guides` + `guideSlugs` + `guideRelated`, tekstus trimis kalbomis, adresą į `publicPaths`;
+  `src/lib/guides.test.ts` patikrina, kad nieko nepamiršta. `GUIDES_UPDATED` pakeisk, kai tekstai peržiūrimi.

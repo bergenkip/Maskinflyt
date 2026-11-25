@@ -464,7 +464,8 @@
     "text": "MaskinGo · Built for Norwegian contractors",
     "linksLabel": "Links",
     "pricing": "Pricing",
-    "directory": "Find a company"
+    "directory": "Find a company",
+    "guides": "Guides"
   },
   "Mfa": {
     "verifyTitle": "Confirm it is you",
@@ -2220,5 +2221,301 @@
     "cancelledSubject": "{company} has cancelled your job",
     "cancelledIntro": "Unfortunately, {company} has cancelled your job.",
     "cancelledTime": "Was planned"
+  },
+  "Guides": {
+    "navName": "Guides",
+    "metaTitle": "Guides for machine, crane truck and transport firms · MaskinGo",
+    "metaDescription": "Practical guides on timesheets, overtime, invoicing machine hours, minimum time and evening rates for machine contractors, crane trucks and transport.",
+    "badge": "Guides",
+    "title": "Guides for machine, crane truck and transport firms",
+    "lead": "Short, practical guides on hours, overtime and invoicing, written for people who run machines, crane trucks or transport.",
+    "guideBadge": "Guide",
+    "readGuide": "Read the guide",
+    "updated": "Updated {date}",
+    "faqTitle": "Questions and answers",
+    "relatedTitle": "Read more about MaskinGo",
+    "moreTitle": "More guides",
+    "allGuides": "All guides",
+    "timesheet": {
+      "navName": "Timesheet for construction work",
+      "metaTitle": "Timesheet for construction work: template and rules · MaskinGo",
+      "metaDescription": "What a timesheet for construction and transport should contain, how overtime is counted in Norway, a simple one-week template and the most common mistakes.",
+      "summary": "What the timesheet should contain, a one-week template and the overtime limits.",
+      "title": "Timesheet for construction work: template and rules",
+      "lead": "A good timesheet gives the right pay, the right invoice and fewer questions. Here is what it should contain, a simple template and the most common mistakes.",
+      "sections": [
+        {
+          "heading": "Why the timesheet matters",
+          "body": [
+            "Section 10-7 of the Norwegian Working Environment Act (arbeidsmiljøloven) requires a record showing how much each employee has worked, available to the Labour Inspection Authority and the employee representatives. The same record is used for pay, for overtime and for invoicing the customer.",
+            "When hours are written on notes and handed in at the end of the month, they are often incomplete. The office has to call around, and some hours are never invoiced."
+          ]
+        },
+        {
+          "heading": "What the timesheet should contain",
+          "list": [
+            "The employee's name and the period (week or month)",
+            "Date, start and end of each day",
+            "Breaks",
+            "The job or customer the hours belong to",
+            "The machine or truck that was used",
+            "Overtime, kept apart from ordinary hours",
+            "The employee's confirmation with a date"
+          ]
+        },
+        {
+          "heading": "Template: one week for a machine operator",
+          "body": [
+            "This is what a week can look like. The numbers are only an example."
+          ],
+          "table": {
+            "caption": "Timesheet, week 48",
+            "head": [
+              "Day",
+              "Start–end",
+              "Break",
+              "Hours",
+              "Job"
+            ],
+            "rows": [
+              [
+                "Mon",
+                "07:00–15:30",
+                "0:30",
+                "8:00",
+                "Groundwork, Fana"
+              ],
+              [
+                "Tue",
+                "07:00–17:30",
+                "0:30",
+                "10:00",
+                "Groundwork, Fana"
+              ],
+              [
+                "Wed",
+                "07:00–15:00",
+                "0:30",
+                "7:30",
+                "Digging, Åsane"
+              ],
+              [
+                "Thu",
+                "06:30–15:00",
+                "0:30",
+                "8:00",
+                "Digging, Åsane"
+              ],
+              [
+                "Fri",
+                "07:00–14:30",
+                "0:30",
+                "7:00",
+                "Hauling soil"
+              ]
+            ]
+          },
+          "after": [
+            "The week has 40.5 hours. With 9 hours a day as the limit, 1 hour on Tuesday is overtime and the rest is ordinary time."
+          ]
+        },
+        {
+          "heading": "Overtime: the limits in the law",
+          "body": [
+            "Under section 10-4 of the Working Environment Act, ordinary working time must not exceed 9 hours in 24 hours and 40 hours in seven days. By agreement it can be calculated as an average over a longer period (section 10-5).",
+            "Work beyond the legal limit is overtime (section 10-6). Overtime must be paid with a supplement of at least 40 percent of the pay for the same work. Many in the trade have a collective agreement with higher supplements, for example for evenings and nights, and then the agreement applies."
+          ]
+        },
+        {
+          "heading": "Common mistakes",
+          "list": [
+            "Hours are written down several days later, from memory",
+            "Breaks are forgotten or deducted differently",
+            "Driving to and from the site is recorded differently from person to person",
+            "Overtime is worked out by hand in a spreadsheet",
+            "The timesheet can be changed after payroll has been run"
+          ]
+        },
+        {
+          "heading": "Paper, spreadsheet or app?",
+          "body": [
+            "Paper and spreadsheets work when you are few, but the hours have to be typed in again for pay and for invoices. With an app the time is recorded while the job is going on, and the same hours are used further.",
+            "In MaskinGo the driver taps \"I'm on my way\", \"I've arrived\" and \"I'm finished\" on the phone. The office approves the hours, and the employee confirms the timesheet for pay. Overtime is split by the rules you set up, and the confirmed timesheet is locked and sent as a PDF to the accountant."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does the timesheet have to be signed?",
+          "a": "No. The law requires the record to exist and be available to the Labour Inspection Authority and the employee representatives, not that it is signed. Having the employee confirm the timesheet still makes disagreements later less likely."
+        },
+        {
+          "q": "How long should timesheets be kept?",
+          "a": "If the timesheets document pay or invoices, they are documentation of booked entries. Under section 13 of the Bookkeeping Act (bokføringsloven), such documentation must be kept in Norway for five years after the end of the financial year."
+        },
+        {
+          "q": "Does driving to the site count as working time?",
+          "a": "It depends on the agreement and where the working day starts. Check the collective or employment agreement, and record it the same way for everyone."
+        }
+      ]
+    },
+    "invoicing": {
+      "navName": "Invoicing machine hours",
+      "metaTitle": "Invoicing machine hours: how to do it · MaskinGo",
+      "metaDescription": "How to invoice hours for excavators, crane trucks and lorries: hourly rate, minimum time, supplements, extra lines and what the invoice must contain.",
+      "summary": "Hourly rate, minimum time, extra lines and what the invoice must contain.",
+      "title": "How to invoice machine hours",
+      "lead": "Hours that are never invoiced are lost money. Here we go through the basis, the prices, what the invoice must contain and the deadlines.",
+      "sections": [
+        {
+          "heading": "Start with approved hours",
+          "body": [
+            "The invoice is never better than the hours it is based on. Record the hours while the job is going on, and let the office approve them before they are invoiced.",
+            "If the driver or operator recorded something wrong, correct the hours with a reason. Then everyone knows why the number changed if the customer asks."
+          ]
+        },
+        {
+          "heading": "Hourly rate, customer price and minimum time",
+          "body": [
+            "Most firms have an hourly rate per machine. Regular customers often have their own agreed price, and many machines have a minimum time, for example 2 hours. A job of 1 hour and 15 minutes is then invoiced as 2 hours.",
+            "Work after a certain time of day can have an evening supplement, either as a percentage on top of the hourly rate or as a separate hourly rate. Write the agreement down so it is the same every time."
+          ]
+        },
+        {
+          "heading": "What is not hours",
+          "body": [
+            "Much of what is invoiced is not hours. Add it as separate lines with quantity, unit and price:"
+          ],
+          "list": [
+            "Ferries and road tolls",
+            "Crushed stone, gravel and soil per tonne",
+            "Driving per km or per trip",
+            "Equipment hire per day",
+            "Landfill and fees"
+          ]
+        },
+        {
+          "heading": "What the invoice must contain",
+          "body": [
+            "Sections 5-1-1 and 5-1-2 of the Bookkeeping Regulations (bokføringsforskriften) say what an invoice must contain at a minimum:"
+          ],
+          "list": [
+            "Number and invoice date",
+            "Your name and organisation number, followed by MVA if you are in the VAT register",
+            "The word \"Foretaksregisteret\" and the head office address if the company is an AS",
+            "The customer's name and address or organisation number",
+            "What was delivered, and how much",
+            "When and where it was delivered",
+            "Price and due date",
+            "VAT, stated in Norwegian kroner"
+          ]
+        },
+        {
+          "heading": "Deadlines and corrections",
+          "body": [
+            "Under section 5-2-2 of the Bookkeeping Regulations, the invoice must be issued as soon as possible and no later than one month after delivery. If you invoice monthly, you may do so within 15 working days of the month after the delivery month (section 5-2-3). A fixed routine, for example every Friday, means fewer forgotten hours and money in sooner.",
+            "If a sent invoice is to be replaced, section 5-2-7 requires a credit note that reverses the original invoice, and then a new invoice."
+          ]
+        },
+        {
+          "heading": "How MaskinGo does it",
+          "body": [
+            "When the working time is approved, MaskinGo makes an invoice draft with the machine's hourly rate, the customer's price, minimum time and evening supplement. You add your own lines and send the PDF by email when you press \"Send invoice\". Nothing is sent automatically."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Should driving to the site be invoiced?",
+          "a": "That is decided by the agreement with the customer. Many invoice travel to the site as hours or per km. Put it in the quote to avoid discussion later."
+        },
+        {
+          "q": "Can I change an invoice that has been sent?",
+          "a": "No. You issue a credit note that reverses it (section 5-2-7 of the Bookkeeping Regulations) and send a new invoice with the right numbers."
+        },
+        {
+          "q": "Do I have to send EHF?",
+          "a": "Public sector buyers must require electronic invoices in an approved format such as EHF, and may hold back payment until one arrives (Regulation on electronic invoicing in public procurement, section 5). Private customers often accept a PDF by email."
+        }
+      ]
+    },
+    "minimumTime": {
+      "navName": "Minimum time and evening rates",
+      "metaTitle": "Minimum time and evening rates for crane trucks · MaskinGo",
+      "metaDescription": "How minimum time and evening supplements work for crane trucks and machines, with worked examples, and how to put them in quotes and invoices.",
+      "summary": "How minimum time and evening supplements are counted, with examples.",
+      "title": "Minimum time and evening rates for crane trucks",
+      "lead": "Minimum time and evening supplements are common for crane trucks and machines, but often lead to questions from the customer. Here is how they work, with worked examples.",
+      "sections": [
+        {
+          "heading": "What is minimum time?",
+          "body": [
+            "Minimum time is the smallest number of hours the customer pays for, however short the job is. The truck has to drive there and rig up and down, and it cannot take another job in the meantime.",
+            "How long a minimum time is usual varies with the truck, the area and the customer. What matters most is that it is in the quote or the agreement."
+          ]
+        },
+        {
+          "heading": "Worked example: a short job",
+          "body": [
+            "The crane truck has an hourly rate of NOK 1,500 and a minimum time of 2 hours. The prices are only an example."
+          ],
+          "list": [
+            "Time worked: 1 hour and 15 minutes",
+            "Time invoiced: 2 hours (the minimum time)",
+            "Amount: 2 × NOK 1,500 = NOK 3,000 excl. VAT"
+          ]
+        },
+        {
+          "heading": "What is an evening supplement?",
+          "body": [
+            "An evening supplement is a higher price for work after a certain time of day, for example after 17:00. It can be a percentage on top of the hourly rate, for example 50%, or a separate evening hourly rate.",
+            "The supplement usually applies only to the hours after that time, not to the whole job."
+          ]
+        },
+        {
+          "heading": "Worked example: a job that runs into the evening",
+          "body": [
+            "The same crane truck, with a 50% evening supplement from 17:00. The job runs from 15:30 to 18:30 without a break."
+          ],
+          "list": [
+            "15:30–17:00: 1.5 hours × NOK 1,500 = NOK 2,250",
+            "17:00–18:30: 1.5 hours × NOK 2,250 = NOK 3,375",
+            "Total: NOK 5,625 excl. VAT"
+          ]
+        },
+        {
+          "heading": "Put it clearly in the quote",
+          "body": [
+            "Customers are rarely annoyed by a minimum time that is in the quote. It is the surprise on the invoice that causes discussion. Include:"
+          ],
+          "list": [
+            "The hourly rate per truck or machine",
+            "The minimum time, and whether it applies per job or per day",
+            "The time the evening supplement starts and how large it is",
+            "Whether travel, ferries and tolls come on top"
+          ]
+        },
+        {
+          "heading": "How MaskinGo does it",
+          "body": [
+            "Every crane truck and machine has its own hourly rate, minimum time and evening supplement, either as a percentage or as a separate hourly rate from a time of day. A customer can have their own price. When the hours are approved, the invoice draft works out the minimum time and evening hours for you, and you see every line before you send."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does the minimum time apply per job or per day?",
+          "a": "You decide that in the agreement with the customer. Per job is most common, and in MaskinGo the minimum time applies per job."
+        },
+        {
+          "q": "Does the evening supplement apply at weekends?",
+          "a": "It depends on the agreement. Many have a separate supplement for weekends and public holidays. In MaskinGo the evening supplement is counted from the time of day, and a weekend supplement can be added as a separate line."
+        },
+        {
+          "q": "What about breaks?",
+          "a": "Breaks are deducted from the time worked. In MaskinGo the break is deducted from the hours at the ordinary price first."
+        }
+      ]
+    }
   }
 }
