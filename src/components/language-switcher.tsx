@@ -3,7 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { setLocale } from "@/i18n/actions";
-import { defaultLocale, isLocale, localeNames, locales } from "@/i18n/locale";
+import { defaultLocale, isLocale, localeNames, visibleLocales } from "@/i18n/locale";
 import { ChevronDownIcon, GlobeIcon } from "./icons";
 
 export function LanguageSwitcher() {
@@ -42,7 +42,7 @@ export function LanguageSwitcher() {
           // 16px text stops iPhone Safari from zooming in; it covers the whole face, border included, so the tap area is 44px.
           className="absolute -top-px -left-px h-11 w-[calc(100%+2px)] cursor-pointer appearance-none rounded-lg text-base opacity-0"
         >
-          {locales.map((value) => (
+          {visibleLocales(current).map((value) => (
             <option key={value} value={value} lang={value}>
               {localeNames[value]}
             </option>

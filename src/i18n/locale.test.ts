@@ -1,50 +1,40 @@
 import { describe, expect, it } from "vitest";
-import { matchAcceptLanguage, resolveLocale } from "./locale";
-
-describe("matchAcceptLanguage", () => {
-  it.each([
-    ["nb-NO,nb;q=0.9,en;q=0.8", "nb"],
-    ["no", "nb"],
-    ["nn-NO", "nb"],
-    ["lt-LT,lt;q=0.9", "lt"],
-    ["en-GB,en;q=0.9", "en"],
-    ["de-DE,de;q=0.9,lt;q=0.5", "lt"],
-    ["en;q=0.5,nb;q=0.8", "nb"],
-  ])("%s → %s", (header, expected) => {
-    expect(matchAcceptLanguage(header)).toBe(expected);
-  });
-
-  it("returns undefined for unsupported or missing languages", () => {
-    expect(matchAcceptLanguage("de-DE,fr;q=0.8")).toBeUndefined();
-    expect(matchAcceptLanguage("")).toBeUndefined();
-    expect(matchAcceptLanguage(null)).toBeUndefined();
-    expect(matchAcceptLanguage("lt;q=0")).toBeUndefined();
-  });
-});
+import { resolveLocale, visibleLocales } from "./locale";
 
 describe("resolveLocale", () => {
   it("prefers the profile over everything else", () => {
     expect(
-      resolveLocale({ profile: "lt", cookie: "en", organization: "nb", acceptLanguage: "en-US" }),
+      resolveLocale({ profile: "lt", cookie: "en", organization: "nb" }),
     ).toBe("lt");
   });
 
   it("uses this device's choice when the profile has none", () => {
-    expect(resolveLocale({ profile: null, cookie: "lt", organization: "nb", acceptLanguage: "en" })).toBe(
+    expect(resolveLocale({ profile: null, cookie: "lt", organization: "nb" })).toBe(
       "lt",
     );
   });
 
-  it("uses the company default before the browser language", () => {
-    expect(resolveLocale({ organization: "en", acceptLanguage: "lt-LT" })).toBe("en");
+  it("uses the company default when nothing else is set", () => {
+    expect(resolveLocale({ organization: "en" })).toBe("en");
   });
 
   it("ignores invalid values", () => {
-    expect(resolveLocale({ profile: "de", cookie: "<script>", acceptLanguage: "en-US" })).toBe("en");
+    expect(resolveLocale({ profile: "de", cookie: "<script>", organization: "en" })).toBe("en");
   });
 
   it("falls back to Norwegian Bokmål", () => {
-    expect(resolveLocale({ acceptLanguage: "de-DE" })).toBe("nb");
     expect(resolveLocale({})).toBe("nb");
+  });
+});
+
+describe("visibleLocales", () => {
+  it("lists only Norwegian and English to everyone", () => {
+    expect(visibleLocales("nb")).toEqual(["nb", "en"]);
+    expect(visibleLocales("en")).toEqual(["nb", "en"]);
+    expect(visibleLocales("de")).toEqual(["nb", "en"]);
+  });
+
+  it("keeps Lithuanian in the list once it is switched on", () => {
+    expect(visibleLocales("lt")).toEqual(["nb", "en", "lt"]);
   });
 });

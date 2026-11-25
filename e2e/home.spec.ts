@@ -98,19 +98,40 @@ test("dark look shows the dark app screens", async ({ page, context, baseURL }) 
   }
 });
 
-test("browser language is used before anything is chosen", async ({ browser }) => {
-  const context = await browser.newContext({ locale: "lt-LT" });
-  const page = await context.newPage();
-  await page.goto("/");
-  await expect(page.locator("html")).toHaveAttribute("lang", "lt");
-  await context.close();
+test("every visitor sees Norwegian first, whatever the browser language", async ({ browser }) => {
+  for (const locale of ["lt-LT", "en-US", "de-DE"]) {
+    const context = await browser.newContext({ locale });
+    const page = await context.newPage();
+    await page.goto("/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "nb");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(titles.nb);
+    // Lithuanian is hidden: only Norwegian and English can be picked.
+    await expect(page.getByLabel("Språk").locator("option")).toHaveText(["Norsk bokmål", "English"]);
+    await context.close();
+  }
 });
 
-test("unsupported browser language falls back to Norwegian", async ({ browser }) => {
-  const context = await browser.newContext({ locale: "de-DE" });
+test("the hidden Lithuanian is switched on with ?lang=lt and remembered", async ({ browser }) => {
+  const context = await browser.newContext();
   const page = await context.newPage();
+  await page.goto("/priser?lang=lt");
+  // The parameter is dropped from the address after it is used.
+  await expect(page).toHaveURL(/\/priser$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "lt");
+  await expect(page.getByLabel("Kalba").locator("option")).toHaveText(["Norsk bokmål", "English", "Lietuvių"]);
+
   await page.goto("/");
-  await expect(page.locator("html")).toHaveAttribute("lang", "nb");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(titles.lt);
+
+  // Unknown values change nothing.
+  await page.goto("/?lang=de");
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "lt");
+
+  // Back to English: Lithuanian leaves the list again.
+  await page.getByLabel("Kalba").selectOption("en");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByLabel("Language").locator("option")).toHaveText(["Norsk bokmål", "English"]);
   await context.close();
 });
 

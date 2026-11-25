@@ -53,7 +53,10 @@ Mano tikslai:
 
 - Sąsaja veikia **norvegų bokmål, anglų ir lietuvių** kalbomis. Kalbą naudotojas pasirenka **Nustatymuose**.
 - Pasirinkimas saugomas **naudotojo profilyje** duomenų bazėje (ne tik naršyklėje), todėl išlieka kitame įrenginyje.
-- Numatytoji kalba: įmonės nustatymas (Norvegijos įmonėms `nb`). Kol naudotojas neprisijungęs, kalba nustatoma pagal naršyklę.
+- Numatytoji kalba: įmonės nustatymas (Norvegijos įmonėms `nb`). Kol naudotojas neprisijungęs ir nieko nepasirinkęs, rodoma `nb`
+  (naršyklės kalba nenaudojama).
+- Viešai pasirenkamos tik `nb` ir `en` (Li sprendimas 2026-11-25). Lietuvių kalba veikia, bet paslėpta:
+  ją įjungia slapta nuoroda `?lang=lt` (įsimenama slapuke ir profilyje), ir tik tada ji matoma sąraše.
 - **Jokių tekstų tiesiai komponentuose.** Visi tekstai laikomi vertimų failuose (`messages/nb.json`, `en.json`, `lt.json`)
   su vienodais raktais. Automatinis testas tikrina, kad visose trijose kalbose yra visi raktai.
 - Datos, skaičiai ir pinigai formatuojami pagal kalbą (`Intl`), pvz. `1 234,50 kr` arba `NOK 1,234.50`.

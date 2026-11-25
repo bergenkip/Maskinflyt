@@ -131,7 +131,8 @@ test("a visitor picks a free time; the office plans the job at it", async ({ bro
   const answers = (await (await page.request.get(`${resendStub}/emails`)).json()) as { subject: string; text: string }[];
   const answer = answers.find((sent) => sent.text.includes("Recipient: kari@nordmann.test") && sent.subject.includes(name));
   expect(answer).toBeDefined();
-  expect(answer!.text).toMatch(new RegExp(`Preferred time: .*${clock.replace(":", "[:.]")}`));
+  // The answer is in English, so the time is written the English way too (01:00 PM, not 13:00).
+  expect(answer!.text).toMatch(new RegExp(`Preferred time: .* at ${shown}`));
 
   // Turned off: customers write a wished-for day again.
   await page.goto("/app/public-page");
