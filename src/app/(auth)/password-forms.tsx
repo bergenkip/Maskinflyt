@@ -127,6 +127,10 @@ function ResetPasswordForm({ email }: { email: string }) {
   const t = useTranslations("Auth");
   const [state, action] = useActionState<ResetPasswordState, FormData>(updatePassword, {});
 
+  useEffect(() => {
+    if (state.saved) window.location.replace("/app");
+  }, [state.saved]);
+
   return (
     <div className="grid gap-6">
       <div className="grid gap-2">

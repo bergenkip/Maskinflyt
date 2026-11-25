@@ -1,7 +1,6 @@
 "use server";
 
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { setLinkSession } from "@/lib/supabase/link-session";
 import { createClient } from "@/lib/supabase/server";
@@ -43,7 +42,7 @@ export async function startPasswordReset(accessToken: string, refreshToken: stri
   return setLinkSession(accessToken, refreshToken);
 }
 
-export type ResetPasswordState = { fieldError?: AuthErrorKey; error?: AuthErrorKey };
+export type ResetPasswordState = { fieldError?: AuthErrorKey; error?: AuthErrorKey; saved?: boolean };
 
 // On the page the e-mailed link opens: the person is signed in by the link and sets a new password.
 export async function updatePassword(_prev: ResetPasswordState, formData: FormData): Promise<ResetPasswordState> {
@@ -60,5 +59,8 @@ export async function updatePassword(_prev: ResetPasswordState, formData: FormDa
     if (error.code === "same_password") return { fieldError: "samePassword" };
     return { error: "unknown" };
   }
-  redirect("/app");
+  // The page opens /app itself with a full load (like the other e-mail-link pages):
+  // a router redirect here raced the router's own work on /reset-password and
+  // sometimes left the person on the form.
+  return { saved: true };
 }
