@@ -65,7 +65,10 @@
     },
     "findTitle": "Trenger du maskinentreprenør, kranbil eller transport?",
     "findLead": "Søk blant firmaene på MaskinGo etter tjeneste og sted, og send en forespørsel rett til firmaet. Gratis for kunder.",
-    "freeLine": "Gratis: bare firmaside i katalogen med kontaktinfo, 0 kr."
+    "customerTitle": "Bestiller du ofte? Opprett kundekonto",
+    "customerText": "Gratis for kunder: følg alle forespørslene dine på ett sted, og bestill raskere neste gang med opplysningene ferdig utfylt. Firmaet bekrefter fortsatt oppdraget.",
+    "customerSignup": "Opprett kundekonto",
+    "customerLogin": "Logg inn som kunde"
   },
   "Nav": {
     "home": "MaskinGo forside",

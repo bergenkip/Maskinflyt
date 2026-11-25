@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 import { COMPANY } from "@/lib/legal";
+import { FreePlanCard } from "./free-plan-card";
 import { planPrice, planSeats, plans, type Plan } from "@/lib/billing";
 
 const primaryButton =
@@ -50,7 +51,7 @@ export function TrialOffer() {
           </li>
         ))}
       </ul>
-      <p className="mt-3 text-sm text-muted">{t("freeLine")}</p>
+      <FreePlanCard className="mt-4" />
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <Link href="/signup" className={primaryButton}>
