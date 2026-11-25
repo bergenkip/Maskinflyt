@@ -82,13 +82,18 @@ function plainFromHtml(html: string): string {
 
 // Returns null when the mail must not be forwarded: it came from our own
 // domain or from the forward address itself (that would loop).
-export function buildForward(email: ReceivedEmail, forwardTo: string): OutgoingEmail | null {
+// contentMissing: Resend did not let us read the mail itself (the key can
+// only send), so only the webhook's own facts are known. The owner still
+// gets a notice and reads the text in Resend.
+export function buildForward(email: ReceivedEmail, forwardTo: string, contentMissing = false): OutgoingEmail | null {
   const sender = addressOf(email.from);
   if (!sender.includes("@")) return null;
   if (sender.endsWith("@maskingo.no") || sender === addressOf(forwardTo)) return null;
 
   const subject = oneLine(email.subject ?? "") || "(uten emne)";
-  const original = email.text?.trim() || (email.html ? plainFromHtml(email.html) : "") || "(tom e-post)";
+  const original = contentMissing
+    ? "(Innholdet kunne ikke hentes automatisk. Les e-posten i Resend under Receiving.)"
+    : email.text?.trim() || (email.html ? plainFromHtml(email.html) : "") || "(tom e-post)";
   const files = email.attachments?.length ?? 0;
   const lines = [
     "---------- Videresendt e-post ----------",
@@ -115,7 +120,8 @@ export function buildForward(email: ReceivedEmail, forwardTo: string): OutgoingE
 }
 
 export async function fetchReceivedEmail(id: string): Promise<ReceivedEmail | null> {
-  const key = process.env.RESEND_API_KEY;
+  // Reading received mail needs a full-access key; the sending key cannot.
+  const key = process.env.RESEND_RECEIVING_API_KEY ?? process.env.RESEND_API_KEY;
   if (!key) return null;
   const base = process.env.RESEND_API_URL ?? "https://api.resend.com";
   try {

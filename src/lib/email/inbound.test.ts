@@ -79,6 +79,13 @@ describe("forwarded e-mail", () => {
     expect(email.text).not.toContain("x()");
   });
 
+  it("sends a notice when the content could not be read", () => {
+    const email = buildForward({ ...received, text: null }, "owner@inbox.test", true)!;
+    expect(email.text).toContain("Les e-posten i Resend");
+    expect(email.subject).toContain("Re: MaskinGo");
+    expect(email.replyTo).toBe("kari@fjellkran.test");
+  });
+
   it("does not forward our own mail or the owner's (no loops)", () => {
     expect(buildForward({ ...received, from: "hei@maskingo.no" }, "owner@inbox.test")).toBeNull();
     expect(buildForward({ ...received, from: "Owner <OWNER@inbox.test>" }, "owner@inbox.test")).toBeNull();
