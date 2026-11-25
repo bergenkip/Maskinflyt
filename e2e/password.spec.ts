@@ -66,7 +66,9 @@ test("a forgotten password is replaced through an e-mailed link", async ({ brows
   await later.page.waitForURL((url) => url.pathname.startsWith("/app"));
 
   // The link works once: opened again, it explains and offers a new one.
+  // Signed out again; the language stays English (it no longer comes from the browser).
   await later.context.clearCookies();
+  await later.context.addCookies([{ name: "NEXT_LOCALE", value: "en", url: baseURL! }]);
   await later.page.goto(link);
   await later.page.waitForURL((url) => url.pathname === "/reset-password");
   await expect(later.page.getByRole("alert").filter({ hasText: "Ask for a new link" })).toBeVisible();
