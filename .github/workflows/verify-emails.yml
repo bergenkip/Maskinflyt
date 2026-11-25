@@ -1,0 +1,35 @@
+name: Verify e-mail addresses
+
+# Checks sales prospect addresses with Verifalia before Li writes to them.
+# Started by hand (Actions → Verify e-mail addresses → Run workflow), never on
+# push. Sends no e-mail. Needs two repository secrets:
+#   VERIFALIA_USERNAME, VERIFALIA_PASSWORD (a Verifalia API user)
+# The results are in the run log and summary, visible only to people with
+# access to this repository.
+
+on:
+  workflow_dispatch:
+    inputs:
+      emails:
+        description: "Addresses, separated by commas or spaces"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify with Verifalia
+        env:
+          EMAILS: ${{ inputs.emails }}
+          VERIFALIA_USERNAME: ${{ secrets.VERIFALIA_USERNAME }}
+          VERIFALIA_PASSWORD: ${{ secrets.VERIFALIA_PASSWORD }}
+        run: node scripts/verify-emails/verify.mjs

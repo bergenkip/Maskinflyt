@@ -548,3 +548,9 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
 - Laiškai `planned-email.ts` (`kind`: planned, changed su ankstesniu laiku, cancelled), nb/en/lt.
 - Testai: `39_job_customer_notices.test.sql`, `job-notice.test.ts`, laiškų testai, `e2e/customer-account.spec.ts`.
 - Testai: `38_planned_requests.test.sql`, `planned-email.test.ts`, `e2e/customer-account.spec.ts`.
+
+## El. pašto adresų tikrinimas per Verifalia (2026-11-25)
+Li prašymu: `.github/workflows/verify-emails.yml` + `scripts/verify-emails/verify.mjs`. Paleidžiama tik ranka
+(Actions → Verify e-mail addresses → Run workflow), adresai įvedami į lauką `emails`. Nieko nesiunčia, tik tikrina.
+Reikia repo secrets `VERIFALIA_USERNAME` ir `VERIFALIA_PASSWORD` (Verifalia API naudotojas). Rezultatai: eilutės
+`RESULT;adresas;klasifikacija;būsena` žurnale ir lentelė santraukoje. Pardavimo sąrašas: projekto failai `kundesok/`.
