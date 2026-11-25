@@ -76,7 +76,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
               <button
                 type="submit"
                 title={t("signOut")}
-                className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg px-2 font-medium text-muted sm:px-3 hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full px-2 font-medium text-muted sm:px-3 hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 <SignOutIcon />
                 {/* Phones and computers: icon only, so the header fits one row (with the bell). */}

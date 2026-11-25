@@ -21,7 +21,7 @@ export default async function CustomerLayout({ children }: LayoutProps<"/kunde">
               <button
                 type="submit"
                 title={t("signOut")}
-                className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg px-2 font-medium text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:px-3"
+                className="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full px-2 font-medium text-muted hover:bg-accent-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:px-3"
               >
                 <SignOutIcon />
                 <span className="max-sm:sr-only">{t("signOut")}</span>

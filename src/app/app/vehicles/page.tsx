@@ -99,7 +99,7 @@ export default async function VehiclesPage() {
               const body = (
                 <>
                   <span
-                    className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${vehicle.active ? "bg-accent-soft text-accent" : "border border-border text-muted"}`}
+                    className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${vehicle.active ? "bg-accent-soft text-link" : "border border-border text-muted"}`}
                   >
                     <TruckIcon className="size-6" />
                   </span>
@@ -139,7 +139,7 @@ export default async function VehiclesPage() {
                       className="group flex items-start gap-3 rounded-xl border border-border bg-surface p-4 hover:border-accent/60 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                     >
                       {body}
-                      <ArrowRightIcon className="mt-3 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                      <ArrowRightIcon className="mt-3 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
                     </Link>
                   ) : (
                     <div className="flex items-start gap-3 rounded-xl border border-border bg-surface p-4">{body}</div>

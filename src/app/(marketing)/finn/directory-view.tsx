@@ -8,7 +8,7 @@ import type { DirectoryCompany } from "@/lib/directory-server";
 import { SITE_URL } from "@/lib/site";
 
 const chip =
-  "flex min-h-11 items-center rounded-full border border-border bg-surface px-4 font-medium hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:border-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent";
+  "flex min-h-11 items-center rounded-full border border-border bg-surface px-4 font-medium hover:border-accent hover:text-link focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[current=page]:border-accent aria-[current=page]:bg-accent-soft aria-[current=page]:text-link";
 
 // The catalog (stage 15d): a search by service and place, the listed companies,
 // and links to every service and the places that have companies. What the
@@ -52,7 +52,7 @@ export async function DirectoryView({
         {service && (
           <Link
             href={DIRECTORY_PATH}
-            className="-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-lg px-2 font-medium text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-full px-2 font-medium text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             <ArrowRightIcon className="size-5 rotate-180" />
             {t("allCompanies")}
@@ -85,7 +85,7 @@ export async function DirectoryView({
           {filtered && (
             <Link
               href={DIRECTORY_PATH}
-              className="flex min-h-11 items-center rounded-lg font-medium text-accent underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="flex min-h-11 items-center rounded-lg font-medium text-link underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {t("clear")}
             </Link>
@@ -151,7 +151,7 @@ export async function DirectoryView({
         <p className="max-w-2xl">{t("ctaText")}</p>
         <Link
           href="/signup"
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-fit"
         >
           {tNav("signup")}
           <ArrowRightIcon className="size-5" />

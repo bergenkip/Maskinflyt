@@ -9,4 +9,4 @@ export function resolveTheme(value: string | undefined): Theme {
 }
 
 // The browser bar colour: the header colour (--surface) of each theme.
-export const themeColors: Record<Theme, string> = { light: "#ffffff", dark: "#1b1c1f" };
+export const themeColors: Record<Theme, string> = { light: "#ffffff", dark: "#142033" };

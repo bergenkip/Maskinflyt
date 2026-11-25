@@ -211,7 +211,7 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
         </div>
         <Link
           href={newJob(view !== "day" && shownToday ? today : date)}
-          className={`flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 sm:w-auto ${focusRing}`}
+          className={`flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 sm:w-auto ${focusRing}`}
         >
           <PlusIcon className="size-5" />
           {tJobs("addTitle")}
@@ -233,7 +233,7 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
           {!shownToday && (
             <Link
               href={here({ date: today })}
-              className={`flex min-h-11 items-center rounded-lg border border-border bg-surface px-3 text-sm font-medium hover:bg-accent-soft sm:px-4 sm:text-base ${focusRing}`}
+              className={`flex min-h-11 items-center rounded-full border border-border bg-surface px-3 text-sm font-medium hover:bg-accent-soft sm:px-4 sm:text-base ${focusRing}`}
             >
               {t("backToToday")}
             </Link>
@@ -349,12 +349,12 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
                 <Link
                   href={here({ date: day, view: "day" })}
                   aria-label={t("openDay", { day: dayName(day) })}
-                  className={`flex min-h-11 flex-wrap items-center justify-between gap-x-2 rounded-lg font-semibold hover:text-accent ${focusRing}`}
+                  className={`flex min-h-11 flex-wrap items-center justify-between gap-x-2 rounded-lg font-semibold hover:text-link ${focusRing}`}
                 >
                   <span className="first-letter:uppercase">
                     {format.dateTime(noon(day), { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" })}
                   </span>
-                  {day === today && <span className="text-sm font-medium text-accent">{t("today")}</span>}
+                  {day === today && <span className="text-sm font-medium text-link">{t("today")}</span>}
                 </Link>
                 {own.length === 0 ? (
                   <p className="text-sm text-muted">{t("noJobsDay")}</p>
@@ -364,7 +364,7 @@ export default async function CalendarPage({ searchParams }: PageProps<"/app/job
                 <Link
                   href={newJob(day)}
                   aria-label={t("newJobOn", { day: dayName(day) })}
-                  className={`mt-auto flex min-h-11 items-center justify-center rounded-lg border border-dashed border-border text-muted hover:border-accent hover:text-accent ${focusRing}`}
+                  className={`mt-auto flex min-h-11 items-center justify-center rounded-lg border border-dashed border-border text-muted hover:border-accent hover:text-link ${focusRing}`}
                 >
                   <PlusIcon className="size-5" />
                 </Link>

@@ -60,7 +60,7 @@ export async function HourSheetView({
         <Link
           // Someone else's sheet leads back to the employees' sheets of its month.
           href={own ? "/app/hours" : `/app/hours/all?month=${sheet.period_from.slice(0, 7)}`}
-          className={`-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-lg px-2 font-medium text-accent hover:bg-accent-soft ${focusRing}`}
+          className={`-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-full px-2 font-medium text-link hover:bg-accent-soft ${focusRing}`}
         >
           <ArrowRightIcon className="size-5 rotate-180" />
           {own ? t("back") : tAll("title")}
@@ -84,7 +84,7 @@ export async function HourSheetView({
             href={`/app/hours/${sheet.id}/pdf`}
             target="_blank"
             rel="noopener"
-            className={`flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background sm:justify-self-start ${focusRing}`}
+            className={`flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold hover:bg-background sm:justify-self-start ${focusRing}`}
           >
             <NoteIcon className="size-5" />
             {t("openPdf")}
@@ -216,7 +216,7 @@ export async function HourSheetView({
                         ) : (
                           <span className="font-semibold tabular-nums">{t("hoursTotal", { hours: hours(approved) })}</span>
                         )}
-                        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
                       </span>
                     </Link>
                   </li>
@@ -250,7 +250,7 @@ export async function HourSheetView({
             <p className="text-sm text-muted">{t("deleteHint")}</p>
             <button
               type="submit"
-              className={`flex min-h-11 items-center justify-center rounded-lg border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft sm:justify-self-start ${focusRing}`}
+              className={`flex min-h-11 items-center justify-center rounded-full border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft sm:justify-self-start ${focusRing}`}
             >
               {t("delete")}
             </button>

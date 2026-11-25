@@ -37,7 +37,7 @@ export default function GuidesPage() {
         // Our own texts; "<" is escaped so no text can close the script tag.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
-      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-link">
         {t("badge")}
       </p>
       <h1 className="mt-5 max-w-3xl text-3xl leading-tight font-semibold tracking-tight sm:text-5xl">{t("title")}</h1>

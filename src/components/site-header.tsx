@@ -29,7 +29,7 @@ export async function SiteHeader({ showLogin = true }: { showLogin?: boolean }) 
               shows the search right under the title, and every page links to it in the footer. */}
           <Link
             href={DIRECTORY_PATH}
-            className="hidden min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-lg px-2 font-medium whitespace-nowrap text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:px-3"
+            className="hidden min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-full px-2 font-medium whitespace-nowrap text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:px-3"
           >
             <SearchIcon className="size-5 shrink-0" />
             <span className="sr-only lg:not-sr-only">{t("directory")}</span>
@@ -39,7 +39,7 @@ export async function SiteHeader({ showLogin = true }: { showLogin?: boolean }) 
           {home ? (
             <Link
               href={home}
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 font-medium whitespace-nowrap sm:px-3 text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-full px-2 font-medium whitespace-nowrap sm:px-3 text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {/* Phones show the person icon only, so long words ("Mano paskyra") never push the page sideways. */}
               <UserIcon className="size-5 shrink-0 sm:hidden" />
@@ -48,7 +48,7 @@ export async function SiteHeader({ showLogin = true }: { showLogin?: boolean }) 
           ) : showLogin && (
             <Link
               href="/login"
-              className="flex min-h-11 items-center rounded-lg px-2 font-medium whitespace-nowrap sm:px-3 text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="flex min-h-11 items-center rounded-full px-2 font-medium whitespace-nowrap sm:px-3 text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {t("login")}
             </Link>

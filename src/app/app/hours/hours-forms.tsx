@@ -20,7 +20,7 @@ import {
 } from "./actions";
 
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-const secondaryButton = `flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`;
+const secondaryButton = `flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`;
 
 export function NewSheetForm({ from, to }: { from: string; to: string }) {
   const t = useTranslations("Hours");
@@ -115,7 +115,7 @@ export function SubmitSheetForm({ sheet, count, hours }: { sheet: string; count:
           type="button"
           onClick={() => setSure(true)}
           disabled={count === 0}
-          className={`flex min-h-11 w-full items-center justify-center rounded-lg bg-accent px-4 text-base font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-70 sm:w-auto sm:justify-self-start ${focusRing}`}
+          className={`flex min-h-11 w-full items-center justify-center rounded-full bg-accent px-4 text-base font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-70 sm:w-auto sm:justify-self-start ${focusRing}`}
         >
           {t("confirm")}
         </button>

@@ -17,7 +17,7 @@ export default async function CompanyLayout({ children }: { children: React.Reac
           {children}
           <Link
             href="/finn"
-            className="mt-8 flex min-h-11 w-fit items-center gap-2 rounded-lg font-semibold text-accent underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="mt-8 flex min-h-11 w-fit items-center gap-2 rounded-lg font-semibold text-link underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             <SearchIcon className="size-5 shrink-0" />
             {t("moreCompanies")}

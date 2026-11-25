@@ -54,7 +54,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/app/cu
         </div>
         <Link
           href="/app/customers/new"
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-auto"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-auto"
         >
           <PlusIcon className="size-5" />
           {t("addTitle")}
@@ -84,7 +84,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/app/cu
           </div>
           <button
             type="submit"
-            className="min-h-11 shrink-0 rounded-lg border border-border px-4 font-medium hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="min-h-11 shrink-0 rounded-full border border-border px-4 font-medium hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {t("search")}
           </button>
@@ -98,7 +98,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/app/cu
             {pattern && (
               <Link
                 href="/app/customers"
-                className="inline-flex min-h-11 items-center text-sm font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="inline-flex min-h-11 items-center text-sm font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 {t("clearSearch")}
               </Link>
@@ -132,7 +132,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/app/cu
                     className="group flex items-start gap-3 rounded-xl border border-border bg-surface p-4 hover:border-accent/60 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     <span
-                      className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${customer.active ? "bg-accent-soft text-accent" : "border border-border text-muted"}`}
+                      className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${customer.active ? "bg-accent-soft text-link" : "border border-border text-muted"}`}
                     >
                       <KindIcon className="size-6" />
                     </span>
@@ -159,7 +159,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/app/cu
                       {/* Person names are data and are shown exactly as entered. */}
                       <span className="text-sm text-muted [overflow-wrap:anywhere]">{addedBy(customer)}</span>
                     </span>
-                    <ArrowRightIcon className="mt-3 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                    <ArrowRightIcon className="mt-3 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
                   </Link>
                 </li>
               );

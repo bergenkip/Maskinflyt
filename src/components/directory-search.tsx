@@ -61,7 +61,7 @@ export function DirectorySearch({
       </div>
       <button
         type="submit"
-        className="flex min-h-11 items-center justify-center gap-2 rounded-lg bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent px-5 font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         <SearchIcon className="size-5" />
         {t("search")}

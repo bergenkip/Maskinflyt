@@ -73,7 +73,7 @@ export async function BillingView({ state, taken, seats, interval, manages, conf
   }
   const tones = {
     ok: "border-success/40 bg-success-soft text-success",
-    info: "border-accent/30 bg-accent-soft text-accent",
+    info: "border-accent/30 bg-accent-soft text-link",
     warn: "border-warning/40 bg-warning-soft text-warning",
     danger: "border-danger/40 bg-danger-soft text-danger",
   };
@@ -164,7 +164,7 @@ export async function BillingView({ state, taken, seats, interval, manages, conf
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="text-lg font-semibold">{planName(plan)}</h3>
                     {current && (
-                      <span className="flex items-center gap-1 rounded-full bg-accent-soft px-2 py-0.5 text-sm font-semibold text-accent">
+                      <span className="flex items-center gap-1 rounded-full bg-accent-soft px-2 py-0.5 text-sm font-semibold text-link">
                         <CheckCircleIcon className="size-4" />
                         {t("current")}
                       </span>

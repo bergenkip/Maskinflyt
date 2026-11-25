@@ -45,7 +45,7 @@ const looks: Record<JobRequestStatus, { icon: typeof CircleIcon; tone: string }>
 };
 
 const contactClass =
-  "flex min-h-11 min-w-0 items-center gap-2 rounded-lg border border-border bg-surface px-3 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 min-w-0 items-center gap-2 rounded-full border border-border bg-surface px-3 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 // One request: who, where, when and what, with links to call or write back.
 // The status is shown with an icon and words. What the customer wrote is data
@@ -73,7 +73,7 @@ export async function RequestCard({
           </h3>
           <p className="text-sm text-muted">{t("received", { time: received })}</p>
           {request.user_id && (
-            <p className="flex items-center gap-1 text-sm font-medium text-accent">
+            <p className="flex items-center gap-1 text-sm font-medium text-link">
               <UserIcon className="size-4 shrink-0" />
               {t("fromAccount")}
             </p>

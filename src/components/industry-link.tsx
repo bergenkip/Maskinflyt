@@ -30,7 +30,7 @@ export function IndustryLink({ industry }: { industry: Industry }) {
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
-          className="mt-0.5 size-5 shrink-0 text-accent"
+          className="mt-0.5 size-5 shrink-0 text-link"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"

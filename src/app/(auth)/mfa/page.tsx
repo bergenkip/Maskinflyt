@@ -34,7 +34,7 @@ export default async function MfaPage() {
       <form action={signOut}>
         <button
           type="submit"
-          className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="inline-flex min-h-11 items-center font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           {tNav("signOut")}
         </button>

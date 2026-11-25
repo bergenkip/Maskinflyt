@@ -88,7 +88,7 @@ export default async function InvitationPage({ params }: PageProps<"/join/[token
           <FormAlert kind="error">{t("alreadyMember")}</FormAlert>
           <Link
             href="/app"
-            className="inline-flex min-h-11 items-center font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="inline-flex min-h-11 items-center font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {t("toApp")}
           </Link>

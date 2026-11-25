@@ -6,7 +6,7 @@ import { FormAlert, SubmitButton } from "@/components/form";
 import { checkSecondStep, type SendState, sendMfaLink } from "./actions";
 
 const secondaryButtonClass =
-  "flex min-h-11 items-center justify-center rounded-lg border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-60";
+  "flex min-h-11 items-center justify-center rounded-full border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-60";
 
 // Step 1: send the link. Step 2: approve from the e-mail, in any browser,
 // while this page checks every few seconds and then opens the app.

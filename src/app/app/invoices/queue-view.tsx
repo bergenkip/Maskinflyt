@@ -8,7 +8,7 @@ const SENT_SHOWN = 30;
 
 const groups: { state: QueueState; icon: typeof ClockIcon; tone: string; anchor: string }[] = [
   { state: "time", icon: ClockIcon, tone: "text-warning", anchor: "time-title" },
-  { state: "ready", icon: NoteIcon, tone: "text-accent", anchor: "invoice-title" },
+  { state: "ready", icon: NoteIcon, tone: "text-link", anchor: "invoice-title" },
   { state: "sent", icon: CheckCircleIcon, tone: "text-success", anchor: "invoice-title" },
 ];
 
@@ -54,7 +54,7 @@ export async function InvoiceQueueView({
             {tSettings(settingsReady ? "stateReady" : "stateMissing")}
           </span>
         </span>
-        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
       </Link>
       <Link
         href="/app/invoices/export"
@@ -65,7 +65,7 @@ export async function InvoiceQueueView({
           <span className="font-semibold">{tExport("link")}</span>
           <span className="text-sm text-muted">{tExport("linkHint")}</span>
         </span>
-        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+        <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
       </Link>
       {failed && <p className="text-danger">{t("error")}</p>}
 
@@ -109,7 +109,7 @@ export async function InvoiceQueueView({
                           {t(`action.${state}`)}
                         </span>
                       </span>
-                      <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                      <ArrowRightIcon className="mt-1 size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
                     </Link>
                   </li>
                 ))}

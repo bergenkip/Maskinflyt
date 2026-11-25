@@ -4,9 +4,9 @@ import { COMPANY } from "@/lib/legal";
 import { planPrice, planSeats, plans, type Plan } from "@/lib/billing";
 
 const primaryButton =
-  "flex min-h-11 items-center justify-center rounded-lg bg-accent px-5 text-center text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-center text-base font-semibold text-on-accent hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 const secondaryButton =
-  "flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-5 text-center text-base font-semibold text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-5 text-center text-base font-semibold text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 // The "try MaskinGo" block at the end of the start page and the trade pages:
 // the free trial, who it fits, the plans in short and how to reach us. Plans
@@ -25,7 +25,7 @@ export function TrialOffer() {
       aria-labelledby="contact-title"
       className="mt-14 rounded-xl border border-border bg-surface p-5 [overflow-wrap:anywhere] hyphens-auto sm:mt-20 sm:p-8"
     >
-      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+      <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-link">
         <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4" />
         </svg>
@@ -60,7 +60,7 @@ export function TrialOffer() {
           {t("seePrices")}
         </Link>
         <a href={`mailto:${COMPANY.email}`} className={`${secondaryButton} gap-2 hyphens-none`}>
-          <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 shrink-0 text-accent" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 shrink-0 text-link" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M4 6h16v12H4zM4 7l8 6 8-6" />
           </svg>
           {COMPANY.email}

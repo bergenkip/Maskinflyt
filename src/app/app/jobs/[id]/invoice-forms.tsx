@@ -57,7 +57,7 @@ export function UnmarkSentForm({ job }: { job: string }) {
       <button
         type="submit"
         disabled={pending}
-        className={`flex min-h-11 items-center justify-center rounded-lg border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
+        className={`flex min-h-11 items-center justify-center rounded-full border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
       >
         {pending ? t("unmarking") : t("unmark")}
       </button>
@@ -86,7 +86,7 @@ export function IssueInvoiceForm({ job }: { job: string }) {
             <button
               type="button"
               onClick={() => setSure(false)}
-              className={`flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`}
+              className={`flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`}
             >
               {t("issueCancel")}
             </button>
@@ -96,7 +96,7 @@ export function IssueInvoiceForm({ job }: { job: string }) {
         <button
           type="button"
           onClick={() => setSure(true)}
-          className={`flex min-h-11 items-center justify-center rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 sm:justify-self-start ${focusRing}`}
+          className={`flex min-h-11 items-center justify-center rounded-full bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 sm:justify-self-start ${focusRing}`}
         >
           {t("issue")}
         </button>
@@ -165,7 +165,7 @@ export function SendInvoiceForm({
             <button
               type="button"
               onClick={() => setSure(false)}
-              className={`flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`}
+              className={`flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`}
             >
               {t("issueCancel")}
             </button>
@@ -176,7 +176,7 @@ export function SendInvoiceForm({
           type="button"
           onClick={() => setSure(true)}
           disabled={to.trim() === ""}
-          className={`flex min-h-11 items-center justify-center rounded-lg bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-70 sm:justify-self-start ${focusRing}`}
+          className={`flex min-h-11 items-center justify-center rounded-full bg-accent px-4 font-semibold text-on-accent hover:bg-accent/90 disabled:opacity-70 sm:justify-self-start ${focusRing}`}
         >
           {t(creditNote ? "sendCredit" : "send")}
         </button>
@@ -224,7 +224,7 @@ export function CreditInvoiceForm({ job, invoice, number }: { job: string; invoi
             <button
               type="button"
               onClick={() => setSure(false)}
-              className={`flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`}
+              className={`flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-4 font-semibold hover:bg-background ${focusRing}`}
             >
               {t("issueCancel")}
             </button>
@@ -235,7 +235,7 @@ export function CreditInvoiceForm({ job, invoice, number }: { job: string; invoi
           type="button"
           onClick={() => setSure(true)}
           disabled={reason.trim() === ""}
-          className={`flex min-h-11 items-center justify-center rounded-lg border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
+          className={`flex min-h-11 items-center justify-center rounded-full border border-danger/40 px-4 font-semibold text-danger hover:bg-danger-soft disabled:opacity-70 sm:justify-self-start ${focusRing}`}
         >
           {t("credit")}
         </button>

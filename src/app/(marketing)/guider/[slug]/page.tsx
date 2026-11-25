@@ -107,7 +107,7 @@ function GuideArticle({ guide }: { guide: Guide }) {
       <nav aria-label={t("allGuides")}>
         <Link
           href={GUIDES_PATH}
-          className="-my-3 inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="-my-3 inline-flex min-h-11 items-center gap-1 text-sm font-medium text-link underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M11 6l-6 6 6 6" />
@@ -117,7 +117,7 @@ function GuideArticle({ guide }: { guide: Guide }) {
       </nav>
 
       <header className="mt-4 max-w-3xl">
-        <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+        <p className="inline-flex max-w-full items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-link">
           {t("guideBadge")}
         </p>
         <h1 className="mt-5 text-3xl leading-tight font-semibold tracking-tight sm:text-5xl">{t(`${guide}.title`)}</h1>
@@ -237,7 +237,7 @@ function GuideArticle({ guide }: { guide: Guide }) {
                 <span className="block font-semibold">{tIndustry(`${related}.navName`)}</span>
                 <span className="mt-1 block leading-relaxed text-muted">{tIndustry(`${related}.summary`)}</span>
               </span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" className="mt-0.5 size-5 shrink-0 text-accent" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg aria-hidden="true" viewBox="0 0 24 24" className="mt-0.5 size-5 shrink-0 text-link" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
             </Link>

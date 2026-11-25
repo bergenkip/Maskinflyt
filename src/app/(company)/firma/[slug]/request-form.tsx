@@ -63,7 +63,7 @@ export function RequestForm({
           {customer && (
             <Link
               href="/kunde"
-              className="flex min-h-11 w-fit items-center font-semibold text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="flex min-h-11 w-fit items-center font-semibold text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {t("seeMyRequests")}
             </Link>
@@ -221,7 +221,7 @@ export function RequestForm({
         {t.rich("privacy", {
           company,
           link: (chunks) => (
-            <Link href="/personvern" className="font-medium text-accent underline underline-offset-4">
+            <Link href="/personvern" className="font-medium text-link underline underline-offset-4">
               {chunks}
             </Link>
           ),
@@ -413,7 +413,7 @@ function SlotPicker({ slots, from, initial, error }: { slots: FreeSlot[]; from: 
           <button
             type="button"
             onClick={() => setDay("")}
-            className="flex min-h-11 w-fit items-center font-medium text-accent underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="flex min-h-11 w-fit items-center font-medium text-link underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {t("timeNone")}
           </button>
@@ -430,7 +430,7 @@ function SlotPicker({ slots, from, initial, error }: { slots: FreeSlot[]; from: 
 function CustomerInvite({ slug }: { slug: string }) {
   const t = useTranslations("JobRequestForm");
   const link =
-    "flex min-h-11 items-center justify-center rounded-lg border border-border bg-surface px-4 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+    "flex min-h-11 items-center justify-center rounded-full border border-border bg-surface px-4 font-semibold text-link hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
   return (
     <aside aria-labelledby="customer-invite" className="grid gap-3 rounded-lg border border-accent/40 bg-accent-soft p-4">
       <div className="grid gap-1">

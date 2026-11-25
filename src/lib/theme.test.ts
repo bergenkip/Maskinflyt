@@ -10,6 +10,6 @@ describe("resolveTheme", () => {
   });
   it("has a browser bar colour for each theme", () => {
     expect(themeColors.light).toBe("#ffffff");
-    expect(themeColors.dark).toBe("#1b1c1f");
+    expect(themeColors.dark).toBe("#142033");
   });
 });

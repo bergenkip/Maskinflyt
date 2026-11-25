@@ -13,7 +13,7 @@ const sectionClass = "grid gap-4 rounded-xl border border-border bg-surface p-5 
 const summaryClass =
   "flex min-h-11 cursor-pointer items-center gap-2 px-3 font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 const linkClass =
-  "rounded-sm font-medium text-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "rounded-sm font-medium text-link underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 export type InvoiceSending = {
   id: string;
@@ -176,7 +176,7 @@ export async function InvoiceView({
               {t("sentBadge")}
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-accent">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-sm font-medium text-link">
               <NoteIcon className="size-4" />
               {t("draftBadge")}
             </span>
@@ -424,7 +424,7 @@ function PdfLink({ href, label }: { href: string; label: string }) {
       href={href}
       target="_blank"
       rel="noopener"
-      className="flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 font-semibold hover:bg-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
+      className="flex min-h-11 items-center justify-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold hover:bg-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:justify-self-start"
     >
       <NoteIcon className="size-5 shrink-0" />
       <span className="[overflow-wrap:anywhere]">{label}</span>

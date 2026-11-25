@@ -15,8 +15,8 @@ export const progressIcon: Record<JobProgress | JobEventKind | "none", typeof Ci
 };
 const tone: Record<JobProgress | "none", string> = {
   none: "text-muted",
-  accepted: "text-accent",
-  on_the_way: "text-accent",
+  accepted: "text-link",
+  on_the_way: "text-link",
   arrived: "text-success",
   on_break: "text-warning",
   finished: "text-success",

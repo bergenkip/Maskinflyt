@@ -30,7 +30,7 @@ export async function AllSheetsView({ month, sheets, failed }: { month: string; 
       <div className="grid gap-2">
         <Link
           href="/app/hours"
-          className={`-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-lg px-2 font-medium text-accent hover:bg-accent-soft ${focusRing}`}
+          className={`-ml-2 flex min-h-11 w-fit items-center gap-1.5 rounded-full px-2 font-medium text-link hover:bg-accent-soft ${focusRing}`}
         >
           <ArrowRightIcon className="size-5 rotate-180" />
           {t("back")}
@@ -89,7 +89,7 @@ export async function AllSheetsView({ month, sheets, failed }: { month: string; 
                       )}
                     </span>
                   </span>
-                  <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+                  <ArrowRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-link" />
                 </Link>
               </li>
             );

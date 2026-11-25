@@ -20,7 +20,7 @@ type RoleOption = { value: string; label: string };
 const selectClass =
   "min-h-11 w-full rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent";
 const secondaryButtonClass =
-  "min-h-11 rounded-lg border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70";
+  "min-h-11 rounded-full border border-border px-4 font-medium text-foreground hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70";
 
 export function InviteForm({ roles }: { roles: RoleOption[] }) {
   const t = useTranslations("Team");
@@ -161,7 +161,7 @@ export function RemoveMemberForm({ membershipId, name }: { membershipId: string;
         }}
         disabled={pending}
         aria-label={t("removeLabel", { name })}
-        className="min-h-11 rounded-lg px-4 font-medium text-danger hover:bg-danger-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70"
+        className="min-h-11 rounded-full px-4 font-medium text-danger hover:bg-danger-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70"
       >
         {pending ? tAuth("pending") : t("remove")}
       </button>
