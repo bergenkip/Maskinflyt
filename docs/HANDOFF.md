@@ -560,3 +560,14 @@ Po 15d. Klientas (užsakovas) užsiregistruoja kaip klientas, ne kaip įmonė:
   Pasikeitus įstatymams, tekstus reikia patikrinti iš naujo ir pakeisti `GUIDES_UPDATED`.
 - Naujas straipsnis: įrašyk į `guides` + `guideSlugs` + `guideRelated`, tekstus trimis kalbomis, adresą į `publicPaths`;
   `src/lib/guides.test.ts` patikrina, kad nieko nepamiršta. `GUIDES_UPDATED` pakeisk, kai tekstai peržiūrimi.
+
+## Gautų laiškų persiuntimas į Gmail (2026-11-25)
+
+Kai į `hei@maskingo.no` (Resend Receiving) ateina laiškas, Resend kviečia `POST /api/resend/inbound` (įvykis `email.received`).
+- `src/lib/email/inbound.ts`: parašo patikra (Svix: `svix-id`, `svix-timestamp`, `svix-signature`, ±5 min.),
+  laiško paėmimas `GET /emails/receiving/{id}`, persiuntimo laiškas `buildForward` (siuntėjas `MaskinGo <hei@maskingo.no>`,
+  Reply-To = klientas, tema „Fwd: …“, tekstas ir pabėgęs HTML; priedai nepersiunčiami, tik nurodomas jų skaičius).
+  Nepersiunčiama, jei siuntėjas `@maskingo.no` arba pats persiuntimo adresas (kad nebūtų ciklo). `Idempotency-Key` = `inbound-<id>`.
+- Vercel aplinkos kintamieji (Production, Sensitive): `RESEND_WEBHOOK_SECRET` (Resend webhook signing secret),
+  `INBOUND_FORWARD_TO` (Li asmeninis paštas; kode jo nėra). Be jų: 503.
+- Testai: `src/lib/email/inbound.test.ts`.
